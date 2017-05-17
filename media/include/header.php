@@ -223,8 +223,8 @@
 					<!-- HEADER MENU -->
 	                    <div class="site-header-collapsed-in">
 	                        <div class="dropdown dropdown-typical">
-	                            <a href="#" class="dropdown-toggle no-arr">
-								   <span class="font-icon font-icon-share"></span> Beranda
+	                            <a href="<?php echo $base_url ?>" class="dropdown-toggle no-arr">
+								   <span class="font-icon font-icon-home"></span> Beranda
 								   <span class="lbl"></span>
 							   </a>
 	                        </div>
@@ -246,6 +246,38 @@
 								   <span class="lbl"></span>
 							   </a>
 						   </div>
+						    <div class="site-header-collapsed-in">
+	                    
+	                        <div class="site-header-search-container">
+
+	                            <form class="site-header-search closed">
+	                                <input type="text" placeholder="Search"/>
+	                                <button type="submit">
+	                                    <span class="font-icon-search"></span>
+	                                </button>
+	                                <div class="overlay"></div>
+	                            </form>
+
+	                        </div>
+						   <div class="dropdown dropdown-typical">
+						   <?php
+			                    	if (isset($_SESSION['lms_id'])) {
+			                    ?>
+			                        <a href="upload.php" class="btn btn-inline btn-sm btn-primary-outline">
+			                            <i class="fa fa-upload"></i> Upload
+
+			                        </a>
+			                        
+			                    <?php
+			                		}else{
+			                	?>
+			                		<a class="btn btn-sm btn-inline btn-primary-outline" href="Auth/Signin.php">
+			                            <i class="fa fa-lock"></i> Login
+			                        </a>
+			                	<?php
+			                		}
+			                    ?>
+			                    </div>
 	                    </div><!--.site-header-collapsed-in-->
 	                </div><!--.site-header-collapsed-->
 	            </div><!--site-header-content-in-->
