@@ -1,5 +1,6 @@
 <?php
-	include "Header.php";
+	include "include/header.php";
+	include 'include/menu.php';
 
 	if (!isset($_SESSION['lms_id']) && !isset($_SESSION['lms_username']) && !isset($_SESSION['lms_status'])) {
         header("Location:Auth/logout.php");
@@ -186,5 +187,5 @@
 	</script>	
 
 <?php
-	include "Footer.php";
+	include "include/footer.php";
 ?>

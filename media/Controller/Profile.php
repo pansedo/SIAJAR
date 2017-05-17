@@ -133,7 +133,7 @@ class Profile
             // $ext_4 = pathinfo($kartu_keluarga_name, PATHINFO_EXTENSION);
 
             // Cek ekstensi File berdasarkan Ekstensi-nya
-}
+
 
 }
 

@@ -1,6 +1,6 @@
 <?php
-	include "header.php";
-	include 'menu.php';
+	include "include/header.php";
+	include 'include/menu.php';
 	$classKategori = new Kategori();
 	$classMedia = new Media();
 
@@ -67,5 +67,5 @@
 	</div>
 
 <?php
-	include "Footer.php";
+	include "include/footer.php";
 ?>
