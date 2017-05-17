@@ -1,5 +1,5 @@
 <?php
-
+//Christ test
 class Media
 {
 
@@ -31,9 +31,7 @@ class Media
 
     	}
     	
-    	// print_r($query);
         if ($count > 0) {
-    		# code...
     		return $media;
     	}else{
     		return $count;
