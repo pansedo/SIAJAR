@@ -3,10 +3,25 @@
     ob_start(); 
 	// error_reporting(0);
 	include '../Connection/connection.php';
-    
+     
     spl_autoload_register(function ($class) {
       include '../Controller/' .$class . '.php';
     });
+
+	if (!isset($_SESSION['lms_id']) && !isset($_SESSION['lms_username']) && !isset($_SESSION['lms_status'])) {
+        header("Location:../Auth/logout.php");
+        exit();
+    }elseif($_SESSION['lms_status'] == "admin"){
+    	set_time_limit(10000); 
+        $id_users   = $_SESSION['lms_id'];
+        $email    = $_SESSION['lms_username'];
+        $status     = $_SESSION['lms_status'];
+    }else{ 
+         header("Location:../Auth/logout.php");
+        exit();
+
+    }
+
 ?>  
 
 
@@ -83,7 +98,7 @@
 	                            <a class="dropdown-item" href="Profile.php"><span class="font-icon glyphicon glyphicon-user"></span>Profile</a>
 	                            <a class="dropdown-item" href="Setting.php"><span class="font-icon glyphicon glyphicon-cog"></span>Settings</a>
 	                            <div class="dropdown-divider"></div>
-	                            <a class="dropdown-item" href="Auth/logout.php"><span class="font-icon glyphicon glyphicon-log-out"></span>Logout</a>
+	                            <a class="dropdown-item" href="../Auth/logout.php"><span class="font-icon glyphicon glyphicon-log-out"></span>Logout</a>
 	                        </div>
 	                    </div>
 	                </div>

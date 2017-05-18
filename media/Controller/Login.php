@@ -19,12 +19,12 @@ class Login
         if (!is_null($getusers)) {
             $hash = $getusers['password'];
             if(password_verify($pswd,$hash)){
-                 if ($getusers['status'] == 'siswa') {
+                 if ($getusers['status'] == 'admin') {
                         $_SESSION['lms_id']             = $getusers['_id'];
                         $_SESSION['lms_username']       = $getusers['username'];
                         $_SESSION['lms_name']           = $getusers['nama'];
                         $_SESSION['lms_status']         = $getusers['status'];
-                        echo "<script language=javascript> document.location.href='../profile.php'; </script>";
+                        echo "<script language=javascript> document.location.href='../Admin/index.php'; </script>";
                     }elseif ($getusers['status'] == 'guru') {
                         # code...
                         $_SESSION['lms_id']             = $getusers['id_users'];
@@ -35,7 +35,7 @@ class Login
                         echo "<script language=javascript> document.location.href='../profile.php'; </script>";
                     }else{
                         echo "<script language='JavaScript'>alert('Anda Belum Terdaftar !')</script>";
-                        echo "<script language=javascript> document.location.href='logout'; </script>";
+                        echo "<script language=javascript> document.location.href='logout.php'; </script>";
                     }
             }else{
                 echo '<script type="text/javascript"> alert("Password Anda Salah")</script>';
