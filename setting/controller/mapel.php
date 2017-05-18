@@ -33,10 +33,9 @@ class Mapel
         $newID  = "";
         $insert = array("id_kelas"=>$kelas, "nama" => $nama, "creator" => "$user", "date_created"=>date('Y-m-d H:i:s'), "date_modified"=>date('Y-m-d H:i:s'));
                   $this->db->mata_pelajaran->insert($insert);
-        $newID  = $insert['_id'];
-        if ($newID) {
+        if ($insert) {
+            $newID  = $insert['_id'];
             $status     = "Success";
-            $relation   = $this->db->anggota_kelas->insert(array("id_user"=>"$user", "id_kelas"=>"$newID"));
         }else {
             $status     = "Failed";
         }

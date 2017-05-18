@@ -179,7 +179,14 @@ if(isset($_POST['joinKelas'])){
 						<section class="box-typical">
 							<header class="box-typical-header-sm bordered">Tentang Saya</header>
 							<div class="box-typical-inner">
-								<p>Maecenas sed diam eget risus varius blandit sit amet non magna. Vestibulum id ligula porta felis euismod semper.</p>
+								<p>
+									<ul style="list-style-type: circle;margin-left: 20px;">
+										<li>Simple</li>
+										<li>Pekerja Keras</li>
+										<li>Periang</li>
+										<li>Rajin Olahraga</li>
+									</ul>
+								</p>
 							</div>
 						</section>
 
@@ -188,31 +195,27 @@ if(isset($_POST['joinKelas'])){
 							<div class="box-typical-inner">
 								<p class="line-with-icon">
 									<i class="font-icon font-icon-pin-2"></i>
-									New York
+									Kota Bandung
 								</p>
 								<p class="line-with-icon">
 									<i class="font-icon font-icon-users-two"></i>
-									Group1, Group2
+									<a href="#">SMAN 22 Bandung</a>
 								</p>
 								<p class="line-with-icon">
-									<i class="font-icon font-icon-case-3"></i>
-									Symfony, PHP, JavaScript, Java, Android, SQL, OOP, OOD
+									<i class="font-icon font-icon-user"></i>
+									Siswa
 								</p>
 								<p class="line-with-icon">
-									<i class="font-icon font-icon-learn"></i>
-									VSU, Compiter Science, Master
-								</p>
-								<p class="line-with-icon">
-									<i class="font-icon font-icon-github"></i>
-									<a href="#">Nickname</a>
+									<i class="font-icon font-icon-facebook"></i>
+									<a href="#">Profil Facebook</a>
 								</p>
 								<p class="line-with-icon">
 									<i class="font-icon font-icon-earth"></i>
-									<a href="#">example.com</a>
+									<a href="#">Website</a>
 								</p>
 								<p class="line-with-icon">
 									<i class="font-icon font-icon-calend"></i>
-									Registered 8 month ago
+									Bergabung 2 hari yang lalu
 								</p>
 							</div>
 						</section>
@@ -288,8 +291,8 @@ if(isset($_POST['joinKelas'])){
 												</a>
 											</div>
 											<div class="tbl-cell">
-												<div class="user-card-row-name"><a href="#">Tim Collins</a></div>
-												<div class="color-blue-grey-lighter">3 days ago - 23 min read</div>
+												<div class="user-card-row-name"><a href="#">Pansera Guru</a> &nbsp; &gt; &nbsp; <a href="#">Contoh Kelas 1</a></div>
+												<div class="color-blue-grey-lighter">3 hari lalu</div>
 											</div>
 										</div>
 									</div>
@@ -298,8 +301,13 @@ if(isset($_POST['joinKelas'])){
 									</a>
 								</div>
 								<div class="profile-post-content">
-									<p class="profile-post-content-note">Subminted a new post</p>
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+									<p>
+										Pengumuman<br />
+										<br />
+										Besok kelas di liburkan, kepada seluruh Tutor harap memberitahu siswa/i yang berada di masing-masing TKB.<br />
+										<br />
+										Terima Kasih
+									</p>
 								</div>
 								<div class="box-typical-footer profile-post-meta">
 									<a href="#" class="meta-item">
@@ -308,7 +316,7 @@ if(isset($_POST['joinKelas'])){
 									</a>
 									<a href="#" class="meta-item">
 										<i class="font-icon font-icon-comment"></i>
-										18 Comment
+										8 Comment
 									</a>
 								</div>
 								<div class="comment-rows-container hover-action scrollable-block">
@@ -640,8 +648,8 @@ if(isset($_POST['joinKelas'])){
 												</a>
 											</div>
 											<div class="tbl-cell">
-												<div class="user-card-row-name"><a href="#">Tim Collins</a></div>
-												<div class="color-blue-grey-lighter">3 days ago - 23 min read</div>
+												<div class="user-card-row-name"><a href="#">Pansera Guru</a> &nbsp; &gt; &nbsp; <a href="#">Contoh Kelas 1</a></div>
+												<div class="color-blue-grey-lighter">3 hari lalu</div>
 											</div>
 										</div>
 									</div>
@@ -707,8 +715,8 @@ if(isset($_POST['joinKelas'])){
 												</a>
 											</div>
 											<div class="tbl-cell">
-												<div class="user-card-row-name"><a href="#">Tim Collins</a></div>
-												<div class="color-blue-grey-lighter">3 days ago - 23 min read</div>
+												<div class="user-card-row-name"><a href="#">Pansera Guru</a> &nbsp; &gt; &nbsp; <a href="#">Contoh Kelas 1</a></div>
+												<div class="color-blue-grey-lighter">3 hari lalu</div>
 											</div>
 										</div>
 									</div>
@@ -778,8 +786,8 @@ if(isset($_POST['joinKelas'])){
 												</a>
 											</div>
 											<div class="tbl-cell">
-												<div class="user-card-row-name"><a href="#">Tim Collins</a></div>
-												<div class="color-blue-grey-lighter">3 days ago - 23 min read</div>
+												<div class="user-card-row-name"><a href="#">Pansera Guru</a> &nbsp; &gt; &nbsp; <a href="#">Contoh Kelas 1</a></div>
+												<div class="color-blue-grey-lighter">3 hari lalu</div>
 											</div>
 										</div>
 									</div>
@@ -841,8 +849,8 @@ if(isset($_POST['joinKelas'])){
 												</a>
 											</div>
 											<div class="tbl-cell">
-												<div class="user-card-row-name"><a href="#">Tim Collins</a></div>
-												<div class="color-blue-grey-lighter">3 days ago - 23 min read</div>
+												<div class="user-card-row-name"><a href="#">Pansera Guru</a> &nbsp; &gt; &nbsp; <a href="#">Contoh Kelas 1</a></div>
+												<div class="color-blue-grey-lighter">3 hari lalu</div>
 											</div>
 										</div>
 									</div>
@@ -913,8 +921,8 @@ if(isset($_POST['joinKelas'])){
 												</a>
 											</div>
 											<div class="tbl-cell">
-												<div class="user-card-row-name"><a href="#">Tim Collins</a></div>
-												<div class="color-blue-grey-lighter">3 days ago - 23 min read</div>
+												<div class="user-card-row-name"><a href="#">Pansera Guru</a> &nbsp; &gt; &nbsp; <a href="#">Contoh Kelas 1</a></div>
+												<div class="color-blue-grey-lighter">3 hari lalu</div>
 											</div>
 										</div>
 									</div>

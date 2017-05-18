@@ -171,9 +171,15 @@
 	                <div class="site-header-collapsed">
 					<!-- HEADER MENU -->
 	                    <div class="site-header-collapsed-in">
+							<div class="dropdown dropdown-typical">
+							   <a href="<?=base_url?>" class="dropdown-toggle no-arr">
+								   <span class="font-icon font-icon-home"></span> Beranda
+								   <span class="lbl"></span>
+							   </a>
+						   </div>
 	                        <div class="dropdown dropdown-typical">
 	                            <a class="dropdown-toggle" id="dd-header-marketing" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                                <span class="font-icon font-icon-home"></span> Kelas
+	                                <span class="font-icon font-icon-users"></span> Kelas
 	                                <span class="lbl"></span>
 	                            </a>
 
@@ -181,18 +187,6 @@
 	                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#addKelas"><span class="font-icon font-icon-plus"></span>Tambah Kelas</a>
 	                                <a class="dropdown-item" href="#"><span class="font-icon font-icon-pencil"></span>Kelola Kelas</a>
 	                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#joinKelas"><span class="font-icon font-icon-user"></span>Gabung Kelas</a>
-	                            </div>
-	                        </div>
-							<div class="dropdown dropdown-typical">
-	                            <a class="dropdown-toggle" id="dd-header-marketing" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                                <span class="font-icon font-icon-users"></span> Perkembangan
-	                                <span class="lbl"></span>
-	                            </a>
-
-	                            <div class="dropdown-menu" aria-labelledby="dd-header-marketing">
-	                                <a class="dropdown-item" href="#">Digital Class Development 1</a>
-	                                <a class="dropdown-item" href="#">Digital Class Development 2</a>
-	                                <a class="dropdown-item" href="#">Digital Class Development 3</a>
 	                            </div>
 	                        </div>
 							<div class="dropdown dropdown-typical">
