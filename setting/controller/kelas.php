@@ -49,13 +49,13 @@ class Kelas
         $newID  = $insert['_id'];
         if ($newID) {
             $status     = "Success";
-            $relation   = $this->db->anggota_kelas->insert(array("id_user"=>"$user", "id_kelas"=>"$newID"));
+            $relation   = $this->db->anggota_kelas->insert(array("id_user"=>"$user", "id_kelas"=>"$newID", "status"=>"1"));
         }else {
             $status     = "Failed";
         }
 
         $result = array("status" => $status, "IDKelas" => $newID);
-        return $newID;
+        return $result;
     }
 
     public function joinKelas($kode, $user){

@@ -10,3 +10,18 @@
 	<script src="assets/js/lib/salvattore/salvattore.min.js"></script>
 	<script src="assets/js/lib/ion-range-slider/ion.rangeSlider.js"></script>
 	<script src="assets/js/lib/fancybox/jquery.fancybox.pack.js"></script>
+	<script type="text/javascript">
+		$(window).bind('scroll', function () {
+			if ($(window).scrollTop() > 225) {
+				$('#menu-fixed').addClass('menu-fixed');
+			} else {
+				$('#menu-fixed').removeClass('menu-fixed');
+			}
+
+			if ($(window).scrollTop() > 550) {
+				$('#menu-fixed2').addClass('menu-fixed2');
+			} else {
+				$('#menu-fixed2').removeClass('menu-fixed2');
+			}
+		});
+	</script>

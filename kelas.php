@@ -26,7 +26,7 @@ if(isset($_POST['addMapel'])){
 	$kelas	= mysql_escape_string($_GET['id']);
 	$rest 	= $mapelClass->addMapel($nama, $kelas, $_SESSION['lms_id']);
 	if ($rest['status'] == "Success") {
-		echo "<script>alert('".$rest['message']."'); document.location='kelas.php?id=".$rest['IDKelas']."'</script>";
+		echo "<script>alert('".$rest['message']."'); document.location='mapel.php?id=".$rest['IDMapel']."'</script>";
 	}
 }
 
@@ -218,14 +218,11 @@ if(isset($_POST['joinKelas'])){
 								</div>
 							</header>
 							<div class="box-typical-inner">
-							<?php
-							foreach($listMapel as $data){
-								echo	'<p class="line-with-icon">
-											<i class="font-icon font-icon-folder"></i>
-											<a href="mapel.php?id='.$data["_id"].'">'.$data["nama"].'</a>
-										</p>';
-							}
-							?>
+								<div class="box-typical-inner" id="listMapel">
+									<p style="text-align: center;">
+										Menunggu..
+									</p>
+								</div>
 							</div>
 						</section>
 
@@ -273,8 +270,8 @@ if(isset($_POST['joinKelas'])){
 												</a>
 											</div>
 											<div class="tbl-cell">
-												<div class="user-card-row-name"><a href="#">Tim Collins</a></div>
-												<div class="color-blue-grey-lighter">3 days ago - 23 min read</div>
+												<div class="user-card-row-name"><a href="#">Pansera Guru</a></div>
+												<div class="color-blue-grey-lighter">3 hari lalu</div>
 											</div>
 										</div>
 									</div>
@@ -283,8 +280,13 @@ if(isset($_POST['joinKelas'])){
 									</a>
 								</div>
 								<div class="profile-post-content">
-									<p class="profile-post-content-note">Subminted a new post</p>
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+									<p>
+										Pengumuman<br />
+										<br />
+										Besok kelas di liburkan, kepada seluruh Tutor harap memberitahu siswa/i yang berada di masing-masing TKB.<br />
+										<br />
+										Terima Kasih
+									</p>
 								</div>
 								<div class="box-typical-footer profile-post-meta">
 									<a href="#" class="meta-item">
@@ -293,7 +295,7 @@ if(isset($_POST['joinKelas'])){
 									</a>
 									<a href="#" class="meta-item">
 										<i class="font-icon font-icon-comment"></i>
-										18 Comment
+										8 Comment
 									</a>
 								</div>
 								<div class="comment-rows-container hover-action scrollable-block">
@@ -625,8 +627,8 @@ if(isset($_POST['joinKelas'])){
 												</a>
 											</div>
 											<div class="tbl-cell">
-												<div class="user-card-row-name"><a href="#">Tim Collins</a></div>
-												<div class="color-blue-grey-lighter">3 days ago - 23 min read</div>
+												<div class="user-card-row-name"><a href="#">Pansera Guru</a></div>
+												<div class="color-blue-grey-lighter">3 hari lalu</div>
 											</div>
 										</div>
 									</div>
@@ -692,8 +694,8 @@ if(isset($_POST['joinKelas'])){
 												</a>
 											</div>
 											<div class="tbl-cell">
-												<div class="user-card-row-name"><a href="#">Tim Collins</a></div>
-												<div class="color-blue-grey-lighter">3 days ago - 23 min read</div>
+												<div class="user-card-row-name"><a href="#">Pansera Guru</a></div>
+												<div class="color-blue-grey-lighter">3 hari lalu</div>
 											</div>
 										</div>
 									</div>
@@ -763,8 +765,8 @@ if(isset($_POST['joinKelas'])){
 												</a>
 											</div>
 											<div class="tbl-cell">
-												<div class="user-card-row-name"><a href="#">Tim Collins</a></div>
-												<div class="color-blue-grey-lighter">3 days ago - 23 min read</div>
+												<div class="user-card-row-name"><a href="#">Pansera Guru</a></div>
+												<div class="color-blue-grey-lighter">3 hari lalu</div>
 											</div>
 										</div>
 									</div>
@@ -826,8 +828,8 @@ if(isset($_POST['joinKelas'])){
 												</a>
 											</div>
 											<div class="tbl-cell">
-												<div class="user-card-row-name"><a href="#">Tim Collins</a></div>
-												<div class="color-blue-grey-lighter">3 days ago - 23 min read</div>
+												<div class="user-card-row-name"><a href="#">Pansera Guru</a></div>
+												<div class="color-blue-grey-lighter">3 hari lalu</div>
 											</div>
 										</div>
 									</div>
@@ -898,8 +900,8 @@ if(isset($_POST['joinKelas'])){
 												</a>
 											</div>
 											<div class="tbl-cell">
-												<div class="user-card-row-name"><a href="#">Tim Collins</a></div>
-												<div class="color-blue-grey-lighter">3 days ago - 23 min read</div>
+												<div class="user-card-row-name"><a href="#">Pansera Guru</a></div>
+												<div class="color-blue-grey-lighter">3 hari lalu</div>
 											</div>
 										</div>
 									</div>
@@ -952,7 +954,33 @@ if(isset($_POST['joinKelas'])){
 			$(elementID).html("");
 		}
 
+
 		$(document).ready(function() {
+			$.ajax({
+				type: 'POST',
+				url: 'url-API/Kelas/Mapel/',
+				data: {"action": "showList", "ID": "<?=$_GET['id']?>"},
+				success: function(res) {
+					$('#listMapel').html('');
+					if(res.data.length > 0){
+						for(i=0; i<=res.data.length; i++){
+							$('#listMapel').append('<p class="line-with-icon">'+
+									'<i class="font-icon font-icon-folder"></i>'+
+									'<a href="mapel.php?id='+res.data[i]._id.$id+'">'+res.data[i].nama+'</a>'+
+								'</p>');
+						}
+					}else{
+						$('#listMapel').append('<p style="text-align:center;">'+
+									'Belum ada Mata Pelajaran'+
+								'</p>');
+					}
+				},
+				error: function (XMLHttpRequest, textStatus, errorThrown) {
+					// console.log('ERROR !');
+					 alert(textStatus);
+				}
+			});
+
 			$(".fancybox").fancybox({
 				padding: 0,
 				openEffect	: 'none',
@@ -992,23 +1020,6 @@ if(isset($_POST['joinKelas'])){
 			});
 
 		});
-	</script>
-	<script>
-		$("#ohyeah").click(function(){
-			$.ajax({
-  				type: 'POST',
-  				url: 'url-API/Siswa/index.php',
-  				data: {"action": "update", "text": "tôi"},
-  				success: function(res) {
-	  				alert(res.text1);
-	  				alert(res.text2);
-	  				alert(res.text3);
-  				},
-  				error: function () {
-
-  				}
-  			});
-		})
 	</script>
 <script src="assets/js/app.js"></script>
 <?php
