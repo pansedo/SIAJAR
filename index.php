@@ -979,7 +979,7 @@ if(isset($_POST['joinKelas'])){
 						}
 					}else{
 						$('#listKelas').append('<p style="text-align:center;">'+
-									'Tidak ada Kelas'+
+									'Belum ada Kelas'+
 								'</p>');
 					}
 				},

@@ -218,14 +218,11 @@ if(isset($_POST['joinKelas'])){
 								</div>
 							</header>
 							<div class="box-typical-inner">
-							<?php
-							foreach($listMapel as $data){
-								echo	'<p class="line-with-icon">
-											<i class="font-icon font-icon-folder"></i>
-											<a href="mapel.php?id='.$data["_id"].'">'.$data["nama"].'</a>
-										</p>';
-							}
-							?>
+								<div class="box-typical-inner" id="listMapel">
+									<p style="text-align: center;">
+										Menunggu..
+									</p>
+								</div>
 							</div>
 						</section>
 
@@ -753,189 +750,6 @@ if(isset($_POST['joinKelas'])){
 								</div>
 							</article>
 
-							<article class="box-typical profile-post">
-								<div class="profile-post-header">
-									<div class="user-card-row">
-										<div class="tbl-row">
-											<div class="tbl-cell tbl-cell-photo">
-												<a href="#">
-													<img src="assets/img/photo-64-2.jpg" alt="">
-												</a>
-											</div>
-											<div class="tbl-cell">
-												<div class="user-card-row-name"><a href="#">Tim Collins</a></div>
-												<div class="color-blue-grey-lighter">3 days ago - 23 min read</div>
-											</div>
-										</div>
-									</div>
-									<a href="#" class="shared">
-										<i class="font-icon font-icon-share"></i>
-									</a>
-								</div>
-								<div class="profile-post-content">
-									<p class="profile-post-content-note">Is listening to the Evernote</p>
-									<div class="minimalistic-player">
-										<div class="tbl minimalistic-player-header">
-											<div class="tbl-row">
-												<div class="tbl-cell tbl-cell-action">
-													<button type="button">
-														<i class="font-icon font-icon-play-square"></i>
-													</button>
-												</div>
-												<div class="tbl-cell tbl-cell-action">
-													<button type="button">
-														<i class="font-icon font-icon-play-prev-square"></i>
-													</button>
-												</div>
-												<div class="tbl-cell tbl-cell-action">
-													<button type="button">
-														<i class="font-icon font-icon-play-next-square"></i>
-													</button>
-												</div>
-												<div class="tbl-cell tbl-cell-caption">Kylie Minogue  – Slow 2015</div>
-												<div class="tbl-cell tbl-cell-time">-04:01</div>
-											</div>
-										</div>
-										<div class="progress">
-											<div style="width: 25%"></div>
-										</div>
-										<div class="progress sound">
-											<div style="width: 50%"><div class="handle"></div></div>
-										</div>
-									</div>
-								</div>
-								<div class="box-typical-footer profile-post-meta">
-									<a href="#" class="meta-item">
-										<i class="font-icon font-icon-heart"></i>
-										45 Like
-									</a>
-									<a href="#" class="meta-item">
-										<i class="font-icon font-icon-comment"></i>
-										18 Comment
-									</a>
-								</div>
-							</article>
-
-							<article class="box-typical profile-post">
-								<div class="profile-post-header">
-									<div class="user-card-row">
-										<div class="tbl-row">
-											<div class="tbl-cell tbl-cell-photo">
-												<a href="#">
-													<img src="assets/img/photo-64-2.jpg" alt="">
-												</a>
-											</div>
-											<div class="tbl-cell">
-												<div class="user-card-row-name"><a href="#">Tim Collins</a></div>
-												<div class="color-blue-grey-lighter">3 days ago - 23 min read</div>
-											</div>
-										</div>
-									</div>
-									<a href="#" class="shared">
-										<i class="font-icon font-icon-share"></i>
-									</a>
-								</div>
-								<div class="profile-post-content">
-									<p class="profile-post-content-note">Created an album collection</p>
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-									<div class="profile-post-gall-fluid profile-post-gall-grid" data-columns>
-										<div class="col">
-											<a class="fancybox" rel="gall-2" href="assets/img/gall-img-1.jpg">
-												<img src="assets/img/gall-img-1.jpg" alt="">
-											</a>
-										</div>
-										<div class="col">
-											<a class="fancybox" rel="gall-2" href="assets/img/gall-img-2.jpg">
-												<img src="assets/img/gall-img-2.jpg" alt="">
-											</a>
-										</div>
-										<div class="col">
-											<a class="fancybox" rel="gall-2" href="assets/img/gall-img-3.jpg">
-												<img src="assets/img/gall-img-3.jpg" alt="">
-											</a>
-										</div>
-										<div class="col">
-											<a class="fancybox" rel="gall-2" href="assets/img/gall-img-4.jpg">
-												<img src="assets/img/gall-img-4.jpg" alt="">
-											</a>
-										</div>
-										<div class="col">
-											<a class="fancybox" rel="gall-2" href="assets/img/gall-img-5.jpg">
-												<img src="assets/img/gall-img-5.jpg" alt="">
-											</a>
-										</div>
-										<div class="col">
-											<a class="fancybox" rel="gall-2" href="assets/img/gall-img-6.jpg">
-												<img src="assets/img/gall-img-6.jpg" alt="">
-											</a>
-										</div>
-										<div class="col">
-											<a class="fancybox" rel="gall-2" href="assets/img/gall-img-7.jpg">
-												<img src="assets/img/gall-img-7.jpg" alt="">
-											</a>
-										</div>
-									</div>
-								</div>
-								<div class="box-typical-footer profile-post-meta">
-									<a href="#" class="meta-item">
-										<i class="font-icon font-icon-heart"></i>
-										45 Like
-									</a>
-									<a href="#" class="meta-item">
-										<i class="font-icon font-icon-comment"></i>
-										18 Comment
-									</a>
-								</div>
-							</article>
-
-							<article class="box-typical profile-post">
-								<div class="profile-post-header">
-									<div class="user-card-row">
-										<div class="tbl-row">
-											<div class="tbl-cell tbl-cell-photo">
-												<a href="#">
-													<img src="assets/img/photo-64-2.jpg" alt="">
-												</a>
-											</div>
-											<div class="tbl-cell">
-												<div class="user-card-row-name"><a href="#">Tim Collins</a></div>
-												<div class="color-blue-grey-lighter">3 days ago - 23 min read</div>
-											</div>
-										</div>
-									</div>
-									<a href="#" class="shared">
-										<i class="font-icon font-icon-share"></i>
-									</a>
-								</div>
-								<div class="profile-post-content">
-									<p class="profile-post-content-note">Scheduled a meeting whith <a href="#">Elen Adarna</a></p>
-									<div class="tbl profile-post-card">
-										<div class="tbl-row">
-											<div class="tbl-cell tbl-cell-photo">
-												<a href="#">
-													<img src="assets/img/100x100.jpg" alt="">
-												</a>
-											</div>
-											<div class="tbl-cell">
-												<p class="title"><a href="#">Telling Your Kife Story: Memoir Workshop Series</a></p>
-												<p>Monday, July 06, 2015 – Thuesday, July 07, 2015</p>
-												<p>SF Bay Theater</p>
-												<p>San Francisco, California, USA</p>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="box-typical-footer profile-post-meta">
-									<a href="#" class="meta-item">
-										<i class="font-icon font-icon-heart"></i>
-										45 Like
-									</a>
-									<a href="#" class="meta-item">
-										<i class="font-icon font-icon-comment"></i>
-										18 Comment
-									</a>
-								</div>
-							</article>
 						</div><!--.tab-content-->
 					</section><!--.tabs-section-->
 				</div>
@@ -952,7 +766,33 @@ if(isset($_POST['joinKelas'])){
 			$(elementID).html("");
 		}
 
+
 		$(document).ready(function() {
+			$.ajax({
+				type: 'POST',
+				url: 'url-API/Kelas/Mapel/',
+				data: {"action": "showList", "ID": "<?=$_GET['id']?>"},
+				success: function(res) {
+					$('#listMapel').html('');
+					if(res.data.length > 0){
+						for(i=0; i<=res.data.length; i++){
+							$('#listMapel').append('<p class="line-with-icon">'+
+									'<i class="font-icon font-icon-folder"></i>'+
+									'<a href="mapel.php?id='+res.data[i]._id.$id+'">'+res.data[i].nama+'</a>'+
+								'</p>');
+						}
+					}else{
+						$('#listMapel').append('<p style="text-align:center;">'+
+									'Belum ada Kelas'+
+								'</p>');
+					}
+				},
+				error: function (XMLHttpRequest, textStatus, errorThrown) {
+					// console.log('ERROR !');
+					 alert(textStatus);
+				}
+			});
+
 			$(".fancybox").fancybox({
 				padding: 0,
 				openEffect	: 'none',
@@ -992,23 +832,6 @@ if(isset($_POST['joinKelas'])){
 			});
 
 		});
-	</script>
-	<script>
-		$("#ohyeah").click(function(){
-			$.ajax({
-  				type: 'POST',
-  				url: 'url-API/Siswa/index.php',
-  				data: {"action": "update", "text": "tôi"},
-  				success: function(res) {
-	  				alert(res.text1);
-	  				alert(res.text2);
-	  				alert(res.text3);
-  				},
-  				error: function () {
-
-  				}
-  			});
-		})
 	</script>
 <script src="assets/js/app.js"></script>
 <?php
