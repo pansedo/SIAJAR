@@ -37,7 +37,8 @@
         $image = mysql_escape_string($_FILES['image']['name']);
         $iduser = "58ec5cf21192a6e8180018bf";
         $gambar_lama = mysql_escape_string($_POST['gambar_lama']);
-        $classMedia->EditMedia($id,$iduser,$judul,$deskripsi,$kategori,$tags,$tautan,$dokumen,$image,$gambar_lama); 
+        $file_lama = mysql_escape_string($_POST['file_lama']);
+        $classMedia->EditMedia($id,$iduser,$judul,$deskripsi,$kategori,$tags,$tautan,$dokumen,$image,$gambar_lama,$file_lama); 
 	}
 
 ?>
@@ -204,11 +205,7 @@
 		$id = base64_decode($_GET['id']);
 		$getMediaById = $classMedia->GetMediaBy($id);
 		$getTagByMedia = $classTag->TagByMedia($id);
-		if ($_GET['action'] == 'view') {
-			?>
-
-			<?php
-		} elseif ($_GET['action'] == 'edit') {
+		if ($_GET['action'] == 'edit') {
 		?>
 		<div class="page-content">
 				<div class="container-fluid">
@@ -332,6 +329,7 @@
 								</div>
 								<div style="text-align: right">
 									<input type="hidden" name="gambar_lama" value="<?php echo $getMediaById['path_image'];?>">
+									<input type="hidden" name="file_lama" value="<?php echo $getMediaById['path_document'];?>">
 									<button type="submit" class="btn btn-rounded btn-primary" name="edit_media" >Ubah Media</button>
 								</div>
 									
