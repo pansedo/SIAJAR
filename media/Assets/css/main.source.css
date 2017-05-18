@@ -14179,3 +14179,21 @@ body.sidebar-hidden .page-content {
     padding-right: 0;
   }
 }
+
+
+
+@media screen and (max-width: 991px) {
+  .menu-fixed{
+    position: relative */;
+  }
+
+}
+
+@media screen and (min-width: 992px) {
+  .menu-fixed{  /* To fix main menu container */
+    position: fixed;
+    /*top: 100px;*/
+    max-width: 278px;
+    width: 100%;
+  }
+}
