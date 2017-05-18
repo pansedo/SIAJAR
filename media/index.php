@@ -14,13 +14,11 @@
 	<div class="page-content">
 		<div class="container-fluid">
 			<div class="row">
-				
-				<div  class="col-lg-3 col-lg-pull-6 col-md-6 col-sm-6">
+				<div class="col-lg-3 ">
 						<div class="menu-fixed">
 						<section class="box-typical">
 							<header class="box-typical-header-sm">
-								Friends
-								
+								Terbaru
 							</header>
 							<div class="friends-list">
 								<article class="friends-list-item">
@@ -29,7 +27,7 @@
 										<div class="tbl-row">
 											<div class="tbl-cell tbl-cell-photo">
 												<a href="#">
-													<img src="Assets/img/photo-64-2.jpg" alt="">
+													<img  src="Assets/img/photo-64-2.jpg" alt="">
 												</a>
 											</div>
 											<div class="tbl-cell">
@@ -44,7 +42,8 @@
 						</section>
 						</div>
 					</div>
-				<div class="col-lg-9 col-lg-pull-6 col-md-6 col-sm-6">
+					
+				<div class="col-lg-9">
 					<div class="cards-grid " data-columns>
 					
 					<?php
@@ -60,7 +59,7 @@
 										<div class="tbl-row">
 											<div class="tbl-cell tbl-cell-photo">
 												<a href="#">
-													<img src="Assets/foto/<?php if ($data['foto'] != NULL) {echo $data['foto'];}else{echo "no_picture.png";} ?>" alt="">
+													<img  src="Assets/foto/<?php if ($data['foto'] != NULL) {echo $data['foto'];}else{echo "no_picture.png";} ?>" alt="">
 												</a>
 											</div>
 											<div class="tbl-cell">
@@ -75,7 +74,7 @@
 								</div>
 								<div class="card-typical-section card-typical-content">
 									<div class="photo">
-										<img src="<?php echo $data['path_image']; ?>" alt="">
+										<img style="  min-width: 200px;" src="<?php echo $data['path_image']; ?>" alt="">
 									</div>
 									<header class="title"><a href="#"></a></header>
 									<p><?php echo substr($data['deskripsi'], 0, 100).". . ."; ?></p>
