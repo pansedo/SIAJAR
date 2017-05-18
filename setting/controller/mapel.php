@@ -32,7 +32,7 @@ class Mapel
     public function addMapel($nama, $kelas, $user){
         $newID  = "";
         $insert = array("id_kelas"=>$kelas, "nama" => $nama, "creator" => "$user", "date_created"=>date('Y-m-d H:i:s'), "date_modified"=>date('Y-m-d H:i:s'));
-                  $this->db->table->insert($insert);
+                  $this->db->mata_pelajaran->insert($insert);
         $newID  = $insert['_id'];
         if ($newID) {
             $status     = "Success";
@@ -41,8 +41,8 @@ class Mapel
             $status     = "Failed";
         }
 
-        $result = array("status" => $status, "IDKelas" => $newID);
-        return $newID;
+        $result = array("status" => $status, "IDMapel" => $newID);
+        return $result;
     }
 
 }

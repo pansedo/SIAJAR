@@ -55,7 +55,7 @@ class Kelas
         }
 
         $result = array("status" => $status, "IDKelas" => $newID);
-        return $newID;
+        return $result;
     }
 
     public function joinKelas($kode, $user){

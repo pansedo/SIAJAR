@@ -26,7 +26,7 @@ if(isset($_POST['addMapel'])){
 	$kelas	= mysql_escape_string($_GET['id']);
 	$rest 	= $mapelClass->addMapel($nama, $kelas, $_SESSION['lms_id']);
 	if ($rest['status'] == "Success") {
-		echo "<script>alert('".$rest['message']."'); document.location='kelas.php?id=".$rest['IDKelas']."'</script>";
+		echo "<script>alert('".$rest['message']."'); document.location='mapel.php?id=".$rest['IDMapel']."'</script>";
 	}
 }
 
