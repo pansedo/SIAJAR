@@ -27,7 +27,7 @@
 										</a>
 									</div>
 									<div class="tbl-cell">
-										<p class="user-card-row-name"><a href="#"><?php echo $data['nama_user']; ?></a></p>
+										<p class="user-card-row-name"><a href="#"><?php echo $data['judul']; ?></a></p>
 										<p class="color-blue-grey-lighter">3 days ago - 23 min read</p>
 									</div>
 									<div class="tbl-cell tbl-cell-status">
@@ -40,11 +40,11 @@
 							<div class="photo">
 								<img src="<?php echo $data['path_image']; ?>" alt="">
 							</div>
-							<header class="title"><a href="#"><?php echo $data['judul']; ?></a></header>
+							<header class="title"><a href="#"></a></header>
 							<p><?php echo substr($data['deskripsi'], 0, 100).". . ."; ?></p>
 						</div>
 						<div class="card-typical-section">
-							<div class="card-typical-linked">in <a href="#">Coders Life</a></div>
+							<div class="card-typical-linked">oleh <a href="#"><?php echo $data['nama_user']; ?></a></div>
 							<a href="#" class="card-typical-likes">
 								<i class="font-icon font-icon-heart"></i>
 								123
@@ -52,12 +52,9 @@
 						</div>
 					</article><!--.card-typical-->
 				</div>
-				
-
-					<?php
-						}
-					?>
-					
+				<?php
+					}
+				?>
 				<!-- Selesai Buku Content -->
 				</div>
 				
