@@ -137,7 +137,7 @@ if(isset($_POST['joinKelas'])){
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-xl-3 col-lg-4">
-					<aside class="profile-side">
+					<aside id="menu-fixed2" class="profile-side">
 						<section class="box-typical profile-side-user">
 							<button type="button" class="avatar-preview avatar-preview-128">
 								<img src="assets/img/avatar-1-256.png" alt=""/>

@@ -109,28 +109,21 @@ $infoMapel	= $mapelClass->getInfoMapel($_GET['id']);
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-xl-3 col-lg-4">
-					<aside class="profile-side" style="margin: 0 0 20px">
+					<aside id="menu-fixed" class="profile-side" style="margin: 0 0 20px">
 						<section class="box-typical">
 							<header class="box-typical-header-sm bordered">
-								Kode Kelas
-								<div class="btn-group" style='float: right;'>
-									<button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-										Aksi
-									</button>
-									<div class="dropdown-menu" style="margin-left: -100px">
-		                                <a class="dropdown-item" href="#"><span class="font-icon font-icon-lock"></span>Kunci Kelas</a>
-									</div>
-								</div>
+								Menu
 							</header>
 							<div class="box-typical-inner">
-								<p style="font-size: 2em; text-decoration: underline; font-weight:bold; text-align: center;"><?=$infoMapel['kode']?></p>
-							</div>
-						</section>
-
-						<section class="box-typical">
-							<header class="box-typical-header-sm bordered">Tentang Kelas</header>
-							<div class="box-typical-inner">
-								<p><?=$infoMapel['tentang']?></p>
+								<p class="line-with-icon">
+									<a href="#"><i class="font-icon font-icon-home"></i> Home</a>
+								</p>
+								<p class="line-with-icon">
+									<a href="#"><i class="font-icon font-icon-doc"></i> Tugas</a>
+								</p>
+								<p class="line-with-icon">
+									<a href="#"><i class="font-icon font-icon-folder"></i> Perkembangan</a>
+								</p>
 							</div>
 						</section>
 

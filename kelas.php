@@ -179,7 +179,7 @@ if(isset($_POST['joinKelas'])){
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-xl-3 col-lg-4">
-					<aside class="profile-side" style="margin: 0 0 20px">
+					<aside id="menu-fixed" class="profile-side" style="margin: 0 0 20px">
 						<section class="box-typical">
 							<header class="box-typical-header-sm bordered">
 								Kode Kelas
