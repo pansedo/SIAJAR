@@ -121,7 +121,10 @@ class Media
     	 "path_image" => $direktori_image,
     	 "tautan" => $tautan ,
     	 "path_document" => $direktori_dokumen,
-    	 "active" => "active" );
+    	 "active" => "active",
+    	 "date_created" => date("Y-m-d H:i:s"),
+    	 "date_modified" => date("Y-m-d H:i:s")
+    	 );
 
         $insertdokumen = $this -> table -> insert($insert);
         $IDDokumen = $insert['_id'];
@@ -184,7 +187,10 @@ class Media
 						    	 "path_image" => $direktori_image,
 						    	 "tautan" => $tautan ,
 						    	 "path_document" => $direktori_dokumen,
-						    	 "active" => "active" );
+						    	 "active" => "active",
+						    	 "date_created" => date("Y-m-d H:i:s"),
+						    	 "date_modified" => date("Y-m-d H:i:s")
+						    	  );
 
 						        $insertdokumen = $this -> table -> insert($insert);
 						        $IDDokumen = $insert['_id'];
@@ -308,7 +314,8 @@ class Media
 				"deskripsi" => $deskripsi,
 				"id_kategori" => $kategori,
 				"tautan" => $tautan,
-				"path_document" => $direktori_dokumen
+				"path_document" => $direktori_dokumen,
+    	 		"date_modified" => date("Y-m-d H:i:s")
 			);
     	}else{
     		$edit = array(
@@ -318,7 +325,8 @@ class Media
 				"id_kategori" => $kategori,
 				"path_image" => $direktori_image,
 				"tautan" => $tautan,
-				"path_document" => $direktori_dokumen
+				"path_document" => $direktori_dokumen,
+    	 		"date_modified" => date("Y-m-d H:i:s")
 			);
     	}
     	

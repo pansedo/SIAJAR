@@ -60,7 +60,6 @@
                         </div>
                     </div>
                      <input type="submit" value='Sign in' name='login' class="btn btn-rounded">
-                    <p class="sign-note">Pendaftar Baru ? <a href="Signup.php">Sign up</a></p>
                 </form>
             </div>
         </div>
