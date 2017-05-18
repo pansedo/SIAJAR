@@ -178,13 +178,15 @@
 										<img src="<?php echo $data['path_image']; ?>" alt="">
 									</div>
 									<header class="title"><a href="#"><?php echo $data['judul']; ?></a></header>
-									<p><?php echo substr($data['deskripsi'], 0, 100).". . ."; ?></p>
+									<p><?php echo substr($data['deskripsi'], 0, 100)."..."; ?></p>
 								</div>
 								<div class="card-typical-section">
 									<div class="card-typical-linked">in <a href="#"><a href="#"><?php echo $data['nama_user']; ?></a></div>
 									<a href="#" class="card-typical-likes">
-										<i class="font-icon font-icon-heart"></i>
-										
+										<i class="font-icon font-icon-pencil"></i>										
+									</a>
+									<a href="#" class="card-typical-likes">
+										<i class="font-icon font-icon-trash"></i>										
 									</a>
 								</div>
 							</article>
