@@ -25,8 +25,10 @@ class Media
     			$kategori = $this->db->kategori->findone(array("_id"=> new MongoId($row['id_kategori'])));
     			$media[$i]=$row;
     			$media[$i]['nama_user'] = $data['nama'];
+    			$media[$i]['foto'] = $data['foto'];
     			$media[$i]['kategori'] = $kategori['kategori'];
     			$i++;
+    			// var_dump($media);
     		}
 
     	}
@@ -44,7 +46,7 @@ class Media
     	$count = $query->count();
     	if ($count > 0) {
     		$i = 0;
-    		echo $query->count();
+    		// echo $query->count();
     		foreach ($query as $row) {
     			$data = $this->db->user->findOne(array("_id"=> new MongoId($row['id_user'])));
     			$kategori = $this->db->kategori->findone(array("_id"=> new MongoId($row['id_kategori'])));

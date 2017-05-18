@@ -4,8 +4,11 @@
 	$classKategori = new Kategori();
 	$classMedia = new Media();
 
+
+
 	$getkategoriutama = $classKategori->GetKategoriUtama();
 	$getMedia = $classMedia->GetMedia();
+
 
 ?>
 	<div class="page-content">
@@ -13,6 +16,7 @@
 			<div class="cards-grid " data-columns>
 			<?php
 				$no = 1;
+
 				foreach ($getMedia as $data) {
 			?>
 				
@@ -23,7 +27,7 @@
 								<div class="tbl-row">
 									<div class="tbl-cell tbl-cell-photo">
 										<a href="#">
-											<img src="Assets/img/gall-img-1.jpg" alt="">
+											<img src="Assets/foto/<?php if ($data['foto'] != NULL) {echo $data['foto'];}else{echo "no_picture.png";} ?>" alt="">
 										</a>
 									</div>
 									<div class="tbl-cell">

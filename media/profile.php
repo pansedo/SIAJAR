@@ -35,9 +35,9 @@
 							</div>
 							<div class="profile-card-name"><?php echo $FuncProfile['nama'];?></div>
 							<div class="profile-card-status"><?php echo $FuncProfile['sekolah'];?></div>
-							<div class="profile-card-location">Asal Sekolah</div>
-							<button type="button" class="btn btn-rounded">Follow</button>
-							<button type="button" class="btn btn-danger btn-rounded">Wishlist</button>
+							<!-- <div class="profile-card-location">Asal Sekolah</div> -->
+							<button style="margin-top:10px;" type="button" class="btn btn-rounded">Follow</button>
+							<button style="margin-top:10px;" type="button" class="btn btn-danger btn-rounded">Wishlist</button>
 						</div>
 
 						<div class="profile-statistic tbl">
