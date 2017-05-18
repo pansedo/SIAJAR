@@ -5,7 +5,7 @@ class Media
 
 	public function __construct() {
         try {
-            global $db;
+            global $db; 
             $tableName = 'dokumen';
             $this->db = $db;
             $this->table = $this->db->$tableName;
@@ -38,6 +38,11 @@ class Media
     	}
     }
 
+    public function GetMediaBy($id)
+    {
+    	$query =  $this -> table -> findone(array("_id"=> new MongoId($id)));
+    	return $query;
+    }
     public function GetMediabyUser($id)
     {
     	$query =  $this -> table -> find(array("id_user"=> "$id"));
@@ -238,7 +243,7 @@ class Media
     	}
     }
 
-    public function EditMedia($id,$iduser,$judul,$deskripsi,$kategori,$tags,$tautan,$dokumen,$image,$gambar_lama)
+    public function EditMedia($id,$iduser,$judul,$deskripsi,$kategori,$tags,$tautan,$dokumen,$image,$gambar_lama,$file_lama)
     {
     	
     	if ($dokumen != "") {
@@ -283,6 +288,7 @@ class Media
 	    if ($dokumen != "") {
     		$format = array("doc", "docx", "pdf","xls");
     		if(in_array(strtolower($type_file_dokumen), $format)){
+    			unlink($file_lama);
     			$direktori_dokumen   = "../Media/Dokumen/".$iduser."/".$namadokumen;
 				move_uploaded_file($lokasi_file_dokumen,$direktori_dokumen);
     		}else{
