@@ -27,7 +27,7 @@ class Login
                         echo "<script language=javascript> document.location.href='../Admin/index.php'; </script>";
                     }elseif ($getusers['status'] == 'guru') {
                         # code...
-                        $_SESSION['lms_id']             = $getusers['id_users'];
+                        $_SESSION['lms_id']             = $getusers['_id'];
                         $_SESSION['lms_username']       = $getusers['username'];
                         $_SESSION['lms_name']           = $getusers['nama'];
                         $_SESSION['lms_status']         = $getusers['status'];
