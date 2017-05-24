@@ -1,20 +1,16 @@
 <?php
 require("includes/header-top.php");
+?>
+<link rel="stylesheet" href="assets/css/separate/pages/files.min.css">
+<?php
 require("includes/header-menu.php");
 
 $mapelClass = new Mapel();
 $modulClass = new Modul();
 
-if(isset($_POST['addModul'])){
-	$nama = mysql_escape_string($_POST['namamodul']);
-	$rest = $modulClass->addModul($nama, $_GET['id'], $_SESSION['lms_id']);
-	if ($rest['status'] == "Success") {
-		echo "<script>alert('".$rest['status']."'); document.location='mapel.php?id=".$rest['IDMapel']."'</script>";
-	}
-}
-
-$infoMapel	= $mapelClass->getInfoMapel($_GET['id']);
-$listModul	= $modulClass->getListbyMapel($_GET['id']);
+$infoMapel	= $mapelClass->getInfoMapel($_GET['pelajaran']);
+$infoModul	= $modulClass->getInfoModul($_GET['id']);
+$menuModul	= 1;
 ?>
 	<div class="modal fade"
 		 id="addKelas"
@@ -80,27 +76,47 @@ $listModul	= $modulClass->getListbyMapel($_GET['id']);
 	</div><!--.modal-->
 
 	<div class="modal fade"
-		 id="addModul"
+		 id="addModulPrasyarat"
 		 tabindex="-1"
 		 role="dialog"
 		 aria-labelledby="addModulLabel"
 		 aria-hidden="true">
-		<div class="modal-dialog" role="document">
+		<div class="modal-dialog modal-lg" role="document">
 			<div class="modal-content">
 				<form method="POST">
 				<div class="modal-header">
 					<button type="button" class="modal-close" data-dismiss="modal" aria-label="Close">
 						<i class="font-icon-close-2"></i>
 					</button>
-					<h4 class="modal-title" id="addModulLabel">Tambah Modul</h4>
+					<h4 class="modal-title" id="addModulLabel">Silakan Pilih Modul</h4>
 				</div>
 				<div class="modal-body">
-					<div class="form-group row">
-						<label for="namamodul" class="col-md-3 form-control-label">Nama Modul</label>
-						<div class="col-md-9">
-							<input type="text" class="form-control" name="namamodul" id="namamodul" placeholder="Nama Modul" />
+					<div class="files-manager-content-in" style="margin-right:0px; border-right: 0px;">
+						<div class="fm-file-grid">
+							<div class="fm-file" style="height: 150px;">
+								<div class="checkbox-bird">
+									<input type="checkbox" id="mess-1" />
+									<label for="mess-1">
+										<div class="fm-file-icon">
+											<img src="assets/img/folder.png" alt="">
+										</div>
+										<div class="fm-file-name">Inspiration</div>
+									</label>
+								</div>
+							</div>
+							<div class="fm-file" style="height: 150px;">
+								<div class="checkbox-bird">
+									<input type="checkbox" id="mess-2" />
+									<label for="mess-2">
+										<div class="fm-file-icon">
+											<img src="assets/img/folder.png" alt="">
+										</div>
+										<div class="fm-file-name">Inspiration</div>
+									</label>
+								</div>
+							</div>
 						</div>
-					</div>
+					</div><!--.files-manager-content-in-->
 				</div>
 				<div class="modal-footer">
 					<button type="submit" name="addModul" value="send" class="btn btn-rounded btn-primary">Simpan</button>
@@ -149,96 +165,79 @@ $listModul	= $modulClass->getListbyMapel($_GET['id']);
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-xl-3 col-lg-4">
-					<aside id="menu-fixed" class="profile-side" style="margin: 0 0 20px">
-						<section class="box-typical">
-							<header class="box-typical-header-sm bordered">
-								Menu
-							</header>
-							<div class="box-typical-inner">
-								<ul class="side-menu-list">
-									<li class="blue opened">
-										<a href="scheduler.html">
-							                <i class="font-icon font-icon-home active"></i>
-							                <span class="lbl">Modul</span>
-							            </a>
-									</li>
-									<li class="blue">
-							            <a href="scheduler.html">
-							                <i class="font-icon font-icon-notebook"></i>
-							                <span class="lbl">Kelola Kuis</span>
-							            </a>
-							        </li>
-									<li class="blue">
-										<a href="scheduler.html">
-											<i class="font-icon font-icon-zigzag"></i>
-											<span class="lbl">Perkembangan</span>
-										</a>
-									</li>
-								</ul>
-							</div>
-						</section>
-
-					</aside><!--.profile-side-->
+					<?php
+						require("includes/modul-menu.php");
+					?>
 				</div>
 
 				<div class="col-xl-9 col-lg-8">
 					<section class="widget widget-activity">
 						<header class="widget-header">
-							Alur Pembelajaran
+							Modul Prasyarat
 							<span class="label label-pill label-primary"><?=$infoMapel['modul']?></span>
 							<div class="btn-group" style='float: right;'>
-								<button type="button" class="btn btn-sm btn-rounded btn-inline" data-toggle="modal" data-target="#addModul">+ Tambah Modul</button>
+								<button type="button" class="btn btn-sm btn-rounded btn-inline" data-toggle="modal" data-target="#addModulPrasyarat">+ Tambah Modul Prasyarat</button>
 							</div>
 						</header>
 						<div>
-							<?php
-								foreach ($listModul as $modul) {
-									?>
-									<div class="widget-activity-item">
-										<div class="user-card-row">
-											<div class="tbl-row">
-												<div class="tbl-cell tbl-cell-photo">
-													<a href="modul.php?id=<?=$modul['_id']?>">
-														<img src="assets/img/folder.png" alt="">
-													</a>
-												</div>
-												<div class="tbl-cell">
-													<p>
-														<a href="prasyarat.php?id=<?=$modul['_id']?>&pelajaran=<?=$_GET['id']?>" class="semibold"><?=$modul['nama']?></a>
-														added a new product
-														<a href="#">Free UI Kit</a>
-													</p>
-													<p>Just Now</p>
-												</div>
-											</div>
+							<div class="files-manager-content-in" style="margin-right:0px; border-right: 0px;">
+								<div class="fm-file-grid">
+									<div class="fm-file">
+										<div class="fm-file-icon">
+											<img src="assets/img/folder.png" alt="">
 										</div>
+										<div class="fm-file-name">Inspiration</div>
 									</div>
-									<?php
-								}
-							?>
-							<div class="widget-activity-item">
-								<div class="user-card-row">
-									<div class="tbl-row">
-										<div class="tbl-cell tbl-cell-photo">
-											<a href="#">
-												<img src="assets/img/folder-na.png" alt="">
-											</a>
+									<div class="fm-file">
+										<div class="fm-file-icon">
+											<img src="assets/img/folder.png" alt="">
 										</div>
-										<div class="tbl-cell">
-											<p>
-												<a href="#" class="semibold">Modul Non Aktif</a>
-												added a new product
-												<a href="#">Free UI Kit</a>
-											</p>
-											<p>Just Now</p>
+										<div class="fm-file-name">Inspiration</div>
+									</div>
+									<div class="fm-file">
+										<div class="fm-file-icon">
+											<img src="assets/img/folder.png" alt="">
 										</div>
+										<div class="fm-file-name">Inspiration</div>
+									</div>
+									<div class="fm-file">
+										<div class="fm-file-icon">
+											<img src="assets/img/folder.png" alt="">
+										</div>
+										<div class="fm-file-name">2014_projects.rar</div>
+									</div>
+									<div class="fm-file">
+										<div class="fm-file-icon">
+											<img src="assets/img/folder.png" alt="">
+										</div>
+										<div class="fm-file-name">Inspiration</div>
+									</div>
+									<div class="fm-file">
+										<div class="fm-file-icon">
+											<img src="assets/img/folder.png" alt="">
+										</div>
+										<div class="fm-file-name">Inspiration</div>
+									</div>
+									<div class="fm-file">
+										<div class="fm-file-icon">
+											<img src="assets/img/folder.png" alt="">
+										</div>
+										<div class="fm-file-name">Inspiration</div>
+									</div>
+									<div class="fm-file">
+										<div class="fm-file-icon">
+											<img src="assets/img/folder.png" alt="">
+										</div>
+										<div class="fm-file-name">Inspiration</div>
 									</div>
 								</div>
-							</div>
+							</div><!--.files-manager-content-in-->
 						</div>
 					</section><!--.widget-tasks-->
+
 				</div>
 			</div><!--.row-->
+
 		</div><!--.container-fluid-->
 	</div><!--.page-content-->
 
