@@ -182,7 +182,7 @@
 								</div>
 								<div class="card-typical-section">
 									<div class="card-typical-linked">in <a href="#"><a href="#"><?php echo $data['nama_user']; ?></a></div>
-									<a href="#" class="card-typical-likes">
+									<a href="media.php?action=edit&id=<?=base64_encode($data['_id']);?>" class="card-typical-likes">
 										<i class="font-icon font-icon-pencil"></i>										
 									</a>
 									<a href="#" class="card-typical-likes">
