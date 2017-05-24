@@ -10,6 +10,7 @@ $modulClass = new Modul();
 
 $infoMapel	= $mapelClass->getInfoMapel($_GET['pelajaran']);
 $infoModul	= $modulClass->getInfoModul($_GET['id']);
+$menuModul	= 2;
 ?>
 	<div class="modal fade"
 		 id="addKelas"
@@ -92,61 +93,27 @@ $infoModul	= $modulClass->getInfoModul($_GET['id']);
 				<div class="modal-body">
 					<div class="files-manager-content-in" style="margin-right:0px; border-right: 0px;">
 						<div class="fm-file-grid">
-							<div class="fm-file">
-								<div class="fm-file-icon">
-									<img src="assets/img/folder.png" alt="">
+							<div class="fm-file" style="height: 150px;">
+								<div class="checkbox-bird">
+									<input type="checkbox" id="mess-1" />
+									<label for="mess-1">
+										<div class="fm-file-icon">
+											<img src="assets/img/folder.png" alt="">
+										</div>
+										<div class="fm-file-name">Inspiration</div>
+									</label>
 								</div>
-								<div class="fm-file-name">Inspiration</div>
-								<div class="fm-file-size">144 files, 52 MB</div>
 							</div>
-							<div class="fm-file">
-								<div class="fm-file-icon">
-									<img src="assets/img/folder.png" alt="">
+							<div class="fm-file" style="height: 150px;">
+								<div class="checkbox-bird">
+									<input type="checkbox" id="mess-2" />
+									<label for="mess-2">
+										<div class="fm-file-icon">
+											<img src="assets/img/folder.png" alt="">
+										</div>
+										<div class="fm-file-name">Inspiration</div>
+									</label>
 								</div>
-								<div class="fm-file-name">Inspiration</div>
-								<div class="fm-file-size">144 files, 52 MB</div>
-							</div>
-							<div class="fm-file">
-								<div class="fm-file-icon">
-									<img src="assets/img/folder.png" alt="">
-								</div>
-								<div class="fm-file-name">Inspiration</div>
-								<div class="fm-file-size">144 files, 52 MB</div>
-							</div>
-							<div class="fm-file">
-								<div class="fm-file-icon">
-									<img src="assets/img/folder.png" alt="">
-								</div>
-								<div class="fm-file-name">2014_projects.rar</div>
-								<div class="fm-file-size">4 MB</div>
-							</div>
-							<div class="fm-file">
-								<div class="fm-file-icon">
-									<img src="assets/img/folder.png" alt="">
-								</div>
-								<div class="fm-file-name">Inspiration</div>
-								<div class="fm-file-size">7 files, 358 MB</div>
-							</div>
-							<div class="fm-file">
-								<div class="fm-file-icon">
-									<img src="assets/img/folder.png" alt="">
-								</div>
-								<div class="fm-file-name">Inspiration</div>
-								<div class="fm-file-size">7 files, 358 MB</div>
-							</div>
-							<div class="fm-file">
-								<div class="fm-file-icon">
-									<img src="assets/img/folder.png" alt="">
-								</div>
-								<div class="fm-file-name">Inspiration</div>
-								<div class="fm-file-size">7 files, 358 MB</div>
-							</div>
-							<div class="fm-file">
-								<div class="fm-file-icon">
-									<img src="assets/img/folder.png" alt="">
-								</div>
-								<div class="fm-file-name">Inspiration</div>
-								<div class="fm-file-size">7 files, 358 MB</div>
 							</div>
 						</div>
 					</div><!--.files-manager-content-in-->
@@ -198,51 +165,18 @@ $infoModul	= $modulClass->getInfoModul($_GET['id']);
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-xl-3 col-lg-4">
-					<aside id="menu-fixed" class="profile-side" style="margin: 0 0 20px">
-						<section class="box-typical">
-							<header class="box-typical-header-sm bordered">
-								<?=$infoModul['nama']?>
-							</header>
-							<div class="box-typical-inner">
-								<ul class="side-menu-list">
-									<li class="blue opened">
-										<a href="scheduler.html">
-							                <i class="font-icon font-icon-home active"></i>
-							                <span class="lbl">Prasyarat</span>
-							            </a>
-									</li>
-									<li class="blue">
-							            <a href="scheduler.html">
-							                <i class="font-icon font-icon-notebook"></i>
-							                <span class="lbl">Materi</span>
-							            </a>
-							        </li>
-									<li class="blue">
-										<a href="scheduler.html">
-											<i class="font-icon font-icon-zigzag"></i>
-											<span class="lbl">Tugas</span>
-										</a>
-									</li>
-									<li class="blue">
-										<a href="scheduler.html">
-											<i class="font-icon font-icon-zigzag"></i>
-											<span class="lbl">Kuis</span>
-										</a>
-									</li>
-								</ul>
-							</div>
-						</section>
-
-					</aside><!--.profile-side-->
+					<?php
+						require("includes/modul-menu.php");
+					?>
 				</div>
 
 				<div class="col-xl-9 col-lg-8">
 					<section class="widget widget-activity">
 						<header class="widget-header">
-							Modul Prasyarat
+							Materi
 							<span class="label label-pill label-primary"><?=$infoMapel['modul']?></span>
 							<div class="btn-group" style='float: right;'>
-								<button type="button" class="btn btn-sm btn-rounded btn-inline" data-toggle="modal" data-target="#addModulPrasyarat">+ Tambah Modul Prasyarat</button>
+								<button type="button" class="btn btn-sm btn-rounded btn-inline" data-toggle="modal" data-target="#">+ Tambah Materi</button>
 							</div>
 						</header>
 						<div>
@@ -250,59 +184,51 @@ $infoModul	= $modulClass->getInfoModul($_GET['id']);
 								<div class="fm-file-grid">
 									<div class="fm-file">
 										<div class="fm-file-icon">
-											<img src="assets/img/folder.png" alt="">
+											<img src="assets/img/file-pdf.png" alt="">
 										</div>
 										<div class="fm-file-name">Inspiration</div>
-										<div class="fm-file-size">144 files, 52 MB</div>
 									</div>
 									<div class="fm-file">
 										<div class="fm-file-icon">
-											<img src="assets/img/folder.png" alt="">
+											<img src="assets/img/file-pdf.png" alt="">
 										</div>
 										<div class="fm-file-name">Inspiration</div>
-										<div class="fm-file-size">144 files, 52 MB</div>
 									</div>
 									<div class="fm-file">
 										<div class="fm-file-icon">
-											<img src="assets/img/folder.png" alt="">
+											<img src="assets/img/file-pdf.png" alt="">
 										</div>
 										<div class="fm-file-name">Inspiration</div>
-										<div class="fm-file-size">144 files, 52 MB</div>
 									</div>
 									<div class="fm-file">
 										<div class="fm-file-icon">
-											<img src="assets/img/folder.png" alt="">
+											<img src="assets/img/file-pdf.png" alt="">
 										</div>
 										<div class="fm-file-name">2014_projects.rar</div>
-										<div class="fm-file-size">4 MB</div>
 									</div>
 									<div class="fm-file">
 										<div class="fm-file-icon">
-											<img src="assets/img/folder.png" alt="">
+											<img src="assets/img/file-doc.png" alt="">
 										</div>
 										<div class="fm-file-name">Inspiration</div>
-										<div class="fm-file-size">7 files, 358 MB</div>
 									</div>
 									<div class="fm-file">
 										<div class="fm-file-icon">
-											<img src="assets/img/folder.png" alt="">
+											<img src="assets/img/file-doc.png" alt="">
 										</div>
 										<div class="fm-file-name">Inspiration</div>
-										<div class="fm-file-size">7 files, 358 MB</div>
 									</div>
 									<div class="fm-file">
 										<div class="fm-file-icon">
-											<img src="assets/img/folder.png" alt="">
+											<img src="assets/img/file-xls.png" alt="">
 										</div>
 										<div class="fm-file-name">Inspiration</div>
-										<div class="fm-file-size">7 files, 358 MB</div>
 									</div>
 									<div class="fm-file">
 										<div class="fm-file-icon">
-											<img src="assets/img/folder.png" alt="">
+											<img src="assets/img/file-xls.png" alt="">
 										</div>
 										<div class="fm-file-name">Inspiration</div>
-										<div class="fm-file-size">7 files, 358 MB</div>
 									</div>
 								</div>
 							</div><!--.files-manager-content-in-->
