@@ -1,3 +1,5 @@
+</head>
+<body>
 	<header class="site-header">
 	    <div class="container-fluid">
 
