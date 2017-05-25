@@ -40,6 +40,58 @@ class Media
     	}
     }
 
+    public function GetMediaPagging()
+    {
+    	$page = isset($_GET['page']) ? $_GET['page'] : 1;
+    	$limit = 9;
+    	$skip = ($page - 1)*$limit;
+    	$next = ($page+1);
+    	$prev = ($page-1);
+    	$short = array('_id' => -1);
+    	$query =  $this -> table -> find()->skip($skip)->limit($limit);
+    	// echo $query;
+    	$count = $query->count();
+    	if ($count > 0) {
+    		$i = 0;
+    		foreach ($query as $row) {
+    			$data = $this->db->user->findOne(array("_id"=> new MongoId($row['id_user'])));
+    			$kategori = $this->db->kategori->findone(array("_id"=> new MongoId($row['id_kategori'])));
+    			$media[$i]=$row;
+    			$media[$i]['nama_user'] = $data['nama'];
+    			$media[$i]['foto'] = $data['foto'];
+    			$media[$i]['kategori'] = $kategori['kategori'];
+    			$i++;
+    		}
+
+    	}
+    	
+        if ($count > 0) {
+    		return $media;
+    	}else{
+    		return $count;
+    	}
+    }
+
+    public function Pagging($page){
+		$page = isset($_GET['page']) ? $_GET['page'] : 1;
+    	$limit = 9;
+    	$skip = ($page - 1)*$limit;
+    	$next = ($page+1);
+    	$prev = ($page-1);
+    	$cursor = $this -> table -> find()->skip($skip)->limit($limit);
+    	$total= $cursor->count();
+		if($page > 1){
+			    echo '<a class="btn btn-sucess" href="?page=' . $prev . '"><b>< Previous</b> </a>';
+			    if($page * $limit < $total) {
+			        echo ' <a class="btn btn-sucess" href="?page=' . $next . '"><b>Next ></b></a>';
+			    }
+			} else {
+			    if($page * $limit < $total) {
+			        echo ' <a class="btn btn-sucess" href="?page=' . $next . '"><b>Next ></b></a>';
+			    }
+			}
+    }
+
     public function GetMediaBy($id)
     {
     	$query =  $this -> table -> findone(array("_id"=> new MongoId($id)));
@@ -47,7 +99,13 @@ class Media
     }
     public function GetMediabyUser($id)
     {
-    	$query =  $this -> table -> find(array("id_user"=> "$id"));
+    	$page = isset($_GET['page']) ? $_GET['page'] : 1;
+    	$limit = 1;
+    	$skip = ($page - 1)*$limit;
+    	$next = ($page+1);
+    	$prev = ($page-1);
+    	$short = array('_id' => -1);
+    	$query =  $this -> table -> find(array("id_user"=> "$id"))->skip($skip)->limit($limit);
     	$count = $query->count();
     	if ($count > 0) {
     		$i = 0;
@@ -67,6 +125,25 @@ class Media
     		return $count;
     	}
         
+    }
+    public function PaggingByUser($page){
+		$page = isset($_GET['page']) ? $_GET['page'] : 1;
+    	$limit = 1;
+    	$skip = ($page - 1)*$limit;
+    	$next = ($page+1);
+    	$prev = ($page-1);
+    	$query =  $this -> table -> find(array("id_user"=> "$id"))->skip($skip)->limit($limit);
+    	$total= $cursor->count();
+		if($page > 1){
+			    echo '<a class="btn btn-sucess" href="?page=' . $prev . '"><b>< Previous</b> </a>';
+			    if($page * $limit < $total) {
+			        echo ' <a class="btn btn-sucess" href="?page=' . $next . '"><b>Next ></b></a>';
+			    }
+			} else {
+			    if($page * $limit < $total) {
+			        echo ' <a class="btn btn-sucess" href="?page=' . $next . '"><b>Next ></b></a>';
+			    }
+			}
     }
    public function CreateMedia($iduser,$judul,$deskripsi,$kategori,$tags,$tautan,$dokumen,$image)
     {	

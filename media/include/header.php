@@ -126,8 +126,8 @@
 		                	<?php
 		                		}else{
 		                    ?>
-		                    	<a href="upload.php" class="btn btn-inline btn-sm btn-primary-outline">
-			                            <i class="fa fa-upload"></i> Upload
+		                    	<a href="media.php?action=unggah" class="btn btn-inline btn-sm btn-primary-outline">
+			                            <i class="fa fa-upload"></i> Unggah 
 			                        </a>
 			                <?php
 			                	}

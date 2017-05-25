@@ -162,6 +162,7 @@
 				</div>
 				<div class="col-lg-9 col-lg-pull-6 col-md-6 col-sm-6">
 				<!-- Mulai Buku Content -->
+				<div >
 				<?php
 					$no = 1;
 					if ($getMedia == 0) {
@@ -181,7 +182,7 @@
 									<p><?php echo substr($data['deskripsi'], 0, 100)."..."; ?></p>
 								</div>
 								<div class="card-typical-section">
-									<div class="card-typical-linked">in <a href="#"><a href="#"><?php echo $data['nama_user']; ?></a></div>
+									<div class="card-typical-linked">in <a href="#"><?php echo $data['nama_user']; ?></a></div>
 									<a href="media.php?action=edit&id=<?=base64_encode($data['_id']);?>" class="card-typical-likes">
 										<i class="font-icon font-icon-pencil"></i>										
 									</a>
@@ -197,6 +198,12 @@
 				}
 				?>
 				<!-- Selesai Buku Content -->
+				</div>
+				<div class="col-lg-12" align="center">
+					<?php
+						$classMedia->pagging(isset($_GET['page']) ? $_GET['page'] : 1);
+					?>
+				</div>
 				</div>
 				
 			</div><!--.row-->
