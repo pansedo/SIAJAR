@@ -28,7 +28,6 @@ class Media
     			$media[$i]['foto'] = $data['foto'];
     			$media[$i]['kategori'] = $kategori['kategori'];
     			$i++;
-    			// var_dump($media);
     		}
 
     	}
@@ -45,13 +44,19 @@ class Media
     	$query =  $this -> table -> findone(array("_id"=> new MongoId($id)));
     	return $query;
     }
+
+    public function GetMediaByLimit($limit){
+    	$query = $this-> table-> find () -> limit($limit);
+    	return $query;
+    }
+
     public function GetMediabyUser($id)
     {
     	$query =  $this -> table -> find(array("id_user"=> "$id"));
     	$count = $query->count();
     	if ($count > 0) {
     		$i = 0;
-    		// echo $query->count();
+    		
     		foreach ($query as $row) {
     			$data = $this->db->user->findOne(array("_id"=> new MongoId($row['id_user'])));
     			$kategori = $this->db->kategori->findone(array("_id"=> new MongoId($row['id_kategori'])));
@@ -140,7 +145,7 @@ class Media
     public function CreateMediaUser($iduser,$judul,$deskripsi,$kategori,$tags,$tautan,$dokumen,$image)
     {	 
     	if (isset($_FILES['image']['name'])) {
-    		# code...
+    	
     		$lokasi_file_image 	= $_FILES['image']['tmp_name'];
 			$nama_file_image   	= $_FILES['image']['name'];
 			$type_file_image   	= pathinfo($nama_file_image,PATHINFO_EXTENSION);
