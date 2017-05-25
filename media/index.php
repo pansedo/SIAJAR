@@ -8,6 +8,7 @@
 
 	$getkategoriutama = $classKategori->GetKategoriUtama();
 	$getMedia = $classMedia->GetMedia();
+	$getMediaPagging = $classMedia->GetMediaPagging();
 
 
 ?>
@@ -49,7 +50,7 @@
 					<?php
 						$no = 1;
 
-						foreach ($getMedia as $data) {
+						foreach ($getMediaPagging as $data) {
 					?>
 						
 						<div class="card-grid-col">
@@ -73,27 +74,34 @@
 									</div>
 								</div>
 								<div class="card-typical-section card-typical-content">
-									<div class="photo">
-										<img style="  min-width: 200px;" src="<?php echo $data['path_image']; ?>" alt="">
+									<!-- <div class="photo" style="min-width: 200px; height:300px; background-image:url('<?php echo $data['path_image']; ?>'; position: center center"> -->
+									 <div class="photo" > 
+										<img style="  min-width: 200px; height:300px; background:<?php echo $data['path_image']; ?>" src="<?php echo $data['path_image']; ?>"  alt="">
 									</div>
 									<header class="title"><a href="#"></a></header>
-									<p><?php echo substr($data['deskripsi'], 0, 100).". . ."; ?></p>
+									<p><?php echo substr($data['deskripsi'], 0, 30)."..."; ?></p>
 								</div>
 								<div class="card-typical-section">
 									<div class="card-typical-linked">oleh <a href="#"><?php echo $data['nama_user']; ?></a></div>
-									<a href="#" class="card-typical-likes">
+									<!-- <a href="#" class="card-typical-likes">
 										<i class="font-icon font-icon-heart"></i>
 										123
-									</a>
+									</a> -->
 								</div>
 							</article><!--.card-typical-->
 						</div>
 						<?php
 							}
+							
+
 						?>
 						<!-- Selesai Buku Content -->
 						</div>
-					
+						<div class="col-lg-12" align="center">
+							<?php
+								$classMedia->pagging(isset($_GET['page']) ? $_GET['page'] : 1);
+							?>
+						</div>
 					</div>
 					
 				</div>
