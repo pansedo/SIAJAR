@@ -380,6 +380,7 @@ class Media
     			unlink("../".$file_lama);
     			$direktori_dokumen = "Media/Dokumen/".$iduser."/".$namadokumen;
 				move_uploaded_file($lokasi_file_dokumen,"../".$direktori_dokumen);
+				
     		}else{
 				echo "<script>alert('File Bukan Tipe Dokumen !'); document.location.href='Media.php'</script>";
 				die();
@@ -437,20 +438,20 @@ class Media
 	   	echo "direk tori : ".$direktori_dokumen;
 	   	echo "direk tori : ".$dokumen."<br>";
 	   	print_r($edit);
-  //       $updatedokumen = $this ->table -> update(array("_id"=> new MongoId($id)),array('$set'=>$edit)); 
+        $updatedokumen = $this ->table -> update(array("_id"=> new MongoId($id)),array('$set'=>$edit)); 
 		
-		// $deleteTags = array(
-		// 	"id_dokumen" => "$id"
-		// 	);  
+		$deleteTags = array(
+			"id_dokumen" => "$id"
+			);  
 
-		// $deleteTag = $this -> db -> tag ->remove($deleteTags);  
+		$deleteTag = $this -> db -> tag ->remove($deleteTags);  
 
-		// $explodetags = explode(",",$tags);
-		// foreach ($explodetags as $tag) {
-		// 	$inserts = array("id_dokumen" => "$id", "nama" => $tag );
-		// 	$inserttag = $this -> db -> tag -> insert($inserts);
-		// }
-		// echo "<script>alert('Data berhasil di rubah !'); document.location.href='Media.php'</script>";
+		$explodetags = explode(",",$tags);
+		foreach ($explodetags as $tag) {
+			$inserts = array("id_dokumen" => "$id", "nama" => $tag );
+			$inserttag = $this -> db -> tag -> insert($inserts);
+		}
+		echo "<script>alert('Data berhasil di rubah !'); document.location.href='Media.php'</script>";
     }
 
     public function EditMediaUser($id,$iduser,$judul,$deskripsi,$kategori,$tags,$tautan,$dokumen,$image,$gambar_lama,$file_lama)
