@@ -362,96 +362,120 @@ class Media
 			mkdir("../".$idDirektoriDokumen, 0744);
 		}
 
-		chmod($idDirektoriGambar, 0777);
-    	chmod($idDirektoriDokumen, 0777);
-
-    	$direktori_image = "";
-
-	    if ($image != "") {
-            unlink("../".$gambar_lama);
-			$direktori_image   	= "Media/Gambar/".$iduser."/".$namagambar;
-		    move_uploaded_file($lokasi_file_image,"../".$direktori_image);
-		}
+		chmod("../".$idDirektoriGambar, 0777);
+    	chmod("../".$idDirektoriDokumen, 0777);
 
 	    $direktori_dokumen = "";
-	    if ($dokumen != null) {
-    		$format = array("doc", "docx", "pdf","xls");
+	    if ($dokumen != "") {
+    		$format = array("doc", "docx", "pdf","xls","ppt","pptx");
     		if(in_array(strtolower($type_file_dokumen), $format)){
     			unlink("../".$file_lama);
-    			$direktori_dokumen = "Media/Dokumen/".$iduser."/".$namadokumen;
+    			$direktori_dokumen   = "Media/Dokumen/".$iduser."/".$namadokumen;
 				move_uploaded_file($lokasi_file_dokumen,"../".$direktori_dokumen);
-				
+				if($image == ""){
+		    		$edit = array(
+			    		"id_user" => "$iduser",
+						"judul" => $judul,
+						"deskripsi" => $deskripsi,
+						"id_kategori" => $kategori,
+						"tautan" => $tautan,
+						"path_document" => $direktori_dokumen,
+		    	 		"date_modified" => date("Y-m-d H:i:s")
+					);
+		    	}else{
+		    		$direktori_image   	= "Media/Gambar/".$iduser."/".$namagambar;
+		    		$upload_image = move_uploaded_file($lokasi_file_image,"../".$direktori_image);
+		    		if ($upload_image) {
+		    			unlink("../".$gambar_lama);
+		    			$edit = array(
+				    		"id_user" => "$iduser",
+							"judul" => $judul,
+							"deskripsi" => $deskripsi,
+							"id_kategori" => $kategori,
+							"path_image" => $direktori_image,
+							"tautan" => $tautan,
+							"path_document" => $direktori_dokumen,
+			    	 		"date_modified" => date("Y-m-d H:i:s")
+						);
+		    		}else{
+		    			$edit = array(
+				    		"id_user" => "$iduser",
+							"judul" => $judul,
+							"deskripsi" => $deskripsi,
+							"id_kategori" => $kategori,
+							"tautan" => $tautan,
+			    	 		"date_modified" => date("Y-m-d H:i:s")
+						);
+		    		}
+		    		
+		    	}
+    	
     		}else{
-				echo "<script>alert('File Bukan Tipe Dokumen !'); document.location.href='Media.php'</script>";
+				echo "<script>alert('File Bukan Tipe Dokumen !'); document.location.href='media.php'</script>";
 				die();
 		    }
-	    }
+	    }else{
+	    	if($image == ""){
+	    		$edit = array(
+		    		"id_user" => "$iduser",
+					"judul" => $judul,
+					"deskripsi" => $deskripsi,
+					"id_kategori" => $kategori,
+					"tautan" => $tautan,
+	    	 		"date_modified" => date("Y-m-d H:i:s")
+				);
+	    	}else{
+	    		$direktori_image   	= "Media/Gambar/".$iduser."/".$namagambar;
+	    		$upload_image = move_uploaded_file($lokasi_file_image,"../".$direktori_image);
+	    		if ($upload_image) {
+	    			unlink("../".$gambar_lama);
+	    			$edit = array(
+			    		"id_user" => "$iduser",
+						"judul" => $judul,
+						"deskripsi" => $deskripsi,
+						"id_kategori" => $kategori,
+						"path_image" => $direktori_image,
+						"tautan" => $tautan,
+		    	 		"date_modified" => date("Y-m-d H:i:s")
+					);
+		    		}else{
+		    			$edit = array(
+				    		"id_user" => "$iduser",
+							"judul" => $judul,
+							"deskripsi" => $deskripsi,
+							"id_kategori" => $kategori,
+							"tautan" => $tautan,
+			    	 		"date_modified" => date("Y-m-d H:i:s")
+						);
+	    			}
+	    		}
+    	}
 
 	    chmod($idDirektoriGambar, 0744);
     	chmod($idDirektoriDokumen, 0744);
     	
-    	if($direktori_image == "" && $direktori_dokumen = ""){
-	   		$edit = array(
- 	    		"id_user" => $iduser,
- 				"judul" => $judul,
- 				"deskripsi" => $deskripsi,
- 				"id_kategori" => $kategori,
- 				"tautan" => $tautan,
-	   	 		"date_modified" => date("Y-m-d H:i:s")
- 			);
- 				
-	   	}elseif ($direktori_image == "" ) {
-	   		$edit = array(
- 	    		"id_user" => $iduser,
- 				"judul" => $judul,
- 				"deskripsi" => $deskripsi,
- 				"id_kategori" => $kategori,
- 				"tautan" => $tautan,
- 				"path_document" => $direktori_dokumen,
-	   	 		"date_modified" => date("Y-m-d H:i:s")
- 			);
- 			
-	   	}elseif ($direktori_dokumen == "" ) {
-	   		$edit = array(
- 	    		"id_user" => $iduser,
- 				"judul" => $judul,
- 				"deskripsi" => $deskripsi,
- 				"id_kategori" => $kategori,
- 				"tautan" => $tautan,
- 				"path_image" => $direktori_image,
-	   	 		"date_modified" => date("Y-m-d H:i:s")
- 			);
- 		
-	   	}else{
-	   		$edit = array(
- 	    		"id_user" => $iduser,
- 				"judul" => $judul,
- 				"deskripsi" => $deskripsi,
- 				"id_kategori" => $kategori,
- 				"path_image" => $direktori_image,
- 				"tautan" => $tautan,
- 				"path_document" => $direktori_dokumen,
-	   	 		"date_modified" => date("Y-m-d H:i:s")
- 			);
-	   	 	
-	   	}
-	   	echo "direk tori : ".$direktori_dokumen;
-	   	echo "direk tori : ".$dokumen."<br>";
-	   	print_r($edit);
+    	print_r($edit);
+
         $updatedokumen = $this ->table -> update(array("_id"=> new MongoId($id)),array('$set'=>$edit)); 
 		
-		$deleteTags = array(
-			"id_dokumen" => "$id"
-			);  
+		
+		if ($updatedokumen) {
+			# code...
+			$deleteTags = array(
+				"id_dokumen" => "$id"
+				);  
 
-		$deleteTag = $this -> db -> tag ->remove($deleteTags);  
+			$deleteTag = $this -> db -> tag ->remove($deleteTags);  
 
-		$explodetags = explode(",",$tags);
-		foreach ($explodetags as $tag) {
-			$inserts = array("id_dokumen" => "$id", "nama" => $tag );
-			$inserttag = $this -> db -> tag -> insert($inserts);
+			$explodetags = explode(",",$tags);
+			foreach ($explodetags as $tag) {
+				$inserts = array("id_dokumen" => "$id", "nama" => $tag );
+				$inserttag = $this -> db -> tag -> insert($inserts);
+			}
+			echo "<script>alert('Data berhasil di rubah !'); document.location.href='media.php'</script>";
+		}else{
+			echo "<script>alert('Data gagal di rubah !'); </script>";
 		}
-		echo "<script>alert('Data berhasil di rubah !'); document.location.href='Media.php'</script>";
     }
 
     public function EditMediaUser($id,$iduser,$judul,$deskripsi,$kategori,$tags,$tautan,$dokumen,$image,$gambar_lama,$file_lama)
@@ -548,7 +572,7 @@ class Media
 					);
 		    	}else{
 		    		$direktori_image   	= "Media/Gambar/".$iduser."/".$namagambar;
-		    		move_uploaded_file($lokasi_file_image,$direktori_image);
+		    		$upload_image = move_uploaded_file($lokasi_file_image,$direktori_image);
 		    		if ($upload_image) {
 		    			unlink($gambar_lama);
 		    			$edit = array(
@@ -598,16 +622,28 @@ class Media
 		}else{
 			echo "<script>alert('Data gagal di rubah !'); </script>";
 		}
-		
-
     }
 
-      public function Delete($id)
+    public function Delete($id)
     {
-    	$delete = array("_id" => new MongoId($id));
-        $this -> table -> remove($delete);
+    	$dokumen = array("_id" => new MongoId($id));
+    	$query =  $this -> table -> findone($dokumen);
 
-        $deleteTags = array(
+    	$idDirektoriGambar  = "../Media/Gambar/".$query["id_user"];
+		$idDirektoriDokumen = "../Media/Dokumen/".$query["id_user"];
+    	
+		chmod($idDirektoriGambar, 0777);
+    	chmod($idDirektoriDokumen, 0777);
+
+		$deletegambar = unlink("../".$query["path_image"]);    	
+		$deletedokumen = unlink("../".$query["path_document"]);    
+    	 
+    	chmod($idDirektoriGambar, 0744);
+    	chmod($idDirektoriDokumen, 0744);
+
+		$this -> table -> remove($dokumen);
+
+		$deleteTags = array(
 			"id_dokumen" => "$id"
 			);  
 
