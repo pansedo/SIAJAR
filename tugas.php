@@ -10,7 +10,7 @@ $modulClass = new Modul();
 
 $infoMapel	= $mapelClass->getInfoMapel($_GET['pelajaran']);
 $infoModul	= $modulClass->getInfoModul($_GET['id']);
-$menuModul	= 1;
+$menuModul	= 2;
 ?>
 	<div class="modal fade"
 		 id="addKelas"
@@ -171,70 +171,112 @@ $menuModul	= 1;
 				</div>
 
 				<div class="col-xl-9 col-lg-8">
-					<section class="widget widget-activity">
-						<header class="widget-header">
-							Modul Prasyarat
-							<span class="label label-pill label-primary"><?=$infoMapel['modul']?></span>
-							<div class="btn-group" style='float: right;'>
-								<button type="button" class="btn btn-sm btn-rounded btn-inline" data-toggle="modal" data-target="#addModulPrasyarat">+ Pilih Modul Prasyarat</button>
-							</div>
-						</header>
-						<div>
-							<div class="files-manager-content-in" style="margin-right:0px; border-right: 0px;">
-								<div class="fm-file-grid">
-									<div class="fm-file">
-										<div class="fm-file-icon">
-											<img src="assets/img/folder.png" alt="">
-										</div>
-										<div class="fm-file-name">Inspiration</div>
-									</div>
-									<div class="fm-file">
-										<div class="fm-file-icon">
-											<img src="assets/img/folder.png" alt="">
-										</div>
-										<div class="fm-file-name">Inspiration</div>
-									</div>
-									<div class="fm-file">
-										<div class="fm-file-icon">
-											<img src="assets/img/folder.png" alt="">
-										</div>
-										<div class="fm-file-name">Inspiration</div>
-									</div>
-									<div class="fm-file">
-										<div class="fm-file-icon">
-											<img src="assets/img/folder.png" alt="">
-										</div>
-										<div class="fm-file-name">2014_projects.rar</div>
-									</div>
-									<div class="fm-file">
-										<div class="fm-file-icon">
-											<img src="assets/img/folder.png" alt="">
-										</div>
-										<div class="fm-file-name">Inspiration</div>
-									</div>
-									<div class="fm-file">
-										<div class="fm-file-icon">
-											<img src="assets/img/folder.png" alt="">
-										</div>
-										<div class="fm-file-name">Inspiration</div>
-									</div>
-									<div class="fm-file">
-										<div class="fm-file-icon">
-											<img src="assets/img/folder.png" alt="">
-										</div>
-										<div class="fm-file-name">Inspiration</div>
-									</div>
-									<div class="fm-file">
-										<div class="fm-file-icon">
-											<img src="assets/img/folder.png" alt="">
-										</div>
-										<div class="fm-file-name">Inspiration</div>
-									</div>
-								</div>
-							</div><!--.files-manager-content-in-->
-						</div>
-					</section><!--.widget-tasks-->
+					<section class="tabs-section">
+						<div class="tab-content no-styled profile-tabs">
+							<div role="tabpanel" class="tab-pane active" id="tabs-2-tab-1">
 
+								<article class="box-typical profile-post">
+									<div class="profile-post-header" style="border-bottom: solid 1px rgba(216, 226, 231, 0);">
+										<div class="user-card-row">
+											<div class="tbl-row">
+												<div class="tbl-cell tbl-cell-photo">
+													<a href="#">
+														<img src="assets/img/folder.png" alt="">
+													</a>
+												</div>
+												<div class="tbl-cell">
+													<div class="user-card-row-name"><a href="#">Tugas</a></div>
+													<div class="color-blue-grey-lighter">3 days ago - 23 min read</div>
+												</div>
+											</div>
+										</div>
+										<a href="#" class="shared">
+											<i class="font-icon font-icon-share"></i>
+										</a>
+									</div>
+									<input type="text" class="write-something" placeholder="Tuliskan deskripsi tugas"/>
+									<div>
+										<div class="files-manager-content-in" style="margin-right:0px; border-right: 0px; border-top: solid 1px #d8e2e7;">
+											<div class="fm-file-grid">
+												<div class="fm-file">
+													<div class="fm-file-icon">
+														<img src="assets/img/file-pdf.png" alt="">
+													</div>
+													<div class="fm-file-name">Inspiration</div>
+												</div>
+												<div class="fm-file">
+													<div class="fm-file-icon">
+														<img src="assets/img/file-pdf.png" alt="">
+													</div>
+													<div class="fm-file-name">Inspiration</div>
+												</div>
+												<div class="fm-file">
+													<div class="fm-file-icon">
+														<img src="assets/img/file-pdf.png" alt="">
+													</div>
+													<div class="fm-file-name">Inspiration</div>
+												</div>
+												<div class="fm-file">
+													<div class="fm-file-icon">
+														<img src="assets/img/file-pdf.png" alt="">
+													</div>
+													<div class="fm-file-name">2014_projects.rar</div>
+												</div>
+												<div class="fm-file">
+													<div class="fm-file-icon">
+														<img src="assets/img/file-doc.png" alt="">
+													</div>
+													<div class="fm-file-name">Inspiration</div>
+												</div>
+												<div class="fm-file">
+													<div class="fm-file-icon">
+														<img src="assets/img/file-doc.png" alt="">
+													</div>
+													<div class="fm-file-name">Inspiration</div>
+												</div>
+												<div class="fm-file">
+													<div class="fm-file-icon">
+														<img src="assets/img/file-xls.png" alt="">
+													</div>
+													<div class="fm-file-name">Inspiration</div>
+												</div>
+												<div class="fm-file">
+													<div class="fm-file-icon">
+														<img src="assets/img/file-xls.png" alt="">
+													</div>
+													<div class="fm-file-name">Inspiration</div>
+												</div>
+											</div>
+										</div><!--.files-manager-content-in-->
+									</div>
+									<div class="box-typical-footer">
+										<div class="tbl">
+											<div class="tbl-row">
+												<div class="tbl-cell">
+													<button type="button" class="btn-icon">
+														<i class="font-icon font-icon-earth"></i>
+													</button>
+													<button type="button" class="btn-icon">
+														<i class="font-icon font-icon-picture"></i>
+													</button>
+													<button type="button" class="btn-icon">
+														<i class="font-icon font-icon-calend"></i>
+													</button>
+													<button type="button" class="btn-icon">
+														<i class="font-icon font-icon-video-fill"></i>
+													</button>
+												</div>
+												<div class="tbl-cell tbl-cell-action">
+													<button type="submit" class="btn btn-rounded">Terbitkan</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</article>
+
+							</div><!--.tab-pane-->
+						</div><!--.tab-content-->
+					</section><!--.tabs-section-->
 				</div>
 			</div><!--.row-->
 

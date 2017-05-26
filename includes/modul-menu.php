@@ -18,7 +18,7 @@
 		            </a>
 		        </li>
 				<li class="blue <?php if($menuModul==3){echo 'opened';} ?>">
-					<a href="#">
+					<a href="tugas.php?id=<?=$_GET['id']?>&pelajaran=<?=$_GET['pelajaran']?>">
 						<i class="font-icon font-icon-zigzag <?php if($menuModul==3){echo 'active';} ?>"></i>
 						<span class="lbl">Tugas</span>
 					</a>
