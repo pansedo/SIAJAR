@@ -28,7 +28,11 @@
         $deskripsi = mysql_escape_string($_POST['deskripsi']);
         $kategori = mysql_escape_string($_POST['kategori']);
         $tags = mysql_escape_string($_POST['tags']);
-        $tautan = mysql_escape_string($_POST['tautan']);
+        if (isset($_POST['tautan'])) {
+        	$tautan = mysql_escape_string($_POST['tautan']);
+        }else{
+        	$tautan = "";
+        }
         if (isset($_FILES['dokumen'])) {
          	$dokumen = mysql_escape_string($_FILES['dokumen']['name']);
          }else{
@@ -187,7 +191,7 @@
 										</tr>
 										<?php
 										$no++;
-									}
+									} 
 								?>	
 							
 							</tbody>
