@@ -1,9 +1,11 @@
 #image-preview {
-  height: 400px;
-  position: relative;
-  overflow: hidden;
-  background-color: #ffffff;
-  color: #ecf0f1;
+  background-size: contain;
+    height: 400px;
+    position: relative;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    background-color: #ffffff;
+    color: #ecf0f1;
 }
 #image-preview input {
   line-height: 200px;

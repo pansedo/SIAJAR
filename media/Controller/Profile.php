@@ -29,9 +29,39 @@ class Profile
         $sukses = $this -> table -> update(array("_id"=> new MongoId($id_profile)),array('$set'=>$update));
         if ($sukses) {
             # code...
-            echo '<script type="text/javascript"> alert("Profil Berhasil Diperbarui")</script>';
+            echo "<script type='text/javascript'> swal({
+                                  title: 'Berhasil diperbarui!',
+                                  text: 'Profil anda berhasil diperbarui',
+                                  type: 'success',
+                                  timer: 2000
+                                }).then(
+                                  function () {
+                                    document.location.href='profile.php';
+                                  },
+                                  function (dismiss) {
+                                    document.location.href='profile.php';
+                                    if (dismiss === 'timer') {
+                                      console.log('I was closed by the timer')
+                                    }
+                                  })
+                </script>";
         }else{
-            echo '<script type="text/javascript"> alert("Profil Gagal Diperbarui")</script>';
+            echo "<script type='text/javascript'> swal({
+                                  title: 'Gagal diperbarui!',
+                                  text: 'Profil anda gagal diperbarui',
+                                  type: 'error',
+                                  timer: 2000
+                                }).then(
+                                  function () {
+                                    document.location.href='profile.php';
+                                  },
+                                  function (dismiss) {
+                                    document.location.href='profile.php';
+                                    if (dismiss === 'timer') {
+                                      console.log('I was closed by the timer')
+                                    }
+                                  })
+                </script>";
         }
         
     }
@@ -56,9 +86,39 @@ class Profile
                     $sukses=$this -> table -> update(array("_id"=> $id_profile),$update);
                     if ($sukses) {
                         # code...
-                        echo '<script type="text/javascript"> alert("Profil Berhasil Diperbarui")</script>';
+                        echo "<script type='text/javascript'> swal({
+                                  title: 'Berhasil diperbarui!',
+                                  text: 'Kata Sandi anda berhasil diperbarui',
+                                  type: 'success',
+                                  timer: 2000
+                                }).then(
+                                  function () {
+                                    document.location.href='profile.php';
+                                  },
+                                  function (dismiss) {
+                                    document.location.href='profile.php';
+                                    if (dismiss === 'timer') {
+                                      console.log('I was closed by the timer')
+                                    }
+                                  })
+                            </script>";
                     }else{
-                        echo '<script type="text/javascript"> alert("Profil Gagal Diperbarui")</script>';
+                        echo "<script type='text/javascript'> swal({
+                                  title: 'Gagal diperbarui!',
+                                  text: 'Kata Sandi anda gagal diperbarui',
+                                  type: 'error',
+                                  timer: 2000
+                                }).then(
+                                  function () {
+                                    document.location.href='profile.php';
+                                  },
+                                  function (dismiss) {
+                                    document.location.href='profile.php';
+                                    if (dismiss === 'timer') {
+                                      console.log('I was closed by the timer')
+                                    }
+                                  })
+                            </script>";
                     }
 
                  }else{

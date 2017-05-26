@@ -1,5 +1,6 @@
 <?php
-	include "Header.php";
+	include "include/header.php";
+	include 'include/menu.php';
 ?>
 	<div class="page-content">
 		<div class="container-fluid">
@@ -90,5 +91,5 @@
 		</div>
 	</div>
 <?php
-	include "Footer.php";
+	include "include/footer.php";
 ?>

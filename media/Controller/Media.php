@@ -100,7 +100,7 @@ class Media
     public function GetMediabyUser($id)
     {
     	$page = isset($_GET['page']) ? $_GET['page'] : 1;
-    	$limit = 1;
+    	$limit = 9;
     	$skip = ($page - 1)*$limit;
     	$next = ($page+1);
     	$prev = ($page-1);
@@ -128,7 +128,7 @@ class Media
     }
     public function PaggingByUser($page){
 		$page = isset($_GET['page']) ? $_GET['page'] : 1;
-    	$limit = 1;
+    	$limit = 9;
     	$skip = ($page - 1)*$limit;
     	$next = ($page+1);
     	$prev = ($page-1);
@@ -281,13 +281,55 @@ class Media
 						        if ($insertdokumen) {
 						        	# code...
 						        	chmod($idDirektoriDokumen, 0744);
-						        	echo "<script type='text/javascript'> alert('Data Berhasil Disimpan.')</script>";
+						        	echo "<script type='text/javascript'>swal({
+															  title: 'Berhasil !',
+															  text: 'Media ajar berhasil disimpan!',
+															  type: 'success',
+															  timer: 2000
+															}).then(
+															  function () {
+															  	//document.location.href='media.php';
+															  },
+															  function (dismiss) {
+															  	//document.location.href='media.php';
+															    if (dismiss === 'timer') {
+															      console.log('I was closed by the timer')
+															    }
+															  })</script>";
 						        }else{
-						        	echo "<script type='text/javascript'> alert('Data Gagal Disimpan.')</script>";
+						        	echo "<script type='text/javascript'>swal({
+															  title: 'Gagal !',
+															  text: 'Media ajar gagal disimpan!',
+															  type: 'error',
+															  timer: 2000
+															}).then(
+															  function () {
+															  	//document.location.href='media.php';
+															  },
+															  function (dismiss) {
+															  	//document.location.href='media.php';
+															    if (dismiss === 'timer') {
+															      console.log('I was closed by the timer')
+															    }
+															  })</script>";
 						        }
 				    		}
 						}else{
-							echo "<script type='text/javascript'> alert('Format yang didukung untuk dokumen hanya jpg, jpeg, png, gif, bmp, pdf, doc, docx, ppt, pptx, xls, xlsx, mp4, 3gp, flv, avi, mp3, ogg.')</script>";
+							echo "<script type='text/javascript'>swal({
+															  title: 'Format file media tidak didukung !',
+															  text: 'Format yang didukung untuk dokumen hanya jpg, jpeg, png, gif, bmp, pdf, doc, docx, ppt, pptx, xls, xlsx, mp4, 3gp, flv, avi, mp3, ogg.',
+															  type: 'error',
+															  timer: 3000
+															}).then(
+															  function () {
+															  	//document.location.href='media.php';
+															  },
+															  function (dismiss) {
+															  	//document.location.href='media.php';
+															    if (dismiss === 'timer') {
+															      console.log('I was closed by the timer')
+															    }
+															  })</script>"; 
 						}
 			    	}else{
 						$insert = array("id_user" => "$iduser",
@@ -310,9 +352,37 @@ class Media
 
 					        if ($insertdokumen) {
 					        	# code...
-					        	echo "<script type='text/javascript'> alert('Data Berhasil Disimpan.')</script>";
+					        	echo "<script type='text/javascript'>swal({
+															  title: 'Berhasil !',
+															  text: 'Media ajar berhasil disimpan!',
+															  type: 'success',
+															  timer: 2000
+															}).then(
+															  function () {
+															  	//document.location.href='media.php';
+															  },
+															  function (dismiss) {
+															  	//document.location.href='media.php';
+															    if (dismiss === 'timer') {
+															      console.log('I was closed by the timer')
+															    }
+															  })</script>";
 					        }else{
-					        	echo "<script type='text/javascript'> alert('Data Gagal Disimpan.')</script>";
+					        	echo "<script type='text/javascript'> swal({
+															  title: 'Gagal !',
+															  text: 'Media ajar gagal disimpan!',
+															  type: 'error',
+															  timer: 2000
+															}).then(
+															  function () {
+															  	//document.location.href='media.php';
+															  },
+															  function (dismiss) {
+															  	//document.location.href='media.php';
+															    if (dismiss === 'timer') {
+															      console.log('I was closed by the timer')
+															    }
+															  })</script>";
 					        }
 			    	}
 
@@ -321,10 +391,38 @@ class Media
 	    	
 
 	    	}else{
-	    		echo "<script type='text/javascript'> alert('Jenis File Tidak didukung.')</script>";
+	    		echo "<script type='text/javascript'>swal({
+															  title: 'Gagal !',
+															  text: 'Jenis File tidak didukung!',
+															  type: 'error',
+															  timer: 2000
+															}).then(
+															  function () {
+															  	//document.location.href='media.php';
+															  },
+															  function (dismiss) {
+															  	//document.location.href='media.php';
+															    if (dismiss === 'timer') {
+															      console.log('I was closed by the timer')
+															    }
+															  })</script>";
 	    	}
     	}else{
-    		echo "<script type='text/javascript'> alert('Silakan pilih sampul terlebih dahulu.')</script>";
+    		echo "<script type='text/javascript'> swal({
+															  title: 'Gagal !',
+															  text: 'Silakan Pilih sampul terlebih dahulu',
+															  type: 'error',
+															  timer: 2000
+															}).then(
+															  function () {
+															  	//document.location.href='media.php';
+															  },
+															  function (dismiss) {
+															  	//document.location.href='media.php';
+															    if (dismiss === 'timer') {
+															      console.log('I was closed by the timer')
+															    }
+															  })</script>";
     	}
     }
 
@@ -438,7 +536,7 @@ class Media
 
 	    $direktori_dokumen = "";
 	    if ($dokumen != "") {
-    		$format = array("doc", "docx", "pdf","xls");
+    		$format = array("jpg", "jpeg", "png", "gif", "bmp", "pdf", "doc", "docx", "ppt", "pptx", "xls", "xlsx", "mp4", "3gp", "flv", "avi", "mp3", "ogg");
     		if(in_array(strtolower($type_file_dokumen), $format)){
     			unlink($file_lama);
     			$direktori_dokumen   = "Media/Dokumen/".$iduser."/".$namadokumen;
@@ -482,7 +580,21 @@ class Media
 		    	}
     	
     		}else{
-				echo "<script>alert('File Bukan Tipe Dokumen !'); document.location.href='Media.php'</script>";
+				echo "<script>swal({
+								  title: 'Gagal !',
+								  text: 'Jenis File tidak didukung!',
+								  type: 'error',
+								  timer: 2000
+								}).then(
+								  function () {
+								  	//document.location.href='media.php';
+								  },
+								  function (dismiss) {
+								  	//document.location.href='media.php';
+								    if (dismiss === 'timer') {
+								      console.log('I was closed by the timer')
+								    }
+								  })</script>";
 				die();
 		    }
 	    }else{
@@ -543,7 +655,24 @@ class Media
 				$inserts = array("id_dokumen" => "$id", "nama" => $tag );
 				$inserttag = $this -> db -> tag -> insert($inserts);
 			}
-			echo "<script>alert('Data berhasil di rubah !'); document.location.href='profile.php'</script>";
+			
+			// echo "<script>swal('Berhasil diperbarui!', 'Informasi media ajar berhasil diperbarui', 'success'); document.location.href='profile.php'</script>";
+			echo "<script>swal({
+								  title: 'Berhasil diperbarui!',
+								  text: 'Informasi media ajar berhasil diperbarui',
+								  type: 'success',
+								  timer: 2000
+								}).then(
+								  function () {
+								  	document.location.href='profile.php';
+								  },
+								  function (dismiss) {
+								  	document.location.href='profile.php';
+								    if (dismiss === 'timer') {
+								      console.log('I was closed by the timer')
+								    }
+								  })
+				</script>";
 		}else{
 			echo "<script>alert('Data gagal di rubah !'); </script>";
 		}

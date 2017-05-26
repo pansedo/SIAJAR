@@ -15,10 +15,10 @@
 	<div class="page-content">
 		<div class="container-fluid">
 			<div class="row">
-				<div class="col-lg-3 ">
-						<div class="menu-fixed">
+				<div class="col-xl-3 col-lg-4">
+						<aside class="profile-side">
 						<section class="box-typical">
-							<header class="box-typical-header-sm">
+							<header class="box-typical-header-sm bordered">
 								Terbaru
 							</header>
 							<div class="friends-list">
@@ -37,14 +37,44 @@
 											</div>
 										</div>
 									</div>
+									<div class="user-card-row">
+										<div class="tbl-row">
+											<div class="tbl-cell tbl-cell-photo">
+												<a href="#">
+													<img  src="Assets/img/photo-64-2.jpg" alt="">
+												</a>
+											</div>
+											<div class="tbl-cell">
+												<p class="user-card-row-name status-online"><a href="#">Dan Cederholm</a></p>
+												<p class="user-card-row-location">New York</p>
+											</div>
+										</div>
+									</div>
 								</article>
 								
 							</div>
 						</section>
+
+						<section class="box-typical">
+							<header class="box-typical-header-sm bordered">Tentang Saya</header>
+							<div class="box-typical-inner">
+								<p>
+									</p><ul style="list-style-type: circle;margin-left: 20px;">
+										<li>Simple</li>
+										<li>Pekerja Keras</li>
+										<li>Periang</li>
+										<li>Rajin Olahraga</li>
+									</ul>
+								<p></p>
+							</div>
+						</section>
+						</aside>
 						</div>
-					</div>
 					
-				<div class="col-lg-9">
+
+
+					
+				<div class="col-xl-9 col-lg-8">
 					<div class="cards-grid " data-columns>
 					
 					<?php
