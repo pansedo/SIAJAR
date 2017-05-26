@@ -10,7 +10,7 @@ $modulClass = new Modul();
 
 $infoMapel	= $mapelClass->getInfoMapel($_GET['pelajaran']);
 $infoModul	= $modulClass->getInfoModul($_GET['id']);
-$menuModul	= 2;
+$menuModul	= 3;
 ?>
 	<div class="modal fade"
 		 id="addKelas"
