@@ -16,6 +16,11 @@
         $id_users   = $_SESSION['lms_id'];
         $email    = $_SESSION['lms_username'];
         $status     = $_SESSION['lms_status'];
+    }elseif($_SESSION['lms_status'] == "guru"){
+    	set_time_limit(10000); 
+        $id_users   = $_SESSION['lms_id'];
+        $email    = $_SESSION['lms_username'];
+        $status     = $_SESSION['lms_status'];
     }else{ 
          header("Location:../Auth/logout.php");
         exit();

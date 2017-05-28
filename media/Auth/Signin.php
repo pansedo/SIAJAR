@@ -7,14 +7,7 @@
     });
 
     $ClassLogin = new Login();
-
-    if (isset($_POST['login'])) {
-        $username = mysql_escape_string(trim(strip_tags(stripslashes($_POST['username']))));
-        $password = mysql_escape_string(trim(strip_tags(stripslashes($_POST['password']))));
-        $ClassLogin->LoginUsers($username,$password);
-    }
-?>  
-
+?>
 <!DOCTYPE html>
 <html>
 <head lang="en">
@@ -33,9 +26,21 @@
     <link rel="stylesheet" href="../Assets/css/lib/font-awesome/font-awesome.min.css">
     <link rel="stylesheet" href="../Assets/css/lib/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="../Assets/css/main.css">
+    <script src="../Assets/js/lib/jquery/jquery.min.js"></script>
+    <!--Sweetalert-->
+    <script  src="../Assets/js/lib/sweetalert/sweetalert2.min.js"></script>
+    <link rel="stylesheet"  href="../Assets/js/lib/sweetalert/sweetalert2.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
 </head>
 <body>
-
+<?php
+    if (isset($_POST['login'])) {
+        $username = mysql_escape_string(trim(strip_tags(stripslashes($_POST['username']))));
+        $password = mysql_escape_string(trim(strip_tags(stripslashes($_POST['password']))));
+        $ClassLogin->LoginUsers($username,$password);
+    }
+?>  
     <div class="page-center">
         <div class="page-center-in">
             <div class="container-fluid">
@@ -66,7 +71,7 @@
     </div>
 
 
-<script src="../Assets/js/lib/jquery/jquery.min.js"></script>
+
 <script src="../Assets/js/lib/tether/tether.min.js"></script>
 <script src="../Assets/js/lib/bootstrap/bootstrap.min.js"></script>
 <script src="../Assets/js/plugins.js"></script>

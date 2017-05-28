@@ -140,7 +140,7 @@
 								
 										<fieldset class="form-group">
 											<label class="form-label">Judul</label>
-											<input type="text" name="judul" required class="form-control maxlength-simple" id="exampleInput" placeholder="Judul" maxlength="15">
+											<input type="text" name="judul" required class="form-control maxlength-simple" id="exampleInput" placeholder="Judul" >
 										</fieldset>
 										<fieldset class="form-group">
 											<label class="form-label">Deskripsi</label>
@@ -193,7 +193,16 @@
 					</section>
 
 					<?php
-					}else if ($_GET['action'] == "edit") {
+					}else if ($_GET['action'] == "hapus") {
+						# code...
+						if (isset($_GET['id'])) {
+							# code...
+							$id = base64_decode($_GET['id']);
+							$classMedia->DeleteMediaUser($id);
+						}
+					}
+
+					else if ($_GET['action'] == "edit") {
 						# code...
 					
 						if (isset($_GET['id'])) {
@@ -218,7 +227,7 @@
 								
 										<fieldset class="form-group">
 											<label class="form-label">Judul</label>
-											<input type="text" name="judul" required class="form-control maxlength-simple" id="exampleInput" value="<?php echo $getMediaById['judul'];?>" placeholder="Judul" maxlength="15">
+											<input type="text" name="judul" required class="form-control maxlength-simple" id="exampleInput" value="<?php echo $getMediaById['judul'];?>" placeholder="Judul" >
 										</fieldset>
 										<fieldset class="form-group">
 											<label class="form-label">Deskripsi</label>

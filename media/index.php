@@ -70,19 +70,15 @@
 						</section>
 						</aside>
 						</div>
-					
-
-
-					
 				<div class="col-xl-9 col-lg-8">
-					<div class="cards-grid " data-columns>
+					
 					
 					<?php
 						$no = 1;
 
 						foreach ($getMediaPagging as $data) {
 					?>
-						
+						<div class="col-lg-4 col-lg-pull-6 col-md-6 col-sm-6" style="padding-bottom: 15px;">
 						<div class="card-grid-col">
 							<article class="card-typical">
 								<div class="card-typical-section">
@@ -94,7 +90,7 @@
 												</a>
 											</div>
 											<div class="tbl-cell">
-												<p class="user-card-row-name"><a href="#"><?php echo $data['judul']; ?></a></p>
+												<p class="user-card-row-name"><a href="product.php?id=<?php echo base64_encode($data['_id']);?>"><?php echo $data['judul']; ?></a></p>
 												<p class="color-blue-grey-lighter">3 days ago - 23 min read</p>
 											</div>
 											<div class="tbl-cell tbl-cell-status">
@@ -104,9 +100,9 @@
 									</div>
 								</div>
 								<div class="card-typical-section card-typical-content">
-									<!-- <div class="photo" style="min-width: 200px; height:300px; background-image:url('<?php echo $data['path_image']; ?>'; position: center center"> -->
+									<!-- <div class="photo" style="min-width: 200px; height:300px; background-image:url('<?php// echo $data['path_image']; ?>'; position: center center"> -->
 									 <div class="photo" > 
-										<img style="  min-width: 200px; height:300px; background:<?php echo $data['path_image']; ?>" src="<?php echo $data['path_image']; ?>"  alt="">
+										<a href="product.php?id=<?php echo base64_encode($data['_id']);?>"><img style="  min-width: 200px; height:300px; background:<?php echo $data['path_image']; ?>" src="<?php echo $data['path_image']; ?>"  alt=""></a>
 									</div>
 									<header class="title"><a href="#"></a></header>
 									<p><?php echo substr($data['deskripsi'], 0, 30)."..."; ?></p>
@@ -120,13 +116,14 @@
 								</div>
 							</article><!--.card-typical-->
 						</div>
+						</div>
 						<?php
 							}
 							
 
 						?>
 						<!-- Selesai Buku Content -->
-						</div>
+						
 						<div class="col-lg-12" align="center">
 							<?php
 								$classMedia->pagging(isset($_GET['page']) ? $_GET['page'] : 1);
