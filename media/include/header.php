@@ -43,6 +43,11 @@
 	<script src="Assets/js/lib/jquery/jquery.min.js"></script>
 	<link rel="stylesheet" href="Assets/css/style_manual.css">
 
+	<!--Sweetalert-->
+	<script  src="Assets/js/lib/sweetalert/sweetalert2.min.js"></script>
+	<link rel="stylesheet"  href="Assets/js/lib/sweetalert/sweetalert2.min.css">
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
 
 	<link rel="stylesheet" type="text/css" href="Assets/css/lib/uploadfile/component.css" />
 	<script>(function(e,t,n){var r=e.querySelectorAll("html")[0];r.className=r.className.replace(/(^|\s)no-js(\s|$)/,"$1js$2")})(document,window,0);</script>
