@@ -149,7 +149,7 @@
 								<p class="date"><?php echo date_format($date,'d-m-Y H:i:s');?></p>
 								<p>
 									<!-- <a href="#">View</a> -->
-									<a href="<?php echo $getMediaById['path_document'];?>">Download</a>
+									<a href="<?php echo $getMediaById['path_document'];?>"  download="<?php echo $getMediaById['judul'];?>.<?php echo $ekstensi;?>">Download</a>
 								</p>
 							</div>
 					<?php

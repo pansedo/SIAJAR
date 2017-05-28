@@ -7,9 +7,11 @@
     spl_autoload_register(function ($class) {
       include 'Controller/' .$class . '.php';
     });
-    $base_url = "http://localhost/siajar/media"
+    $base_url = "http://localhost/siajar/media";
 
-    
+
+    $classKategori = new Kategori();
+    $getkategoriutama = $classKategori->GetKategoriUtama();
 ?>  
 <!DOCTYPE html>
 <html>
@@ -104,22 +106,27 @@
 	                        </div>
 							<div class="dropdown dropdown-typical">
 	                            <a class="dropdown-toggle" id="dd-header-marketing" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                                <span class="font-icon font-icon-users"></span> Tingkat
+	                                <span class="font-icon font-icon-users"></span> Kategori
 	                                <span class="lbl"></span>
 	                            </a>
 
 	                            <div class="dropdown-menu" aria-labelledby="dd-header-marketing">
-	                                <a class="dropdown-item" href="#">Digital Class Development 1</a>
+	                            <?php
+	                            	foreach ($getkategoriutama as $data) {
+	                            		echo "<a class='dropdown-item' href='#'>".$data['kategori']."</a>";
+	                            	}
+	                            ?>
+	                                <!-- <a class="dropdown-item" href="#">Digital Class Development 1</a>
 	                                <a class="dropdown-item" href="#">Digital Class Development 2</a>
-	                                <a class="dropdown-item" href="#">Digital Class Development 3</a>
+	                                <a class="dropdown-item" href="#">Digital Class Development 3</a> -->
 	                            </div>
 	                        </div>
-							<div class="dropdown dropdown-typical">
+							<!-- <div class="dropdown dropdown-typical">
 							   <a href="#" class="dropdown-toggle no-arr">
 								   <span class="font-icon font-icon-share"></span> Gudang Media
 								   <span class="lbl"></span>
 							   </a>
-						   </div>
+						   </div> -->
 						    <div class="site-header-collapsed-in">
 	                    
 	                        <div class="site-header-search-container">

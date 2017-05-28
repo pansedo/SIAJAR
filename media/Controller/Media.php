@@ -215,7 +215,7 @@ class Media
         	$inserts = array("id_dokumen" => "$IDDokumen", "nama" => $tag );
         	$inserttag = $this -> db -> tag -> insert($inserts);
         }
-		echo "<script>alert('Data berhasil di tambah !'); document.location.href='Media.php'</script>";
+		echo "<script>alert('Data berhasil di tambah !'); document.location.href='media.php'</script>";
     }
 
     public function CreateMediaUser($iduser,$judul,$deskripsi,$kategori,$tags,$tautan,$dokumen,$image)
@@ -343,7 +343,9 @@ class Media
 								    	"path_image" => $direktori_image,
 								    	"tautan" => $tautan ,
 								    	"path_document" => "",
-								    	"active" => "active" );
+								    	"active" => "active",
+								    	"date_created" => date("Y-m-d H:i:s"),
+								    	"date_modified" => date("Y-m-d H:i:s" ));
 
 					        $insertdokumen = $this -> table -> insert($insert);
 					        $IDDokumen = $insert['_id'];
@@ -389,7 +391,6 @@ class Media
 															  })</script>";
 					        }
 			    	}
-
 			    }
 		    chmod($idDirektoriGambar, 0744);
 	    	
@@ -781,6 +782,68 @@ class Media
 		echo "<script>alert('Data berhasil di delete !'); document.location.href='Media.php'</script>";
     }
     
+    public function DeleteMediaUser($id)
+    {
+    	$dokumen = array("_id" => new MongoId($id));
+    	$query =  $this -> table -> findone($dokumen);
+
+    	$idDirektoriGambar  = "Media/Gambar/".$query["id_user"];
+		$idDirektoriDokumen = "Media/Dokumen/".$query["id_user"];
+    	
+		chmod($idDirektoriGambar, 0777);
+    	chmod($idDirektoriDokumen, 0777);
+
+		$deletegambar = unlink($query["path_image"]);    	
+		$deletedokumen = unlink($query["path_document"]);    
+    	 
+    	chmod($idDirektoriGambar, 0744);
+    	chmod($idDirektoriDokumen, 0744);
+
+		$delete= $this -> table -> remove($dokumen);
+
+		$deleteTags = array(
+			"id_dokumen" => "$id"
+			);  
+
+		$deleteTag = $this -> db -> tag ->remove($deleteTags);  
+
+		if ($delete) {
+			# code...
+			echo "<script>swal({
+								  title: 'Berhasil dihapus!',
+								  text: 'Data media ajar berhasil dihapus',
+								  type: 'success',
+								  timer: 2000
+								}).then(
+								  function () {
+								  	document.location.href='profile.php';
+								  },
+								  function (dismiss) {
+								  	document.location.href='profile.php';
+								    if (dismiss === 'timer') {
+								      console.log('I was closed by the timer')
+								    }
+								  })
+				</script>";
+		}else{
+			echo "<script>swal({
+								  title: 'Gagal dihapus!',
+								  text: 'Data media ajar gagal dihapus',
+								  type: 'error',
+								  timer: 2000
+								}).then(
+								  function () {
+								  	document.location.href='profile.php';
+								  },
+								  function (dismiss) {
+								  	document.location.href='profile.php';
+								    if (dismiss === 'timer') {
+								      console.log('I was closed by the timer')
+								    }
+								  })
+				</script>";
+		}
+    }
 }
 
 ?>

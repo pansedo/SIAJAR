@@ -193,7 +193,16 @@
 					</section>
 
 					<?php
-					}else if ($_GET['action'] == "edit") {
+					}else if ($_GET['action'] == "hapus") {
+						# code...
+						if (isset($_GET['id'])) {
+							# code...
+							$id = base64_decode($_GET['id']);
+							$classMedia->DeleteMediaUser($id);
+						}
+					}
+
+					else if ($_GET['action'] == "edit") {
 						# code...
 					
 						if (isset($_GET['id'])) {

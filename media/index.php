@@ -70,19 +70,15 @@
 						</section>
 						</aside>
 						</div>
-					
-
-
-					
 				<div class="col-xl-9 col-lg-8">
-					<div class="cards-grid " data-columns>
+					
 					
 					<?php
 						$no = 1;
 
 						foreach ($getMediaPagging as $data) {
 					?>
-						
+						<div class="col-lg-4 col-lg-pull-6 col-md-6 col-sm-6" style="padding-bottom: 15px;">
 						<div class="card-grid-col">
 							<article class="card-typical">
 								<div class="card-typical-section">
@@ -120,13 +116,14 @@
 								</div>
 							</article><!--.card-typical-->
 						</div>
+						</div>
 						<?php
 							}
 							
 
 						?>
 						<!-- Selesai Buku Content -->
-						</div>
+						
 						<div class="col-lg-12" align="center">
 							<?php
 								$classMedia->pagging(isset($_GET['page']) ? $_GET['page'] : 1);
