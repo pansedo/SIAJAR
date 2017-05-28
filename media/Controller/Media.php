@@ -10,7 +10,7 @@ class Media
             $this->table = $this->db->$tableName;
         } catch(Exception $e) {
             echo "Database Not Connection";
-            exit();
+            exit(); 
         }
     }
     public function GetMedia()
@@ -98,6 +98,44 @@ class Media
 
     public function GetMediaByLimit($limit){
     	$query = $this-> table-> find () -> limit($limit);
+    	$count = $query->count();
+    	if ($count > 0) {
+    		$i = 0;
+    		foreach ($query as $row) {
+    			$data = $this->db->user->findOne(array("_id"=> new MongoId($row['id_user'])));
+    			$kategori = $this->db->kategori->findone(array("_id"=> new MongoId($row['id_kategori'])));
+    			$media[$i]=$row;
+    			$media[$i]['nama_user'] = $data['nama'];
+    			$media[$i]['foto'] = $data['foto'];
+    			$media[$i]['kategori'] = $kategori['kategori'];
+    			$i++;
+    		}
+
+    	}
+    	
+        if ($count > 0) {
+    		return $media;
+    	}else{
+    		return $count;
+    	}
+    }
+
+    public function GetCountData()
+    {	
+    	$query['dokumen'] = $this-> table-> find () -> count();
+    	$query['user'] = $this-> db -> user -> find () -> count();
+ 	 	$query['tag'] = $this-> db -> tag -> count();
+ 	 	$query['kategori'] = $this-> db -> kategori -> find((array("sub_id"=>"0"))) ->count();
+		// $query['tag'] = $this-> db -> tag -> aggregate ([
+		// 		{ $group: {
+		// 		    "_id": "$nama"
+		// 			}
+		// 		},
+		// 	    {
+		// 	      $count: "total"
+		// 	    }
+		// ]);
+
     	return $query;
     }
 
@@ -215,7 +253,22 @@ class Media
         	$inserts = array("id_dokumen" => "$IDDokumen", "nama" => $tag );
         	$inserttag = $this -> db -> tag -> insert($inserts);
         }
-		echo "<script>alert('Data berhasil di tambah !'); document.location.href='Media.php'</script>";
+        echo "<script type='text/javascript'>swal({
+				  title: 'Berhasil !',
+				  text: 'Media ajar berhasil disimpan!',
+				  type: 'success',
+				  timer: 2000
+				}).then(
+				  function () {
+				  	document.location.href='media.php';
+				  },
+				  function (dismiss) {
+				  	document.location.href='media.php';
+				    if (dismiss === 'timer') {
+				      console.log('I was closed by the timer')
+				    }
+				  })</script>";
+		echo "<script type='text/javascript'>document.location.href='media.php'</script>";
     }
 
     public function CreateMediaUser($iduser,$judul,$deskripsi,$kategori,$tags,$tautan,$dokumen,$image)
@@ -552,8 +605,6 @@ class Media
 	    chmod($idDirektoriGambar, 0744);
     	chmod($idDirektoriDokumen, 0744);
     	
-    	print_r($edit);
-
         $updatedokumen = $this ->table -> update(array("_id"=> new MongoId($id)),array('$set'=>$edit)); 
 		
 		
@@ -570,9 +621,37 @@ class Media
 				$inserts = array("id_dokumen" => "$id", "nama" => $tag );
 				$inserttag = $this -> db -> tag -> insert($inserts);
 			}
-			echo "<script>alert('Data berhasil di rubah !'); document.location.href='media.php'</script>";
+			echo "<script type='text/javascript'>swal({
+				  title: 'Berhasil !',
+				  text: 'Media ajar berhasil di rubah!',
+				  type: 'success',
+				  timer: 2000
+				}).then(
+				  function () {
+				  	document.location.href='media.php';
+				  },
+				  function (dismiss) {
+				  	document.location.href='media.php';
+				    if (dismiss === 'timer') {
+				      console.log('I was closed by the timer')
+				    }
+				  })</script>";
 		}else{
-			echo "<script>alert('Data gagal di rubah !'); </script>";
+			echo "<script type='text/javascript'>swal({
+				  title: 'Berhasil !',
+				  text: 'Media ajar berhasil di rubah!',
+				  type: 'warning',
+				  timer: 2000
+				}).then(
+				  function () {
+				  	document.location.href='media.php';
+				  },
+				  function (dismiss) {
+				  	document.location.href='media.php';
+				    if (dismiss === 'timer') {
+				      console.log('I was closed by the timer')
+				    }
+				  })</script>";
 		}
     }
 

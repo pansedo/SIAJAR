@@ -9,7 +9,7 @@
 	$getkategoriutama = $classKategori->GetKategoriUtama();
 	$getMedia = $classMedia->GetMedia();
 
-
+ 
 	if (isset($_POST['tambah_media'])) {
         $judul = mysql_escape_string($_POST['judul']);
         $deskripsi = mysql_escape_string($_POST['deskripsi']);

@@ -1,7 +1,7 @@
 <?php
     session_start();
     ob_start(); 
-	// error_reporting(0);
+	// error_reporting(0); 
 	include '../Connection/connection.php';
      
     spl_autoload_register(function ($class) {
@@ -45,6 +45,12 @@
 	<link rel="stylesheet" href="../Assets/css/lib/datatables-net/datatables.min.css">
 	<link rel="stylesheet" href="../Assets/css/separate/vendor/datatables-net.min.css">
 	<link rel="stylesheet" href="../Assets/css/separate/vendor/tags_editor.min.css">
+
+		<!--Sweetalert-->
+	<script  src="../Assets/js/lib/sweetalert/sweetalert2.min.js"></script>
+	<link rel="stylesheet"  href="../Assets/js/lib/sweetalert/sweetalert2.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
+
 
 	<link rel="stylesheet" type="text/css" href="../Assets/css/lib/uploadfile/component.css" />
 	<script>(function(e,t,n){var r=e.querySelectorAll("html")[0];r.className=r.className.replace(/(^|\s)no-js(\s|$)/,"$1js$2")})(document,window,0);</script>
