@@ -140,7 +140,7 @@
 								
 										<fieldset class="form-group">
 											<label class="form-label">Judul</label>
-											<input type="text" name="judul" required class="form-control maxlength-simple" id="exampleInput" placeholder="Judul" maxlength="15">
+											<input type="text" name="judul" required class="form-control maxlength-simple" id="exampleInput" placeholder="Judul" >
 										</fieldset>
 										<fieldset class="form-group">
 											<label class="form-label">Deskripsi</label>
@@ -218,7 +218,7 @@
 								
 										<fieldset class="form-group">
 											<label class="form-label">Judul</label>
-											<input type="text" name="judul" required class="form-control maxlength-simple" id="exampleInput" value="<?php echo $getMediaById['judul'];?>" placeholder="Judul" maxlength="15">
+											<input type="text" name="judul" required class="form-control maxlength-simple" id="exampleInput" value="<?php echo $getMediaById['judul'];?>" placeholder="Judul" >
 										</fieldset>
 										<fieldset class="form-group">
 											<label class="form-label">Deskripsi</label>

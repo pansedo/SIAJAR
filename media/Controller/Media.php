@@ -130,14 +130,14 @@ class Media
     	}
         
     }
-    public function PaggingByUser($page){
+    public function PaggingByUser($id,$page){
 		$page = isset($_GET['page']) ? $_GET['page'] : 1;
     	$limit = 9;
     	$skip = ($page - 1)*$limit;
     	$next = ($page+1);
     	$prev = ($page-1);
     	$query =  $this -> table -> find(array("id_user"=> "$id"))->skip($skip)->limit($limit);
-    	$total= $cursor->count();
+    	$total= $query->count();
 		if($page > 1){
 			    echo '<a class="btn btn-sucess" href="?page=' . $prev . '"><b>< Previous</b> </a>';
 			    if($page * $limit < $total) {

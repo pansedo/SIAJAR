@@ -94,7 +94,7 @@
 												</a>
 											</div>
 											<div class="tbl-cell">
-												<p class="user-card-row-name"><a href="#"><?php echo $data['judul']; ?></a></p>
+												<p class="user-card-row-name"><a href="product.php?id=<?php echo base64_encode($data['_id']);?>"><?php echo $data['judul']; ?></a></p>
 												<p class="color-blue-grey-lighter">3 days ago - 23 min read</p>
 											</div>
 											<div class="tbl-cell tbl-cell-status">
@@ -104,9 +104,9 @@
 									</div>
 								</div>
 								<div class="card-typical-section card-typical-content">
-									<!-- <div class="photo" style="min-width: 200px; height:300px; background-image:url('<?php echo $data['path_image']; ?>'; position: center center"> -->
+									<!-- <div class="photo" style="min-width: 200px; height:300px; background-image:url('<?php// echo $data['path_image']; ?>'; position: center center"> -->
 									 <div class="photo" > 
-										<img style="  min-width: 200px; height:300px; background:<?php echo $data['path_image']; ?>" src="<?php echo $data['path_image']; ?>"  alt="">
+										<a href="product.php?id=<?php echo base64_encode($data['_id']);?>"><img style="  min-width: 200px; height:300px; background:<?php echo $data['path_image']; ?>" src="<?php echo $data['path_image']; ?>"  alt=""></a>
 									</div>
 									<header class="title"><a href="#"></a></header>
 									<p><?php echo substr($data['deskripsi'], 0, 30)."..."; ?></p>

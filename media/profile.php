@@ -180,7 +180,7 @@
 									<div class="photo">
 										<img src="<?php echo $data['path_image']; ?>" alt="">
 									</div>
-									<header class="title"><a href="#"><?php echo $data['judul']; ?></a></header>
+									<header class="title"><a href="product.php?id=<?php echo base64_encode($data['_id']);?>"><?php echo $data['judul']; ?></a></header>
 									<p><?php echo substr($data['deskripsi'], 0, 100)."..."; ?></p>
 								</div>
 								<div class="card-typical-section">
@@ -205,10 +205,10 @@
 				</div>
 				<div class="col-lg-12" align="center">
 					<?php
-						$classMedia->pagging(isset($_GET['page']) ? $_GET['page'] : 1);
+						$classMedia->paggingByUser($id_users, isset($_GET['page']) ? $_GET['page'] : 1);
 					?>
 				</div>
-				<button class="btn btn-primary" onclick="myFunction()">Test</button>
+				<!-- <button class="btn btn-primary" onclick="myFunction()">Test</button> -->
 				</div>
 				
 			</div><!--.row-->
