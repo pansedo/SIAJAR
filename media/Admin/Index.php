@@ -10,51 +10,39 @@
 	        <div class="row">
 	        	<div class="col-xl-6">
 	                <section class="box-typical box-typical-dashboard panel panel-default scrollable">
-	                    <header class="box-typical-header panel-heading">
-	                        <h3 class="panel-title">Recent tickets</h3>
-	                    </header>
-	                    <div class="box-typical-body panel-body">
-	                        <table class="tbl-typical">
-	                            <tr>
-	                                <th><div>Status</div></th>
-	                                <th><div>Subject</div></th>
-	                                <th align="center"><div>Department</div></th>
-	                                <th align="center"><div>Date</div></th>
-	                            </tr>
-	                            <tr>
-	                                <td>
-	                                    <span class="label label-success">Open</span>
-	                                </td>
-	                                <td>Website down for one week</td>
-	                                <td align="center">Support</td>
-	                                <td nowrap align="center"><span class="semibold">Today</span> 8:30</td>
-	                            </tr>
-	                            <tr>
-	                                <td>
-	                                    <span class="label label-success">Open</span>
-	                                </td>
-	                                <td>Restoring default settings</td>
-	                                <td align="center">Support</td>
-	                                <td nowrap align="center"><span class="semibold">Today</span> 16:30</td>
-	                            </tr>
-	                            <tr>
-	                                <td>
-	                                    <span class="label label-warning">Progress</span>
-	                                </td>
-	                                <td>Loosing control on server</td>
-	                                <td align="center">Support</td>
-	                                <td nowrap align="center"><span class="semibold">Yesterday</span></td>
-	                            </tr>
-	                            <tr>
-	                                <td>
-	                                    <span class="label label-danger">Closed</span>
-	                                </td>
-	                                <td>Authorizations keys</td>
-	                                <td align="center">Support</td>
-	                                <td nowrap align="center">23th May</td>
-	                            </tr>
-	                        </table>
-	                    </div><!--.box-typical-body-->
+	                   <table id="table-edit" class="table table-bordered table-hover">
+				<thead>
+				<tr>
+					<th width="1">
+						#
+					</th>
+					<th>Name</th>
+					<th>Description</th>
+					<th class="table-icon-cell">
+						<i class="font-icon font-icon-heart"></i>
+					</th>
+					<th class="table-icon-cell">
+						<i class="font-icon font-icon-comment"></i>
+					</th>
+					<th width="120">Date Created</th>
+					<th></th>
+				</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>1</td>
+						<td>Last quarter revene</td>
+						<td class="color-blue-grey-lighter">Revene for last quarter in state America for year 2013, whith...</td>
+						<td class="table-icon-cell">5</td>
+						<td class="table-icon-cell">24</td>
+						<td class="table-date">6 minets ago</td>
+						<td class="table-photo">
+							<img src="img/photo-64-1.jpg" alt="" data-toggle="tooltip" data-placement="bottom" title="Nicholas<br/>Barrett">
+						</td>
+					</tr>
+					
+				</tbody>
+			</table>
 	                </section><!--.box-typical-dashboard-->
 	                <section class="box-typical box-typical-dashboard panel panel-default scrollable">
 	                    <header class="box-typical-header panel-heading">
