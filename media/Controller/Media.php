@@ -253,10 +253,6 @@ class Media
         	$inserts = array("id_dokumen" => "$IDDokumen", "nama" => $tag );
         	$inserttag = $this -> db -> tag -> insert($inserts);
         }
-<<<<<<< HEAD
-
-=======
->>>>>>> 9102362e27203db36fdb675b79e3ea52610b279b
         echo "<script type='text/javascript'>swal({
 				  title: 'Berhasil !',
 				  text: 'Media ajar berhasil disimpan!',
@@ -272,13 +268,7 @@ class Media
 				      console.log('I was closed by the timer')
 				    }
 				  })</script>";
-		echo "<script type='text/javascript'>document.location.href='media.php'</script>";
-<<<<<<< HEAD
-
-		echo "<script>alert('Data berhasil di tambah !'); document.location.href='media.php'</script>";
-
-=======
->>>>>>> 9102362e27203db36fdb675b79e3ea52610b279b
+	
     }
 
     public function CreateMediaUser($iduser,$judul,$deskripsi,$kategori,$tags,$tautan,$dokumen,$image)
