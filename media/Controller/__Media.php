@@ -1,7 +1,6 @@
 <?php
 class Media
 { 
-
 	public function __construct() {
         try {
             global $db; 
@@ -10,7 +9,7 @@ class Media
             $this->table = $this->db->$tableName;
         } catch(Exception $e) {
             echo "Database Not Connection";
-            exit(); 
+            exit();
         }
     }
     public function GetMedia()
@@ -28,7 +27,6 @@ class Media
     			$media[$i]['kategori'] = $kategori['kategori'];
     			$i++;
     		}
-
     	}
     	
         if ($count > 0) {
@@ -37,7 +35,6 @@ class Media
     		return $count;
     	}
     }
-
     public function GetMediaPagging()
     {
     	$page = isset($_GET['page']) ? $_GET['page'] : 1;
@@ -46,7 +43,7 @@ class Media
     	$next = ($page+1);
     	$prev = ($page-1);
     	$short = array('_id' => -1);
-    	$query =  $this -> table -> find()->skip($skip)->limit($limit)->sort($short);
+    	$query =  $this -> table -> find()->skip($skip)->limit($limit);
     	// echo $query;
     	$count = $query->count();
     	if ($count > 0) {
@@ -60,7 +57,6 @@ class Media
     			$media[$i]['kategori'] = $kategori['kategori'];
     			$i++;
     		}
-
     	}
     	
         if ($count > 0) {
@@ -69,7 +65,6 @@ class Media
     		return $count;
     	}
     }
-
     public function Pagging($page){
 		$page = isset($_GET['page']) ? $_GET['page'] : 1;
     	$limit = 9;
@@ -89,56 +84,15 @@ class Media
 			    }
 			}
     }
-
     public function GetMediaBy($id)
     {
     	$query =  $this -> table -> findone(array("_id"=> new MongoId($id)));
     	return $query;
     }
-
     public function GetMediaByLimit($limit){
     	$query = $this-> table-> find () -> limit($limit);
-    	$count = $query->count();
-    	if ($count > 0) {
-    		$i = 0;
-    		foreach ($query as $row) {
-    			$data = $this->db->user->findOne(array("_id"=> new MongoId($row['id_user'])));
-    			$kategori = $this->db->kategori->findone(array("_id"=> new MongoId($row['id_kategori'])));
-    			$media[$i]=$row;
-    			$media[$i]['nama_user'] = $data['nama'];
-    			$media[$i]['foto'] = $data['foto'];
-    			$media[$i]['kategori'] = $kategori['kategori'];
-    			$i++;
-    		}
-
-    	}
-    	
-        if ($count > 0) {
-    		return $media;
-    	}else{
-    		return $count;
-    	}
-    }
-
-    public function GetCountData()
-    {	
-    	$query['dokumen'] = $this-> table-> find () -> count();
-    	$query['user'] = $this-> db -> user -> find () -> count();
- 	 	$query['tag'] = $this-> db -> tag -> count();
- 	 	$query['kategori'] = $this-> db -> kategori -> find((array("sub_id"=>"0"))) ->count();
-		// $query['tag'] = $this-> db -> tag -> aggregate ([
-		// 		{ $group: {
-		// 		    "_id": "$nama"
-		// 			}
-		// 		},
-		// 	    {
-		// 	      $count: "total"
-		// 	    }
-		// ]);
-
     	return $query;
     }
-
     public function GetMediabyUser($id)
     {
     	$page = isset($_GET['page']) ? $_GET['page'] : 1;
@@ -147,7 +101,7 @@ class Media
     	$next = ($page+1);
     	$prev = ($page-1);
     	$short = array('_id' => -1);
-    	$query =  $this -> table -> find(array("id_user"=> "$id"))->skip($skip)->limit($limit)->sort($short);
+    	$query =  $this -> table -> find(array("id_user"=> "$id"))->skip($skip)->limit($limit);
     	$count = $query->count();
     	if ($count > 0) {
     		$i = 0;
@@ -193,15 +147,12 @@ class Media
 		$nama_file_image   	= $_FILES['image']['name'];
 		$type_file_image   	= pathinfo($nama_file_image,PATHINFO_EXTENSION);
 		$namagambar			= md5($iduser.date('Y-m-d H:i:s:u')).".".$type_file_image; 
-
 		$lokasi_file_dokumen = $_FILES['dokumen']['tmp_name'];
 		$nama_file_dokumen   = $_FILES['dokumen']['name'];
 		$type_file_dokumen   = pathinfo($nama_file_dokumen,PATHINFO_EXTENSION);
 		$namadokumen		 = md5($iduser.date('Y-m-d H:i:s:u')).".".$type_file_dokumen; 
-
     	$idDirektoriGambar  = "../Media/Gambar/".$iduser;
 		$idDirektoriDokumen = "../Media/Dokumen/".$iduser;
-
 		if (!is_dir($idDirektoriGambar)&&!is_dir($idDirektoriDokumen)) {
 			mkdir($idDirektoriGambar, 0744);
 			mkdir($idDirektoriDokumen, 0744);
@@ -211,10 +162,8 @@ class Media
 		}elseif (!is_dir($idDirektoriDokumen)) {
 			mkdir($idDirektoriDokumen, 0744);
 		}
-
     	chmod($idDirektoriGambar, 0777);
     	chmod($idDirektoriDokumen, 0777);
-
 		$direktori_image   	= "Media/Gambar/".$iduser."/".$namagambar;
 	    move_uploaded_file($lokasi_file_image,"../".$direktori_image);
 	    
@@ -229,10 +178,8 @@ class Media
 				die();
 		    }
 	    }
-
 	    chmod($idDirektoriGambar, 0744);
     	chmod($idDirektoriDokumen, 0744);
-
     	$insert = array("id_user" => $iduser,
     	 "judul" => $judul ,
     	 "deskripsi" => $deskripsi ,
@@ -244,7 +191,6 @@ class Media
     	 "date_created" => date("Y-m-d H:i:s"),
     	 "date_modified" => date("Y-m-d H:i:s")
     	 );
-
         $insertdokumen = $this -> table -> insert($insert);
         $IDDokumen = $insert['_id'];
         
@@ -253,28 +199,8 @@ class Media
         	$inserts = array("id_dokumen" => "$IDDokumen", "nama" => $tag );
         	$inserttag = $this -> db -> tag -> insert($inserts);
         }
-
-        echo "<script type='text/javascript'>swal({
-				  title: 'Berhasil !',
-				  text: 'Media ajar berhasil disimpan!',
-				  type: 'success',
-				  timer: 2000
-				}).then(
-				  function () {
-				  	document.location.href='media.php';
-				  },
-				  function (dismiss) {
-				  	document.location.href='media.php';
-				    if (dismiss === 'timer') {
-				      console.log('I was closed by the timer')
-				    }
-				  })</script>";
-		echo "<script type='text/javascript'>document.location.href='media.php'</script>";
-
 		echo "<script>alert('Data berhasil di tambah !'); document.location.href='media.php'</script>";
-
     }
-
     public function CreateMediaUser($iduser,$judul,$deskripsi,$kategori,$tags,$tautan,$dokumen,$image)
     {	 
     	if (isset($_FILES['image']['name'])) {
@@ -287,16 +213,13 @@ class Media
 	    	$format_img = array("jpg","png","jpeg");
 	    	$format = array("jpg", "jpeg", "png", "gif", "bmp", "pdf", "doc", "docx", "ppt", "pptx", "xls", "xlsx", "mp4", "3gp", "flv", "avi", "mp3", "ogg");
 	    	$idDirektoriGambar = "Media/Gambar/".$iduser;
-
 	    	if(in_array(strtolower($type_file_image), $format_img)){
 				if (!is_dir($idDirektoriGambar)) {
 					mkdir($idDirektoriGambar, 0744);
 				}
 		    	chmod($idDirektoriGambar, 0777);
-
 				$direktori_image   	= "Media/Gambar/".$iduser."/".$namagambar;
 			    $upload_gambar = move_uploaded_file($lokasi_file_image,$direktori_image);
-
 			    if ($upload_gambar) {
 			    	# code...
 				    if (isset($_FILES['dokumen']['name'])) {
@@ -306,7 +229,6 @@ class Media
 						$type_file_dokumen   = pathinfo($nama_file_dokumen,PATHINFO_EXTENSION);
 						$namadokumen		 = md5($iduser.date('Y-m-d H:i:s:u')).".".$type_file_dokumen;
 						$idDirektoriDokumen = "Media/Dokumen/".$iduser;
-
 						if(in_array(strtolower($type_file_dokumen), $format)){
 							if (!is_dir($idDirektoriDokumen)) {
 								mkdir($idDirektoriDokumen, 0744);
@@ -315,7 +237,6 @@ class Media
 					    	chmod($idDirektoriDokumen, 0777);
 					    	$direktori_dokumen   = "Media/Dokumen/".$iduser."/".$namadokumen;
 				    		$upload_dokumen = move_uploaded_file($lokasi_file_dokumen,$direktori_dokumen);
-
 				    		if ($upload_dokumen) {
 				    			# code...
 				    			$insert = array("id_user" => "$iduser",
@@ -329,7 +250,6 @@ class Media
 						    	 "date_created" => date("Y-m-d H:i:s"),
 						    	 "date_modified" => date("Y-m-d H:i:s")
 						    	  );
-
 						        $insertdokumen = $this -> table -> insert($insert);
 						        $IDDokumen = $insert['_id'];
 						        
@@ -338,7 +258,6 @@ class Media
 						        	$inserts = array("id_dokumen" => $IDDokumen, "nama" => $tag );
 						        	$inserttag = $this -> db -> tag -> insert($inserts);
 						        }
-
 						        if ($insertdokumen) {
 						        	# code...
 						        	chmod($idDirektoriDokumen, 0744);
@@ -403,7 +322,6 @@ class Media
 								    	"active" => "active",
 								    	"date_created" => date("Y-m-d H:i:s"),
 								    	"date_modified" => date("Y-m-d H:i:s" ));
-
 					        $insertdokumen = $this -> table -> insert($insert);
 					        $IDDokumen = $insert['_id'];
 					        
@@ -412,7 +330,6 @@ class Media
 					        	$inserts = array("id_dokumen" => $IDDokumen, "nama" => $tag );
 					        	$inserttag = $this -> db -> tag -> insert($inserts);
 					        }
-
 					        if ($insertdokumen) {
 					        	# code...
 					        	echo "<script type='text/javascript'>swal({
@@ -451,7 +368,6 @@ class Media
 			    }
 		    chmod($idDirektoriGambar, 0744);
 	    	
-
 	    	}else{
 	    		echo "<script type='text/javascript'>swal({
 															  title: 'Gagal !',
@@ -487,7 +403,6 @@ class Media
 															  })</script>";
     	}
     }
-
     public function EditMedia($id,$iduser,$judul,$deskripsi,$kategori,$tags,$tautan,$dokumen,$image,$gambar_lama,$file_lama)
     {
     	
@@ -497,17 +412,14 @@ class Media
 			$type_file_dokumen   = pathinfo($nama_file_dokumen,PATHINFO_EXTENSION);
 			$namadokumen		 = md5($iduser.date('Y-m-d H:i:s:u')).".".$type_file_dokumen;
     	}
-
     	if ($image != "") {
     		$lokasi_file_image 	= $_FILES['image']['tmp_name'];
 			$nama_file_image   	= $_FILES['image']['name'];
 			$type_file_image   	= pathinfo($nama_file_image,PATHINFO_EXTENSION);
 			$namagambar			= md5($iduser.date('Y-m-d H:i:s:u')).".".$type_file_image; 
     	}
-
     	$idDirektoriGambar = "Media/Gambar/".$iduser;
 		$idDirektoriDokumen = "Media/Dokumen/".$iduser;
-
 		if (!is_dir($idDirektoriGambar)&&!is_dir($idDirektoriDokumen)) {
 			mkdir("../".$idDirektoriGambar, 0744);
 			mkdir("../".$idDirektoriDokumen, 0744);
@@ -517,10 +429,8 @@ class Media
 		}elseif (!is_dir($idDirektoriDokumen)) {
 			mkdir("../".$idDirektoriDokumen, 0744);
 		}
-
 		chmod("../".$idDirektoriGambar, 0777);
     	chmod("../".$idDirektoriDokumen, 0777);
-
 	    $direktori_dokumen = "";
 	    if ($dokumen != "") {
     		$format = array("doc", "docx", "pdf","xls","ppt","pptx");
@@ -606,10 +516,10 @@ class Media
 	    			}
 	    		}
     	}
-
 	    chmod($idDirektoriGambar, 0744);
     	chmod($idDirektoriDokumen, 0744);
     	
+    	print_r($edit);
         $updatedokumen = $this ->table -> update(array("_id"=> new MongoId($id)),array('$set'=>$edit)); 
 		
 		
@@ -618,48 +528,17 @@ class Media
 			$deleteTags = array(
 				"id_dokumen" => "$id"
 				);  
-
 			$deleteTag = $this -> db -> tag ->remove($deleteTags);  
-
 			$explodetags = explode(",",$tags);
 			foreach ($explodetags as $tag) {
 				$inserts = array("id_dokumen" => "$id", "nama" => $tag );
 				$inserttag = $this -> db -> tag -> insert($inserts);
 			}
-			echo "<script type='text/javascript'>swal({
-				  title: 'Berhasil !',
-				  text: 'Media ajar berhasil di rubah!',
-				  type: 'success',
-				  timer: 2000
-				}).then(
-				  function () {
-				  	document.location.href='media.php';
-				  },
-				  function (dismiss) {
-				  	document.location.href='media.php';
-				    if (dismiss === 'timer') {
-				      console.log('I was closed by the timer')
-				    }
-				  })</script>";
+			echo "<script>alert('Data berhasil di rubah !'); document.location.href='media.php'</script>";
 		}else{
-			echo "<script type='text/javascript'>swal({
-				  title: 'Berhasil !',
-				  text: 'Media ajar berhasil di rubah!',
-				  type: 'warning',
-				  timer: 2000
-				}).then(
-				  function () {
-				  	document.location.href='media.php';
-				  },
-				  function (dismiss) {
-				  	document.location.href='media.php';
-				    if (dismiss === 'timer') {
-				      console.log('I was closed by the timer')
-				    }
-				  })</script>";
+			echo "<script>alert('Data gagal di rubah !'); </script>";
 		}
     }
-
     public function EditMediaUser($id,$iduser,$judul,$deskripsi,$kategori,$tags,$tautan,$dokumen,$image,$gambar_lama,$file_lama)
     {
     	
@@ -669,17 +548,14 @@ class Media
 			$type_file_dokumen   = pathinfo($nama_file_dokumen,PATHINFO_EXTENSION);
 			$namadokumen		 = md5($iduser.date('Y-m-d H:i:s:u')).".".$type_file_dokumen;
     	}
-
     	if ($image != "") {
     		$lokasi_file_image 	= $_FILES['image']['tmp_name'];
 			$nama_file_image   	= $_FILES['image']['name'];
 			$type_file_image   	= pathinfo($nama_file_image,PATHINFO_EXTENSION);
 			$namagambar			= md5($iduser.date('Y-m-d H:i:s:u')).".".$type_file_image; 
     	}
-
     	$idDirektoriGambar = "Media/Gambar/".$iduser;
 		$idDirektoriDokumen = "Media/Dokumen/".$iduser;
-
 		if (!is_dir($idDirektoriGambar)&&!is_dir($idDirektoriDokumen)) {
 			mkdir($idDirektoriGambar, 0744);
 			mkdir($idDirektoriDokumen, 0744);
@@ -689,10 +565,8 @@ class Media
 		}elseif (!is_dir($idDirektoriDokumen)) {
 			mkdir($idDirektoriDokumen, 0744);
 		}
-
 		chmod($idDirektoriGambar, 0777);
     	chmod($idDirektoriDokumen, 0777);
-
 	    $direktori_dokumen = "";
 	    if ($dokumen != "") {
     		$format = array("jpg", "jpeg", "png", "gif", "bmp", "pdf", "doc", "docx", "ppt", "pptx", "xls", "xlsx", "mp4", "3gp", "flv", "avi", "mp3", "ogg");
@@ -793,11 +667,9 @@ class Media
 		    		}
 		    	}
 	    }
-
 	    chmod($idDirektoriGambar, 0744);
     	chmod($idDirektoriDokumen, 0744);
     	
-
         $updatedokumen = $this ->table -> update(array("_id"=> new MongoId($id)),array('$set'=>$edit)); 
 		
 		
@@ -806,9 +678,7 @@ class Media
 			$deleteTags = array(
 				"id_dokumen" => "$id"
 				);  
-
 			$deleteTag = $this -> db -> tag ->remove($deleteTags);  
-
 			$explodetags = explode(",",$tags);
 			foreach ($explodetags as $tag) {
 				$inserts = array("id_dokumen" => "$id", "nama" => $tag );
@@ -836,32 +706,25 @@ class Media
 			echo "<script>alert('Data gagal di rubah !'); </script>";
 		}
     }
-
     public function Delete($id)
     {
     	$dokumen = array("_id" => new MongoId($id));
     	$query =  $this -> table -> findone($dokumen);
-
     	$idDirektoriGambar  = "../Media/Gambar/".$query["id_user"];
 		$idDirektoriDokumen = "../Media/Dokumen/".$query["id_user"];
     	
 		chmod($idDirektoriGambar, 0777);
     	chmod($idDirektoriDokumen, 0777);
-
 		$deletegambar = unlink("../".$query["path_image"]);    	
 		$deletedokumen = unlink("../".$query["path_document"]);    
     	 
     	chmod($idDirektoriGambar, 0744);
     	chmod($idDirektoriDokumen, 0744);
-
 		$this -> table -> remove($dokumen);
-
 		$deleteTags = array(
 			"id_dokumen" => "$id"
 			);  
-
 		$deleteTag = $this -> db -> tag ->remove($deleteTags);  
-
 		echo "<script>alert('Data berhasil di delete !'); document.location.href='Media.php'</script>";
     }
     
@@ -869,27 +732,21 @@ class Media
     {
     	$dokumen = array("_id" => new MongoId($id));
     	$query =  $this -> table -> findone($dokumen);
-
     	$idDirektoriGambar  = "Media/Gambar/".$query["id_user"];
 		$idDirektoriDokumen = "Media/Dokumen/".$query["id_user"];
     	
 		chmod($idDirektoriGambar, 0777);
     	chmod($idDirektoriDokumen, 0777);
-
 		$deletegambar = unlink($query["path_image"]);    	
 		$deletedokumen = unlink($query["path_document"]);    
     	 
     	chmod($idDirektoriGambar, 0744);
     	chmod($idDirektoriDokumen, 0744);
-
 		$delete= $this -> table -> remove($dokumen);
-
 		$deleteTags = array(
 			"id_dokumen" => "$id"
 			);  
-
 		$deleteTag = $this -> db -> tag ->remove($deleteTags);  
-
 		if ($delete) {
 			# code...
 			echo "<script>swal({
@@ -928,5 +785,4 @@ class Media
 		}
     }
 }
-
 ?>

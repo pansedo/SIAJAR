@@ -79,9 +79,9 @@
 						foreach ($getMediaPagging as $data) {
 					?>
 						<div class="col-lg-4 col-lg-pull-6 col-md-6 col-sm-6" style="padding-bottom: 15px;">
-						<div class="card-grid-col">
+						<!-- <div class="card-grid-col"> -->
 							<article class="card-typical">
-								<div class="card-typical-section">
+								<div class="card-typical-section" style="height:90px">
 									<div class="user-card-row">
 										<div class="tbl-row">
 											<div class="tbl-cell tbl-cell-photo">
@@ -115,7 +115,7 @@
 									</a> -->
 								</div>
 							</article><!--.card-typical-->
-						</div>
+						<!-- </div> -->
 						</div>
 						<?php
 							}
