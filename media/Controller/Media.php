@@ -253,10 +253,7 @@ class Media
         	$inserts = array("id_dokumen" => "$IDDokumen", "nama" => $tag );
         	$inserttag = $this -> db -> tag -> insert($inserts);
         }
-<<<<<<< HEAD
 
-=======
->>>>>>> 9102362e27203db36fdb675b79e3ea52610b279b
         echo "<script type='text/javascript'>swal({
 				  title: 'Berhasil !',
 				  text: 'Media ajar berhasil disimpan!',
@@ -272,19 +269,15 @@ class Media
 				      console.log('I was closed by the timer')
 				    }
 				  })</script>";
-		echo "<script type='text/javascript'>document.location.href='media.php'</script>";
-<<<<<<< HEAD
 
-		echo "<script>alert('Data berhasil di tambah !'); document.location.href='media.php'</script>";
 
-=======
->>>>>>> 9102362e27203db36fdb675b79e3ea52610b279b
     }
 
     public function CreateMediaUser($iduser,$judul,$deskripsi,$kategori,$tags,$tautan,$dokumen,$image)
     {	 
+    	$old = umask(0);
     	if (isset($_FILES['image']['name'])) {
-    	
+    		
     		$lokasi_file_image 	= $_FILES['image']['tmp_name'];
 			$nama_file_image   	= $_FILES['image']['name'];
 			$type_file_image   	= pathinfo($nama_file_image,PATHINFO_EXTENSION);
@@ -296,7 +289,7 @@ class Media
 
 	    	if(in_array(strtolower($type_file_image), $format_img)){
 				if (!is_dir($idDirektoriGambar)) {
-					mkdir($idDirektoriGambar, 0744);
+					mkdir($idDirektoriGambar, 0777);
 				}
 		    	chmod($idDirektoriGambar, 0777);
 
@@ -492,6 +485,7 @@ class Media
 															    }
 															  })</script>";
     	}
+    	umask($old);
     }
 
     public function EditMedia($id,$iduser,$judul,$deskripsi,$kategori,$tags,$tautan,$dokumen,$image,$gambar_lama,$file_lama)
@@ -515,8 +509,8 @@ class Media
 		$idDirektoriDokumen = "Media/Dokumen/".$iduser;
 
 		if (!is_dir($idDirektoriGambar)&&!is_dir($idDirektoriDokumen)) {
-			mkdir("../".$idDirektoriGambar, 0744);
-			mkdir("../".$idDirektoriDokumen, 0744);
+			mkdir("../".$idDirektoriGambar, 0777);
+			mkdir("../".$idDirektoriDokumen, 0777);
 		}
 		elseif(!is_dir($idDirektoriGambar)){
 		    mkdir("../".$idDirektoriGambar, 0744);
@@ -979,8 +973,9 @@ class Media
     	$next = ($page+1);
     	$prev = ($page-1);
     	$short = array('_id' => -1);
-    	$query =  $this -> table -> find(array('$text' => array('$search' => $texts)))-> skip($skip)->limit($limit);
-    	
+    	$query =  $this -> table -> find(array('$text' => array('$search' => '$texts')))->skip($skip)->limit($limit);
+    	// echo " find(array('$text' => array('$search' => $texts)))->skip($skip)->limit($limit)";
+    	print_r($query);
     	$count = $query->count();
     	if ($count > 0) {
     		$i = 0;
