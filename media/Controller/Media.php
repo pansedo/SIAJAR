@@ -253,7 +253,10 @@ class Media
         	$inserts = array("id_dokumen" => "$IDDokumen", "nama" => $tag );
         	$inserttag = $this -> db -> tag -> insert($inserts);
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9102362e27203db36fdb675b79e3ea52610b279b
         echo "<script type='text/javascript'>swal({
 				  title: 'Berhasil !',
 				  text: 'Media ajar berhasil disimpan!',
@@ -270,9 +273,12 @@ class Media
 				    }
 				  })</script>";
 		echo "<script type='text/javascript'>document.location.href='media.php'</script>";
+<<<<<<< HEAD
 
 		echo "<script>alert('Data berhasil di tambah !'); document.location.href='media.php'</script>";
 
+=======
+>>>>>>> 9102362e27203db36fdb675b79e3ea52610b279b
     }
 
     public function CreateMediaUser($iduser,$judul,$deskripsi,$kategori,$tags,$tautan,$dokumen,$image)
@@ -927,6 +933,113 @@ class Media
 				</script>";
 		}
     }
+
+    // const ACCENT_STRINGS = 'ŠŒŽšœžŸ¥µÀÁÂÃÄÅÆÇÈÉÊËẼÌÍÎÏĨÐÑÒÓÔÕÖØÙÚÛÜÝßàáâãäåæçèéêëẽìíîïĩðñòóôõöøùúûüýÿ';
+    // const NO_ACCENT_STRINGS = 'SOZsozYYuAAAAAAACEEEEEIIIIIDNOOOOOOUUUUYsaaaaaaaceeeeeiiiiionoooooouuuuyy';
+
+  //    public function accentToRegex($text)
+  //   {
+ 
+  //       $from = str_split(utf8_decode(self::ACCENT_STRINGS));
+  //       $to   = str_split(strtolower(self::NO_ACCENT_STRINGS));
+  //       $text = utf8_decode($text);
+  //       $regex = array();
+  //       foreach ($to as $key => $value) {
+  //           if (isset($regex[$value])) {
+  //               $regex[$value] .= $from[$key];
+  //           } else {
+  //               $regex[$value] = $value;
+  //           }
+  //       }
+  //       foreach ($regex as $rg_key => $rg) {
+  //           $text = preg_replace("/[$rg]/", "_{$rg_key}_", $text);
+  //       }
+  //       foreach ($regex as $rg_key => $rg) {
+  //           $text = preg_replace("/_{$rg_key}_/", "[$rg]", $text);
+  //       }
+ 	// 	 $search = utf8_encode($text);
+ 	// 	$query =  array('judul' =>new MongoRegex("/.*{$search}.*/i"));
+ 	// 	// db.dokumen.find({$text:{$search:"$query"}})
+		// $cursosr = $this -> table ->find(array($text=>array($search=>"$text")));
+		// // $cursosr = $this -> table ->find($query);
+		// var_dump($query);
+		// foreach ($cursosr as $key ) {
+		// 	print_r($key['judul']);
+		// 	var_dump($key['judul']);
+		// }
+		
+		// // return $cursor;
+       
+  //   }
+    public function SearchData($texts)
+    {	
+    	$page = isset($_GET['page']) ? $_GET['page'] : 1;
+    	$limit = 15;
+    	$skip = ($page - 1)*$limit;
+    	$next = ($page+1);
+    	$prev = ($page-1);
+    	$short = array('_id' => -1);
+    	$query =  $this -> table -> find(array('$text' => array('$search' => $texts)))-> skip($skip)->limit($limit);
+    	
+    	$count = $query->count();
+    	if ($count > 0) {
+    		$i = 0;
+    		foreach ($query as $row) {
+    			$data = $this->db->user->findOne(array("_id"=> new MongoId($row['id_user'])));
+    			$kategori = $this->db->kategori->findone(array("_id"=> new MongoId($row['id_kategori'])));
+    			$media[$i]=$row;
+    			$media[$i]['nama_user'] = $data['nama'];
+    			$media[$i]['foto'] = $data['foto'];
+    			$media[$i]['kategori'] = $kategori['kategori'];
+    			$i++;
+    		}
+
+    	}else{
+			echo "<script type='text/javascript'>swal({
+					  title: 'Data Tidak Ditemukan',
+					  text: 'Data Tidak Ditemukan!',
+					  type: 'error',
+					  timer: 2000
+					}).then(
+					  function () {
+					  	document.location.href='index.php';
+					  },
+					  function (dismiss) {
+					  	document.location.href='index.php';
+					    if (dismiss === 'timer') {
+					      console.log('I was closed by the timer')
+					    }
+				  })</script>";
+    		die();
+    	}
+    	
+        if ($count > 0) {
+    		return $media;
+    	}else{
+    		return $count;
+    	}
+    }
+
+     public function PaggingSearch($page,$texts){
+		$page = isset($_GET['page']) ? $_GET['page'] : 1;
+    	$limit = 9;
+    	$skip = ($page - 1)*$limit;
+    	$next = ($page+1);
+    	$prev = ($page-1);
+    	$cursor = $this -> table -> find(array('$text' => array('$search' => $texts)))-> skip($skip)->limit($limit);
+    	$total= $cursor->count();
+		if($page > 1){
+			    echo '<a class="btn btn-sucess" href="?page=' . $prev . '"><b>< Previous</b> </a>';
+			    if($page * $limit < $total) {
+			        echo ' <a class="btn btn-sucess" href="?page=' . $next . '"><b>Next ></b></a>';
+			    }
+			} else {
+			    if($page * $limit < $total) {
+			        echo ' <a class="btn btn-sucess" href="?page=' . $next . '"><b>Next ></b></a>';
+			    }
+			}
+    }
+
 }
 
 ?>
