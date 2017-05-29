@@ -116,14 +116,14 @@
 	                <div class="mobile-menu-right-overlay"></div>
 	                <div class="site-header-collapsed">
 	                    <div class="site-header-collapsed-in">
-	                    
+	                     
 	                        <div class="site-header-search-container">
-
-	                            <form class="site-header-search closed">
-	                                <input type="text" placeholder="Search"/>
-	                                <button type="submit">
+	                            <form action="search.php" method="POST" name="pencarian" id="pencarian" class="site-header-search closed">
+	                                <input type="text"  name="search" id="search" placeholder="Search"/>
+	                               <!--  <button type="submit" name="submit"> 
 	                                    <span class="font-icon-search"></span>
-	                                </button>
+	                                </button> -->
+	                                 <input type="SUBMIT" name="SUBMIT" id="SUBMIT" value="search" >
 	                                <div class="overlay"></div>
 	                            </form>
 

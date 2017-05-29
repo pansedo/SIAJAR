@@ -147,13 +147,14 @@
 			                	}
 			                ?>
 
-	                            <form class="site-header-search">
-	                                <input type="text" placeholder="Search"/>
+	                            <form action="search.php" method="POST" class="site-header-search">
+	                                <input type="text"  name="search"  placeholder="Search"/>
 	                                <button type="submit">
 	                                    <span class="font-icon-search"></span>
 	                                </button>
 	                                <div class="overlay"></div>
 	                            </form>
+	                              
 						 
 
 	                        </div>
