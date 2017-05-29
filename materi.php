@@ -33,7 +33,8 @@ $infoMapel	= $mapelClass->getInfoMapel($_GET['pelajaran']);
 
 if(isset($_POST['terbitkanMateri'])){
 	$rest = $modulClass->submitMateri($_GET['id'], $_POST['isi']);
-	echo "<script>alert('Gagal Update $rest')</script>";
+	$rest = implode($rest);
+	echo "<script>alert('$rest')</script>";
 	if ($rest['status'] == "Success") {
 		echo "<script>alert('".$rest['status']."'); document.location='materi.php?id=".$_GET['id']."&pelajaran=".$_GET['pelajaran']."'</script>";
 	}else{

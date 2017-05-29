@@ -42,19 +42,19 @@ class Modul
 
     public function submitMateri($id_modul, $materi){
 
-        $document   = array("materi"=>$materi, "date_modified"=>date('Y-m-d H:i:s'));
+        $document   = array('$set' => array("materi"=>$materi, "date_modified"=>date('Y-m-d H:i:s')));
 
         $options    = array('$set' => array("upsert" => false, "multiple" => true));
 
         try {
-            $this->db->modul->update(array("_id" => new MongoId($id)), $document, $options);
+            $this->db->modul->update(array("_id" => new MongoId($id)), $document);
             $status     = "Success";
         } catch(MongoCursorException $e) {
             $status     = "Failed";
         }
 
         $result = array("status" => $status, "IDModul" => $id_modul);
-        return $e->getMessage();
+        return $result;
     }
 
 }
