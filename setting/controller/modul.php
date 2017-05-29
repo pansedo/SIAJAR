@@ -27,7 +27,7 @@ class Modul
 
     public function addModul($nama, $mapel, $user){
         $newID  = "";
-        $insert = array("id_mapel"=>$mapel, "nama" => $nama, "creator" => "$user", "date_created"=>date('Y-m-d H:i:s'), "date_modified"=>date('Y-m-d H:i:s'));
+        $insert = array("id_mapel"=>$mapel, "nama" => $nama, "materi" => "", "creator" => "$user", "date_created"=>date('Y-m-d H:i:s'), "date_modified"=>date('Y-m-d H:i:s'));
                   $this->db->modul->insert($insert);
         if ($insert) {
             $newID  = $insert['_id'];
@@ -38,6 +38,23 @@ class Modul
 
         $result = array("status" => $status, "IDMapel" => $mapel);
         return $result;
+    }
+
+    public function submitMateri($id_modul, $materi){
+
+        $document   = array("materi"=>$materi, "date_modified"=>date('Y-m-d H:i:s'));
+
+        $options    = array('$set' => array("upsert" => false, "multiple" => true));
+
+        try {
+            $this->db->modul->update(array("_id" => new MongoId($id)), $document, $options);
+            $status     = "Success";
+        } catch(MongoCursorException $e) {
+            $status     = "Failed";
+        }
+
+        $result = array("status" => $status, "IDModul" => $id_modul);
+        return $e->getMessage();
     }
 
 }

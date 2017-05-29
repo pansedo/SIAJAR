@@ -1,16 +1,52 @@
 <?php
 require("includes/header-top.php");
 ?>
-<link rel="stylesheet" href="assets/css/separate/pages/files.min.css">
+<link rel="stylesheet" href="assets/editor/css/plugins/code_view.css">
+<link rel="stylesheet" href="assets/editor/css/plugins/draggable.css">
+<link rel="stylesheet" href="assets/editor/css/plugins/colors.css">
+<link rel="stylesheet" href="assets/editor/css/plugins/emoticons.css">
+<link rel="stylesheet" href="assets/editor/css/plugins/image_manager.css">
+<link rel="stylesheet" href="assets/editor/css/plugins/image.css">
+<link rel="stylesheet" href="assets/editor/css/plugins/line_breaker.css">
+<link rel="stylesheet" href="assets/editor/css/plugins/table.css">
+<link rel="stylesheet" href="assets/editor/css/plugins/char_counter.css">
+<link rel="stylesheet" href="assets/editor/css/plugins/video.css">
+<link rel="stylesheet" href="assets/editor/css/plugins/fullscreen.css">
+<link rel="stylesheet" href="assets/editor/css/plugins/file.css">
+<link rel="stylesheet" href="assets/editor/css/plugins/quick_insert.css">
+<link rel="stylesheet" href="assets/editor/css/plugins/help.css">
+<link rel="stylesheet" href="assets/editor/css/plugins/special_characters.css">
+<link type="text/css" rel="stylesheet" href="assets/editor/css/froala_style.css"/>
+<link type="text/css" rel="stylesheet" href="assets/editor/css/froala_editor.pkgd.min.css"/>
+<link type="text/css" rel="stylesheet" href="assets/editor/css/themes/gray.css"/>
+
 <?php
 require("includes/header-menu.php");
 
-$mapelClass = new Mapel();
-$modulClass = new Modul();
+$mapelClass 	= new Mapel();
+$modulClass 	= new Modul();
+$materiClass	= new Materi();
 
-$infoMapel	= $mapelClass->getInfoMapel($_GET['pelajaran']);
-$infoModul	= $modulClass->getInfoModul($_GET['id']);
 $menuModul	= 2;
+$infoModul	= $modulClass->getInfoModul($_GET['id']);
+$infoMapel	= $mapelClass->getInfoMapel($_GET['pelajaran']);
+
+if(isset($_POST['terbitkanMateri'])){
+	$rest = $modulClass->submitMateri($_GET['id'], $_POST['isi']);
+	echo "<script>alert('Gagal Update $rest')</script>";
+	if ($rest['status'] == "Success") {
+		echo "<script>alert('".$rest['status']."'); document.location='materi.php?id=".$_GET['id']."&pelajaran=".$_GET['pelajaran']."'</script>";
+	}else{
+		echo "<script>alert('Gagal Update')</script>";
+	}
+}
+
+if(isset($_GET['materi'])){
+	$infoMateri	= $materiClass->getInfoMateri($_GET['materi']);
+	$isiMateri	= $infoMateri['file'];
+}else{
+	$isiMateri	= "";
+}
 ?>
 	<div class="modal fade"
 		 id="addKelas"
@@ -176,102 +212,54 @@ $menuModul	= 2;
 							<div role="tabpanel" class="tab-pane active" id="tabs-2-tab-1">
 
 								<article class="box-typical profile-post">
-									<div class="profile-post-header" style="border-bottom: solid 1px rgba(216, 226, 231, 0);">
-										<div class="user-card-row">
-											<div class="tbl-row">
-												<div class="tbl-cell tbl-cell-photo">
-													<a href="#">
-														<img src="assets/img/folder.png" alt="">
-													</a>
+									<form id="form_modul" method="POST" action="">
+										<div class="profile-post-header" style="border-bottom: solid 1px rgba(216, 226, 231, 0);">
+											<div class="user-card-row">
+												<div class="tbl-row">
+													<div class="tbl-cell tbl-cell-photo">
+														<a href="#">
+															<img src="assets/img/folder.png" alt="">
+														</a>
+													</div>
+													<div class="tbl-cell">
+														<div class="user-card-row-name"><a href="#">Materi</a></div>
+														<div class="color-blue-grey-lighter">3 days ago - 23 min read</div>
+													</div>
 												</div>
-												<div class="tbl-cell">
-													<div class="user-card-row-name"><a href="#">Materi</a></div>
-													<div class="color-blue-grey-lighter">3 days ago - 23 min read</div>
+											</div>
+											<a href="#" class="shared">
+												<i class="font-icon font-icon-pencil"></i>
+											</a>
+										</div>
+
+										<textarea id="editor" name="isi">
+											<?=$isiMateri?>
+										</textarea>
+
+										<div class="box-typical-footer">
+											<div class="tbl">
+												<div class="tbl-row">
+													<div class="tbl-cell">
+														<button type="button" class="btn-icon">
+															<i class="font-icon font-icon-earth"></i>
+														</button>
+														<button type="button" class="btn-icon">
+															<i class="font-icon font-icon-picture"></i>
+														</button>
+														<button type="button" class="btn-icon">
+															<i class="font-icon font-icon-calend"></i>
+														</button>
+														<button type="button" class="btn-icon">
+															<i class="font-icon font-icon-video-fill"></i>
+														</button>
+													</div>
+													<div class="tbl-cell tbl-cell-action">
+														<button type="submit" name="terbitkanMateri" class="btn btn-rounded">Terbitkan</button>
+													</div>
 												</div>
 											</div>
 										</div>
-										<a href="#" class="shared">
-											<i class="font-icon font-icon-share"></i>
-										</a>
-									</div>
-									<input type="text" class="write-something" placeholder="Tuliskan deskripsi materi"/>
-									<div>
-										<div class="files-manager-content-in" style="margin-right:0px; border-right: 0px; border-top: solid 1px #d8e2e7;">
-											<div class="fm-file-grid">
-												<div class="fm-file">
-													<div class="fm-file-icon">
-														<img src="assets/img/file-pdf.png" alt="">
-													</div>
-													<div class="fm-file-name">Inspiration</div>
-												</div>
-												<div class="fm-file">
-													<div class="fm-file-icon">
-														<img src="assets/img/file-pdf.png" alt="">
-													</div>
-													<div class="fm-file-name">Inspiration</div>
-												</div>
-												<div class="fm-file">
-													<div class="fm-file-icon">
-														<img src="assets/img/file-pdf.png" alt="">
-													</div>
-													<div class="fm-file-name">Inspiration</div>
-												</div>
-												<div class="fm-file">
-													<div class="fm-file-icon">
-														<img src="assets/img/file-pdf.png" alt="">
-													</div>
-													<div class="fm-file-name">2014_projects.rar</div>
-												</div>
-												<div class="fm-file">
-													<div class="fm-file-icon">
-														<img src="assets/img/file-doc.png" alt="">
-													</div>
-													<div class="fm-file-name">Inspiration</div>
-												</div>
-												<div class="fm-file">
-													<div class="fm-file-icon">
-														<img src="assets/img/file-doc.png" alt="">
-													</div>
-													<div class="fm-file-name">Inspiration</div>
-												</div>
-												<div class="fm-file">
-													<div class="fm-file-icon">
-														<img src="assets/img/file-xls.png" alt="">
-													</div>
-													<div class="fm-file-name">Inspiration</div>
-												</div>
-												<div class="fm-file">
-													<div class="fm-file-icon">
-														<img src="assets/img/file-xls.png" alt="">
-													</div>
-													<div class="fm-file-name">Inspiration</div>
-												</div>
-											</div>
-										</div><!--.files-manager-content-in-->
-									</div>
-									<div class="box-typical-footer">
-										<div class="tbl">
-											<div class="tbl-row">
-												<div class="tbl-cell">
-													<button type="button" class="btn-icon">
-														<i class="font-icon font-icon-earth"></i>
-													</button>
-													<button type="button" class="btn-icon">
-														<i class="font-icon font-icon-picture"></i>
-													</button>
-													<button type="button" class="btn-icon">
-														<i class="font-icon font-icon-calend"></i>
-													</button>
-													<button type="button" class="btn-icon">
-														<i class="font-icon font-icon-video-fill"></i>
-													</button>
-												</div>
-												<div class="tbl-cell tbl-cell-action">
-													<button type="submit" class="btn btn-rounded">Terbitkan</button>
-												</div>
-											</div>
-										</div>
-									</div>
+									</form>
 								</article>
 
 							</div><!--.tab-pane-->
@@ -286,13 +274,71 @@ $menuModul	= 2;
 <?php
 	require('includes/footer-top.php');
 ?>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/codemirror.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/mode/xml/xml.min.js"></script>
+
+	<script type="text/javascript" src="assets/editor/js/froala_editor.pkgd.min.js"></script>
+	<script type="text/javascript" src="assets/editor/js/plugins/froala_wiris/integration/WIRISplugins.js?viewer=image"></script>
+	<script type="text/javascript" src="assets/editor/js/plugins/froala_wiris/wiris.js"></script>
+	<script type="text/javascript" src="assets/editor/js/plugins/align.min.js"></script>
+	<script type="text/javascript" src="assets/editor/js/plugins/char_counter.min.js"></script>
+	<script type="text/javascript" src="assets/editor/js/plugins/code_beautifier.min.js"></script>
+	<script type="text/javascript" src="assets/editor/js/plugins/code_view.min.js"></script>
+	<script type="text/javascript" src="assets/editor/js/plugins/colors.min.js"></script>
+	<script type="text/javascript" src="assets/editor/js/plugins/draggable.min.js"></script>
+	<script type="text/javascript" src="assets/editor/js/plugins/emoticons.min.js"></script>
+	<script type="text/javascript" src="assets/editor/js/plugins/entities.min.js"></script>
+	<script type="text/javascript" src="assets/editor/js/plugins/file.min.js"></script>
+	<script type="text/javascript" src="assets/editor/js/plugins/font_size.min.js"></script>
+	<script type="text/javascript" src="assets/editor/js/plugins/font_family.min.js"></script>
+	<script type="text/javascript" src="assets/editor/js/plugins/fullscreen.min.js"></script>
+	<script type="text/javascript" src="assets/editor/js/plugins/image.min.js"></script>
+	<script type="text/javascript" src="assets/editor/js/plugins/image_manager.min.js"></script>
+	<script type="text/javascript" src="assets/editor/js/plugins/line_breaker.min.js"></script>
+	<script type="text/javascript" src="assets/editor/js/plugins/inline_style.min.js"></script>
+	<script type="text/javascript" src="assets/editor/js/plugins/link.min.js"></script>
+	<script type="text/javascript" src="assets/editor/js/plugins/lists.min.js"></script>
+	<script type="text/javascript" src="assets/editor/js/plugins/paragraph_format.min.js"></script>
+	<script type="text/javascript" src="assets/editor/js/plugins/paragraph_style.min.js"></script>
+	<script type="text/javascript" src="assets/editor/js/plugins/quick_insert.min.js"></script>
+	<script type="text/javascript" src="assets/editor/js/plugins/quote.min.js"></script>
+	<script type="text/javascript" src="assets/editor/js/plugins/table.min.js"></script>
+	<script type="text/javascript" src="assets/editor/js/plugins/save.min.js"></script>
+	<script type="text/javascript" src="assets/editor/js/plugins/url.min.js"></script>
+	<script type="text/javascript" src="assets/editor/js/plugins/video.min.js"></script>
+	<script type="text/javascript" src="assets/editor/js/plugins/help.min.js"></script>
+	<script type="text/javascript" src="assets/editor/js/plugins/print.min.js"></script>
+	<script type="text/javascript" src="assets/editor/js/plugins/special_characters.min.js"></script>
+	<script type="text/javascript" src="assets/editor/js/plugins/word_paste.min.js"></script>
+	<script src="assets/editor/init.js"></script>
 
 	<script>
+
 		function clearText(elementID){
 			$(elementID).html("");
 		}
 
+		$("#ohyeah").click(function(){
+			$.ajax({
+				type: 'POST',
+				url: 'url-API/Siswa/index.php',
+				data: {"action": "update", "text": "tôi"},
+				success: function(res) {
+					alert(res.text1);
+					alert(res.text2);
+					alert(res.text3);
+				},
+				error: function () {
+
+				}
+			});
+		})
+
 		$(document).ready(function() {
+
+
+			$('.note-statusbar').hide();
+
 			$(".fancybox").fancybox({
 				padding: 0,
 				openEffect	: 'none',
@@ -330,34 +376,11 @@ $menuModul	= 2;
 				hide_min_max: true,
 				hide_from_to: true
 			});
-
-			$("#example-vertical").steps({
-				headerTag: "h3",
-				bodyTag: "section",
-				transitionEffect: "slideLeft",
-				stepsOrientation: "vertical"
-			});
-
 		});
 	</script>
-	<script>
-		$("#ohyeah").click(function(){
-			$.ajax({
-  				type: 'POST',
-  				url: 'url-API/Siswa/index.php',
-  				data: {"action": "update", "text": "tôi"},
-  				success: function(res) {
-	  				alert(res.text1);
-	  				alert(res.text2);
-	  				alert(res.text3);
-  				},
-  				error: function () {
 
-  				}
-  			});
-		})
-	</script>
-<script src="assets/js/app.js"></script>
+	<script src="assets/js/app.js"></script>
+
 <?php
 	require('includes/footer-bottom.php');
 ?>

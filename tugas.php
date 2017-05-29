@@ -2,6 +2,17 @@
 require("includes/header-top.php");
 ?>
 <link rel="stylesheet" href="assets/css/separate/pages/files.min.css">
+<link rel="stylesheet" href="assets/css/lib/summernote/summernote.css"/>
+<link rel="stylesheet" href="assets/css/separate/pages/editor.min.css">
+<style>
+.note-editor .note-toolbar{
+	border: 0px;
+}
+
+.note-editor.note-frame .note-editing-area {
+	border: 0px;
+}
+</style>
 <?php
 require("includes/header-menu.php");
 
@@ -194,7 +205,9 @@ $menuModul	= 3;
 											<i class="font-icon font-icon-share"></i>
 										</a>
 									</div>
-									<input type="text" class="write-something" placeholder="Tuliskan deskripsi tugas"/>
+									<div class="summernote-theme-1">
+										<textarea class="summernote" name="name">Hello Summernote</textarea>
+									</div>
 									<div>
 										<div class="files-manager-content-in" style="margin-right:0px; border-right: 0px; border-top: solid 1px #d8e2e7;">
 											<div class="fm-file-grid">
@@ -286,13 +299,39 @@ $menuModul	= 3;
 <?php
 	require('includes/footer-top.php');
 ?>
+	<script src="assets/js/lib/summernote/summernote.min.js"></script>
 
 	<script>
 		function clearText(elementID){
 			$(elementID).html("");
 		}
 
+		$("#ohyeah").click(function(){
+			$.ajax({
+				type: 'POST',
+				url: 'url-API/Siswa/index.php',
+				data: {"action": "update", "text": "tôi"},
+				success: function(res) {
+					alert(res.text1);
+					alert(res.text2);
+					alert(res.text3);
+				},
+				error: function () {
+
+				}
+			});
+		})
+
 		$(document).ready(function() {
+			$('.summernote').summernote({
+				height: 300,                 // set editor height
+				minHeight: null,             // set minimum height of editor
+				maxHeight: null,             // set maximum height of editor
+				disableResizeEditor: true
+			});
+
+			$('.note-statusbar').hide();
+
 			$(".fancybox").fancybox({
 				padding: 0,
 				openEffect	: 'none',
@@ -340,24 +379,8 @@ $menuModul	= 3;
 
 		});
 	</script>
-	<script>
-		$("#ohyeah").click(function(){
-			$.ajax({
-  				type: 'POST',
-  				url: 'url-API/Siswa/index.php',
-  				data: {"action": "update", "text": "tôi"},
-  				success: function(res) {
-	  				alert(res.text1);
-	  				alert(res.text2);
-	  				alert(res.text3);
-  				},
-  				error: function () {
 
-  				}
-  			});
-		})
-	</script>
-<script src="assets/js/app.js"></script>
+	<script src="assets/js/app.js"></script>
 <?php
 	require('includes/footer-bottom.php');
 ?>
