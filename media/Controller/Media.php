@@ -253,6 +253,7 @@ class Media
         	$inserts = array("id_dokumen" => "$IDDokumen", "nama" => $tag );
         	$inserttag = $this -> db -> tag -> insert($inserts);
         }
+
         echo "<script type='text/javascript'>swal({
 				  title: 'Berhasil !',
 				  text: 'Media ajar berhasil disimpan!',
@@ -268,13 +269,14 @@ class Media
 				      console.log('I was closed by the timer')
 				    }
 				  })</script>";
-	
+
     }
 
     public function CreateMediaUser($iduser,$judul,$deskripsi,$kategori,$tags,$tautan,$dokumen,$image)
     {	 
+    	$old = umask(0);
     	if (isset($_FILES['image']['name'])) {
-    	
+    		
     		$lokasi_file_image 	= $_FILES['image']['tmp_name'];
 			$nama_file_image   	= $_FILES['image']['name'];
 			$type_file_image   	= pathinfo($nama_file_image,PATHINFO_EXTENSION);
@@ -286,7 +288,7 @@ class Media
 
 	    	if(in_array(strtolower($type_file_image), $format_img)){
 				if (!is_dir($idDirektoriGambar)) {
-					mkdir($idDirektoriGambar, 0744);
+					mkdir($idDirektoriGambar, 0777);
 				}
 		    	chmod($idDirektoriGambar, 0777);
 
@@ -482,6 +484,7 @@ class Media
 															    }
 															  })</script>";
     	}
+    	umask($old);
     }
 
     public function EditMedia($id,$iduser,$judul,$deskripsi,$kategori,$tags,$tautan,$dokumen,$image,$gambar_lama,$file_lama)
@@ -505,8 +508,8 @@ class Media
 		$idDirektoriDokumen = "Media/Dokumen/".$iduser;
 
 		if (!is_dir($idDirektoriGambar)&&!is_dir($idDirektoriDokumen)) {
-			mkdir("../".$idDirektoriGambar, 0744);
-			mkdir("../".$idDirektoriDokumen, 0744);
+			mkdir("../".$idDirektoriGambar, 0777);
+			mkdir("../".$idDirektoriDokumen, 0777);
 		}
 		elseif(!is_dir($idDirektoriGambar)){
 		    mkdir("../".$idDirektoriGambar, 0744);
@@ -969,8 +972,9 @@ class Media
     	$next = ($page+1);
     	$prev = ($page-1);
     	$short = array('_id' => -1);
-    	$query =  $this -> table -> find(array('$text' => array('$search' => $texts)))-> skip($skip)->limit($limit);
-    	
+    	$query =  $this -> table -> find(array('$text' => array('$search' => '$texts')))->skip($skip)->limit($limit);
+    	// echo " find(array('$text' => array('$search' => $texts)))->skip($skip)->limit($limit)";
+    	print_r($query);
     	$count = $query->count();
     	if ($count > 0) {
     		$i = 0;
@@ -1028,6 +1032,56 @@ class Media
 			        echo ' <a class="btn btn-sucess" href="?page=' . $next . '"><b>Next ></b></a>';
 			    }
 			}
+    }
+
+    public function classMediaByKategori($idkat)
+    {	
+		$page = isset($_GET['page']) ? $_GET['page'] : 1;
+    	$limit = 15;
+    	$skip = ($page - 1)*$limit;
+    	$next = ($page+1);
+    	$prev = ($page-1);
+    	$short = array('_id' => -1);
+    	$query =  $this -> table -> find(array("id_kategori" => "$idkat"))-> skip($skip)->limit($limit);
+    	
+    	$count = $query->count();
+    	if ($count > 0) {
+    		$i = 0;
+    		foreach ($query as $row) {
+    			$data = $this->db->user->findOne(array("_id"=> new MongoId($row['id_user'])));
+    			$kategori = $this->db->kategori->findone(array("_id"=> new MongoId($row['id_kategori'])));
+    			$media[$i]=$row;
+    			$media[$i]['nama_user'] = $data['nama'];
+    			$media[$i]['foto'] = $data['foto'];
+    			$media[$i]['kategori'] = $kategori['kategori'];
+    			$i++;
+    		}
+
+    	}else{
+			echo "<script type='text/javascript'>swal({
+					  title: 'Data Tidak Ditemukan',
+					  text: 'Data Tidak Ditemukan!',
+					  type: 'error',
+					  timer: 2000
+					}).then(
+					  function () {
+					  	document.location.href='index.php';
+					  },
+					  function (dismiss) {
+					  	document.location.href='index.php';
+					    if (dismiss === 'timer') {
+					      console.log('I was closed by the timer')
+					    }
+				  })</script>";
+    		die();
+    	}
+    	
+        if ($count > 0) {
+    		return $media;
+    	}else{
+    		return $count;
+    	}
+    	
     }
 
 }

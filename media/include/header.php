@@ -1,5 +1,5 @@
 <?php
-    session_start();
+    session_start(); 
     ob_start(); 
 	// error_reporting(0);
 	include 'Connection/connection.php';
@@ -111,9 +111,9 @@
 	                            </a>
 
 	                            <div class="dropdown-menu" aria-labelledby="dd-header-marketing">
-	                            <?php
+	                            <?php 
 	                            	foreach ($getkategoriutama as $data) {
-	                            		echo "<a class='dropdown-item' href='#'>".$data['kategori']."</a>";
+	                            		echo "<a class='dropdown-item' href='kategori.php?idkat=".base64_encode($data['_id'])."'>".$data['kategori']."</a>";
 	                            	}
 	                            ?>
 	                                <!-- <a class="dropdown-item" href="#">Digital Class Development 1</a>

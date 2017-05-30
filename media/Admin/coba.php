@@ -19,10 +19,12 @@
     // 	 echo $key['nama_user'];
     // 	 echo $key['count'];
     // }
-    $x = $classPopular->TagTerbanyak();
-    foreach ($x as $key) {
-    	echo $key['_id'];
-    }
-    	print_r($x);
+    // $x = $classPopular->TagTerbanyak();
+    // foreach ($x as $key) {
+    // 	echo $key['_id'];
+    // }
+    // 	print_r($x);
+
+    $x = $classMedia->classMediaByKategori("591012131192a6dc1800002a");
    
 ?>
