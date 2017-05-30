@@ -155,6 +155,11 @@
 					<?php
 						}
 						if($getMediaById['tautan'] != ""){
+							if (substr($getMediaById['tautan'], 0,4) == "http"){
+								$http = "";
+							}else{
+								$http = "http://";
+							}
 					?>
 						<header class="proj-page-subtitle">
 								<h3>Link</h3>
@@ -165,7 +170,7 @@
 								<p class="name"><?php echo $getMediaById['judul'];?></p>
 								<p class="date"><?php echo date_format($date,'d-m-Y H:i:s');?></p>
 								<p>
-									<a href="http://<?php echo $getMediaById['tautan'];?>" target="_blank">View</a>
+									<a href="<?php echo $http;echo $getMediaById['tautan'];?>" target="_blank">View</a>
 								</p>
 							</div>
 					<?php
