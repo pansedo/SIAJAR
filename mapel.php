@@ -204,7 +204,7 @@ $listModul	= $modulClass->getListbyMapel($_GET['id']);
 												</div>
 												<div class="tbl-cell">
 													<p>
-														<a href="prasyarat.php?id=<?=$modul['_id']?>&pelajaran=<?=$_GET['id']?>" class="semibold"><?=$modul['nama']?></a>
+														<a href="prasyarat.php?modul=<?=$modul['_id']?>" class="semibold"><?=$modul['nama']?></a>
 														added a new product
 														<a href="#">Free UI Kit</a>
 													</p>

@@ -18,15 +18,16 @@ function createEditorInstance(lang, wiriseditorparameters) {
         toolbarButtonsMD: toolbar,
         toolbarButtonsSM: toolbar,
         toolbarButtonsXS: toolbar,
+		toolbarSticky: false,
         htmlAllowedTags:   ['.*'],
         htmlAllowedAttrs: ['.*'],
+		linkAutoPrefix: 'https://localhost/siajar/',
         language: lang,
         imageResize : false,
         key: 'lrqpD6E-11cyeI-7A11lE-13B-13==',
         imageUploadURL: 'url-API/Editor/upload.php',
         fileUploadURL: 'url-API/Editor/upload.php',
-        videoUploadURL: 'url-API/Editor/upload.php',
-		height: 280
+        videoUploadURL: 'url-API/Editor/upload.php'
     }).on('froalaEditor.image.removed', function (e, editor, $img) {
 
 		var imageDeleted = String($img.attr("src")).split("/").pop();
@@ -89,5 +90,3 @@ function createEditorInstance(lang, wiriseditorparameters) {
         })
     });
 }
-
-createEditorInstance('en', {});

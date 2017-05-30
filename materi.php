@@ -1,6 +1,7 @@
 <?php
 require("includes/header-top.php");
 ?>
+<link rel="stylesheet" href="assets/css/separate/pages/others.min.css">
 <link rel="stylesheet" href="assets/editor/css/plugins/code_view.css">
 <link rel="stylesheet" href="assets/editor/css/plugins/draggable.css">
 <link rel="stylesheet" href="assets/editor/css/plugins/colors.css">
@@ -25,28 +26,27 @@ require("includes/header-menu.php");
 
 $mapelClass 	= new Mapel();
 $modulClass 	= new Modul();
-$materiClass	= new Materi();
+$materiClass 	= new Materi();
 
-$menuModul	= 2;
-$infoModul	= $modulClass->getInfoModul($_GET['id']);
-$infoMapel	= $mapelClass->getInfoMapel($_GET['pelajaran']);
+$menuModul		= 2;
+$infoModul		= $modulClass->getInfoModul($_GET['modul']);
+$infoMapel		= $mapelClass->getInfoMapel($infoModul['id_mapel']);
+$infoMateri		= $materiClass->getInfoMateri($_GET['modul']);
 
-if(isset($_POST['terbitkanMateri'])){
-	$rest = $modulClass->submitMateri($_GET['id'], $_POST['isi']);
-	$rest = implode($rest);
-	echo "<script>alert('$rest')</script>";
+if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
+
+
+	if(isset($_POST['addMateri'])){
+		$rest 	= $materiClass->addMateri($_GET['modul'], $_POST['judul'], $_POST['isi'], $_SESSION['lms_id']);
+	}else{
+		$rest 	= $materiClass->updateMateri($_GET['modul'], $_POST['judul'], $_POST['isi']);
+	}
+
 	if ($rest['status'] == "Success") {
-		echo "<script>alert('".$rest['status']."'); document.location='materi.php?id=".$_GET['id']."&pelajaran=".$_GET['pelajaran']."'</script>";
+		echo "<script>alert('".$rest['status']."'); document.location='materi.php?modul=".$_GET['modul']."'</script>";
 	}else{
 		echo "<script>alert('Gagal Update')</script>";
 	}
-}
-
-if(isset($_GET['materi'])){
-	$infoMateri	= $materiClass->getInfoMateri($_GET['materi']);
-	$isiMateri	= $infoMateri['file'];
-}else{
-	$isiMateri	= "";
 }
 ?>
 	<div class="modal fade"
@@ -208,64 +208,94 @@ if(isset($_GET['materi'])){
 				</div>
 
 				<div class="col-xl-9 col-lg-8">
-					<section class="tabs-section">
-						<div class="tab-content no-styled profile-tabs">
-							<div role="tabpanel" class="tab-pane active" id="tabs-2-tab-1">
 
-								<article class="box-typical profile-post">
-									<form id="form_modul" method="POST" action="">
-										<div class="profile-post-header" style="border-bottom: solid 1px rgba(216, 226, 231, 0);">
-											<div class="user-card-row">
-												<div class="tbl-row">
-													<div class="tbl-cell tbl-cell-photo">
-														<a href="#">
-															<img src="assets/img/folder.png" alt="">
-														</a>
-													</div>
-													<div class="tbl-cell">
-														<div class="user-card-row-name"><a href="#">Materi</a></div>
-														<div class="color-blue-grey-lighter">3 days ago - 23 min read</div>
-													</div>
-												</div>
-											</div>
-											<a href="#" class="shared">
-												<i class="font-icon font-icon-pencil"></i>
-											</a>
+					<article id="materi-editor" class="box-typical profile-post" style="display: none;">
+						<form method="POST" action="">
+							<div class="profile-post-header">
+								<div class="user-card-row">
+									<fieldset class="form-group">
+										<label class="form-label semibold">Judul</label>
+										<input type="text" class="form-control" name="judul" placeholder="Judul Materi" value="<?php echo (isset($infoMateri) ? $infoMateri['judul']: ''); ?>">
+									</fieldset>
+								</div>
+								<a href="#" id="btn-cancel" class="shared">
+									<i class="font-icon font-icon-del"></i>
+								</a>
+							</div>
+
+							<textarea id="editor" name="isi">
+							</textarea>
+
+							<div class="box-typical-footer">
+								<div class="tbl">
+									<div class="tbl-row">
+										<div class="tbl-cell tbl-cell-action">
+											<?php
+												if(!isset($infoMateri)){
+											?>
+											<button type="submit" name="addMateri" class="btn btn-rounded pull-right">Terbitkan</button>
+											<?php
+										}else{
+											?>
+											<button type="submit" name="updateMateri" class="btn btn-rounded pull-right">Perbarui</button>
+										<?php
+										}
+										?>
 										</div>
+									</div>
+								</div>
+							</div>
+						</form>
+					</article>
 
-										<textarea id="editor" name="isi">
-											<?=$isiMateri?>
-										</textarea>
+					<article id="materi-preview" class="box-typical profile-post">
 
-										<div class="box-typical-footer">
-											<div class="tbl">
-												<div class="tbl-row">
-													<div class="tbl-cell">
-														<button type="button" class="btn-icon">
-															<i class="font-icon font-icon-earth"></i>
-														</button>
-														<button type="button" class="btn-icon">
-															<i class="font-icon font-icon-picture"></i>
-														</button>
-														<button type="button" class="btn-icon">
-															<i class="font-icon font-icon-calend"></i>
-														</button>
-														<button type="button" class="btn-icon">
-															<i class="font-icon font-icon-video-fill"></i>
-														</button>
-													</div>
-													<div class="tbl-cell tbl-cell-action">
-														<button type="submit" name="terbitkanMateri" class="btn btn-rounded">Terbitkan</button>
-													</div>
-												</div>
-											</div>
-										</div>
-									</form>
-								</article>
+						<?php
+							if(!isset($infoMateri)){
+						?>
 
-							</div><!--.tab-pane-->
-						</div><!--.tab-content-->
-					</section><!--.tabs-section-->
+						<div class="add-customers-screen tbl">
+							<div class="add-customers-screen-in">
+								<div class="add-customers-screen-user">
+									<i class="font-icon font-icon-folder"></i>
+								</div>
+								<h2>Materi Kosong</h2>
+								<p class="lead color-blue-grey-lighter">Belum ada materi yang ditambahkan<br/> Klik tombol tambah materi untuk menambahkan materi</p>
+								<a href="#" id="btn-tambah" class="btn">Tambah Materi</a>
+							</div>
+						</div>
+
+						<?php
+							}else{
+						?>
+
+						<div class="profile-post-header">
+							<div class="user-card-row">
+								<div class="tbl-row">
+									<div class="tbl-cell tbl-cell-photo">
+										<a href="#">
+											<img src="assets/img/folder.png" alt="">
+										</a>
+									</div>
+									<div class="tbl-cell">
+										<div class="user-card-row-name"><a href="#"><?=$infoMateri['judul']?></a></div>
+										<div class="color-blue-grey-lighter"><?php echo ($infoMateri['date_created'] == $infoMateri['date_modified'] ? "Diterbitkan pada " : "Diperbarui pada ").$infoMateri['date_modified']; ?></div>
+									</div>
+								</div>
+							</div>
+							<a href="#" id="btn-edit" class="shared">
+								<i class="font-icon font-icon-pencil"></i>
+							</a>
+						</div>
+
+						<div id="preview" class="profile-post-content">
+							<?=$infoMateri['file']?>
+						</div>
+
+						<?php
+							}
+						?>
+					</article>
 				</div>
 			</div><!--.row-->
 
@@ -311,12 +341,98 @@ if(isset($_GET['materi'])){
 	<script type="text/javascript" src="assets/editor/js/plugins/print.min.js"></script>
 	<script type="text/javascript" src="assets/editor/js/plugins/special_characters.min.js"></script>
 	<script type="text/javascript" src="assets/editor/js/plugins/word_paste.min.js"></script>
-	<script src="assets/editor/init.js"></script>
 
 	<script>
 
 		function clearText(elementID){
 			$(elementID).html("");
+		}
+
+		function createEditorInstance(lang, wiriseditorparameters) {
+			var toolbar = ['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent',
+		                    'indent', 'quote', '-', 'insertLink', 'insertImage', 'insertVideo', 'insertFile', 'insertTable', 'wirisEditor', 'wirisChemistry', '|', 'emoticons', 'specialCharacters', 'insertHR', 'selectAll', 'clearFormatting', '|', 'print'];
+			$('#editor').froalaEditor({
+		        // Add the custom buttons in the toolbarButtons list, after the separator.
+		        iframe: true,
+				theme: 'gray',
+		        //       toolbarInline: true,
+		        charCounterCount: false,
+		        imageEditButtons: ['imageDisplay', 'imageAlign', 'imageRemove'],
+		        toolbarButtons: toolbar,
+		        toolbarButtonsMD: toolbar,
+		        toolbarButtonsSM: toolbar,
+		        toolbarButtonsXS: toolbar,
+				toolbarSticky: false,
+		        htmlAllowedTags:   ['.*'],
+		        htmlAllowedAttrs: ['.*'],
+				linkAutoPrefix: 'https://localhost/siajar/',
+		        language: lang,
+		        imageResize : false,
+		        key: 'lrqpD6E-11cyeI-7A11lE-13B-13==',
+		        imageUploadURL: 'url-API/Editor/upload.php',
+		        fileUploadURL: 'url-API/Editor/upload.php',
+		        videoUploadURL: 'url-API/Editor/upload.php'
+		    }).on('froalaEditor.image.removed', function (e, editor, $img) {
+
+				var imageDeleted = String($img.attr("src")).split("/").pop();
+
+		        $.ajax({
+		            // Request method.
+		            method: "POST",
+
+		            // Request URL.
+		            url: "url-API/Editor/delete.php",
+
+		            // Request params.
+		            data: {
+		                file: imageDeleted
+		            }
+		        })
+		        .done (function (data) {
+		            console.log ('image was deleted '+data);
+		        })
+		        .fail (function () {
+		            console.log ('image delete problem');
+		        })
+		    }).on('froalaEditor.file.unlink', function (e, editor, link) {
+
+				var fileDeleted = String(link).split("/").pop();
+
+		        $.ajax({
+		            // Request method.
+		            method: "POST",
+
+		            // Request URL.
+		            url: "url-API/Editor/delete.php",
+
+		            // Request params.
+		            data: {
+		                file: fileDeleted
+		            }
+		        })
+		        .done (function (data) {
+		            console.log ('file was deleted '+data);
+		        })
+		    }).on('froalaEditor.video.removed', function (e, editor, $video) {
+
+		        var videoDeletedURL = $video.context.lastChild.src;
+
+		        $.ajax({
+		            // Request method.
+		            method: "POST",
+
+		            // Request URL.
+		            url: "url-API/Editor/delete.php",
+
+		            // Request params.
+		            data: {
+		                file: videoDeletedURL.split("/").pop()
+		            }
+		        })
+		        .done (function (data) {
+		            console.log ('video was deleted '+data);
+		        })
+		    });
 		}
 
 		$("#ohyeah").click(function(){
@@ -334,6 +450,27 @@ if(isset($_GET['materi'])){
 				}
 			});
 		})
+
+		// Destroy action.
+		$('#btn-cancel').on('click', function () {
+
+			if ($('#editor').data('froala.editor')) {
+				$('#editor').froalaEditor('destroy');
+				$('#materi-preview').show();
+				$('#materi-editor').hide();
+			}
+		});
+
+		// Initialize action.
+		$('#btn-tambah, #btn-edit').on('click', function () {
+
+			if (!$('#editor').data('froala.editor')) {
+				createEditorInstance('en', {});
+				$('#editor').froalaEditor('html.set', $('#preview').html());
+				$('#materi-preview').hide();
+				$('#materi-editor').show();
+			}
+		});
 
 		$(document).ready(function() {
 

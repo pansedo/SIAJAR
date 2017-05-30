@@ -9,7 +9,7 @@ $mapelClass = new Mapel();
 $modulClass = new Modul();
 
 $infoMapel	= $mapelClass->getInfoMapel($_GET['pelajaran']);
-$infoModul	= $modulClass->getInfoModul($_GET['id']);
+$infoModul	= $modulClass->getInfoModul($_GET['modul']);
 $menuModul	= 1;
 ?>
 	<div class="modal fade"
