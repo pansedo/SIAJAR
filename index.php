@@ -99,7 +99,7 @@ if(isset($_POST['joinKelas'])){
 										<div class="tbl-row">
 											<div class="tbl-cell">
 												<p class="title"><?=$_SESSION['lms_name']?></p>
-												<p><?=$_SESSION['lms_status']?></p>
+												<p><?=ucfirst($_SESSION['lms_status'])?></p>
 											</div>
 											<div class="tbl-cell tbl-cell-stat">
 												<div class="inline-block">
@@ -203,7 +203,7 @@ if(isset($_POST['joinKelas'])){
 								</p>
 								<p class="line-with-icon">
 									<i class="font-icon font-icon-user"></i>
-									Siswa
+									<?=ucfirst($_SESSION['lms_status'])?>
 								</p>
 								<p class="line-with-icon">
 									<i class="font-icon font-icon-facebook"></i>
