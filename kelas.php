@@ -233,7 +233,7 @@ if(isset($_POST['joinKelas'])){
 
 						<div class="tab-content no-styled profile-tabs">
 							<form class="box-typical">
-								<textarea type="text" class="write-something" placeholder="Apa yang ingin anda beritahukan?"></textarea>
+								<textarea class="write-something" placeholder="Apa yang ingin anda beritahukan?"></textarea>
 								<div class="box-typical-footer">
 									<div class="tbl">
 										<div class="tbl-row">
@@ -293,7 +293,7 @@ if(isset($_POST['joinKelas'])){
 										8 Comment
 									</a>
 								</div>
-								<div id="post1" style="display:none;">
+								<div id="post1">
 									<div class="comment-rows-container hover-action scrollable-block">
 										<div class="comment-row-item">
 											<div class="avatar-preview avatar-preview-32">
@@ -410,7 +410,7 @@ if(isset($_POST['joinKelas'])){
 											</div>
 										</div><!--.comment-row-item-->
 									</div><!--.comment-rows-container-->
-									<input type="text" class="write-something" placeholder="Leave a comment"/>
+									<textarea type="text" class="write-something" placeholder="Leave a comment"/></textarea>
 									<div class="box-typical-footer">
 										<div class="tbl">
 											<div class="tbl-row">
@@ -434,11 +434,16 @@ if(isset($_POST['joinKelas'])){
 <?php
 	require('includes/footer-top.php');
 ?>
+<script src="assets/js/lib/autoresize/autoresize-textarea.js"></script>
 
 	<script>
 		function clearText(elementID){
 			$(elementID).html("");
 		}
+
+		$(function(){
+	      $('textarea').autoResize();
+	    });
 
 
 		$(document).ready(function() {
