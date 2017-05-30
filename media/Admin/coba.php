@@ -9,8 +9,20 @@
     });
 
     $classMedia = new Media();
-    $text = "haha";
-    $tes = $classMedia->SearchData($text);
+    // $text = "haha";
+    // $tes = $classMedia->SearchData($text);
     // $tes = $classMedia->accentToRegex($text);
+    $classPopular = new Popular();
 
+    // $x =  $classPopular->DataTerbanyak();
+    // foreach ($x as $key) {
+    // 	 echo $key['nama_user'];
+    // 	 echo $key['count'];
+    // }
+    $x = $classPopular->TagTerbanyak();
+    foreach ($x as $key) {
+    	echo $key['_id'];
+    }
+    	print_r($x);
+   
 ?>

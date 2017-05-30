@@ -269,7 +269,6 @@ class Media
 				      console.log('I was closed by the timer')
 				    }
 				  })</script>";
-
     }
 
     public function CreateMediaUser($iduser,$judul,$deskripsi,$kategori,$tags,$tautan,$dokumen,$image)

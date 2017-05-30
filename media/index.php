@@ -3,13 +3,14 @@
 	include 'include/menu.php';
 	$classKategori = new Kategori();
 	$classMedia = new Media();
-
+	$classPopular = new Popular();
 
 
 	$getkategoriutama = $classKategori->GetKategoriUtama();
 	$getMedia = $classMedia->GetMedia();
 	$getMediaPagging = $classMedia->GetMediaPagging();
-
+	$getMediaTerbanyak = $classPopular->MediaTerbanyak();
+	$getTagTerbanyak = $classPopular->TagTerbanyak();
 
 ?>
 	<div class="page-content">
@@ -19,51 +20,50 @@
 						<aside class="profile-side">
 						<section class="box-typical">
 							<header class="box-typical-header-sm bordered">
-								Terbaru
+								Dokumen Terbanyak
 							</header>
+							<br>
 							<div class="friends-list">
 								<article class="friends-list-item">
-
-									<div class="user-card-row">
-										<div class="tbl-row">
-											<div class="tbl-cell tbl-cell-photo">
-												<a href="#">
-													<img  src="Assets/img/photo-64-2.jpg" alt="">
-												</a>
+									<?php 
+										foreach ($getMediaTerbanyak as $orang) {
+											?>
+											<div class="user-card-row">
+												<div class="tbl-row">
+													<div class="tbl-cell tbl-cell-photo">
+														<a href="#">
+															<img  src="Assets/img/photo-64-2.jpg" alt="">
+														</a>
+													</div>
+													<div class="tbl-cell">
+														<p class="user-card-row-name status-online"><a href="#"><?php echo $orang['nama_user'];?></a></p>
+														<p class="user-card-row-location"><?php echo $orang['sekolah_user'];?></p>
+													</div>
+												</div>
 											</div>
-											<div class="tbl-cell">
-												<p class="user-card-row-name status-online"><a href="#">Dan Cederholm</a></p>
-												<p class="user-card-row-location">New York</p>
-											</div>
-										</div>
-									</div>
-									<div class="user-card-row">
-										<div class="tbl-row">
-											<div class="tbl-cell tbl-cell-photo">
-												<a href="#">
-													<img  src="Assets/img/photo-64-2.jpg" alt="">
-												</a>
-											</div>
-											<div class="tbl-cell">
-												<p class="user-card-row-name status-online"><a href="#">Dan Cederholm</a></p>
-												<p class="user-card-row-location">New York</p>
-											</div>
-										</div>
-									</div>
+											<?php
+										}
+									?>
+									
 								</article>
 								
 							</div>
 						</section>
 
 						<section class="box-typical">
-							<header class="box-typical-header-sm bordered">Tentang Saya</header>
+							<header class="box-typical-header-sm bordered">Tag Terbanyak</header>
 							<div class="box-typical-inner">
 								<p>
 									</p><ul style="list-style-type: circle;margin-left: 20px;">
-										<li>Simple</li>
-										<li>Pekerja Keras</li>
-										<li>Periang</li>
-										<li>Rajin Olahraga</li>
+									<?php 
+										foreach ($getTagTerbanyak as $tags) {
+											if (is_array($tags)) {
+												foreach ($tags as $tag) {
+													echo "<a href='#' class='btn btn-inline btn-primary btn-sm ladda-button'>".$tag['_id']."</a>";
+												}
+											}
+										}
+									?>
 									</ul>
 								<p></p>
 							</div>
