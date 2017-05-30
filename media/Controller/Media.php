@@ -270,7 +270,6 @@ class Media
 				    }
 				  })</script>";
 
-
     }
 
     public function CreateMediaUser($iduser,$judul,$deskripsi,$kategori,$tags,$tautan,$dokumen,$image)
