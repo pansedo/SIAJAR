@@ -12,7 +12,7 @@
         $status     = $_SESSION['lms_status'];
     }
 
-    $classProfile = new Profile();
+    $classProfile = new Profile(); 
 	$classKategori = new Kategori();
 	$classMedia = new Media();
 	$classTag = new Tag();
@@ -39,10 +39,11 @@
         }else{
         	$dokumen = "";
         }
-        
+        // echo "<script>alert('test');</script>";
         $image = mysql_escape_string($_FILES['image']['name']);
         $iduser = $id_users;
         $classMedia->CreateMediaUser($iduser,$judul,$deskripsi,$kategori,$tags,$tautan,$dokumen,$image); 
+        
 	}
 	if (isset($_POST['update_media'])) {
 		# code...
@@ -79,41 +80,31 @@
 							</div>
 							<div class="profile-card-name"><?php echo $FuncProfile['nama'];?></div>
 							<div class="profile-card-status"><?php echo $FuncProfile['sekolah'];?></div>
-							<div class="profile-card-location">Asal Sekolah</div>
-							<button type="button" class="btn btn-rounded">Follow</button>
-							<button type="button" class="btn btn-danger btn-rounded">Wishlist</button>
+							<!-- <div class="profile-card-location">Asal Sekolah</div> -->
 						</div>
-
 						<div class="profile-statistic tbl">
 							<div class="tbl-row">
 								<div class="tbl-cell">
-									<b>200</b>
-									Connections
-								</div>
-								<div class="tbl-cell">
-									<b>57</b>
-									Books
+									<b><?php echo $getMediaCount; ?></b>
+									Media Bahan Ajar
 								</div>
 							</div>
 						</div>
 
 						<ul class="profile-links-list">
 							<li class="nowrap">
-								<i class="font-icon font-icon-earth-bordered"></i>
-								// <a href="#"><?php /*echo $FuncProfile['sosmed']['website'];*/?></a>
+								<i class="font-icon font-icon-earth-bordered"></i> 
+								<a href="#"><?php echo $FuncProfile['sosmed']['website'];?></a>
 							</li>
 							<li class="nowrap">
-								<i class="font-icon font-icon-fb-fill"></i>
-								<a href="#"><?php /*echo $FuncProfile['sosmed']['facebook'];*/?></a>
+								<i class="font-icon font-icon-fb-fill"></i> 
+								<a href="#"><?php echo $FuncProfile['sosmed']['facebook'];?></a>
 							</li>
 							<li class="nowrap">
-								<i class="font-icon font-icon-in-fill"></i>
-								<a href="#"><?php /*echo $FuncProfile['sosmed']['linkedin'];*/?></a>
-							</li>
-							<li class="nowrap">
-								<i class="font-icon font-icon-tw-fill"></i>
-								<a href="#"><?php /*echo $FuncProfile['sosmed']['twitter'];*/?></a>
-							</li>
+								<i class="font-icon font-icon-calend"></i> 
+								<a href="#"><?php echo selisih_waktu($FuncProfile['date_created']);?></a>
+							</li> 
+							 
 						</ul>
 					</section>
 				</div>
@@ -140,7 +131,7 @@
 								
 										<fieldset class="form-group">
 											<label class="form-label">Judul</label>
-											<input type="text" name="judul" required class="form-control maxlength-simple" id="exampleInput" placeholder="Judul" >
+											<input type="text" name="judul" required class="form-control maxlength-simple" id="exampleInput" placeholder="Judul" maxlength="45">
 										</fieldset>
 										<fieldset class="form-group">
 											<label class="form-label">Deskripsi</label>
@@ -227,7 +218,7 @@
 								
 										<fieldset class="form-group">
 											<label class="form-label">Judul</label>
-											<input type="text" name="judul" required class="form-control maxlength-simple" id="exampleInput" value="<?php echo $getMediaById['judul'];?>" placeholder="Judul" >
+											<input type="text" name="judul" required class="form-control maxlength-simple" id="exampleInput" value="<?php echo $getMediaById['judul'];?>" placeholder="Judul" maxlength="45">
 										</fieldset>
 										<fieldset class="form-group">
 											<label class="form-label">Deskripsi</label>

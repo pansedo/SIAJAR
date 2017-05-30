@@ -2,7 +2,7 @@
 	include "include/header.php";
 	include 'include/menu.php';
 
-	$classMedia = new Media();
+	$classMedia = new Media(); 
 	$classTag = new Tag();
 	$classProfile = new Profile();
 	$classKategori = new Kategori();
@@ -13,6 +13,7 @@
 		$getTagByMedia 	= $classTag->TagByMedia($id);
 		$getUserById 	= $classProfile->GetData($getMediaById['id_user']);
 		$getKategori 	= $classKategori->getkategoriutamabyId($getMediaById['id_kategori']);
+		$FuncProfile = $classProfile->GetData($getMediaById['id_user']);
 
 	
 ?>
@@ -27,9 +28,24 @@
 							</div>
 							<div class="profile-card-name"><?php echo $getUserById['nama'];?></div>
 							<div class="profile-card-location"><?php echo $getUserById['sekolah'];?></div>
-							<button style="margin-top:10px;" type="button" class="btn btn-rounded">Follow</button>
-							<button style="margin-top:10px;" type="button" class="btn btn-danger btn-rounded">Wishlist</button>
 						</div>
+						<section class="proj-page-section proj-page-labels">
+							<ul class="profile-links-list">
+								<li class="nowrap">
+									<i class="font-icon font-icon-earth-bordered"></i> 
+									<a href="#"><?php echo $FuncProfile['sosmed']['website'];?></a>
+								</li>
+								<li class="nowrap">
+									<i class="font-icon font-icon-fb-fill"></i> 
+									<a href="#"><?php echo $FuncProfile['sosmed']['facebook'];?></a>
+								</li>
+								<li class="nowrap">
+									<i class="font-icon font-icon-calend"></i> 
+									<a href="#"><?php echo selisih_waktu($FuncProfile['date_created']);?></a>
+								</li> 
+							</ul>
+						</section>
+
 						<section class="proj-page-section proj-page-labels">
 							<header class="proj-page-subtitle padding-sm">
 								<h3>Tag</h3>
@@ -39,18 +55,12 @@
 									echo "<a href='' class='label label-light-grey'>".$datatag['nama']."</a>";
 								}
 							?>
-							<!-- <a href="#" class="label label-light-grey">Buku</a>
-							<a href="#" class="label label-light-grey">Indonesia</a>
-							<a href="#" class="label label-light-grey">Hehehe</a> -->
-						</section><!--.proj-page-section-->
-						<section class="proj-page-section">
-							<row>
-								<div class="col-lg-6">
-									<button type="button" class="btn btn-warning btn-rounded">Report</button>
-								</div>
-							</row>
-							<br>
-						</section><!--.proj-page-section-->
+						</section>
+
+
+						
+
+
 					</section>
 
 				</div>

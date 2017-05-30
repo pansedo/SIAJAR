@@ -25,6 +25,9 @@
     // }
     // 	print_r($x);
 
-    $x = $classMedia->classMediaByKategori("591012131192a6dc1800002a");
-   
+    // $x = $classMedia->classMediaByKategori("591012131192a6dc1800002a");
+    $classKategori = new Kategori();
+    $x = $classKategori-> GetKategoriSemua();
+    echo $x;
+    echo "string"; 
 ?>

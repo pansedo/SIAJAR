@@ -4,7 +4,8 @@ class Media
 
 	public function __construct() {
         try {
-            global $db;
+            global $db;  
+
             $tableName = 'dokumen';
             $this->db = $db;
             $this->table = $this->db->$tableName;
@@ -37,7 +38,11 @@ class Media
     		return $count;
     	}
     }
-
+    public function GetMediabyUserCount($id)
+    {	
+    	$query = $this -> table -> find(array("id_user"=> "$id"))->count();
+    	return $query;
+    }
     public function GetMediaPagging()
     {
     	$page = isset($_GET['page']) ? $_GET['page'] : 1;
@@ -972,14 +977,10 @@ class Media
     	$next = ($page+1);
     	$prev = ($page-1);
     	$short = array('_id' => -1);
-<<<<<<< HEAD
-    	$query =  $this -> table -> find(array('$text' => array('$search' => $texts)))-> skip($skip)->limit($limit);
+    	$query =  $this -> table -> find(array('$text' => array('$search' => $texts)))->skip($skip)->limit($limit);
 
-=======
-    	$query =  $this -> table -> find(array('$text' => array('$search' => '$texts')))->skip($skip)->limit($limit);
     	// echo " find(array('$text' => array('$search' => $texts)))->skip($skip)->limit($limit)";
     	print_r($query);
->>>>>>> 558c1a5fc053742c09b1e7d19e6cb340a8732885
     	$count = $query->count();
     	if ($count > 0) {
     		$i = 0;

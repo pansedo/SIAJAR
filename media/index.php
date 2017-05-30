@@ -91,8 +91,8 @@
 												</a>
 											</div>
 											<div class="tbl-cell">
-												<p class="user-card-row-name"><a href="product.php?id=<?php echo base64_encode($data['_id']);?>"><?php echo substr($data['judul'],0,45); ?></a></p>
-												<p class="color-blue-grey-lighter"><?php echo date_format($date,'d-m-Y H:i:s');?></p>
+												<p class="user-card-row-name"><a href="product.php?id=<?php echo base64_encode($data['_id']);?>"><?php echo $data['judul']; ?></a></p>
+												<p class="color-blue-grey-lighter"><?php echo selisih_waktu(date_format($date,'d-m-Y H:i:s'));?></p>
 											</div>
 											<div class="tbl-cell tbl-cell-status">
 												<a href="#" class="font-icon font-icon-star active"></a>

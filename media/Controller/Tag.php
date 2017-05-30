@@ -2,9 +2,9 @@
 
 class Tag
 {
-	public function __construct() {
+    public function __construct() {
         try {
-            global $db;
+            global $db; 
             $tableName = 'tag';
             $this->db = $db;
             $this->table = $this->db->$tableName;
@@ -16,8 +16,8 @@ class Tag
 
     public function TagByMedia($id)
     {
-    	$query =  $this -> table -> find(array("id_dokumen"=>$id));
-    	return $query;
+        $query =  $this -> table -> find(array("id_dokumen"=>new MongoId($id)));
+        return $query; 
     }
 }
 ?>
