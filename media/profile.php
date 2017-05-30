@@ -18,6 +18,7 @@
 
 	$getkategoriutama = $classKategori->GetKategoriUtama();
 	$getMedia = $classMedia->GetMediabyUser($id_users);
+	$getMediaCount = $classMedia->GetMediabyUserCount($id_users);
 
 
     $classProfile = new Profile();
@@ -29,7 +30,6 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-lg-3 col-lg-pull-6 col-md-6 col-sm-6">
-					
 					<section class="box-typical">
 						<div class="profile-card ">
 							<div class="profile-card-photo">
@@ -38,129 +38,33 @@
 							<div class="profile-card-name"><?php echo $FuncProfile['nama'];?></div>
 							<div class="profile-card-status"><?php echo $FuncProfile['sekolah'];?></div>
 							<!-- <div class="profile-card-location">Asal Sekolah</div> -->
-							<button style="margin-top:10px;" type="button" class="btn btn-rounded">Follow</button>
-							<button style="margin-top:10px;" type="button" class="btn btn-danger btn-rounded">Wishlist</button>
 						</div>
-
 						<div class="profile-statistic tbl">
 							<div class="tbl-row">
 								<div class="tbl-cell">
-									<b>200</b>
-									Connections
-								</div>
-								<div class="tbl-cell">
-									<b>57</b>
-									Books
+									<b><?php echo $getMediaCount; ?></b>
+									Media Bahan Ajar
 								</div>
 							</div>
 						</div>
 
 						<ul class="profile-links-list">
 							<li class="nowrap">
-								<i class="font-icon font-icon-earth-bordered"></i>
-								// <a href="#"><?php /*echo $FuncProfile['sosmed']['website'];*/?></a>
+								<i class="font-icon font-icon-earth-bordered"></i> 
+								<a href="#"><?php echo $FuncProfile['sosmed']['website'];?></a>
 							</li>
 							<li class="nowrap">
-								<i class="font-icon font-icon-fb-fill"></i>
-								<a href="#"><?php /*echo $FuncProfile['sosmed']['facebook'];*/?></a>
+								<i class="font-icon font-icon-fb-fill"></i> 
+								<a href="#"><?php echo $FuncProfile['sosmed']['facebook'];?></a>
 							</li>
 							<li class="nowrap">
-								<i class="font-icon font-icon-in-fill"></i>
-								<a href="#"><?php /*echo $FuncProfile['sosmed']['linkedin'];*/?></a>
-							</li>
-							<li class="nowrap">
-								<i class="font-icon font-icon-tw-fill"></i>
-								<a href="#"><?php /*echo $FuncProfile['sosmed']['twitter'];*/?></a>
-							</li>
+								<i class="font-icon font-icon-calend"></i> 
+								<a href="#"><?php echo selisih_waktu($FuncProfile['date_created']);?></a>
+							</li> 
+							 
 						</ul>
 					</section>
 				
-
-					<section class="box-typical">
-						<header class="box-typical-header-sm">
-							Friends
-							&nbsp;
-							<a href="#" class="full-count">268</a>
-						</header>
-						<div class="friends-list">
-							<article class="friends-list-item">
-
-								<div class="user-card-row">
-									<div class="tbl-row">
-										<div class="tbl-cell tbl-cell-photo">
-											<a href="#">
-												<img src="Assets/img/photo-64-2.jpg" alt="">
-											</a>
-										</div>
-										<div class="tbl-cell">
-											<p class="user-card-row-name status-online"><a href="#">Dan Cederholm</a></p>
-											<p class="user-card-row-location">New York</p>
-										</div>
-									</div>
-								</div>
-							</article>
-							<article class="friends-list-item">
-								<div class="user-card-row">
-									<div class="tbl-row">
-										<div class="tbl-cell tbl-cell-photo">
-											<a href="#">
-												<img src="Assets/img/photo-64-1.jpg" alt="">
-											</a>
-										</div>
-										<div class="tbl-cell">
-											<p class="user-card-row-name"><a href="#">Oykun Yilmaz</a></p>
-											<p class="user-card-row-location">Los Angeles</p>
-										</div>
-									</div>
-								</div>
-							</article>
-							<article class="friends-list-item">
-								<div class="user-card-row">
-									<div class="tbl-row">
-										<div class="tbl-cell tbl-cell-photo">
-											<a href="#">
-												<img src="Assets/img/photo-64-3.jpg" alt="">
-											</a>
-										</div>
-										<div class="tbl-cell">
-											<p class="user-card-row-name"><a href="#">Bill S Kenney</a></p>
-											<p class="user-card-row-location">Cardiff</p>
-										</div>
-									</div>
-								</div>
-							</article>
-							<article class="friends-list-item">
-								<div class="user-card-row">
-									<div class="tbl-row">
-										<div class="tbl-cell tbl-cell-photo">
-											<a href="#">
-												<img src="Assets/img/photo-64-4.jpg" alt="">
-											</a>
-										</div>
-										<div class="tbl-cell">
-											<p class="user-card-row-name"><a href="#">Maggy Smith</a></p>
-											<p class="user-card-row-location">Dusseldorf</p>
-										</div>
-									</div>
-								</div>
-							</article>
-							<article class="friends-list-item">
-								<div class="user-card-row">
-									<div class="tbl-row">
-										<div class="tbl-cell tbl-cell-photo">
-											<a href="#">
-												<img src="Assets/img/photo-64-2.jpg" alt="">
-											</a>
-										</div>
-										<div class="tbl-cell">
-											<p class="user-card-row-name"><a href="#">Dan Cederholm</a></p>
-											<p class="user-card-row-location">New York</p>
-										</div>
-									</div>
-								</div>
-							</article>
-						</div>
-					</section>
 				</div>
 				<div class="col-lg-9 col-lg-pull-6 col-md-6 col-sm-6">
 				<!-- Mulai Buku Content -->
