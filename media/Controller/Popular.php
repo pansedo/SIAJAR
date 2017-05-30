@@ -40,7 +40,7 @@ class Popular
     {
         $query = $this -> table -> aggregate(array('$group' => array('_id' => '$id_user','count' => array('$sum' => 1))),array('$sort' => array('count'=> -1)),array('$limit'=>5));
         // $query = $this -> table -> aggregate(array('$group' => array('_id' => '$id_user','count' => array('$sum' => 1))));
-        print_r($query);
+        // print_r($query);
         foreach ($query as $key) {
             if (is_array($key)) {
                 $i = 0;

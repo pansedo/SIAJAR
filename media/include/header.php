@@ -7,9 +7,21 @@
     spl_autoload_register(function ($class) {
       include 'Controller/' .$class . '.php';
     });
-    $base_url = "http://localhost/siajar/media";
+    $base_url = "http://172.16.0.179/media";
 
+if (!isset($_SESSION['lms_id']) && !isset($_SESSION['lms_username']) && !isset($_SESSION['lms_status'])) {
+        // header("Location:Auth/$base_url");
+        // exit();
+    }else{ 
+        set_time_limit(10000); 
+        $id_users   = $_SESSION['lms_id'];
+        $email    = $_SESSION['lms_username'];
+        $status     = $_SESSION['lms_status'];
 
+        $classProfile = new Profile();
+		$FuncProfile = $classProfile->GetData($id_users);
+
+    }
     $classKategori = new Kategori();
     $getkategoriutama = $classKategori->GetKategoriUtama();
 ?>  
@@ -76,7 +88,7 @@
 
 	                    <div class="dropdown user-menu">
 	                        <button class="dropdown-toggle" id="dd-user-menu" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                            <img src="assets/img/avatar-2-64.png" alt="">
+	                            <img src="Assets/foto/<?php if ($FuncProfile['foto'] != NULL) {echo $FuncProfile['foto'];}else{echo "no_picture.png";} ?>" alt="">
 	                        </button>
 	                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd-user-menu">
 	                            <!-- <a class="dropdown-item" href="<?php //echo $base_url ?>"><span class="font-icon glyphicon glyphicon-home"></span></a> -->

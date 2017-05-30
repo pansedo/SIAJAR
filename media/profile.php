@@ -3,7 +3,7 @@
 	include 'include/menu.php';
 
 	if (!isset($_SESSION['lms_id']) && !isset($_SESSION['lms_username']) && !isset($_SESSION['lms_status'])) {
-        header("Location:Auth/logout.php");
+        header("Location:Auth/$base_url");
         exit();
     }else{ 
         set_time_limit(10000); 
