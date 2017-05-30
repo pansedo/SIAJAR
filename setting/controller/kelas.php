@@ -49,12 +49,14 @@ class Kelas
         $newID  = $insert['_id'];
         if ($newID) {
             $status     = "Success";
+            $message    = "Kelas $nama Berhasil ditambahkan!";
             $relation   = $this->db->anggota_kelas->insert(array("id_user"=>"$user", "id_kelas"=>"$newID", "status"=>"1"));
         }else {
             $status     = "Failed";
+            $message    = "Kelas $nama Gagal ditambahkan!";
         }
 
-        $result = array("status" => $status, "IDKelas" => $newID);
+        $result = array("status" => $status, "message"=>$message, "IDKelas" => $newID);
         return $result;
     }
 
