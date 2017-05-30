@@ -8,13 +8,7 @@
 
     $ClassLogin = new Login();
 
-    if (isset($_POST['register'])) {
-        $nama       = mysql_escape_string(trim(strip_tags(stripslashes($_POST['nama']))));
-        $username   = mysql_escape_string(trim(strip_tags(stripslashes($_POST['username']))));
-        $password   = mysql_escape_string(trim(strip_tags(stripslashes($_POST['password']))));
-        $status     = mysql_escape_string(trim(strip_tags(stripslashes($_POST['status']))));
-        $ClassLogin->RegisterUsers($nama,$username,$password,$status);
-    }
+    
 ?> 
 
 <!DOCTYPE html>
@@ -37,8 +31,24 @@
     <link rel="stylesheet" href="../Assets/css/separate/vendor/bootstrap-select/bootstrap-select.min.css">
     <link rel="stylesheet" href="../Assets/css/separate/vendor/select2.min.css">
     <link rel="stylesheet" href="../Assets/css/main.css">
+
+    <script src="../Assets/js/lib/jquery/jquery.min.js"></script>
+    <!--Sweetalert-->
+    <script  src="../Assets/js/lib/sweetalert/sweetalert2.min.js"></script>
+    <link rel="stylesheet"  href="../Assets/js/lib/sweetalert/sweetalert2.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
 </head>
 <body>
+<?php
+if (isset($_POST['register'])) {
+        $nama       = mysql_escape_string(trim(strip_tags(stripslashes($_POST['nama']))));
+        $username   = mysql_escape_string(trim(strip_tags(stripslashes($_POST['username']))));
+        $password   = mysql_escape_string(trim(strip_tags(stripslashes($_POST['password']))));
+        $status     = mysql_escape_string(trim(strip_tags(stripslashes($_POST['status']))));
+        $ClassLogin->RegisterUsers($nama,$username,$password,$status);
+    }
+?>
 
     <div class="page-center">
         <div class="page-center-in">
@@ -70,7 +80,7 @@
             </div>
         </div>
     </div><!--.page-center-->
-    <script src="../Assets/js/lib/jquery/jquery.min.js"></script>
+
     <script src="../Assets/js/lib/tether/tether.min.js"></script>
     <script src="../Assets/js/lib/bootstrap/bootstrap.min.js"></script>
     <script src="../Assets/js/lib/jquery-tag-editor/jquery.caret.min.js"></script>

@@ -24,6 +24,13 @@ class Kategori
         return $query;
     }
 
+    public function getkategoribyId($id){
+        // $criteria = array('_id' => new MongoId($id));
+        $query =  $this -> table -> find(array("_id"=>"$id"));
+        // echo $query;
+        return $query;
+    }
+
     public function CreateKategoriUtama($namekategoriutama,$deskripsi){
         $insert = array("kategori" => $namekategoriutama, "deskripsi" => $deskripsi,"sub_id"=>"0");
         $this -> table -> insert($insert);

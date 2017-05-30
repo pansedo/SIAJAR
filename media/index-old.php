@@ -1,6 +1,6 @@
 <?php
-	include "Header.php";
-	include 'Menu.php';
+	include "include/header.php";
+	include 'include/Menu.php';
 ?>
 	<div class="page-content">
 		<div class="container-fluid">

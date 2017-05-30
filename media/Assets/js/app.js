@@ -22,20 +22,20 @@ $(document).ready(function(){
     Header search
     ========================================================================== */
 
-	$('.site-header .site-header-search').each(function(){
-		var parent = $(this),
-			overlay = parent.find('.overlay');
+	// $('.site-header .site-header-search').each(function(){
+	// 	var parent = $(this),
+	// 		overlay = parent.find('.overlay');
 
-		overlay.click(function(){
-			parent.removeClass('closed');
-		});
+	// 	overlay.click(function(){
+	// 		parent.removeClass('closed');
+	// 	});
 
-		parent.clickoutside(function(){
-			if (!parent.hasClass('closed')) {
-				parent.addClass('closed');
-			}
-		});
-	});
+	// 	parent.clickoutside(function(){
+	// 		if (!parent.hasClass('closed')) {
+	// 			parent.addClass('closed');
+	// 		}
+	// 	});
+	// });
 
 /* ==========================================================================
     Header mobile menu

@@ -7,11 +7,6 @@
     spl_autoload_register(function ($class) {
       include 'Controller/' .$class . '.php';
     });
-    $base_url = "http://localhost/siajar/media";
-
-
-    $classKategori = new Kategori();
-    $getkategoriutama = $classKategori->GetKategoriUtama();
 ?>  
 <!DOCTYPE html>
 <html>
@@ -47,129 +42,122 @@
 	<script src="Assets/js/lib/jquery/jquery.min.js"></script>
 	<link rel="stylesheet" href="Assets/css/style_manual.css">
 
-	<!--Sweetalert-->
-	<script  src="Assets/js/lib/sweetalert/sweetalert2.min.js"></script>
-	<link rel="stylesheet"  href="Assets/js/lib/sweetalert/sweetalert2.min.css">
-
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
 
 	<link rel="stylesheet" type="text/css" href="Assets/css/lib/uploadfile/component.css" />
 	<script>(function(e,t,n){var r=e.querySelectorAll("html")[0];r.className=r.className.replace(/(^|\s)no-js(\s|$)/,"$1js$2")})(document,window,0);</script>
 </head>
 <body class="with-side-menu sidebar-hidden chrome-browser ">
-<header class="site-header">
+	<header class="site-header">
 	    <div class="container-fluid">
-
-	        <a href="<?=$base_url?>" class="site-logo">
+	
+	        <a href="#" class="site-logo">
 	            <img class="hidden-md-down" src="Assets/img/logo-2.png" alt="">
 	            <img class="hidden-lg-up" src="Assets/img/logo-2-mob.png" alt="">
 	        </a>
-
 	        <div class="site-header-content">
 	            <div class="site-header-content-in">
-		            
 	                <div class="site-header-shown">
-	                <?php
-	                	if (isset($_SESSION['lms_id'])) {
-	                ?>
-	                    
 
-	                    <div class="dropdown user-menu">
-	                        <button class="dropdown-toggle" id="dd-user-menu" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                            <img src="assets/img/avatar-2-64.png" alt="">
-	                        </button>
-	                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd-user-menu">
-	                            <!-- <a class="dropdown-item" href="<?php //echo $base_url ?>"><span class="font-icon glyphicon glyphicon-home"></span></a> -->
-	                            <a class="dropdown-item" href="profile.php"><span class="font-icon glyphicon glyphicon-user"></span>Profil</a>
-	                            <a class="dropdown-item" href="setting.php"><span class="font-icon glyphicon glyphicon-cog"></span>Pengaturan</a>
-	                            <div class="dropdown-divider"></div>
-	                            <a class="dropdown-item" href="Auth/logout.php"><span class="font-icon glyphicon glyphicon-log-out"></span>Keluar</a>
+	                    <?php
+	                    	if (isset($_SESSION['lms_id'])) {
+	                    ?>
+	                      <div class="dropdown dropdown-notification notif">
+	                        <a href="#"
+	                           class="header-alarm dropdown-toggle active"
+	                           id="dd-notification"
+	                           data-toggle="dropdown"
+	                           aria-haspopup="true"
+	                           aria-expanded="false">
+	                            <i class="font-icon-alarm"></i>
+	                        </a>
+	                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-notif" aria-labelledby="dd-notification">
+	                        	 
+	                            <div class="dropdown-menu-notif-header">
+	                                Notifications
+	                                <span class="label label-pill label-danger">4</span>
+	                            </div>
+	                            <div class="dropdown-menu-notif-list">
+	                                <div class="dropdown-menu-notif-item">
+	                                    <div class="photo">
+	                                        <img src="Assets/img/photo-64-1.jpg" alt="">
+	                                    </div>
+	                                    <div class="dot"></div>
+	                                    <a href="#">Morgan</a> was bothering about something
+	                                    <div class="color-blue-grey-lighter">7 hours ago</div>
+	                                </div>
+	                            </div>
+	                            <div class="dropdown-menu-notif-more">
+	                                <a href="#">See more</a>
+	                            </div>
 	                        </div>
 	                    </div>
-						<?php
-	 					} ?>
+	                    <div class="dropdown user-menu">
+	                        <button class="dropdown-toggle" id="dd-user-menu" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	                            <img src="Assets/img/avatar-2-64.png" alt="">
+	                        </button>
+	                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd-user-menu">
+	                            <a class="dropdown-item" href="Index.php"><span class="font-icon glyphicon glyphicon-home"></span>Home</a>
+	                            <a class="dropdown-item" href="Profile.php"><span class="font-icon glyphicon glyphicon-user"></span>Profile</a>
+	                            <a class="dropdown-item" href="Setting.php"><span class="font-icon glyphicon glyphicon-cog"></span>Settings</a>
+	                            <div class="dropdown-divider"></div>
+	                            <a class="dropdown-item" href="Auth/logout.php"><span class="font-icon glyphicon glyphicon-log-out"></span>Logout</a>
+	                        </div>
+	                    </div>
+	                    <?php		
+	                    	}
+	                    ?>
+
+	
 	                    <button type="button" class="burger-right">
 	                        <i class="font-icon-menu-addl"></i>
 	                    </button>
-	                    
 	                </div><!--.site-header-shown-->
-	                
+	
 	                <div class="mobile-menu-right-overlay"></div>
 	                <div class="site-header-collapsed">
-					<!-- HEADER MENU -->
 	                    <div class="site-header-collapsed-in">
-	                        <div class="dropdown dropdown-typical">
-	                            <a href="<?php echo $base_url ?>" class="dropdown-toggle no-arr">
-								   <span class="font-icon font-icon-home"></span> Beranda
-								   <span class="lbl"></span>
-							   </a>
-	                        </div>
-							<div class="dropdown dropdown-typical">
-	                            <a class="dropdown-toggle" id="dd-header-marketing" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                                <span class="font-icon font-icon-users"></span> Kategori
-	                                <span class="lbl"></span>
-	                            </a>
-
-	                            <div class="dropdown-menu" aria-labelledby="dd-header-marketing">
-	                            <?php
-	                            	foreach ($getkategoriutama as $data) {
-	                            		echo "<a class='dropdown-item' href='#'>".$data['kategori']."</a>";
-	                            	}
-	                            ?>
-	                                <!-- <a class="dropdown-item" href="#">Digital Class Development 1</a>
-	                                <a class="dropdown-item" href="#">Digital Class Development 2</a>
-	                                <a class="dropdown-item" href="#">Digital Class Development 3</a> -->
-	                            </div>
-	                        </div>
-							<!-- <div class="dropdown dropdown-typical">
-							   <a href="#" class="dropdown-toggle no-arr">
-								   <span class="font-icon font-icon-share"></span> Gudang Media
-								   <span class="lbl"></span>
-							   </a>
-						   </div> -->
-						    <div class="site-header-collapsed-in">
-	                    
+	                     
 	                        <div class="site-header-search-container">
-	                       	<?php
-	                            if (!isset($_SESSION['lms_id'])) {
-	 						
-			                ?>
-		        				<a class="btn btn-sm btn-inline btn-primary-outline" href="Auth/Signin.php">
-		                            <i class="fa fa-lock"></i> Login
-		                        </a>
-		                	<?php
-		                		}else{
-		                    ?>
-		                    	<a href="media.php?action=unggah" class="btn btn-inline btn-sm btn-primary-outline">
-			                            <i class="fa fa-upload"></i> Unggah 
-			                        </a>
-			                <?php
-			                	}
-			                ?>
-
-	                            <form action="search.php" method="POST" class="site-header-search">
-	                                <input type="text"  name="search"  placeholder="Search"/>
-	                                <button type="submit">
+	                            <form action="search.php" method="POST" name="pencarian" id="pencarian" class="site-header-search closed">
+	                                <input type="text"  name="search" id="search" placeholder="Search"/>
+	                               <!--  <button type="submit" name="submit"> 
 	                                    <span class="font-icon-search"></span>
-	                                </button>
+	                                </button> -->
+	                                 <input type="SUBMIT" name="SUBMIT" id="SUBMIT" value="search" >
 	                                <div class="overlay"></div>
 	                            </form>
-	                              
-						 
 
 	                        </div>
-						   <div class="dropdown dropdown-typical">   
-			                		
-			                    </div>
+	                        <button id="show-hide-sidebar-toggle" class="show-hide-sidebar">
+					            <span>toggle menu</span>
+					        </button>
+					
+					        <button class="hamburger hamburger--htla">
+					            <span>toggle menu</span>
+					        </button>
+	                        <?php
+			                    	if (isset($_SESSION['lms_id'])) {
+			                    ?>
+			                        <a href="upload.php" class="btn btn-inline btn-sm btn-primary-outline">
+			                            <i class="fa fa-upload"></i> Upload
+
+			                        </a>
+			                        
+			                    <?php
+			                		}else{
+			                	?>
+			                		<a class="btn btn-sm btn-inline btn-primary-outline" href="Auth/Signin.php">
+			                            <i class="fa fa-lock"></i> Login
+			                        </a>
+			                	<?php
+			                		}
+			                    ?>
+			                
 	                    </div><!--.site-header-collapsed-in-->
 	                </div><!--.site-header-collapsed-->
 	            </div><!--site-header-content-in-->
 	        </div><!--.site-header-content-->
 	    </div><!--.container-fluid-->
-	</header><!--.site-header-->
-
-
-	
 	</header><!--.site-header-->
 	<div class="modal fade bd-example-modal-lg"
 		 tabindex="-1"

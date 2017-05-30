@@ -51,13 +51,10 @@
 						<a href="sign-up.html"><button type="button" style="display: inline-block" class="btn btn-primary">sebagai Guru</button></a>
 						<a href="sign-up.html"><button type="button" style="display: inline-block" class="btn btn-warning">sebagai Siswa</button></a>
 					</p>
-                    <!--<button type="button" class="close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>-->
                 </form>
             </div>
         </div>
-    </div><!--.page-center-->
+    </div>
 
 
 	<script src="assets/js/lib/jquery/jquery.min.js"></script>
@@ -66,44 +63,35 @@
     <script type="text/javascript" src="assets/js/lib/match-height/jquery.matchHeight.min.js"></script>
     <script>
         $(function() {
-			$('#form-login').submit(function() {
-				var fd = new FormData(this);
-				fd.append('action','login');
-				$.ajax({
-      				type: 'POST',
-      				url: 'url-API/auth.php',
-      				data: fd,
-      				contentType: false,
-      				processData: false,
-      				success: function(res){
-      			// 		swal({
-      			// 				title: res.response,
-      			// 				text:  res.message,
-      			// 				type:  res.icon
-      			// 		}, function() {
-      			// 		});
-						alert(res.message);
-						location.href='index.php';
-      				},
-      				error: function(){
-      					swal(res.response, res.message, res.icon);
-      				}
-      			});
-			});
-
-
-            $('.page-center').matchHeight({
-                target: $('html')
-            });
-
-            $(window).resize(function(){
-                setTimeout(function(){
-                    $('.page-center').matchHeight({ remove: true });
-                    $('.page-center').matchHeight({
-                        target: $('html')
-                    });
-                },100);
-            });
+    			$('#form-login').submit(function() {
+    				var fd = new FormData(this);
+    				fd.append('action','login');
+    				$.ajax({
+          				type: 'POST',
+          				url: 'url-API/auth.php',
+          				data: fd,
+          				contentType: false,
+          				processData: false,
+          				success: function(res){
+        						alert(res.message);
+        						location.href='index.php';
+          				},
+          				error: function(){
+          					swal(res.response, res.message, res.icon);
+          				}
+          			});
+    			});
+          $('.page-center').matchHeight({
+              target: $('html')
+          });
+          $(window).resize(function(){
+              setTimeout(function(){
+                  $('.page-center').matchHeight({ remove: true });
+                  $('.page-center').matchHeight({
+                      target: $('html')
+                  });
+              },100);
+          });
         });
 
     </script>

@@ -29,9 +29,39 @@ class Profile
         $sukses = $this -> table -> update(array("_id"=> new MongoId($id_profile)),array('$set'=>$update));
         if ($sukses) {
             # code...
-            echo '<script type="text/javascript"> alert("Profil Berhasil Diperbarui")</script>';
+            echo "<script type='text/javascript'> swal({
+                                  title: 'Berhasil diperbarui!',
+                                  text: 'Profil anda berhasil diperbarui',
+                                  type: 'success',
+                                  timer: 2000
+                                }).then(
+                                  function () {
+                                    document.location.href='profile.php';
+                                  },
+                                  function (dismiss) {
+                                    document.location.href='profile.php';
+                                    if (dismiss === 'timer') {
+                                      console.log('I was closed by the timer')
+                                    }
+                                  })
+                </script>";
         }else{
-            echo '<script type="text/javascript"> alert("Profil Gagal Diperbarui")</script>';
+            echo "<script type='text/javascript'> swal({
+                                  title: 'Gagal diperbarui!',
+                                  text: 'Profil anda gagal diperbarui',
+                                  type: 'error',
+                                  timer: 2000
+                                }).then(
+                                  function () {
+                                    document.location.href='profile.php';
+                                  },
+                                  function (dismiss) {
+                                    document.location.href='profile.php';
+                                    if (dismiss === 'timer') {
+                                      console.log('I was closed by the timer')
+                                    }
+                                  })
+                </script>";
         }
         
     }
@@ -56,16 +86,76 @@ class Profile
                     $sukses=$this -> table -> update(array("_id"=> $id_profile),$update);
                     if ($sukses) {
                         # code...
-                        echo '<script type="text/javascript"> alert("Profil Berhasil Diperbarui")</script>';
+                        echo "<script type='text/javascript'> swal({
+                                  title: 'Berhasil diperbarui!',
+                                  text: 'Kata Sandi anda berhasil diperbarui',
+                                  type: 'success',
+                                  timer: 2000
+                                }).then(
+                                  function () {
+                                    document.location.href='profile.php';
+                                  },
+                                  function (dismiss) {
+                                    document.location.href='profile.php';
+                                    if (dismiss === 'timer') {
+                                      console.log('I was closed by the timer')
+                                    }
+                                  })
+                            </script>";
                     }else{
-                        echo '<script type="text/javascript"> alert("Profil Gagal Diperbarui")</script>';
+                        echo "<script type='text/javascript'> swal({
+                                  title: 'Gagal diperbarui!',
+                                  text: 'Kata Sandi anda gagal diperbarui',
+                                  type: 'error',
+                                  timer: 2000
+                                }).then(
+                                  function () {
+                                    document.location.href='profile.php';
+                                  },
+                                  function (dismiss) {
+                                    document.location.href='profile.php';
+                                    if (dismiss === 'timer') {
+                                      console.log('I was closed by the timer')
+                                    }
+                                  })
+                            </script>";
                     }
 
                  }else{
-                    echo '<script type="text/javascript"> alert("Kata Sandi Baru yang Anda Masukan Tidak Sesuai")</script>';
+                    echo "<script type='text/javascript'> swal({
+                                  title: 'Gagal diperbarui!',
+                                  text: 'Kata sandi baru yang anda masukan tidak sama.',
+                                  type: 'error',
+                                  timer: 2000
+                                }).then(
+                                  function () {
+                                    // document.location.href='setting.php';
+                                  },
+                                  function (dismiss) {
+                                    // document.location.href='setting.php';
+                                    if (dismiss === 'timer') {
+                                      console.log('I was closed by the timer')
+                                    }
+                                  })
+                </script>";
                  }
             }else{
-                echo '<script type="text/javascript"> alert("Kata Sandi Anda Salah")</script>';
+                echo "<script type='text/javascript'> swal({
+                                  title: 'Gagal diperbarui!',
+                                  text: 'Kata sandi anda tidak sesuai.',
+                                  type: 'error',
+                                  timer: 2000
+                                }).then(
+                                  function () {
+                                    // document.location.href='setting.php';
+                                  },
+                                  function (dismiss) {
+                                    // document.location.href='setting.php';
+                                    if (dismiss === 'timer') {
+                                      console.log('I was closed by the timer')
+                                    }
+                                  })
+                </script>";
             }
         }else{
             echo '<script type="text/javascript"> alert("Username Anda Tidak ditemukan")</script>';
@@ -104,21 +194,81 @@ class Profile
 
                         if ($sukses) {
                             # code...
-                            echo "<script type='text/javascript'> alert('Berhasil Diperbarui'); document.location.href='Setting.php';</script>"; 
+                            echo "<script type='text/javascript'> swal({
+                                                                      title: 'Berhasil diperbarui!',
+                                                                      text: 'Profil anda berhasil diperbarui',
+                                                                      type: 'success',
+                                                                      timer: 2000
+                                                                    }).then(
+                                                                      function () {
+                                                                        document.location.href='setting.php';
+                                                                      },
+                                                                      function (dismiss) {
+                                                                        document.location.href='setting.php';
+                                                                        if (dismiss === 'timer') {
+                                                                          console.log('I was closed by the timer')
+                                                                        }
+                                                                      })
+                                </script>";
                         }
                         else
                         {
-                            echo "<script type='text/javascript'> alert('Gagal Diperbarui'); document.location.href='Setting.php';</script>"; 
+                            echo "<script type='text/javascript'> swal({
+                                  title: 'Gagal diperbarui!',
+                                  text: 'Profil anda gagal diperbarui',
+                                  type: 'error',
+                                  timer: 2000
+                                }).then(
+                                  function () {
+                                    document.location.href='setting.php';
+                                  },
+                                  function (dismiss) {
+                                    document.location.href='setting.php';
+                                    if (dismiss === 'timer') {
+                                      console.log('I was closed by the timer')
+                                    }
+                                  })
+                </script>";
                         }
                     }
                     else
                     {
-                        echo "<script type='text/javascript'> alert('File Gagal diunggah')</script>";    
+                        echo "<script type='text/javascript'> swal({
+                                  title: 'Gagal diunggah!',
+                                  text: 'Fotp profil anda gagal diunggah cek kembali ukuran file dan koneksi internet anda!',
+                                  type: 'error',
+                                  timer: 2000
+                                }).then(
+                                  function () {
+                                    // document.location.href='setting.php';
+                                  },
+                                  function (dismiss) {
+                                    // document.location.href='setting.php';
+                                    if (dismiss === 'timer') {
+                                      console.log('I was closed by the timer')
+                                    }
+                                  })
+                </script>";    
                     }
             }
             else
             {
-                echo "<script type='text/javascript'> alert('Jenis File Tidak didukung.')</script>";
+                echo "<script type='text/javascript'> swal({
+                                  title: 'Gagal diunggah!',
+                                  text: 'Jenis File tidak didukung!',
+                                  type: 'error',
+                                  timer: 2000
+                                }).then(
+                                  function () {
+                                    // document.location.href='setting.php';
+                                  },
+                                  function (dismiss) {
+                                    // document.location.href='setting.php';
+                                    if (dismiss === 'timer') {
+                                      console.log('I was closed by the timer')
+                                    }
+                                  })
+                </script>";
             }
                
     }

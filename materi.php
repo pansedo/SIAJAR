@@ -1,10 +1,16 @@
 <?php
 require("includes/header-top.php");
+?>
+<link rel="stylesheet" href="assets/css/separate/pages/files.min.css">
+<?php
 require("includes/header-menu.php");
 
 $mapelClass = new Mapel();
+$modulClass = new Modul();
 
-$infoMapel	= $mapelClass->getInfoMapel($_GET['id']);
+$infoMapel	= $mapelClass->getInfoMapel($_GET['pelajaran']);
+$infoModul	= $modulClass->getInfoModul($_GET['id']);
+$menuModul	= 2;
 ?>
 	<div class="modal fade"
 		 id="addKelas"
@@ -69,7 +75,57 @@ $infoMapel	= $mapelClass->getInfoMapel($_GET['id']);
 		</div>
 	</div><!--.modal-->
 
-
+	<div class="modal fade"
+		 id="addModulPrasyarat"
+		 tabindex="-1"
+		 role="dialog"
+		 aria-labelledby="addModulLabel"
+		 aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<form method="POST">
+				<div class="modal-header">
+					<button type="button" class="modal-close" data-dismiss="modal" aria-label="Close">
+						<i class="font-icon-close-2"></i>
+					</button>
+					<h4 class="modal-title" id="addModulLabel">Silakan Pilih Modul</h4>
+				</div>
+				<div class="modal-body">
+					<div class="files-manager-content-in" style="margin-right:0px; border-right: 0px;">
+						<div class="fm-file-grid">
+							<div class="fm-file" style="height: 150px;">
+								<div class="checkbox-bird">
+									<input type="checkbox" id="mess-1" />
+									<label for="mess-1">
+										<div class="fm-file-icon">
+											<img src="assets/img/folder.png" alt="">
+										</div>
+										<div class="fm-file-name">Inspiration</div>
+									</label>
+								</div>
+							</div>
+							<div class="fm-file" style="height: 150px;">
+								<div class="checkbox-bird">
+									<input type="checkbox" id="mess-2" />
+									<label for="mess-2">
+										<div class="fm-file-icon">
+											<img src="assets/img/folder.png" alt="">
+										</div>
+										<div class="fm-file-name">Inspiration</div>
+									</label>
+								</div>
+							</div>
+						</div>
+					</div><!--.files-manager-content-in-->
+				</div>
+				<div class="modal-footer">
+					<button type="submit" name="addModul" value="send" class="btn btn-rounded btn-primary">Simpan</button>
+					<button type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Tutup</button>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div><!--.modal-->
 
 	<div class="page-content">
 		<div class="profile-header-photo">
@@ -100,48 +156,88 @@ $infoMapel	= $mapelClass->getInfoMapel($_GET['id']);
 				</div>
 			</div>
 			<button type="button" class="change-cover">
-				<i class="font-icon font-icon-pencil"></i>
-				Pengaturan
+				<i class="font-icon font-icon-picture-double"></i>
+				Ganti sampul
+				<input type="file"/>
 			</button>
 		</div><!--.profile-header-photo-->
 
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-xl-3 col-lg-4">
-					<aside id="menu-fixed" class="profile-side" style="margin: 0 0 20px">
-						<section class="box-typical">
-							<header class="box-typical-header-sm bordered">
-								Menu
-							</header>
-							<div class="box-typical-inner">
-								<p class="line-with-icon">
-									<a href="#"><i class="font-icon font-icon-home"></i> Modul</a>
-								</p>
-								<p class="line-with-icon">
-									<a href="#"><i class="font-icon font-icon-notebook"></i> Kelola Kuis</a>
-								</p>
-								<p class="line-with-icon">
-									<a href="#"><i class="font-icon font-icon-zigzag"></i> Perkembangan</a>
-								</p>
-							</div>
-						</section>
-
-					</aside><!--.profile-side-->
+					<?php
+						require("includes/modul-menu.php");
+					?>
 				</div>
 
 				<div class="col-xl-9 col-lg-8">
-					<section class="card">
-						<div class="card-block">
-							<h5 class="with-border">Alur Pembelajaran
-								<div class="btn-group" style='float: right;'>
-									<button type="button" class="btn btn-sm btn-rounded btn-inline">+ Tambah Modul</button>
+					<section class="widget widget-activity">
+						<header class="widget-header">
+							Materi
+							<span class="label label-pill label-primary"><?=$infoMapel['modul']?></span>
+							<div class="btn-group" style='float: right;'>
+								<button type="button" class="btn btn-sm btn-rounded btn-inline" data-toggle="modal" data-target="#">+ Tambah Materi</button>
+							</div>
+						</header>
+						<div>
+							<div class="files-manager-content-in" style="margin-right:0px; border-right: 0px;">
+								<div class="fm-file-grid">
+									<div class="fm-file">
+										<div class="fm-file-icon">
+											<img src="assets/img/file-pdf.png" alt="">
+										</div>
+										<div class="fm-file-name">Inspiration</div>
+									</div>
+									<div class="fm-file">
+										<div class="fm-file-icon">
+											<img src="assets/img/file-pdf.png" alt="">
+										</div>
+										<div class="fm-file-name">Inspiration</div>
+									</div>
+									<div class="fm-file">
+										<div class="fm-file-icon">
+											<img src="assets/img/file-pdf.png" alt="">
+										</div>
+										<div class="fm-file-name">Inspiration</div>
+									</div>
+									<div class="fm-file">
+										<div class="fm-file-icon">
+											<img src="assets/img/file-pdf.png" alt="">
+										</div>
+										<div class="fm-file-name">2014_projects.rar</div>
+									</div>
+									<div class="fm-file">
+										<div class="fm-file-icon">
+											<img src="assets/img/file-doc.png" alt="">
+										</div>
+										<div class="fm-file-name">Inspiration</div>
+									</div>
+									<div class="fm-file">
+										<div class="fm-file-icon">
+											<img src="assets/img/file-doc.png" alt="">
+										</div>
+										<div class="fm-file-name">Inspiration</div>
+									</div>
+									<div class="fm-file">
+										<div class="fm-file-icon">
+											<img src="assets/img/file-xls.png" alt="">
+										</div>
+										<div class="fm-file-name">Inspiration</div>
+									</div>
+									<div class="fm-file">
+										<div class="fm-file-icon">
+											<img src="assets/img/file-xls.png" alt="">
+										</div>
+										<div class="fm-file-name">Inspiration</div>
+									</div>
 								</div>
-							</h5>
-							<p align="center">Belum ada Modul</p>
+							</div><!--.files-manager-content-in-->
 						</div>
-					</section>
+					</section><!--.widget-tasks-->
+
 				</div>
 			</div><!--.row-->
+
 		</div><!--.container-fluid-->
 	</div><!--.page-content-->
 
@@ -191,6 +287,13 @@ $infoMapel	= $mapelClass->getInfoMapel($_GET['id']);
 				from: 30,
 				hide_min_max: true,
 				hide_from_to: true
+			});
+
+			$("#example-vertical").steps({
+				headerTag: "h3",
+				bodyTag: "section",
+				transitionEffect: "slideLeft",
+				stepsOrientation: "vertical"
 			});
 
 		});

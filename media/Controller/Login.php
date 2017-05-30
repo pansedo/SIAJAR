@@ -19,29 +19,105 @@ class Login
         if (!is_null($getusers)) {
             $hash = $getusers['password'];
             if(password_verify($pswd,$hash)){
-                 if ($getusers['status'] == 'siswa') {
+                 if ($getusers['status'] == 'admin') {
                         $_SESSION['lms_id']             = $getusers['_id'];
                         $_SESSION['lms_username']       = $getusers['username'];
                         $_SESSION['lms_name']           = $getusers['nama'];
                         $_SESSION['lms_status']         = $getusers['status'];
-                        echo "<script language=javascript> document.location.href='../profile.php'; </script>";
+                        echo "<script type='text/javascript'> swal({
+                                  title: 'Berhasil!',
+                                  text: 'Selamat Datang Admin!',
+                                  type: 'success',
+                                  timer: 2000
+                                }).then(
+                                  function () {
+                                    document.location.href='../Admin/index.php';
+                                  },
+                                  function (dismiss) {
+                                    document.location.href='setting.php';
+                                    if (dismiss === 'timer') {
+                                      console.log('I was closed by the timer')
+                                    }
+                                  })
+                </script>";
                     }elseif ($getusers['status'] == 'guru') {
                         # code...
-                        $_SESSION['lms_id']             = $getusers['id_users'];
+                        $_SESSION['lms_id']             = $getusers['_id'];
                         $_SESSION['lms_username']       = $getusers['username'];
                         $_SESSION['lms_name']           = $getusers['nama'];
                         $_SESSION['lms_status']         = $getusers['status'];
                         
-                        echo "<script language=javascript> document.location.href='../profile.php'; </script>";
+                        echo "<script type='text/javascript'> swal({
+                                  title: 'Berhasil!',
+                                  text: 'Selamat Datang !',
+                                  type: 'success',
+                                  timer: 2000
+                                }).then(
+                                  function () {
+                                    document.location.href='../profile.php';
+                                  },
+                                  function (dismiss) {
+                                    document.location.href='../profile.php';
+                                    if (dismiss === 'timer') {
+                                      console.log('I was closed by the timer')
+                                    }
+                                  })
+                            </script>";
                     }else{
-                        echo "<script language='JavaScript'>alert('Anda Belum Terdaftar !')</script>";
-                        echo "<script language=javascript> document.location.href='logout'; </script>";
+                        "<script type='text/javascript'> swal({
+                                  title: 'Gagal!',
+                                  text: 'Anda belum terdaftar sebagai guru',
+                                  type: 'error',
+                                  timer: 2000
+                                }).then(
+                                  function () {
+                                    document.location.href='Logout.php';
+                                  },
+                                  function (dismiss) {
+                                    document.location.href='Logout.php';
+                                    if (dismiss === 'timer') {
+                                      console.log('I was closed by the timer')
+                                    }
+                                  })
+                </script>";
+                        // echo "<script language='JavaScript'>alert('Anda Belum Terdaftar !')</script>";
+                        // echo "<script language=javascript> document.location.href='logout.php'; </script>";
                     }
             }else{
-                echo '<script type="text/javascript"> alert("Password Anda Salah")</script>';
+                echo "<script type='text/javascript'> swal({
+                                  title: 'Gagal!',
+                                  text: 'Kata sandi anda tidak sesuai.',
+                                  type: 'error',
+                                  timer: 2000
+                                }).then(
+                                  function () {
+                                    // document.location.href='setting.php';
+                                  },
+                                  function (dismiss) {
+                                    // document.location.href='setting.php';
+                                    if (dismiss === 'timer') {
+                                      console.log('I was closed by the timer')
+                                    }
+                                  })
+                </script>";
             }
         }else{
-            echo '<script type="text/javascript"> alert("Username & Password Anda Salah")</script>';
+            echo "<script type='text/javascript'> swal({
+                                  title: 'Gagal !',
+                                  text: 'Kombinasi username dan password tidak ditemukan silakan cek kembali !',
+                                  type: 'error',
+                                  timer: 2000
+                                }).then(
+                                  function () {
+                                    // document.location.href='setting.php';
+                                  },
+                                  function (dismiss) {
+                                    // document.location.href='setting.php';
+                                    if (dismiss === 'timer') {
+                                      console.log('I was closed by the timer')
+                                    }
+                                  })
+                </script>";
         }
     }
 

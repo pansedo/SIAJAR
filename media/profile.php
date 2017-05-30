@@ -22,7 +22,9 @@
 
     $classProfile = new Profile();
 	$FuncProfile = $classProfile->GetData($id_users);
+
 ?> 
+		
 	<div class="page-content">
 		<div class="container-fluid">
 			<div class="row">
@@ -162,6 +164,7 @@
 				</div>
 				<div class="col-lg-9 col-lg-pull-6 col-md-6 col-sm-6">
 				<!-- Mulai Buku Content -->
+				<div >
 				<?php
 					$no = 1;
 					if ($getMedia == 0) {
@@ -177,17 +180,19 @@
 									<div class="photo">
 										<img src="<?php echo $data['path_image']; ?>" alt="">
 									</div>
-									<header class="title"><a href="#"><?php echo $data['judul']; ?></a></header>
+									<header class="title"><a href="product.php?id=<?php echo base64_encode($data['_id']);?>"><?php echo $data['judul']; ?></a></header>
 									<p><?php echo substr($data['deskripsi'], 0, 100)."..."; ?></p>
 								</div>
 								<div class="card-typical-section">
-									<div class="card-typical-linked">in <a href="#"><a href="#"><?php echo $data['nama_user']; ?></a></div>
-									<a href="#" class="card-typical-likes">
+									<div class="card-typical-linked">in <a href="#"><?php echo $data['nama_user']; ?></a></div>
+									<a class="btn btn-sm btn-success card-typical-likes" href="media.php?action=edit&id=<?php echo base64_encode($data['_id']);?>" class="card-typical-likes">
 										<i class="font-icon font-icon-pencil"></i>										
 									</a>
-									<a href="#" class="card-typical-likes">
-										<i class="font-icon font-icon-trash"></i>										
-									</a>
+									<!-- <form action="" method="POST"> -->
+										<button class="btn btn-sm btn-danger card-typical-likes" onclick="myFunction('<?php echo base64_encode($data['_id']);?>')" href="?action=hapus" >
+											<i class="font-icon font-icon-trash"></i>										
+										</button>
+									<!-- </form> -->
 								</div>
 							</article>
 						</div>
@@ -198,10 +203,44 @@
 				?>
 				<!-- Selesai Buku Content -->
 				</div>
+				<div class="col-lg-12" align="center">
+					<?php
+						$classMedia->paggingByUser($id_users, isset($_GET['page']) ? $_GET['page'] : 1);
+					?>
+				</div>
+				<!-- <button class="btn btn-primary" onclick="myFunction()">Test</button> -->
+				</div>
 				
 			</div><!--.row-->
 		</div><!--.container-fluid-->
 	</div><!--.page-content-->
+	<script type="text/javascript">
+		function myFunction(id) {
+		   swal({
+		      title: 'Anda yakin ingin menghapus media ini?',
+		      text: 'File akan dihapus secara permanen dari sistem ini !',
+		      type: 'warning',
+		      showCancelButton: true,
+		      confirmButtonColor: '#3085d6',
+		      cancelButtonColor: '#d33',
+		      confirmButtonText: 'Iya, Hapus Sekarang!',
+		      cancelButtonText: 'Tidak, Batalkan!',
+		      confirmButtonClass: 'btn btn-success',
+		      cancelButtonClass: 'btn btn-danger',
+		      buttonsStyling: false
+		    }).then(function () {
+		      // swal('Terhapus!', 'Your file has been deleted!', 'success');
+		      document.location.href='media.php?action=hapus&id='+id;
+		    }, function (dismiss) {
+		      // dismiss can be 'cancel', 'overlay', 'close', 'timer'
+		      if (dismiss === 'cancel') {
+		        swal('Dibatalkan', 'File anda masih tersedia di sistem ini', 'error')
+		      }
+		    }
+  			);
+
+		}
+		</script>
 
 <?php
 	include "include/footer.php";

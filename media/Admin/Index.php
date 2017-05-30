@@ -1,72 +1,50 @@
 <?php
 	include 'header.php';
 	include 'menu.php';
+
+	$classMedia = new Media();
+	$datamedialimit = $classMedia->GetMediaByLimit(10);
+	$datacount = $classMedia->GetCountData();
 ?>
 
 	<div class="page-content">
-	    <div class="container-fluid">
+	   <div class="container-fluid">
 	        <div class="row">
-	            <div class="col-xl-6">
-	                <div class="chart-statistic-box">
-	                    <div class="chart-txt">
-	                        <div class="chart-txt-top">
-	                            <p><span class="unit">$</span><span class="number">1540</span></p>
-	                            <p class="caption">Week income</p>
-	                        </div>
-	                        <table class="tbl-data">
-	                            <tr>
-	                                <td class="price color-purple">120$</td>
-	                                <td>Orders</td>
-	                            </tr>
-	                            <tr>
-	                                <td class="price color-yellow">15$</td>
-	                                <td>Investments</td>
-	                            </tr>
-	                            <tr>
-	                                <td class="price color-lime">55$</td>
-	                                <td>Others</td>
-	                            </tr>
-	                        </table>
-	                    </div>
-	                    <div class="chart-container">
-	                        <div class="chart-container-in">
-	                            <div id="chart_div"></div>
-	                            <header class="chart-container-title">Income</header>
-	                            <div class="chart-container-x">
-	                                <div class="item"></div>
-	                                <div class="item">tue</div>
-	                                <div class="item">wed</div>
-	                                <div class="item">thu</div>
-	                                <div class="item">fri</div>
-	                                <div class="item">sat</div>
-	                                <div class="item">sun</div>
-	                                <div class="item">mon</div>
-	                                <div class="item"></div>
-	                            </div>
-	                            <div class="chart-container-y">
-	                                <div class="item">300</div>
-	                                <div class="item"></div>
-	                                <div class="item">250</div>
-	                                <div class="item"></div>
-	                                <div class="item">200</div>
-	                                <div class="item"></div>
-	                                <div class="item">150</div>
-	                                <div class="item"></div>
-	                                <div class="item">100</div>
-	                                <div class="item"></div>
-	                                <div class="item">50</div>
-	                                <div class="item"></div>
-	                            </div>
-	                        </div>
-	                    </div>
-	                </div><!--.chart-statistic-box-->
+	        	<div class="col-xl-6">
+	                <section class="box-typical box-typical-dashboard panel panel-default scrollable">
+	                   <table id="table-edit" class="table table-bordered table-hover">
+						<thead>
+						<tr>
+							<th width="1%">No</th>
+							<th width="25%">User</th>
+							<th width="50%">Judul</th>
+							<th width="10%">Kategori</th>
+						</tr>
+						</thead>
+						<tbody>
+						<?php 
+						$i = 1;
+							foreach ($datamedialimit as $datamedia) {
+						?>
+							<tr>
+								<td><?php echo $i; $i++ ?></td>
+								<td><?php echo $datamedia['nama_user'] ?></td>
+								<td><?php echo $datamedia['judul'] ?></td>
+								<td><?php echo $datamedia['kategori'] ?></td>
+							</tr>
+						<?php
+						}
+						?>
+						</tbody>
+					</table>
+		        </section><!--.box-typical-dashboard-->
 	            </div><!--.col-->
 	            <div class="col-xl-6">
 	                <div class="row">
 	                    <div class="col-sm-6">
 	                        <article class="statistic-box red">
 	                            <div>
-	                                <div class="number">1456</div>
+	                                <div class="number"><?php echo $datacount['dokumen']; ?></div>
 	                                <div class="caption"><div>Media</div></div>
 	                                 <div class="percent">
 	                                    <div class="arrow up"></div>
@@ -77,7 +55,7 @@
 	                    <div class="col-sm-6">
 	                        <article class="statistic-box purple">
 	                            <div>
-	                                <div class="number">2028</div>
+	                                <div class="number"><?php echo $datacount['tag']; ?></div>
 	                                <div class="caption"><div>Hastag</div></div>
 	                                 <div class="percent">
 	                                    <div class="arrow up"></div>
@@ -88,8 +66,8 @@
 	                    <div class="col-sm-6">
 	                        <article class="statistic-box yellow">
 	                            <div>
-	                                <div class="number">10</div>
-	                                <div class="caption"><div>Pengaduan Media</div></div>
+	                                <div class="number"><?php echo $datacount['kategori']; ?></div>
+	                                <div class="caption"><div>Kategori</div></div>
 	                                 <div class="percent">
 	                                    <div class="arrow up"></div>
 	                                </div>
@@ -99,7 +77,7 @@
 	                    <div class="col-sm-6">
 	                        <article class="statistic-box green">
 	                            <div>
-	                                <div class="number">917</div>
+	                                <div class="number"><?php echo $datacount['user']; ?></div>
 	                                <div class="caption"><div>Users</div></div>
 	                                <div class="percent">
 	                                    <div class="arrow up"></div>
@@ -109,98 +87,8 @@
 	                    </div><!--.col-->
 	                </div><!--.row-->
 	            </div><!--.col-->
-	        </div><!--.row-->
-	
-	        <div class="row">
-	            <div class="col-xl-6 dahsboard-column">
-	                <section class="box-typical box-typical-dashboard panel panel-default scrollable">
-	                    <header class="box-typical-header panel-heading">
-	                        <h3 class="panel-title">Recent orders</h3>
-	                    </header>
-	                    <div class="box-typical-body panel-body">
-	                        <table class="tbl-typical">
-	                            <tr>
-	                                <th><div>Status</div></th>
-	                                <th><div>Clients</div></th>
-	                                <th align="center"><div>Orders#</div></th>
-	                                <th align="center"><div>Date</div></th>
-	                            </tr>
-	                            <tr>
-	                                <td>
-	                                    <span class="label label-primary">Paid</span>
-	                                    <span class="label label-success">Active</span>
-	                                </td>
-	                                <td>John Doe</td>
-	                                <td align="center">3435362</td>
-	                                <td class="color-blue-grey" nowrap align="center"><span class="semibold">Today</span> 8:30</td>
-	                            </tr>
-	                            <tr>
-	                                <td>
-	                                    <span class="label label-primary">Paid</span>
-	                                    <span class="label label-success">Active</span>
-	                                </td>
-	                                <td>Thomas Bayer</td>
-	                                <td align="center">3435362</td>
-	                                <td class="color-blue-grey" nowrap align="center"><span class="semibold">Today</span> 16:30</td>
-	                            </tr>
-	                            <tr>
-	                                <td>
-	                                    <span class="label label-primary">Paid</span>
-	                                    <span class="label label-default">Inactive</span>
-	                                </td>
-	                                <td>Nicolas Karabat</td>
-	                                <td align="center">3435362</td>
-	                                <td class="color-blue-grey" nowrap align="center"><span class="semibold">Yesterday</span></td>
-	                            </tr>
-	                            <tr>
-	                                <td>
-	                                    <span class="label label-default">Unpaid</span>
-	                                    <span class="label label-default">Inactive</span>
-	                                </td>
-	                                <td>Alexandre Pome</td>
-	                                <td align="center">3435362</td>
-	                                <td class="color-blue-grey" nowrap align="center">23th May</td>
-	                            </tr>
-	                            <tr>
-	                                <td>
-	                                    <span class="label label-primary">Paid</span>
-	                                    <span class="label label-success">Active</span>
-	                                </td>
-	                                <td>John Doe</td>
-	                                <td align="center">3435362</td>
-	                                <td class="color-blue-grey" nowrap align="center"><span class="semibold">Today</span> 8:30</td>
-	                            </tr>
-	                            <tr>
-	                                <td>
-	                                    <span class="label label-primary">Paid</span>
-	                                    <span class="label label-success">Active</span>
-	                                </td>
-	                                <td>Thomas Bayer</td>
-	                                <td align="center">3435362</td>
-	                                <td class="color-blue-grey" nowrap align="center"><span class="semibold">Today</span> 16:30</td>
-	                            </tr>
-	                            <tr>
-	                                <td>
-	                                    <span class="label label-primary">Paid</span>
-	                                    <span class="label label-default">Inactive</span>
-	                                </td>
-	                                <td>Nicolas Karabat</td>
-	                                <td align="center">3435362</td>
-	                                <td class="color-blue-grey" nowrap align="center"><span class="semibold">Yesterday</span></td>
-	                            </tr>
-	                            <tr>
-	                                <td>
-	                                    <span class="label label-default">Unpaid</span>
-	                                    <span class="label label-default">Inactive</span>
-	                                </td>
-	                                <td>Alexandre Pome</td>
-	                                <td align="center">3435362</td>
-	                                <td class="color-blue-grey" nowrap align="center">23th May</td>
-	                            </tr>
-	                        </table>
-	                    </div><!--.box-typical-body-->
-	                </section><!--.box-typical-dashboard-->
-	                <section class="box-typical box-typical-dashboard panel panel-default scrollable">
+	            <div class="col-xl-6">
+	        <!--     <section class="box-typical box-typical-dashboard panel panel-default scrollable">
 	                    <header class="box-typical-header panel-heading">
 	                        <h3 class="panel-title">Comments</h3>
 	                    </header>
@@ -233,13 +121,6 @@
 	                                <a href="#">
 	                                    <i class="font-icon font-icon-re"></i>
 	                                </a>
-	                                <!--Реализация кнопками-->
-	                                <!--<button type="button" class="star">-->
-	                                <!--<i class="font-icon font-icon-star"></i>-->
-	                                <!--</button>-->
-	                                <!--<button type="button">-->
-	                                <!--<i class="font-icon font-icon-re"></i>-->
-	                                <!--</button>-->
 	                            </div>
 	                        </article>
 	                        <article class="comment-item">
@@ -270,207 +151,14 @@
 	                                <a href="#">
 	                                    <i class="font-icon font-icon-re"></i>
 	                                </a>
-	                                <!--Реализация кнопками-->
-	                                <!--<button type="button" class="star">-->
-	                                <!--<i class="font-icon font-icon-star"></i>-->
-	                                <!--</button>-->
-	                                <!--<button type="button">-->
-	                                <!--<i class="font-icon font-icon-re"></i>-->
-	                                <!--</button>-->
 	                            </div>
 	                        </article>
-	                    </div><!--.box-typical-body-->
-	                </section>
-	            </div><!--.col-->
-	            <div class="col-xl-6 dahsboard-column">
-	                <section class="box-typical box-typical-dashboard panel panel-default scrollable">
-	                    <header class="box-typical-header panel-heading">
-	                        <h3 class="panel-title">Recent tickets</h3>
-	                    </header>
-	                    <div class="box-typical-body panel-body">
-	                        <table class="tbl-typical">
-	                            <tr>
-	                                <th><div>Status</div></th>
-	                                <th><div>Subject</div></th>
-	                                <th align="center"><div>Department</div></th>
-	                                <th align="center"><div>Date</div></th>
-	                            </tr>
-	                            <tr>
-	                                <td>
-	                                    <span class="label label-success">Open</span>
-	                                </td>
-	                                <td>Website down for one week</td>
-	                                <td align="center">Support</td>
-	                                <td nowrap align="center"><span class="semibold">Today</span> 8:30</td>
-	                            </tr>
-	                            <tr>
-	                                <td>
-	                                    <span class="label label-success">Open</span>
-	                                </td>
-	                                <td>Restoring default settings</td>
-	                                <td align="center">Support</td>
-	                                <td nowrap align="center"><span class="semibold">Today</span> 16:30</td>
-	                            </tr>
-	                            <tr>
-	                                <td>
-	                                    <span class="label label-warning">Progress</span>
-	                                </td>
-	                                <td>Loosing control on server</td>
-	                                <td align="center">Support</td>
-	                                <td nowrap align="center"><span class="semibold">Yesterday</span></td>
-	                            </tr>
-	                            <tr>
-	                                <td>
-	                                    <span class="label label-danger">Closed</span>
-	                                </td>
-	                                <td>Authorizations keys</td>
-	                                <td align="center">Support</td>
-	                                <td nowrap align="center">23th May</td>
-	                            </tr>
-	                        </table>
-	                    </div><!--.box-typical-body-->
-	                </section><!--.box-typical-dashboard-->
-	                <section class="box-typical box-typical-dashboard panel panel-default scrollable">
-	                    <header class="box-typical-header panel-heading">
-	                        <h3 class="panel-title">Contacts</h3>
-	                    </header>
-	                    <div class="box-typical-body panel-body">
-	                        <div class="contact-row-list">
-	                            <article class="contact-row">
-	                                <div class="user-card-row">
-	                                    <div class="tbl-row">
-	                                        <div class="tbl-cell tbl-cell-photo">
-	                                            <a href="#">
-	                                                <img src="img/photo-64-2.jpg" alt="">
-	                                            </a>
-	                                        </div>
-	                                        <div class="tbl-cell">
-	                                            <p class="user-card-row-name"><a href="#">Tim Collins</a></p>
-	                                            <p class="user-card-row-mail"><a href="#">timcolins@mail.com</a></p>
-	                                        </div>
-	                                        <div class="tbl-cell tbl-cell-status">Director at Tony’s</div>
-	                                    </div>
-	                                </div>
-	                            </article>
-	                            <article class="contact-row">
-	                                <div class="user-card-row">
-	                                    <div class="tbl-row">
-	                                        <div class="tbl-cell tbl-cell-photo">
-	                                            <a href="#">
-	                                                <img src="img/photo-64-1.jpg" alt="">
-	                                            </a>
-	                                        </div>
-	                                        <div class="tbl-cell">
-	                                            <p class="user-card-row-name"><a href="#">Maggy Smith</a></p>
-	                                            <p class="user-card-row-mail"><a href="#">maggysmith@mail.com</a></p>
-	                                        </div>
-	                                        <div class="tbl-cell tbl-cell-status">PR Manager</div>
-	                                    </div>
-	                                </div>
-	                            </article>
-	                            <article class="contact-row">
-	                                <div class="user-card-row">
-	                                    <div class="tbl-row">
-	                                        <div class="tbl-cell tbl-cell-photo">
-	                                            <a href="#">
-	                                                <img src="img/photo-64-3.jpg" alt="">
-	                                            </a>
-	                                        </div>
-	                                        <div class="tbl-cell">
-	                                            <p class="user-card-row-name"><a href="#">Molly Bridjet</a></p>
-	                                            <p class="user-card-row-mail"><a href="#">mollybr@mail.com</a></p>
-	                                        </div>
-	                                        <div class="tbl-cell tbl-cell-status">Assistan</div>
-	                                    </div>
-	                                </div>
-	                            </article>
-	                            <article class="contact-row">
-	                                <div class="user-card-row">
-	                                    <div class="tbl-row">
-	                                        <div class="tbl-cell tbl-cell-photo">
-	                                            <a href="#">
-	                                                <img src="img/photo-64-4.jpg" alt="">
-	                                            </a>
-	                                        </div>
-	                                        <div class="tbl-cell">
-	                                            <p class="user-card-row-name"><a href="#">Maggy Smith</a></p>
-	                                            <p class="user-card-row-mail"><a href="#">maggysmith@mail.com</a></p>
-	                                        </div>
-	                                        <div class="tbl-cell tbl-cell-status">PR Manager</div>
-	                                    </div>
-	                                </div>
-	                            </article>
-	                            <article class="contact-row">
-	                                <div class="user-card-row">
-	                                    <div class="tbl-row">
-	                                        <div class="tbl-cell tbl-cell-photo">
-	                                            <a href="#">
-	                                                <img src="img/photo-64-2.jpg" alt="">
-	                                            </a>
-	                                        </div>
-	                                        <div class="tbl-cell">
-	                                            <p class="user-card-row-name"><a href="#">Tim Collins</a></p>
-	                                            <p class="user-card-row-mail"><a href="#">timcolins@mail.com</a></p>
-	                                        </div>
-	                                        <div class="tbl-cell tbl-cell-status">Director at Tony’s</div>
-	                                    </div>
-	                                </div>
-	                            </article>
-	                            <article class="contact-row">
-	                                <div class="user-card-row">
-	                                    <div class="tbl-row">
-	                                        <div class="tbl-cell tbl-cell-photo">
-	                                            <a href="#">
-	                                                <img src="img/photo-64-1.jpg" alt="">
-	                                            </a>
-	                                        </div>
-	                                        <div class="tbl-cell">
-	                                            <p class="user-card-row-name"><a href="#">Maggy Smith</a></p>
-	                                            <p class="user-card-row-mail"><a href="#">maggysmith@mail.com</a></p>
-	                                        </div>
-	                                        <div class="tbl-cell tbl-cell-status">PR Manager</div>
-	                                    </div>
-	                                </div>
-	                            </article>
-	                            <article class="contact-row">
-	                                <div class="user-card-row">
-	                                    <div class="tbl-row">
-	                                        <div class="tbl-cell tbl-cell-photo">
-	                                            <a href="#">
-	                                                <img src="img/photo-64-3.jpg" alt="">
-	                                            </a>
-	                                        </div>
-	                                        <div class="tbl-cell">
-	                                            <p class="user-card-row-name"><a href="#">Molly Bridjet</a></p>
-	                                            <p class="user-card-row-mail"><a href="#">mollybr@mail.com</a></p>
-	                                        </div>
-	                                        <div class="tbl-cell tbl-cell-status">Assistan</div>
-	                                    </div>
-	                                </div>
-	                            </article>
-	                            <article class="contact-row">
-	                                <div class="user-card-row">
-	                                    <div class="tbl-row">
-	                                        <div class="tbl-cell tbl-cell-photo">
-	                                            <a href="#">
-	                                                <img src="img/photo-64-4.jpg" alt="">
-	                                            </a>
-	                                        </div>
-	                                        <div class="tbl-cell">
-	                                            <p class="user-card-row-name"><a href="#">Maggy Smith</a></p>
-	                                            <p class="user-card-row-mail"><a href="#">maggysmith@mail.com</a></p>
-	                                        </div>
-	                                        <div class="tbl-cell tbl-cell-status">PR Manager</div>
-	                                    </div>
-	                                </div>
-	                            </article>
-	                        </div>
-	                    </div><!--.box-typical-body-->
-	                </section><!--.box-typical-dashboard-->
-	            </div><!--.col-->
+	                    </div>
+	            </section> -->
+	            </div>
 	        </div>
-	    </div><!--.container-fluid-->
-	</div><!--.page-content-->	
+	    </div>
+	</div>
 
 <?php
 	include 'footer.php';

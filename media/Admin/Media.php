@@ -9,7 +9,7 @@
 	$getkategoriutama = $classKategori->GetKategoriUtama();
 	$getMedia = $classMedia->GetMedia();
 
-
+ 
 	if (isset($_POST['tambah_media'])) {
         $judul = mysql_escape_string($_POST['judul']);
         $deskripsi = mysql_escape_string($_POST['deskripsi']);
@@ -28,7 +28,11 @@
         $deskripsi = mysql_escape_string($_POST['deskripsi']);
         $kategori = mysql_escape_string($_POST['kategori']);
         $tags = mysql_escape_string($_POST['tags']);
-        $tautan = mysql_escape_string($_POST['tautan']);
+        if (isset($_POST['tautan'])) {
+        	$tautan = mysql_escape_string($_POST['tautan']);
+        }else{
+        	$tautan = "";
+        }
         if (isset($_FILES['dokumen'])) {
          	$dokumen = mysql_escape_string($_FILES['dokumen']['name']);
          }else{
@@ -187,7 +191,7 @@
 										</tr>
 										<?php
 										$no++;
-									}
+									} 
 								?>	
 							
 							</tbody>
@@ -230,7 +234,7 @@
 								<div class="row">
 									<div class="col-lg-4">
 
-										<div id="image-preview" style="background-image: url('<?php echo $getMediaById['path_image'];?>')">
+										<div id="image-preview" style="background-image: url('../<?php echo $getMediaById['path_image'];?>')">
 										  <label  for="image-upload" id="image-label">Choose File</label>
 										  <input type="file" name="image" id="image-upload"   />
 										</div>

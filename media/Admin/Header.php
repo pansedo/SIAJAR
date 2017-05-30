@@ -1,12 +1,32 @@
 <?php
     session_start();
     ob_start(); 
-	// error_reporting(0);
+	// error_reporting(0); 
 	include '../Connection/connection.php';
-    
+     
     spl_autoload_register(function ($class) {
       include '../Controller/' .$class . '.php';
     });
+
+	if (!isset($_SESSION['lms_id']) && !isset($_SESSION['lms_username']) && !isset($_SESSION['lms_status'])) {
+        header("Location:../Auth/logout.php");
+        exit();
+    }elseif($_SESSION['lms_status'] == "admin"){
+    	set_time_limit(10000); 
+        $id_users   = $_SESSION['lms_id'];
+        $email    = $_SESSION['lms_username'];
+        $status     = $_SESSION['lms_status'];
+    }elseif($_SESSION['lms_status'] == "guru"){
+    	set_time_limit(10000); 
+        $id_users   = $_SESSION['lms_id'];
+        $email    = $_SESSION['lms_username'];
+        $status     = $_SESSION['lms_status'];
+    }else{ 
+         header("Location:../Auth/logout.php");
+        exit();
+
+    }
+
 ?>  
 
 
@@ -30,6 +50,12 @@
 	<link rel="stylesheet" href="../Assets/css/lib/datatables-net/datatables.min.css">
 	<link rel="stylesheet" href="../Assets/css/separate/vendor/datatables-net.min.css">
 	<link rel="stylesheet" href="../Assets/css/separate/vendor/tags_editor.min.css">
+
+		<!--Sweetalert-->
+	<script  src="../Assets/js/lib/sweetalert/sweetalert2.min.js"></script>
+	<link rel="stylesheet"  href="../Assets/js/lib/sweetalert/sweetalert2.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
+
 
 	<link rel="stylesheet" type="text/css" href="../Assets/css/lib/uploadfile/component.css" />
 	<script>(function(e,t,n){var r=e.querySelectorAll("html")[0];r.className=r.className.replace(/(^|\s)no-js(\s|$)/,"$1js$2")})(document,window,0);</script>
@@ -83,7 +109,7 @@
 	                            <a class="dropdown-item" href="Profile.php"><span class="font-icon glyphicon glyphicon-user"></span>Profile</a>
 	                            <a class="dropdown-item" href="Setting.php"><span class="font-icon glyphicon glyphicon-cog"></span>Settings</a>
 	                            <div class="dropdown-divider"></div>
-	                            <a class="dropdown-item" href="Auth/logout.php"><span class="font-icon glyphicon glyphicon-log-out"></span>Logout</a>
+	                            <a class="dropdown-item" href="../Auth/logout.php"><span class="font-icon glyphicon glyphicon-log-out"></span>Logout</a>
 	                        </div>
 	                    </div>
 	                </div>

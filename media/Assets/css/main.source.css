@@ -10865,7 +10865,7 @@ body {
    Site Header Search
    ========================================================================== */
 .site-header-search {
-  width: 100%;
+  width: 67%;
   height: 30px;
   position: relative;
   padding: 0 35px 0 0;
@@ -11531,7 +11531,7 @@ body {
 }
 .site-header .site-header-search-container {
   float: right;
-  width: 158px;
+  width: 300px;
   margin: 0 10px 0 0;
   zoom: 1;
   *zoom: 1;
@@ -11553,7 +11553,7 @@ body {
   margin-right: -199px;
 }
 .site-header .site-header-collapsed .site-header-collapsed-in {
-  margin-right: 8%;
+  margin-right: 2%;
   zoom: 1;
   *zoom: 1;
 }
@@ -14177,5 +14177,21 @@ body.sidebar-hidden .page-content {
   .chrome-browser.with-side-menu-addl .page-content {
     padding-left: 0;
     padding-right: 0;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .menu-fixed{
+    position: relative */;
+  }
+
+}
+
+@media screen and (min-width: 992px) {
+  .menu-fixed{  /* To fix main menu container */
+    position: fixed;
+    /*top: 100px;*/
+    max-width: 278px;
+    width: 100%;
   }
 }
