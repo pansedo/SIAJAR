@@ -8,8 +8,8 @@ require("includes/header-menu.php");
 $mapelClass = new Mapel();
 $modulClass = new Modul();
 
-$infoMapel	= $mapelClass->getInfoMapel($_GET['pelajaran']);
 $infoModul	= $modulClass->getInfoModul($_GET['modul']);
+$infoMapel	= $mapelClass->getInfoMapel($infoModul['id_mapel']);
 $menuModul	= 1;
 ?>
 	<div class="modal fade"
@@ -138,14 +138,8 @@ $menuModul	= 1;
 									<div class="tbl info-tbl">
 										<div class="tbl-row">
 											<div class="tbl-cell">
-												<p class="title"><?=$infoMapel['nama']?></p>
-												<p>Mata Pelajaran</p>
-											</div>
-											<div class="tbl-cell tbl-cell-stat">
-												<div class="inline-block">
-													<p class="title"><?=$infoMapel['modul']?></p>
-													<p>Modul</p>
-												</div>
+												<p class="title">Modul <?=$infoModul['nama']?></p>
+												<p>Mata Pelajaran <?=$infoMapel['nama']?></p>
 											</div>
 										</div>
 									</div>

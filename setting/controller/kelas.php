@@ -86,6 +86,24 @@ class Kelas
         $result = array("status" => $status, "message"=>$message, "IDKelas" => $newID);
         return $result;
     }
+
+    public function postingKelas($kelas){
+        $query  = $this->db->posting->find(array("id_kelas" => $kelas))->sort(array('date_created' => 1));
+		$count  = $query->count();
+        $data   = array();
+
+        if ($count > 0) {
+            foreach ($query as $index => $isi) {
+                $data[$index] = $isi;
+                $userID	= new MongoId($isi['creator']);
+                $query2 = $this->db->user->findOne(array('_id' => $userID));
+                $data[$index]['user']   = $query2['nama'];
+            }
+        }
+
+        $result = array("count" => $count, "data"=>$data);
+        return $result;
+    }
 }
 
 ?>

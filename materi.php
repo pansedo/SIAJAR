@@ -218,7 +218,7 @@ if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
 										<input type="text" class="form-control" name="judul" placeholder="Judul Materi" value="<?php echo (isset($infoMateri) ? $infoMateri['judul']: ''); ?>">
 									</fieldset>
 								</div>
-								<a href="#" id="btn-cancel" class="shared">
+								<a id="btn-cancel" class="shared">
 									<i class="font-icon font-icon-del"></i>
 								</a>
 							</div>
@@ -283,7 +283,7 @@ if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
 									</div>
 								</div>
 							</div>
-							<a href="#" id="btn-edit" class="shared">
+							<a id="btn-edit" class="shared">
 								<i class="font-icon font-icon-pencil"></i>
 							</a>
 						</div>

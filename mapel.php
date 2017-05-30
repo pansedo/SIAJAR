@@ -208,7 +208,7 @@ $listModul	= $modulClass->getListbyMapel($_GET['id']);
 														added a new product
 														<a href="#">Free UI Kit</a>
 													</p>
-													<p>Just Now</p>
+													<p><?=selisih_waktu($modul['date_created'])?></p>
 												</div>
 											</div>
 										</div>
