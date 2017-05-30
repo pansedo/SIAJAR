@@ -170,16 +170,15 @@ if(isset($_POST['joinKelas'])){
 				</div>
 			</div>
 			<button type="button" class="change-cover">
-				<i class="font-icon font-icon-picture-double"></i>
-				Ganti sampul
-				<input type="file" />
+				<i class="font-icon font-icon-pencil"></i>
+				Pengaturan Kelas
 			</button>
 		</div><!--.profile-header-photo-->
 
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-xl-3 col-lg-4">
-					<aside id="menu-fixed" class="profile-side" style="margin: 0 0 20px">
+					<aside id="menu-fixed2" class="profile-side" style="margin: 0 0 20px">
 						<section class="box-typical">
 							<header class="box-typical-header-sm bordered">
 								Kode Kelas

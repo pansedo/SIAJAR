@@ -100,9 +100,8 @@ $infoMapel	= $mapelClass->getInfoMapel($_GET['id']);
 				</div>
 			</div>
 			<button type="button" class="change-cover">
-				<i class="font-icon font-icon-picture-double"></i>
-				Ganti sampul
-				<input type="file"/>
+				<i class="font-icon font-icon-pencil"></i>
+				Pengaturan
 			</button>
 		</div><!--.profile-header-photo-->
 
@@ -138,7 +137,7 @@ $infoMapel	= $mapelClass->getInfoMapel($_GET['id']);
 									<button type="button" class="btn btn-sm btn-rounded btn-inline">+ Tambah Modul</button>
 								</div>
 							</h5>
-							
+							<p align="center">Belum ada Modul</p>
 						</div>
 					</section>
 				</div>
