@@ -32,7 +32,7 @@
 												<div class="tbl-row">
 													<div class="tbl-cell tbl-cell-photo">
 														<a href="#">
-															<img  src="Assets/img/photo-64-2.jpg" alt="">
+															<img  src="Assets/foto/<?php if ($orang['foto_user'] != NULL) {echo $orang['foto_user'];}else{echo "no_picture.png";} ?>" alt="">
 														</a>
 													</div>
 													<div class="tbl-cell">
