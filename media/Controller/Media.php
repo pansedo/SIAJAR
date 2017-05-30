@@ -1034,6 +1034,56 @@ class Media
 			}
     }
 
+    public function classMediaByKategori($idkat)
+    {	
+		$page = isset($_GET['page']) ? $_GET['page'] : 1;
+    	$limit = 15;
+    	$skip = ($page - 1)*$limit;
+    	$next = ($page+1);
+    	$prev = ($page-1);
+    	$short = array('_id' => -1);
+    	$query =  $this -> table -> find(array("id_kategori" => "$idkat"))-> skip($skip)->limit($limit);
+    	
+    	$count = $query->count();
+    	if ($count > 0) {
+    		$i = 0;
+    		foreach ($query as $row) {
+    			$data = $this->db->user->findOne(array("_id"=> new MongoId($row['id_user'])));
+    			$kategori = $this->db->kategori->findone(array("_id"=> new MongoId($row['id_kategori'])));
+    			$media[$i]=$row;
+    			$media[$i]['nama_user'] = $data['nama'];
+    			$media[$i]['foto'] = $data['foto'];
+    			$media[$i]['kategori'] = $kategori['kategori'];
+    			$i++;
+    		}
+
+    	}else{
+			echo "<script type='text/javascript'>swal({
+					  title: 'Data Tidak Ditemukan',
+					  text: 'Data Tidak Ditemukan!',
+					  type: 'error',
+					  timer: 2000
+					}).then(
+					  function () {
+					  	document.location.href='index.php';
+					  },
+					  function (dismiss) {
+					  	document.location.href='index.php';
+					    if (dismiss === 'timer') {
+					      console.log('I was closed by the timer')
+					    }
+				  })</script>";
+    		die();
+    	}
+    	
+        if ($count > 0) {
+    		return $media;
+    	}else{
+    		return $count;
+    	}
+    	
+    }
+
 }
 
 ?>
