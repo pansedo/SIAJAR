@@ -9,7 +9,7 @@ $mapelClass = new Mapel();
 $modulClass = new Modul();
 
 $infoMapel	= $mapelClass->getInfoMapel($_GET['pelajaran']);
-$infoModul	= $modulClass->getInfoModul($_GET['id']);
+$infoModul	= $modulClass->getInfoModul($_GET['modul']);
 $menuModul	= 1;
 ?>
 	<div class="modal fade"
@@ -176,7 +176,7 @@ $menuModul	= 1;
 							Modul Prasyarat
 							<span class="label label-pill label-primary"><?=$infoMapel['modul']?></span>
 							<div class="btn-group" style='float: right;'>
-								<button type="button" class="btn btn-sm btn-rounded btn-inline" data-toggle="modal" data-target="#addModulPrasyarat">+ Tambah Modul Prasyarat</button>
+								<button type="button" class="btn btn-sm btn-rounded btn-inline" data-toggle="modal" data-target="#addModulPrasyarat">+ Pilih Modul Prasyarat</button>
 							</div>
 						</header>
 						<div>
