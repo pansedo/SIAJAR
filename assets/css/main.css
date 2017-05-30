@@ -20,7 +20,7 @@
 }
 .menu-fixed2{  /* To fix main menu container */
 	position: fixed;
-	bottom: 50px;
+	bottom: 58px;
 	max-width: 278px;
 	width: 100%;
 }

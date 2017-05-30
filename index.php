@@ -21,6 +21,9 @@ if(isset($_POST['joinKelas'])){
 		echo "<script>alert('".$rest['message']."');</script>";
 	}
 }
+
+$userClass	= new User();
+$userProfil	= $userClass->GetData($_SESSION['lms_id']);
 ?>
 	<div class="modal fade"
 		 id="addKelas"
@@ -199,7 +202,7 @@ if(isset($_POST['joinKelas'])){
 								</p>
 								<p class="line-with-icon">
 									<i class="font-icon font-icon-users-two"></i>
-									<a href="#">SMAN 22 Bandung</a>
+									<a href="#"> <?=$userProfil['sekolah']?></a>
 								</p>
 								<p class="line-with-icon">
 									<i class="font-icon font-icon-user"></i>
@@ -207,15 +210,15 @@ if(isset($_POST['joinKelas'])){
 								</p>
 								<p class="line-with-icon">
 									<i class="font-icon font-icon-facebook"></i>
-									<a href="#">Profil Facebook</a>
+									<a href="#"> <?=$userProfil['sosmed']['facebook']?></a>
 								</p>
 								<p class="line-with-icon">
 									<i class="font-icon font-icon-earth"></i>
-									<a href="#">Website</a>
+									<a href="#"> <?=$userProfil['sosmed']['website']?></a>
 								</p>
 								<p class="line-with-icon">
 									<i class="font-icon font-icon-calend"></i>
-									Bergabung 2 hari yang lalu
+									Bergabung <?=selisih_waktu($userProfil['date_created'])?>
 								</p>
 							</div>
 						</section>
@@ -254,170 +257,44 @@ if(isset($_POST['joinKelas'])){
 
 						<div class="tab-content no-styled profile-tabs">
 
-							<article class="box-typical profile-post">
-								<div class="profile-post-header">
-									<div class="user-card-row">
-										<div class="tbl-row">
-											<div class="tbl-cell tbl-cell-photo">
-												<a href="#">
-													<img src="assets/img/photo-64-2.jpg" alt="">
-												</a>
-											</div>
-											<div class="tbl-cell">
-												<div class="user-card-row-name"><a href="#">Pansera Guru</a> &nbsp; &gt; &nbsp; <a href="#">Contoh Kelas 1</a></div>
-												<div class="color-blue-grey-lighter">3 hari lalu</div>
-											</div>
-										</div>
-									</div>
-									<a href="#" class="shared">
-										<i class="font-icon font-icon-share"></i>
-									</a>
-								</div>
-								<div class="profile-post-content">
-									<p>
-										Pengumuman<br />
-										<br />
-										Besok kelas di liburkan, kepada seluruh Tutor harap memberitahu siswa/i yang berada di masing-masing TKB.<br />
-										<br />
-										Terima Kasih
-									</p>
-								</div>
-								<div class="box-typical-footer profile-post-meta">
-									<a class="meta-item">
-										<i class="font-icon font-icon-comment"></i>
-										8 Comment
-									</a>
-								</div>
-								<div id="post1" style="display:none;">
-									<div class="comment-rows-container hover-action scrollable-block">
-										<div class="comment-row-item">
-											<div class="avatar-preview avatar-preview-32">
-												<a href="#">
-													<img src="assets/img/photo-64-2.jpg" alt="">
-												</a>
-											</div>
-											<div class="tbl comment-row-item-header">
-												<div class="tbl-row">
-													<div class="tbl-cell tbl-cell-name">Eric Fox</div>
-													<div class="tbl-cell tbl-cell-date">04.07.15, 20:02 PM</div>
-												</div>
-											</div>
-											<div class="comment-row-item-content">
-												<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>
-												<button type="button" class="comment-row-item-action edit">
-													<i class="font-icon font-icon-pencil"></i>
-												</button>
-												<button type="button" class="comment-row-item-action del">
-													<i class="font-icon font-icon-trash"></i>
-												</button>
-											</div>
-										</div><!--.comment-row-item-->
+							<?php
+								$listPosting	= $kelasClass->postingSeluruh($_SESSION['lms_id']);
 
-										<div class="comment-row-item">
-											<div class="avatar-preview avatar-preview-32">
-												<a href="#">
-													<img src="assets/img/avatar-2-64.png" alt="">
-												</a>
-											</div>
-											<div class="tbl comment-row-item-header">
-												<div class="tbl-row">
-													<div class="tbl-cell tbl-cell-name">Vasilisa</div>
-													<div class="tbl-cell tbl-cell-date">04.07.15, 20:02 PM</div>
+								if ($listPosting['count'] > 0) {
+									foreach ($listPosting['data'] as $posting) {
+										echo '	<article class="box-typical profile-post">
+													<div class="profile-post-header">
+														<div class="user-card-row">
+															<div class="tbl-row">
+																<div class="tbl-cell tbl-cell-photo">
+																	<a href="#">
+																		<img src="assets/img/photo-64-2.jpg" alt="">
+																	</a>
+																</div>
+																<div class="tbl-cell">
+																	<div class="user-card-row-name"><a href="#">'.$posting['user'].'</a> &nbsp; &gt; &nbsp; <a href="#">'.$posting['kelas'].'</a></div>
+																	<div class="color-blue-grey-lighter">'.selisih_waktu($posting['date_created']).'</div>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="profile-post-content">
+														<p>
+															'.nl2br($posting['isi_postingan']).'
+														</p>
+													</div>
+												</article>';
+									}
+								}else {
+									echo '	<article class="box-typical profile-post">
+												<div class="profile-post-content">
+													<p align="center">
+													 Belum ada Postingan saat ini.
+													</p>
 												</div>
-											</div>
-											<div class="comment-row-item-content">
-												<p>Yes!</p>
-												<button type="button" class="comment-row-item-action edit">
-													<i class="font-icon font-icon-pencil"></i>
-												</button>
-												<button type="button" class="comment-row-item-action del">
-													<i class="font-icon font-icon-trash"></i>
-												</button>
-											</div>
-										</div><!--.comment-row-item-->
-
-										<div class="comment-row-item">
-											<div class="avatar-preview avatar-preview-32">
-												<a href="#">
-													<img src="assets/img/photo-64-2.jpg" alt="">
-												</a>
-											</div>
-											<div class="tbl comment-row-item-header">
-												<div class="tbl-row">
-													<div class="tbl-cell tbl-cell-name">Henry Olson</div>
-													<div class="tbl-cell tbl-cell-date">04.07.15, 20:02 PM</div>
-												</div>
-											</div>
-											<div class="comment-row-item-content">
-												<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
-												<button type="button" class="comment-row-item-action edit">
-													<i class="font-icon font-icon-pencil"></i>
-												</button>
-												<button type="button" class="comment-row-item-action del">
-													<i class="font-icon font-icon-trash"></i>
-												</button>
-											</div>
-										</div><!--.comment-row-item-->
-
-										<div class="comment-row-item">
-											<div class="avatar-preview avatar-preview-32">
-												<a href="#">
-													<img src="assets/img/avatar-2-64.png" alt="">
-												</a>
-											</div>
-											<div class="tbl comment-row-item-header">
-												<div class="tbl-row">
-													<div class="tbl-cell tbl-cell-name">Vasilisa</div>
-													<div class="tbl-cell tbl-cell-date">04.07.15, 20:02 PM</div>
-												</div>
-											</div>
-											<div class="comment-row-item-content">
-												<p>No!</p>
-												<button type="button" class="comment-row-item-action edit">
-													<i class="font-icon font-icon-pencil"></i>
-												</button>
-												<button type="button" class="comment-row-item-action del">
-													<i class="font-icon font-icon-trash"></i>
-												</button>
-											</div>
-										</div><!--.comment-row-item-->
-
-										<div class="comment-row-item">
-											<div class="avatar-preview avatar-preview-32">
-												<a href="#">
-													<img src="assets/img/avatar-2-64.png" alt="">
-												</a>
-											</div>
-											<div class="tbl comment-row-item-header">
-												<div class="tbl-row">
-													<div class="tbl-cell tbl-cell-name">Vasilisa</div>
-													<div class="tbl-cell tbl-cell-date">04.07.15, 20:02 PM</div>
-												</div>
-											</div>
-											<div class="comment-row-item-content">
-												<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed...</p>
-												<button type="button" class="comment-row-item-action edit">
-													<i class="font-icon font-icon-pencil"></i>
-												</button>
-												<button type="button" class="comment-row-item-action del">
-													<i class="font-icon font-icon-trash"></i>
-												</button>
-											</div>
-										</div><!--.comment-row-item-->
-									</div><!--.comment-rows-container-->
-									<input type="text" class="write-something" placeholder="Leave a comment"/>
-									<div class="box-typical-footer">
-										<div class="tbl">
-											<div class="tbl-row">
-												<div class="tbl-cell"></div>
-												<div class="tbl-cell tbl-cell-action">
-													<button type="submit" class="btn btn-rounded">Send</button>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</article>
+											</article>';
+								}
+							?>
 
 						</div><!--.tab-content-->
 					</section><!--.tabs-section-->

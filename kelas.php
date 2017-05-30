@@ -39,6 +39,18 @@ if(isset($_POST['joinKelas'])){
 		echo "<script>alert('".$rest['message']."');</script>";
 	}
 }
+
+if(isset($_POST['postingText'])){
+	$post = trim(htmlentities($_POST['textPost']));
+	$rest = $kelasClass->addPost($post, $infoKelas['_id'], $_SESSION['lms_id']);
+	// echo "<script>alert('WOE!');</script>";
+	if ($rest['status'] == "Success") {
+		// echo "<script>alert('".$rest['status']."');</script>";
+		// echo "<script>document.location='kelas.php?id=".$infoKelas['_id']."'</script>";
+	}else{
+		echo "<script>alert('".$rest['status']."');</script>";
+	}
+}
 ?>
 	<div class="modal fade"
 		 id="addKelas"
@@ -216,12 +228,10 @@ if(isset($_POST['joinKelas'])){
 									</div>
 								</div>
 							</header>
-							<div class="box-typical-inner">
-								<div class="box-typical-inner" id="listMapel">
-									<p style="text-align: center;">
-										Menunggu..
-									</p>
-								</div>
+							<div class="box-typical-inner" id="listMapel">
+								<p style="text-align: center;">
+									Menunggu..
+								</p>
 							</div>
 						</section>
 
@@ -232,8 +242,8 @@ if(isset($_POST['joinKelas'])){
 					<section class="tabs-section">
 
 						<div class="tab-content no-styled profile-tabs">
-							<form class="box-typical">
-								<textarea class="write-something" placeholder="Apa yang ingin anda beritahukan?"></textarea>
+							<form class="box-typical" method="post" action="">
+								<textarea class="write-something" name="textPost" placeholder="Apa yang ingin anda beritahukan?"></textarea>
 								<div class="box-typical-footer">
 									<div class="tbl">
 										<div class="tbl-row">
@@ -252,7 +262,7 @@ if(isset($_POST['joinKelas'])){
 												</button>
 											</div>
 											<div class="tbl-cell tbl-cell-action">
-												<button type="submit" class="btn btn-rounded">Send</button>
+												<button type="submit" name="postingText" class="btn btn-rounded">Send</button>
 											</div>
 										</div>
 									</div>
@@ -285,11 +295,19 @@ if(isset($_POST['joinKelas'])){
 													</div>
 													<div class="profile-post-content">
 														<p>
-															'.$posting['isi_postingan'].'
+															'.nl2br($posting['isi_postingan']).'
 														</p>
 													</div>
 												</article>';
 									}
+								}else {
+									echo '	<article class="box-typical profile-post">
+												<div class="profile-post-content">
+													<p align="center">
+													 Belum ada Postingan saat ini.
+													</p>
+												</div>
+											</article>';
 								}
 
 							?>

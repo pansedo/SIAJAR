@@ -87,8 +87,23 @@ class Kelas
         return $result;
     }
 
+    public function addPost($post, $kelas, $user){
+        $newID  = "";
+        $insert = array("isi_postingan" => $post, 'id_kelas'=> "$kelas", "creator"=>"$user", "date_created"=>date('Y-m-d H:i:s'), "date_modified"=>date('Y-m-d H:i:s'));
+                  $this->db->posting->insert($insert);
+        $newID  = $insert['_id'];
+        if ($newID) {
+            $status     = "Success";
+        }else {
+            $status     = "Failed";
+        }
+
+        $result = array("status" => $status, "IDPosting" => $newID);
+        return $result;
+    }
+
     public function postingKelas($kelas){
-        $query  = $this->db->posting->find(array("id_kelas" => $kelas))->sort(array('date_created' => 1));
+        $query  = $this->db->posting->find(array("id_kelas" => $kelas))->sort(array('date_created' => -1));
 		$count  = $query->count();
         $data   = array();
 
@@ -98,6 +113,33 @@ class Kelas
                 $userID	= new MongoId($isi['creator']);
                 $query2 = $this->db->user->findOne(array('_id' => $userID));
                 $data[$index]['user']   = $query2['nama'];
+            }
+        }
+
+        $result = array("count" => $count, "data"=>$data);
+        return $result;
+    }
+
+    public function postingSeluruh($user){
+        $query  = $this->db->anggota_kelas->find(array("id_user"=>"$user"));
+        foreach ($query as $isi) {
+            $simpan[]['id_kelas'] = $isi['id_kelas'];
+        }
+        $query2 = $this->db->posting->find(array(
+                                            '$or' => $simpan
+                                        ))->sort(array('date_created' => -1));
+		$count  = $query2->count();
+        $data   = array();
+
+        if ($count > 0) {
+            foreach ($query2 as $index => $isi) {
+                $data[$index] = $isi;
+                $userID	= new MongoId($isi['creator']);
+                $idkelas    = new MongoId($isi['id_kelas']);
+                $query3 = $this->db->user->findOne(array('_id' => $userID));
+                $query4 = $this->db->table->findOne(array('_id' => $idkelas));
+                $data[$index]['user']   = $query3['nama'];
+                $data[$index]['kelas']   = $query4['nama'];
             }
         }
 
