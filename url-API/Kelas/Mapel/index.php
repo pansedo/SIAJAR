@@ -27,7 +27,7 @@ if(isset($method['action'])){
 
 		echo $Json;
 	}
-	
+
 	if($method['action'] == 'showList'){
         $catch  = $table->find(array("id_kelas" => $method['ID']));
         foreach ($catch as $row) {
