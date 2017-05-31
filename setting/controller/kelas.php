@@ -122,24 +122,27 @@ class Kelas
 
     public function postingSeluruh($user){
         $query  = $this->db->anggota_kelas->find(array("id_user"=>"$user"));
-        foreach ($query as $isi) {
-            $simpan[]['id_kelas'] = $isi['id_kelas'];
-        }
-        $query2 = $this->db->posting->find(array(
-                                            '$or' => $simpan
-                                        ))->sort(array('date_created' => -1));
-		$count  = $query2->count();
+        $count  = $query->count();
         $data   = array();
 
-        if ($count > 0) {
-            foreach ($query2 as $index => $isi) {
-                $data[$index] = $isi;
-                $userID	= new MongoId($isi['creator']);
-                $idkelas    = new MongoId($isi['id_kelas']);
-                $query3 = $this->db->user->findOne(array('_id' => $userID));
-                $query4 = $this->db->table->findOne(array('_id' => $idkelas));
-                $data[$index]['user']   = $query3['nama'];
-                $data[$index]['kelas']   = $query4['nama'];
+        if($count > 0){
+            foreach ($query as $isi) {
+                $simpan[]['id_kelas'] = $isi['id_kelas'];
+            }
+            $query2 = $this->db->posting->find(array(
+                                                '$or' => $simpan
+                                            ))->sort(array('date_created' => -1));
+    		$count2  = $query2->count();
+            if ($count2 > 0) {
+                foreach ($query2 as $index => $isi) {
+                    $data[$index] = $isi;
+                    $userID	    = new MongoId($isi['creator']);
+                    $idkelas    = new MongoId($isi['id_kelas']);
+                    $query3     = $this->db->user->findOne(array('_id' => $userID));
+                    $query4     = $this->db->table->findOne(array('_id' => $idkelas));
+                    $data[$index]['user']   = $query3['nama'];
+                    $data[$index]['kelas']  = $query4['nama'];
+                }
             }
         }
 
