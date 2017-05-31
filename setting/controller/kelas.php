@@ -147,7 +147,7 @@ class Kelas
             }
         }
 
-        $result = array("count" => $count, "data"=>$data);
+        $result = array("count" => $count2, "data"=>$data);
         return $result;
     }
 }
