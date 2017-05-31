@@ -17,6 +17,16 @@ class Kategori
         $query =  $this -> table -> find(array("sub_id"=>"0"));
         return $query;
     }   
+     public function GetKategoriSemua(){
+        $query =  $this -> table -> find(array("sub_id"=>"0"));
+        foreach ($query as $kategoriutama) {
+            echo $kategoriutama['kategori'].'<br>';
+            $subquery =  $this -> table -> find(array("sub_id"=>"$kategoriutama[_id]"));
+            foreach ($subquery as $kategorisub) {
+                echo $kategorisub['kategori'].'<br>';
+            }
+        }
+    }  
 
     public function getkategoriutamabyId($id){
         $criteria = array('_id' => new MongoId($id));

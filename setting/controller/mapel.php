@@ -33,14 +33,16 @@ class Mapel
         $newID  = "";
         $insert = array("id_kelas"=>$kelas, "nama" => $nama, "creator" => "$user", "date_created"=>date('Y-m-d H:i:s'), "date_modified"=>date('Y-m-d H:i:s'));
                   $this->db->mata_pelajaran->insert($insert);
-        if ($insert) {
-            $newID  = $insert['_id'];
+        $newID  = $insert['_id'];
+        if ($newID) {
             $status     = "Success";
+            $message    = "Mata Pelajaran $nama berhasil ditambahkan!";
         }else {
             $status     = "Failed";
+            $message    = "Mata Pelajaran $nama gagal ditambahkan!";
         }
 
-        $result = array("status" => $status, "IDMapel" => $newID);
+        $result = array("status" => $status, "message"=>$message, "IDMapel" => $newID);
         return $result;
     }
 

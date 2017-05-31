@@ -8,8 +8,8 @@ require("includes/header-menu.php");
 $mapelClass = new Mapel();
 $modulClass = new Modul();
 
-$infoMapel	= $mapelClass->getInfoMapel($_GET['pelajaran']);
-$infoModul	= $modulClass->getInfoModul($_GET['id']);
+$infoModul	= $modulClass->getInfoModul($_GET['modul']);
+$infoMapel	= $mapelClass->getInfoMapel($infoModul['id_mapel']);
 $menuModul	= 1;
 ?>
 	<div class="modal fade"
@@ -138,14 +138,8 @@ $menuModul	= 1;
 									<div class="tbl info-tbl">
 										<div class="tbl-row">
 											<div class="tbl-cell">
-												<p class="title"><?=$infoMapel['nama']?></p>
-												<p>Mata Pelajaran</p>
-											</div>
-											<div class="tbl-cell tbl-cell-stat">
-												<div class="inline-block">
-													<p class="title"><?=$infoMapel['modul']?></p>
-													<p>Modul</p>
-												</div>
+												<p class="title">Modul <?=$infoModul['nama']?></p>
+												<p>Mata Pelajaran <?=$infoMapel['nama']?></p>
 											</div>
 										</div>
 									</div>
@@ -176,7 +170,7 @@ $menuModul	= 1;
 							Modul Prasyarat
 							<span class="label label-pill label-primary"><?=$infoMapel['modul']?></span>
 							<div class="btn-group" style='float: right;'>
-								<button type="button" class="btn btn-sm btn-rounded btn-inline" data-toggle="modal" data-target="#addModulPrasyarat">+ Tambah Modul Prasyarat</button>
+								<button type="button" class="btn btn-sm btn-rounded btn-inline" data-toggle="modal" data-target="#addModulPrasyarat">+ Pilih Modul Prasyarat</button>
 							</div>
 						</header>
 						<div>

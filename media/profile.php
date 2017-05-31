@@ -18,6 +18,7 @@
 
 	$getkategoriutama = $classKategori->GetKategoriUtama();
 	$getMedia = $classMedia->GetMediabyUser($id_users);
+	$getMediaCount = $classMedia->GetMediabyUserCount($id_users);
 
 
     $classProfile = new Profile();
@@ -29,7 +30,6 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-lg-3 col-lg-pull-6 col-md-6 col-sm-6">
-					
 					<section class="box-typical">
 						<div class="profile-card ">
 							<div class="profile-card-photo">
@@ -38,129 +38,33 @@
 							<div class="profile-card-name"><?php echo $FuncProfile['nama'];?></div>
 							<div class="profile-card-status"><?php echo $FuncProfile['sekolah'];?></div>
 							<!-- <div class="profile-card-location">Asal Sekolah</div> -->
-							<button style="margin-top:10px;" type="button" class="btn btn-rounded">Follow</button>
-							<button style="margin-top:10px;" type="button" class="btn btn-danger btn-rounded">Wishlist</button>
 						</div>
-
 						<div class="profile-statistic tbl">
 							<div class="tbl-row">
 								<div class="tbl-cell">
-									<b>200</b>
-									Connections
-								</div>
-								<div class="tbl-cell">
-									<b>57</b>
-									Books
+									<b><?php echo $getMediaCount; ?></b>
+									Media Bahan Ajar
 								</div>
 							</div>
 						</div>
 
 						<ul class="profile-links-list">
 							<li class="nowrap">
-								<i class="font-icon font-icon-earth-bordered"></i>
-								// <a href="#"><?php /*echo $FuncProfile['sosmed']['website'];*/?></a>
+								<i class="font-icon font-icon-earth-bordered"></i> 
+								<a href="#"><?php echo $FuncProfile['sosmed']['website'];?></a>
 							</li>
 							<li class="nowrap">
-								<i class="font-icon font-icon-fb-fill"></i>
-								<a href="#"><?php /*echo $FuncProfile['sosmed']['facebook'];*/?></a>
+								<i class="font-icon font-icon-fb-fill"></i> 
+								<a href="#"><?php echo $FuncProfile['sosmed']['facebook'];?></a>
 							</li>
 							<li class="nowrap">
-								<i class="font-icon font-icon-in-fill"></i>
-								<a href="#"><?php /*echo $FuncProfile['sosmed']['linkedin'];*/?></a>
-							</li>
-							<li class="nowrap">
-								<i class="font-icon font-icon-tw-fill"></i>
-								<a href="#"><?php /*echo $FuncProfile['sosmed']['twitter'];*/?></a>
-							</li>
+								<i class="font-icon font-icon-calend"></i> 
+								<a href="#"><?php echo selisih_waktu($FuncProfile['date_created']);?></a>
+							</li> 
+							 
 						</ul>
 					</section>
 				
-
-					<section class="box-typical">
-						<header class="box-typical-header-sm">
-							Friends
-							&nbsp;
-							<a href="#" class="full-count">268</a>
-						</header>
-						<div class="friends-list">
-							<article class="friends-list-item">
-
-								<div class="user-card-row">
-									<div class="tbl-row">
-										<div class="tbl-cell tbl-cell-photo">
-											<a href="#">
-												<img src="Assets/img/photo-64-2.jpg" alt="">
-											</a>
-										</div>
-										<div class="tbl-cell">
-											<p class="user-card-row-name status-online"><a href="#">Dan Cederholm</a></p>
-											<p class="user-card-row-location">New York</p>
-										</div>
-									</div>
-								</div>
-							</article>
-							<article class="friends-list-item">
-								<div class="user-card-row">
-									<div class="tbl-row">
-										<div class="tbl-cell tbl-cell-photo">
-											<a href="#">
-												<img src="Assets/img/photo-64-1.jpg" alt="">
-											</a>
-										</div>
-										<div class="tbl-cell">
-											<p class="user-card-row-name"><a href="#">Oykun Yilmaz</a></p>
-											<p class="user-card-row-location">Los Angeles</p>
-										</div>
-									</div>
-								</div>
-							</article>
-							<article class="friends-list-item">
-								<div class="user-card-row">
-									<div class="tbl-row">
-										<div class="tbl-cell tbl-cell-photo">
-											<a href="#">
-												<img src="Assets/img/photo-64-3.jpg" alt="">
-											</a>
-										</div>
-										<div class="tbl-cell">
-											<p class="user-card-row-name"><a href="#">Bill S Kenney</a></p>
-											<p class="user-card-row-location">Cardiff</p>
-										</div>
-									</div>
-								</div>
-							</article>
-							<article class="friends-list-item">
-								<div class="user-card-row">
-									<div class="tbl-row">
-										<div class="tbl-cell tbl-cell-photo">
-											<a href="#">
-												<img src="Assets/img/photo-64-4.jpg" alt="">
-											</a>
-										</div>
-										<div class="tbl-cell">
-											<p class="user-card-row-name"><a href="#">Maggy Smith</a></p>
-											<p class="user-card-row-location">Dusseldorf</p>
-										</div>
-									</div>
-								</div>
-							</article>
-							<article class="friends-list-item">
-								<div class="user-card-row">
-									<div class="tbl-row">
-										<div class="tbl-cell tbl-cell-photo">
-											<a href="#">
-												<img src="Assets/img/photo-64-2.jpg" alt="">
-											</a>
-										</div>
-										<div class="tbl-cell">
-											<p class="user-card-row-name"><a href="#">Dan Cederholm</a></p>
-											<p class="user-card-row-location">New York</p>
-										</div>
-									</div>
-								</div>
-							</article>
-						</div>
-					</section>
 				</div>
 				<div class="col-lg-9 col-lg-pull-6 col-md-6 col-sm-6">
 				<!-- Mulai Buku Content -->
@@ -172,31 +76,47 @@
 						echo "Belum ada dokumen";
 					}else{
 					foreach ($getMedia as $data) {
+						$date = date_create($data['date_created']);
 				?>
 					<div class="col-lg-4 col-lg-pull-6 col-md-6 col-sm-6" style="padding-bottom: 15px;">
-						<div class="card-grid-col">
+						<!-- <div class="card-grid-col"> -->
 							<article class="card-typical">
-								<div class="card-typical-section card-typical-content">
-									<div class="photo">
-										<img src="<?php echo $data['path_image']; ?>" alt="">
+								<div class="card-typical-section" style="height:80px">
+									<div class="user-card-row">
+										<div class="tbl-row">
+											<div class="tbl-cell tbl-cell-photo">
+												<a href="#">
+													<img  src="Assets/foto/<?php if ($data['foto'] != NULL) {echo $data['foto'];}else{echo "no_picture.png";} ?>" alt="">
+												</a>
+											</div>
+											<div class="tbl-cell">
+												<p class="user-card-row-name"><a href="product.php?id=<?php echo base64_encode($data['_id']);?>"><?php echo $data['judul']; ?></a></p>
+												<p class="color-blue-grey-lighter"><?php echo selisih_waktu(date_format($date,'d-m-Y H:i:s'));?></p>
+											</div>
+											<div class="tbl-cell tbl-cell-status">
+												<a href="#" class="font-icon font-icon-star active"></a>
+											</div>
+										</div>
 									</div>
-									<header class="title"><a href="product.php?id=<?php echo base64_encode($data['_id']);?>"><?php echo $data['judul']; ?></a></header>
-									<p><?php echo substr($data['deskripsi'], 0, 100)."..."; ?></p>
+								</div>
+								<div class="card-typical-section card-typical-content">
+									<!-- <div class="photo" style="min-width: 200px; height:300px; background-image:url('<?php// echo $data['path_image']; ?>'; position: center center"> -->
+									 <div class="photo" > 
+										<a href="product.php?id=<?php echo base64_encode($data['_id']);?>"><img style="  min-width: 200px; height:350px; background:<?php echo $data['path_image']; ?>" src="<?php echo $data['path_image']; ?>"  alt=""></a>
+									</div>
+									<header class="title"><a href="#"></a></header>
+									<p><?php //echo substr($data['deskripsi'], 0, 30)."..."; ?></p>
 								</div>
 								<div class="card-typical-section">
-									<div class="card-typical-linked">in <a href="#"><?php echo $data['nama_user']; ?></a></div>
-									<a class="btn btn-sm btn-success card-typical-likes" href="media.php?action=edit&id=<?php echo base64_encode($data['_id']);?>" class="card-typical-likes">
-										<i class="font-icon font-icon-pencil"></i>										
-									</a>
-									<!-- <form action="" method="POST"> -->
-										<button class="btn btn-sm btn-danger card-typical-likes" onclick="myFunction('<?php echo base64_encode($data['_id']);?>')" href="?action=hapus" >
-											<i class="font-icon font-icon-trash"></i>										
-										</button>
-									<!-- </form> -->
+									<div class="card-typical-linked" style="height:33px">oleh <a href="#"><?php echo $data['nama_user']; ?></a></div>
+									<!-- <a href="#" class="card-typical-likes">
+										<i class="font-icon font-icon-heart"></i>
+										123
+									</a> -->
 								</div>
-							</article>
+							</article><!--.card-typical-->
+						<!-- </div> -->
 						</div>
-					</div>
 				<?php
 					}
 				}

@@ -49,12 +49,14 @@ class Kelas
         $newID  = $insert['_id'];
         if ($newID) {
             $status     = "Success";
+            $message    = "Kelas $nama Berhasil ditambahkan!";
             $relation   = $this->db->anggota_kelas->insert(array("id_user"=>"$user", "id_kelas"=>"$newID", "status"=>"1"));
         }else {
             $status     = "Failed";
+            $message    = "Kelas $nama Gagal ditambahkan!";
         }
 
-        $result = array("status" => $status, "IDKelas" => $newID);
+        $result = array("status" => $status, "message"=>$message, "IDKelas" => $newID);
         return $result;
     }
 
@@ -82,6 +84,24 @@ class Kelas
             $message    = "Maaf, tidak ada kelas dengan kode tersebut!";
         }
         $result = array("status" => $status, "message"=>$message, "IDKelas" => $newID);
+        return $result;
+    }
+
+    public function postingKelas($kelas){
+        $query  = $this->db->posting->find(array("id_kelas" => $kelas))->sort(array('date_created' => 1));
+		$count  = $query->count();
+        $data   = array();
+
+        if ($count > 0) {
+            foreach ($query as $index => $isi) {
+                $data[$index] = $isi;
+                $userID	= new MongoId($isi['creator']);
+                $query2 = $this->db->user->findOne(array('_id' => $userID));
+                $data[$index]['user']   = $query2['nama'];
+            }
+        }
+
+        $result = array("count" => $count, "data"=>$data);
         return $result;
     }
 }

@@ -1,5 +1,5 @@
 <?php
-define('base_url', 'http://localhost/siajar_lms');
+define('base_url', 'http://localhost/siajar');
 date_default_timezone_set('Asia/Jakarta');
 // error_reporting(0);
 session_start();
@@ -13,6 +13,36 @@ include 'setting/connection.php';
 spl_autoload_register(function ($class) {
   include 'setting/controller/' .$class . '.php';
 });
+
+function selisih_waktu($timestamp){
+    $selisih = time() - strtotime($timestamp) ;
+
+    $detik  = $selisih ;
+    $menit  = round($selisih / 60 );
+    $jam    = round($selisih / 3600 );
+    $hari   = round($selisih / 86400 );
+    $minggu = round($selisih / 604800 );
+    $bulan  = round($selisih / 2419200 );
+    $tahun  = round($selisih / 29030400 );
+
+    if ($detik <= 60) {
+        $waktu = $detik.' detik yang lalu';
+    } else if ($menit <= 60) {
+        $waktu = $menit.' menit yang lalu';
+    } else if ($jam <= 24) {
+        $waktu = $jam.' jam yang lalu';
+    } else if ($hari <= 7) {
+        $waktu = $hari.' hari yang lalu';
+    } else if ($minggu <= 4) {
+        $waktu = $minggu.' minggu yang lalu';
+    } else if ($bulan <= 12) {
+        $waktu = $bulan.' bulan yang lalu';
+    } else {
+        $waktu = $tahun.' tahun yang lalu';
+    }
+
+    return $waktu;
+}
 ?>
 <!DOCTYPE html>
 <html>

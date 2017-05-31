@@ -7,7 +7,8 @@
     spl_autoload_register(function ($class) {
       include 'Controller/' .$class . '.php';
     });
-    $base_url = "http://172.16.0.179/media";
+    $base_url = "http://localhost/siajar/media";
+
 
 if (!isset($_SESSION['lms_id']) && !isset($_SESSION['lms_username']) && !isset($_SESSION['lms_status'])) {
         // header("Location:Auth/$base_url");
@@ -17,6 +18,37 @@ if (!isset($_SESSION['lms_id']) && !isset($_SESSION['lms_username']) && !isset($
         $id_users   = $_SESSION['lms_id'];
         $email    = $_SESSION['lms_username'];
         $status     = $_SESSION['lms_status'];
+
+    function selisih_waktu($timestamp){
+    	$selisih = time() - strtotime($timestamp) ;
+
+	    $detik  = $selisih ;
+	    $menit  = round($selisih / 60 );
+	    $jam    = round($selisih / 3600 );
+	    $hari   = round($selisih / 86400 );
+	    $minggu = round($selisih / 604800 );
+	    $bulan  = round($selisih / 2419200 );
+	    $tahun  = round($selisih / 29030400 );
+
+	    if ($detik <= 60) {
+	        $waktu = $detik.' detik yang lalu';
+	    } else if ($menit <= 60) {
+	        $waktu = $menit.' menit yang lalu';
+	    } else if ($jam <= 24) {
+	        $waktu = $jam.' jam yang lalu';
+	    } else if ($hari <= 7) {
+	        $waktu = $hari.' hari yang lalu';
+	    } else if ($minggu <= 4) {
+	        $waktu = $minggu.' minggu yang lalu';
+	    } else if ($bulan <= 12) {
+	        $waktu = $bulan.' bulan yang lalu';
+	    } else {
+	        $waktu = $tahun.' tahun yang lalu';
+	    }
+
+	    return $waktu;
+	}
+
 
         $classProfile = new Profile();
 		$FuncProfile = $classProfile->GetData($id_users);
@@ -118,7 +150,7 @@ if (!isset($_SESSION['lms_id']) && !isset($_SESSION['lms_username']) && !isset($
 	                        </div>
 							<div class="dropdown dropdown-typical">
 	                            <a class="dropdown-toggle" id="dd-header-marketing" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                                <span class="font-icon font-icon-users"></span> Kategori
+	                                <span class="font-icon font-icon-users"></span> Jenjang Pendidikan
 	                                <span class="lbl"></span>
 	                            </a>
 

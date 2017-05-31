@@ -12,6 +12,8 @@
         $status     = $_SESSION['lms_status'];
     }
 
+    $classMedia = new Media();
+    $getMediaCount = $classMedia->GetMediabyUserCount($id_users);
     $classProfile = new Profile();
 	$FuncProfile = $classProfile->GetData($id_users);
 
@@ -87,33 +89,26 @@
 						<div class="profile-statistic tbl">
 							<div class="tbl-row">
 								<div class="tbl-cell">
-									<b>200</b>
-									Connections
-								</div>
-								<div class="tbl-cell">
-									<b>57</b>
-									Books
+									<b><?php echo $getMediaCount; ?></b>
+									Media Bahan Ajar
 								</div>
 							</div>
 						</div>
 
 						<ul class="profile-links-list">
 							<li class="nowrap">
-								<i class="font-icon font-icon-earth-bordered"></i>
-								// <a href="#"><?php /*echo $FuncProfile['sosmed']['website'];*/?></a>
+								<i class="font-icon font-icon-earth-bordered"></i> 
+								<a href="#"><?php echo $FuncProfile['sosmed']['website'];?></a>
 							</li>
 							<li class="nowrap">
-								<i class="font-icon font-icon-fb-fill"></i>
-								<a href="#"><?php /*echo $FuncProfile['sosmed']['facebook'];*/?></a>
+								<i class="font-icon font-icon-fb-fill"></i> 
+								<a href="#"><?php echo $FuncProfile['sosmed']['facebook'];?></a>
 							</li>
 							<li class="nowrap">
-								<i class="font-icon font-icon-in-fill"></i>
-								<a href="#"><?php /*echo $FuncProfile['sosmed']['linkedin'];*/?></a>
-							</li>
-							<li class="nowrap">
-								<i class="font-icon font-icon-tw-fill"></i>
-								<a href="#"><?php /*echo $FuncProfile['sosmed']['twitter'];*/?></a>
-							</li>
+								<i class="font-icon font-icon-calend"></i> 
+								<a href="#"><?php echo selisih_waktu($FuncProfile['date_created']);?></a>
+							</li> 
+							 
 						</ul>
 					</section>
 				</div>
