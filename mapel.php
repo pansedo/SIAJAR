@@ -205,10 +205,12 @@ $listModul	= $modulClass->getListbyMapel($_GET['id']);
 												<div class="tbl-cell">
 													<p>
 														<a href="prasyarat.php?modul=<?=$modul['_id']?>" class="semibold"><?=$modul['nama']?></a>
-														added a new product
-														<a href="#">Free UI Kit</a>
 													</p>
 													<p><?=selisih_waktu($modul['date_created'])?></p>
+												</div>
+												<div class="tbl-cell" align="right">
+													<a title="edit"><i class="font-icon font-icon-pencil"></i></a>
+													<a title="hapus"><i class="font-icon font-icon-trash"></i></a>
 												</div>
 											</div>
 										</div>

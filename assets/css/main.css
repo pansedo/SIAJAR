@@ -10,18 +10,17 @@
 	}
 }
 
-@media screen and (min-width: 992px) {
-
-.menu-fixed{  /* To fix main menu container */
-	position: fixed;
-	top: 100px;
-	max-width: 278px;
-	width: 100%;
-}
-.menu-fixed2{  /* To fix main menu container */
-	position: fixed;
-	bottom: 58px;
-	max-width: 278px;
-	width: 100%;
-}
+@media (min-width: 992px) and (max-width: 1279px) {
+	.menu-fixed{  /* To fix main menu container */
+		position: fixed;
+		top: 100px;
+		max-width: 278px;
+		width: 100%;
+	}
+	.menu-fixed2{  /* To fix main menu container */
+		position: fixed;
+		bottom: 58px;
+		max-width: 278px;
+		width: 100%;
+	}
 }

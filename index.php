@@ -272,7 +272,7 @@ $userProfil	= $userClass->GetData($_SESSION['lms_id']);
 																	</a>
 																</div>
 																<div class="tbl-cell">
-																	<div class="user-card-row-name"><a href="#">'.$posting['user'].'</a> &nbsp; &gt; &nbsp; <a href="#">'.$posting['kelas'].'</a></div>
+																	<div class="user-card-row-name"><a href="#">'.$posting['user'].'</a> &nbsp; &gt; &nbsp; <a href="kelas.php?id='.$posting['id_kelas'].'">'.$posting['kelas'].'</a></div>
 																	<div class="color-blue-grey-lighter">'.selisih_waktu($posting['date_created']).'</div>
 																</div>
 															</div>
