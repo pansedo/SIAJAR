@@ -123,6 +123,7 @@ class Kelas
     public function postingSeluruh($user){
         $query  = $this->db->anggota_kelas->find(array("id_user"=>"$user"));
         $count  = $query->count();
+        $count2 = 0;
         $data   = array();
 
         if($count > 0){
