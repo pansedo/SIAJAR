@@ -30,6 +30,7 @@ if(isset($method['action'])){
 
 	if($method['action'] == 'showList'){
         $catch  = $table->find(array("id_kelas" => $method['ID']));
+        $data = array();
         foreach ($catch as $row) {
 			$data[]   = $row;
 			// $id_kelas	= new MongoId($row['id_kelas']);

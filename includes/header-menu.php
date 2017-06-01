@@ -1,4 +1,25 @@
 </head>
+<?php
+$kelasClass = new Kelas();
+
+if(isset($_POST['addKelas'])){
+	$nama = mysql_escape_string($_POST['namakelas']);
+	$rest = $kelasClass->addKelas($nama, $_SESSION['lms_id']);
+	if ($rest['status'] == "Success") {
+		echo "<script>alert('".$rest['message']."'); document.location='kelas.php?id=".$rest['IDKelas']."'</script>";
+	}
+}
+
+if(isset($_POST['joinKelas'])){
+	$kode = mysql_escape_string($_POST['kodekelas']);
+	$rest = $kelasClass->joinKelas($kode, $_SESSION['lms_id']);
+	if ($rest['status'] == "Success") {
+		echo "<script>alert('".$rest['message']."'); document.location='kelas.php?id=".$rest['IDKelas']."'</script>";
+	}else{
+		echo "<script>alert('".$rest['message']."');</script>";
+	}
+}
+?>
 <body>
 	<header class="site-header">
 	    <div class="container-fluid">
@@ -203,3 +224,66 @@
 	        </div><!--.site-header-content-->
 	    </div><!--.container-fluid-->
 	</header><!--.site-header-->
+
+	<div class="modal fade"
+		 id="addKelas"
+		 tabindex="-1"
+		 role="dialog"
+		 aria-labelledby="addKelasLabel"
+		 aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<form method="POST">
+				<div class="modal-header">
+					<button type="button" class="modal-close" data-dismiss="modal" aria-label="Close">
+						<i class="font-icon-close-2"></i>
+					</button>
+					<h4 class="modal-title" id="addKelasLabel">Tambah Kelas Baru</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group row">
+						<label for="namakelas" class="col-md-3 form-control-label">Nama Kelas</label>
+						<div class="col-md-9">
+							<input type="text" class="form-control" name="namakelas" id="namakelas" placeholder="Nama Kelas baru" title="Nama Kelas Baru" data-toggle="popover" data-placement="bottom" data-trigger="hover" data-content="Silahkan isikan Nama Kelas yang akan dibuat!" required />
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" name="addKelas" value="send" class="btn btn-rounded btn-primary">Simpan</button>
+					<button type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Tutup</button>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div><!--.modal-->
+
+	<div class="modal fade bd-example-modal-sm"
+		 id="joinKelas"
+		 tabindex="-1"
+		 role="dialog"
+		 aria-labelledby="joinKelasLabel"
+		 aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<form method="POST" >
+				<div class="modal-header">
+					<button type="button" class="modal-close" data-dismiss="modal" aria-label="Close">
+						<i class="font-icon-close-2"></i>
+					</button>
+					<h4 class="modal-title" id="joinKelasLabel">Bergabung Kelas</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group row">
+						<div class="col-md-12">
+						<input type="text" class="form-control" name="kodekelas" id="kodekelas" placeholder="Kode Kelas" title="Kode Kelas" data-toggle="popover" data-placement="bottom" data-trigger="hover" data-content="Silahkan isikan Kode Kelas yang sudah diberikan oleh Guru/Tutor/Rekan anda!"  required />
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" name="joinKelas" value="send" class="btn btn-rounded btn-primary">Bergabung</button>
+					<button type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Tutup</button>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div><!--.modal-->

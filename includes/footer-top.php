@@ -24,4 +24,8 @@
 				$('#menu-fixed2').removeClass('menu-fixed2');
 			}
 		});
+
+		$(document).ready(function() {
+			$('[data-toggle="popover"]').popover();
+		});
 	</script>

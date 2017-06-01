@@ -73,7 +73,7 @@ class Kelas
                     $status     = "Failed";
                     $message    = "Kamu sudah bergabung kedalam Kelas ini!";
                 }else{
-                    $relation   = $this->db->anggota_kelas->insert(array("id_user"=>"$user", "id_kelas"=>"$query[_id]"));
+                    $relation   = $this->db->anggota_kelas->insert(array("id_user"=>"$user", "id_kelas"=>"$query[_id]", "status"=>"3"));
                     $status     = "Success";
                     $message    = "Kamu berhasil bergabung kedalam Kelas!";
                     $newID      = "$query[_id]";

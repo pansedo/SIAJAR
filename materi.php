@@ -49,68 +49,6 @@ if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
 	}
 }
 ?>
-	<div class="modal fade"
-		 id="addKelas"
-		 tabindex="-1"
-		 role="dialog"
-		 aria-labelledby="addKelasLabel"
-		 aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="modal-close" data-dismiss="modal" aria-label="Close">
-						<i class="font-icon-close-2"></i>
-					</button>
-					<h4 class="modal-title" id="addKelasLabel">Tambah Kelas Baru</h4>
-				</div>
-				<div class="modal-body">
-					<form method="POST" onSubmit="return false">
-						<div class="form-group row">
-							<label for="namakelas" class="col-md-3 form-control-label">Nama Kelas</label>
-							<div class="col-md-9">
-								<input type="text" class="form-control" id="namakelas" placeholder="Nama Kelas baru" />
-							</div>
-						</div>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-rounded btn-primary">Simpan</button>
-					<button type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Tutup</button>
-				</div>
-			</div>
-		</div>
-	</div><!--.modal-->
-
-	<div class="modal fade bd-example-modal-sm"
-		 id="joinKelas"
-		 tabindex="-1"
-		 role="dialog"
-		 aria-labelledby="joinKelasLabel"
-		 aria-hidden="true">
-		<div class="modal-dialog modal-sm">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="modal-close" data-dismiss="modal" aria-label="Close">
-						<i class="font-icon-close-2"></i>
-					</button>
-					<h4 class="modal-title" id="joinKelasLabel">Bergabung Kelas</h4>
-				</div>
-				<div class="modal-body">
-					<form method="POST" onSubmit="return false">
-						<div class="form-group row">
-							<div class="col-md-12">
-								<input type="text" class="form-control" name="kodekelas" id="kodekelas" placeholder="Kode Kelas" />
-							</div>
-						</div>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-rounded btn-primary">Bergabung</button>
-					<button type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Tutup</button>
-				</div>
-			</div>
-		</div>
-	</div><!--.modal-->
 
 	<div class="modal fade"
 		 id="addModulPrasyarat"
@@ -175,13 +113,13 @@ if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
 									<div class="tbl info-tbl">
 										<div class="tbl-row">
 											<div class="tbl-cell">
-												<p class="title"><?=$infoMapel['nama']?></p>
-												<p>Mata Pelajaran</p>
+												<p class="title">Modul <?=$infoModul['nama']?></p>
+												<p>Mata Pelajaran <?=$infoMapel['nama']?></p>
 											</div>
 											<div class="tbl-cell tbl-cell-stat">
 												<div class="inline-block">
-													<p class="title"><?=$infoMapel['modul']?></p>
-													<p>Modul</p>
+													<p class="title"><?=$infoMateri->count();?></p>
+													<p>Materi</p>
 												</div>
 											</div>
 										</div>
@@ -207,95 +145,45 @@ if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
 					?>
 				</div>
 
-				<div class="col-xl-9 col-lg-8">
-
-					<article id="materi-editor" class="box-typical profile-post" style="display: none;">
-						<form method="POST" action="">
-							<div class="profile-post-header">
-								<div class="user-card-row">
-									<fieldset class="form-group">
-										<label class="form-label semibold">Judul</label>
-										<input type="text" class="form-control" name="judul" placeholder="Judul Materi" value="<?php echo (isset($infoMateri) ? $infoMateri['judul']: ''); ?>">
-									</fieldset>
-								</div>
-								<a id="btn-cancel" class="shared">
-									<i class="font-icon font-icon-del"></i>
-								</a>
-							</div>
-
-							<textarea id="editor" name="isi">
-							</textarea>
-
-							<div class="box-typical-footer">
-								<div class="tbl">
-									<div class="tbl-row">
-										<div class="tbl-cell tbl-cell-action">
-											<?php
-												if(!isset($infoMateri)){
-											?>
-											<button type="submit" name="addMateri" class="btn btn-rounded pull-right">Terbitkan</button>
-											<?php
-										}else{
-											?>
-											<button type="submit" name="updateMateri" class="btn btn-rounded pull-right">Perbarui</button>
-										<?php
-										}
-										?>
+				<div class="col-xl-9 col-lg-8" id="accordion">
+				<?php
+					$no	= 1;
+					foreach ($infoMateri as $materi) {
+						echo '<article class="box-typical profile-post panel">
+								<div class="profile-post-header">
+									<div class="user-card-row">
+										<div class="tbl-row">
+											<div class="tbl-cell tbl-cell-photo">
+												<a href="#demo'.$no.'" data-toggle="collapse" data-parent="#accordion">
+													<img src="assets/img/folder.png" alt="">
+												</a>
+											</div>
+											<div class="tbl-cell">
+												<div class="user-card-row-name"><a href="#demo'.$no.'" data-toggle="collapse" data-parent="#accordion">'.$materi['judul'].'</a></div>
+												<div class="color-blue-grey-lighter">'.($materi['date_created'] == $materi['date_modified'] ? "Diterbitkan " : "Diperbarui ").selisih_waktu($materi['date_modified']).'</div>
+											</div>
+											<div class="tbl-cell" align="right">';
+											if ($_SESSION['lms_id'] == $materi['creator']) {
+												echo '<a href="?act=update&md='.$infoModul['_id'].'&ma='.$materi['_id'].'" class="shared" title="Edit" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Memperbarui isi dari Materi yang sudah dibuat." style="right: 35px">
+														<i class="font-icon font-icon-pencil")"></i>
+													</a>
+													<a onclick="remove(\''.$materi['_id'].'\')"   class="shared" title="Hapus" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Menghapus Materi yang sudah dibuat.">
+														<i class="font-icon font-icon-trash")"></i>
+													</a>';
+											}
+						echo '				</div>
 										</div>
 									</div>
 								</div>
-							</div>
-						</form>
-					</article>
-
-					<article id="materi-preview" class="box-typical profile-post">
-
-						<?php
-							if(!isset($infoMateri)){
-						?>
-
-						<div class="add-customers-screen tbl">
-							<div class="add-customers-screen-in">
-								<div class="add-customers-screen-user">
-									<i class="font-icon font-icon-folder"></i>
+								<div id="demo'.$no.'" class="profile-post-content collapse">
+									'.$materi['file'].'
 								</div>
-								<h2>Materi Kosong</h2>
-								<p class="lead color-blue-grey-lighter">Belum ada materi yang ditambahkan<br/> Klik tombol tambah materi untuk menambahkan materi</p>
-								<a href="#" id="btn-tambah" class="btn">Tambah Materi</a>
-							</div>
-						</div>
+							</article>
+						';
+						$no++;
+					}
+				?>
 
-						<?php
-							}else{
-						?>
-
-						<div class="profile-post-header">
-							<div class="user-card-row">
-								<div class="tbl-row">
-									<div class="tbl-cell tbl-cell-photo">
-										<a href="#">
-											<img src="assets/img/folder.png" alt="">
-										</a>
-									</div>
-									<div class="tbl-cell">
-										<div class="user-card-row-name"><a href="#"><?=$infoMateri['judul']?></a></div>
-										<div class="color-blue-grey-lighter"><?php echo ($infoMateri['date_created'] == $infoMateri['date_modified'] ? "Diterbitkan pada " : "Diperbarui pada ").$infoMateri['date_modified']; ?></div>
-									</div>
-								</div>
-							</div>
-							<a id="btn-edit" class="shared">
-								<i class="font-icon font-icon-pencil"></i>
-							</a>
-						</div>
-
-						<div id="preview" class="profile-post-content">
-							<?=$infoMateri['file']?>
-						</div>
-
-						<?php
-							}
-						?>
-					</article>
 				</div>
 			</div><!--.row-->
 
@@ -435,22 +323,6 @@ if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
 		    });
 		}
 
-		$("#ohyeah").click(function(){
-			$.ajax({
-				type: 'POST',
-				url: 'url-API/Siswa/index.php',
-				data: {"action": "update", "text": "tôi"},
-				success: function(res) {
-					alert(res.text1);
-					alert(res.text2);
-					alert(res.text3);
-				},
-				error: function () {
-
-				}
-			});
-		})
-
 		// Destroy action.
 		$('#btn-cancel').on('click', function () {
 
@@ -473,47 +345,7 @@ if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
 		});
 
 		$(document).ready(function() {
-
-
 			$('.note-statusbar').hide();
-
-			$(".fancybox").fancybox({
-				padding: 0,
-				openEffect	: 'none',
-				closeEffect	: 'none'
-			});
-
-			$("#range-slider-1").ionRangeSlider({
-				min: 0,
-				max: 100,
-				from: 30,
-				hide_min_max: true,
-				hide_from_to: true
-			});
-
-			$("#range-slider-2").ionRangeSlider({
-				min: 0,
-				max: 100,
-				from: 30,
-				hide_min_max: true,
-				hide_from_to: true
-			});
-
-			$("#range-slider-3").ionRangeSlider({
-				min: 0,
-				max: 100,
-				from: 30,
-				hide_min_max: true,
-				hide_from_to: true
-			});
-
-			$("#range-slider-4").ionRangeSlider({
-				min: 0,
-				max: 100,
-				from: 30,
-				hide_min_max: true,
-				hide_from_to: true
-			});
 		});
 	</script>
 

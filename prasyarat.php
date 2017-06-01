@@ -13,69 +13,6 @@ $infoMapel	= $mapelClass->getInfoMapel($infoModul['id_mapel']);
 $menuModul	= 1;
 ?>
 	<div class="modal fade"
-		 id="addKelas"
-		 tabindex="-1"
-		 role="dialog"
-		 aria-labelledby="addKelasLabel"
-		 aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="modal-close" data-dismiss="modal" aria-label="Close">
-						<i class="font-icon-close-2"></i>
-					</button>
-					<h4 class="modal-title" id="addKelasLabel">Tambah Kelas Baru</h4>
-				</div>
-				<div class="modal-body">
-					<form method="POST" onSubmit="return false">
-						<div class="form-group row">
-							<label for="namakelas" class="col-md-3 form-control-label">Nama Kelas</label>
-							<div class="col-md-9">
-								<input type="text" class="form-control" id="namakelas" placeholder="Nama Kelas baru" />
-							</div>
-						</div>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-rounded btn-primary">Simpan</button>
-					<button type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Tutup</button>
-				</div>
-			</div>
-		</div>
-	</div><!--.modal-->
-
-	<div class="modal fade bd-example-modal-sm"
-		 id="joinKelas"
-		 tabindex="-1"
-		 role="dialog"
-		 aria-labelledby="joinKelasLabel"
-		 aria-hidden="true">
-		<div class="modal-dialog modal-sm">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="modal-close" data-dismiss="modal" aria-label="Close">
-						<i class="font-icon-close-2"></i>
-					</button>
-					<h4 class="modal-title" id="joinKelasLabel">Bergabung Kelas</h4>
-				</div>
-				<div class="modal-body">
-					<form method="POST" onSubmit="return false">
-						<div class="form-group row">
-							<div class="col-md-12">
-								<input type="text" class="form-control" name="kodekelas" id="kodekelas" placeholder="Kode Kelas" />
-							</div>
-						</div>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-rounded btn-primary">Bergabung</button>
-					<button type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Tutup</button>
-				</div>
-			</div>
-		</div>
-	</div><!--.modal-->
-
-	<div class="modal fade"
 		 id="addModulPrasyarat"
 		 tabindex="-1"
 		 role="dialog"

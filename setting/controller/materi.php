@@ -15,7 +15,7 @@ class Materi
     }
 
     public function getInfoMateri($idModul){
-        $query  = $this->db->materi->findOne(array("id_modul" => $idModul));
+        $query  = $this->db->materi->find(array("id_modul" => $idModul));
         return $query;
     }
 
