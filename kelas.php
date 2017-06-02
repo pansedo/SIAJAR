@@ -12,15 +12,6 @@ $infoKelas	= $kelasClass->getInfoKelas($_GET['id']);
 // var_dump($infoKelas);
 $listMapel	= $mapelClass->getListbyKelas($_GET['id']);
 
-
-if(isset($_POST['addKelas'])){
-	$nama = mysql_escape_string($_POST['namakelas']);
-	$rest = $kelasClass->addKelas($nama, $_SESSION['lms_id']);
-	if ($rest['status'] == "Success") {
-		echo "<script>alert('".$rest['message']."'); document.location='kelas.php?id=".$rest['IDKelas']."'</script>";
-	}
-}
-
 if(isset($_POST['addMapel'])){
 	$nama	= mysql_escape_string($_POST['namamapel']);
 	$kelas	= mysql_escape_string($_GET['id']);
@@ -30,20 +21,10 @@ if(isset($_POST['addMapel'])){
 	}
 }
 
-if(isset($_POST['joinKelas'])){
-	$kode = mysql_escape_string($_POST['kodekelas']);
-	$rest = $kelasClass->joinKelas($kode, $_SESSION['lms_id']);
-	if ($rest['status'] == "Success") {
-		echo "<script>alert('".$rest['message']."'); document.location='kelas.php?id=".$rest['IDKelas']."'</script>";
-	}else{
-		echo "<script>alert('".$rest['message']."');</script>";
-	}
-}
-
 if(isset($_POST['postingText'])){
-	$post = trim(htmlentities($_POST['textPost']));
-	$rest = $kelasClass->addPost($post, $infoKelas['_id'], $_SESSION['lms_id']);
-	// echo "<script>alert('WOE!');</script>";
+	$post	= trim(htmlentities($_POST['textPost']));
+	$rest	= $kelasClass->addPost($post, $infoKelas['_id'], $_SESSION['lms_id']);
+
 	if ($rest['status'] == "Success") {
 		// echo "<script>alert('".$rest['status']."');</script>";
 		// echo "<script>document.location='kelas.php?id=".$infoKelas['_id']."'</script>";
@@ -51,7 +32,57 @@ if(isset($_POST['postingText'])){
 		echo "<script>alert('".$rest['status']."');</script>";
 	}
 }
+
+if(isset($_POST['updateKelas'])){
+	$nama	= mysql_escape_string($_POST['namakelasupdate']);
+	$post	= trim(htmlentities($_POST['tentang']));
+	$rest	= $kelasClass->updateKelas($nama, $post, $infoKelas['_id']);
+
+	if ($rest['status'] == "Success") {
+		echo "<script>alert('".$rest['status']."');</script>";
+	}else{
+		echo "<script>alert('".$rest['status']."');</script>";
+	}
+}
 ?>
+	<div class="modal fade"
+		 id="updateKelas"
+		 tabindex="-1"
+		 role="dialog"
+		 aria-labelledby="updateKelasLabel"
+		 aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<form method="POST">
+				<div class="modal-header">
+					<button type="button" class="modal-close" data-dismiss="modal" aria-label="Close">
+						<i class="font-icon-close-2"></i>
+					</button>
+					<h4 class="modal-title" id="updateKelasLabel">Pengaturan Kelas</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group row">
+						<label for="namakelasupdate" class="col-md-3 form-control-label">Nama Kelas</label>
+						<div class="col-md-9">
+							<input type="text" class="form-control" name="namakelasupdate" id="namakelasupdate" placeholder="Nama Kelas" />
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="tentang" class="col-md-3 form-control-label">Tentang Kelas</label>
+						<div class="col-md-9">
+							<textarea class="form-control" name="tentang" id="tentang" placeholder="Deskripsikan tentang kelas anda - Maksimal 260 karakter" maxlength="260"></textarea>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-rounded btn-danger pull-left" onclick="" name="hapusKelas"><i class="font-icon-trash"></i> Hapus Kelas</button>
+					<button type="submit" class="btn btn-rounded btn-primary" name="updateKelas" value="send" >Simpan</button>
+					<button type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Tutup</button>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div><!--.modal-->
 
 	<div class="modal fade"
 		 id="addMapel"
@@ -70,7 +101,7 @@ if(isset($_POST['postingText'])){
 				</div>
 				<div class="modal-body">
 					<div class="form-group row">
-						<label for="namakelas" class="col-md-3 form-control-label">Nama Mata Pelajaran</label>
+						<label for="namamapel" class="col-md-3 form-control-label">Nama Mata Pelajaran</label>
 						<div class="col-md-9">
 							<input type="text" class="form-control" name="namamapel" id="namamapel" placeholder="Nama Mata Pelajaran" />
 						</div>
@@ -119,7 +150,7 @@ if(isset($_POST['postingText'])){
 					</div>
 				</div>
 			</div>
-			<button type="button" class="change-cover">
+			<button type="button" class="change-cover" onclick="update()">
 				<i class="font-icon font-icon-pencil"></i>
 				Pengaturan Kelas
 			</button>
@@ -149,7 +180,7 @@ if(isset($_POST['postingText'])){
 						<section class="box-typical">
 							<header class="box-typical-header-sm bordered">Tentang Kelas</header>
 							<div class="box-typical-inner">
-								<p><?=$infoKelas['tentang']?></p>
+								<p><?=nl2br($infoKelas['tentang'])?></p>
 							</div>
 						</section>
 
@@ -181,7 +212,7 @@ if(isset($_POST['postingText'])){
 
 						<div class="tab-content no-styled profile-tabs">
 							<form class="box-typical" method="post" action="">
-								<textarea class="write-something" name="textPost" placeholder="Apa yang ingin anda beritahukan?"></textarea>
+								<textarea class="write-something" name="textPost" id="textPost" placeholder="Apa yang ingin anda beritahukan?" required></textarea>
 								<div class="box-typical-footer">
 									<div class="tbl">
 										<div class="tbl-row">
@@ -232,7 +263,7 @@ if(isset($_POST['postingText'])){
 														</div>
 													';
 										if ($_SESSION['lms_id'] == $posting['creator']) {
-										echo '		<a class="shared" onclick="remove(\''.$posting['_id'].'\')" title="Hapus" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Menghapus Kiriman yang sudah dibuat.">
+										echo '		<a class="shared" onclick="remove(\''.$posting['_id'].'\')" title="Hapus" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menghapus kiriman yang sudah dibuat.">
 														<i class="font-icon font-icon-trash"></i>
 													</a>';
 										}
@@ -303,8 +334,18 @@ if(isset($_POST['postingText'])){
 		}
 
 		$(function(){
-	      $('textarea').autoResize();
+	      $('#textPost').autoResize();
 	    });
+
+		function update(){
+      		$('#updateKelas').trigger("reset");
+      		$('#updateKelas').modal("show");
+      		$('#updateKelasLabel').text(
+      		   $('#updateKelasLabel').text().replace('Tambah Modul', 'Pengaturan Kelas')
+      		).show();
+			$('#namakelasupdate').val("<?=$infoKelas['nama']?>");
+			$('#tentang').html("<?=$infoKelas['tentang']?>");
+      	}
 
 		function remove(ID){
       		swal({

@@ -194,7 +194,7 @@ $userProfil	= $userClass->GetData($_SESSION['lms_id']);
 															</div>
 														</div>';
 														if ($_SESSION['lms_id'] == $posting['creator']) {
-														echo '		<a class="shared" onclick="remove(\''.$posting['_id'].'\')" title="Hapus" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Menghapus Kiriman yang sudah dibuat.">
+														echo '		<a class="shared" onclick="remove(\''.$posting['_id'].'\')" title="Hapus" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menghapus Kiriman yang sudah dibuat.">
 																		<i class="font-icon font-icon-trash"></i>
 																	</a>';
 														}

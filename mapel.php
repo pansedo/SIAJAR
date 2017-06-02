@@ -22,6 +22,38 @@ if(isset($_POST['addModul'])){
 $infoMapel	= $mapelClass->getInfoMapel($_GET['id']);
 $listModul	= $modulClass->getListbyMapel($_GET['id']);
 ?>
+	<div class="modal fade"
+		 id="updateMapel"
+		 tabindex="-1"
+		 role="dialog"
+		 aria-labelledby="updateMapelLabel"
+		 aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<form method="POST">
+				<div class="modal-header">
+					<button type="button" class="modal-close" data-dismiss="modal" aria-label="Close">
+						<i class="font-icon-close-2"></i>
+					</button>
+					<h4 class="modal-title" id="updateMapelLabel">Pengaturan Mata Pelajaran</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group row">
+						<label for="namaMapelupdate" class="col-md-3 form-control-label">Mata Pelajaran</label>
+						<div class="col-md-9">
+							<input type="text" class="form-control" name="namaMapelupdate" id="namaMapelupdate" placeholder="Nama Mata Pelajaran" />
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-rounded btn-danger pull-left" onclick="" name="hapusKelas"><i class="font-icon-trash"></i> Hapus Mata Pelajaran</button>
+					<button type="submit" class="btn btn-rounded btn-primary" name="updateMapel" value="send" >Simpan</button>
+					<button type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Tutup</button>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div><!--.modal-->
 
 	<div class="modal fade"
 		 id="addModul"
@@ -84,10 +116,9 @@ $listModul	= $modulClass->getListbyMapel($_GET['id']);
 					</div>
 				</div>
 			</div>
-			<button type="button" class="change-cover">
-				<i class="font-icon font-icon-picture-double"></i>
-				Ganti sampul
-				<input type="file"/>
+			<button type="button" class="change-cover" onclick="update()">
+				<i class="font-icon font-icon-pencil"></i>
+				Pengaturan Mata Pelajaran
 			</button>
 		</div><!--.profile-header-photo-->
 
@@ -132,7 +163,7 @@ $listModul	= $modulClass->getListbyMapel($_GET['id']);
 							Alur Pembelajaran
 							<span class="label label-pill label-primary"><?=$infoMapel['modul']?></span>
 							<div class="btn-group" style='float: right;'>
-								<button type="button" class="btn btn-sm btn-rounded btn-inline" onclick="add()">+ Tambah Modul</button>
+								<button type="button" class="btn btn-sm btn-rounded btn-inline" onclick="add()" title="Tambah" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menambahkan Modul baru.">+ Tambah Modul</button>
 							</div>
 						</header>
 						<div>
@@ -154,8 +185,8 @@ $listModul	= $modulClass->getListbyMapel($_GET['id']);
 													<p><?=selisih_waktu($modul['date_created'])?></p>
 												</div>
 												<div class="tbl-cell" align="right">
-													<a onclick="edit('<?=$modul['_id']?>')" title="Edit" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Memperbarui Modul yang sudah dibuat."><i class="font-icon font-icon-pencil"></i></a>
-													<a onclick="remove('<?=$modul['_id']?>')" title="Hapus" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Menghapus Modul yang sudah dibuat."><i class="font-icon font-icon-trash"></i></a>
+													<a onclick="edit('<?=$modul['_id']?>')" title="Edit" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk memperbarui Modul yang sudah dibuat."><i class="font-icon font-icon-pencil"></i></a>
+													<a onclick="remove('<?=$modul['_id']?>')" title="Hapus" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menghapus Modul yang sudah dibuat."><i class="font-icon font-icon-trash"></i></a>
 												</div>
 											</div>
 										</div>
@@ -205,6 +236,15 @@ $listModul	= $modulClass->getListbyMapel($_GET['id']);
       		   $('#addModulLabel').text().replace('Edit Modul', 'Tambah Modul')
       		).show();
       	};
+
+		function update(){
+      		$('#updateMapel').trigger("reset");
+      		$('#updateMapel').modal("show");
+      		$('#updateMapelLabel').text(
+      		   $('#updateMapelLabel').text().replace('Tambah Modul', 'Pengaturan Mata Pelajaran')
+      		).show();
+			$('#namaMapelupdate').val("<?=$infoMapel['nama']?>");
+      	}
 
 		function edit(ID){
       		$('#addModul').trigger("reset");

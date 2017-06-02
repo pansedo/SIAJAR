@@ -150,7 +150,7 @@ if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
 						<header class="card-header">
 							Kumpulan Materi
 							<div class="btn-group" style='float: right;'>
-								<a href="" class="btn btn-sm btn-rounded">+ Tambah Materi</a>
+								<a href="" title="Tambah" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menambahkan materi baru." class="btn btn-sm btn-rounded">+ Tambah Materi</a>
 							</div>
 						</header>
 						<div class="card-block" id="accordion">
@@ -173,10 +173,10 @@ if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
 												</div>
 												<div class="tbl-cell" align="right">';
 												if ($_SESSION['lms_id'] == $materi['creator']) {
-													echo '<a href="?act=update&md='.$infoModul['_id'].'&ma='.$materi['_id'].'" class="shared" title="Edit" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Memperbarui isi dari Materi yang sudah dibuat." style="right: 35px">
+													echo '<a href="?act=update&md='.$infoModul['_id'].'&ma='.$materi['_id'].'" class="shared" title="Edit" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk memperbarui isi dari Materi yang sudah dibuat." style="right: 35px">
 															<i class="font-icon font-icon-pencil")"></i>
 														</a>
-														<a onclick="remove(\''.$materi['_id'].'\')"   class="shared" title="Hapus" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Menghapus Materi yang sudah dibuat.">
+														<a onclick="remove(\''.$materi['_id'].'\')"   class="shared" title="Hapus" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menghapus Materi yang sudah dibuat.">
 															<i class="font-icon font-icon-trash")"></i>
 														</a>';
 												}
@@ -234,7 +234,7 @@ if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
       		}, function () {
       			$.ajax({
       				type: 'POST',
-      				url: 'url-API/Kelas/Modul/Materi',
+      				url: 'url-API/Kelas/Modul/Materi/',
       				data: {"action": "remv", "ID": ID},
       				success: function(res) {
 						swal({
