@@ -10,6 +10,7 @@
 	<script src="assets/js/lib/salvattore/salvattore.min.js"></script>
 	<script src="assets/js/lib/ion-range-slider/ion.rangeSlider.js"></script>
 	<script src="assets/js/lib/fancybox/jquery.fancybox.pack.js"></script>
+	<script src="assets/js/lib/bootstrap-sweetalert/sweetalert.min.js"></script>
 	<script type="text/javascript">
 		$(window).bind('scroll', function () {
 			if ($(window).scrollTop() > 225) {

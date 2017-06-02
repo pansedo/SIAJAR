@@ -40,6 +40,20 @@ class Modul
         return $result;
     }
 
+    public function setModul($nama, $mapel, $id){
+        $newID  = "";
+        $update = array("nama" => $nama, "date_modified"=>date('Y-m-d H:i:s'));
+        $sukses = $this->db->modul->update(array("_id"=> new MongoId($id)),array('$set'=>$update));
+        if ($sukses) {
+            $status     = "Success";
+        }else {
+            $status     = "Failed";
+        }
+
+        $result = array("status" => $status, "IDMapel" => $mapel);
+        return $result;
+    }
+
 }
 
 ?>

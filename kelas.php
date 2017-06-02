@@ -306,6 +306,30 @@ if(isset($_POST['postingText'])){
 	      $('textarea').autoResize();
 	    });
 
+		function remove(ID){
+      		swal({
+      		  title: "Apakah anda yakin?",
+      		  text: "Data yang sudah dihapus tidak dapat dikembalikan!",
+      		  type: "warning",
+      		  showCancelButton: true,
+			  	confirmButtonText: "Setuju!",
+      			confirmButtonClass: "btn-danger",
+      		  closeOnConfirm: false,
+      		  showLoaderOnConfirm: true
+      		}, function () {
+      			$.ajax({
+      				type: 'POST',
+      				url: 'url-API/Kelas/Posting/',
+      				data: {"act": "remv", "ID": ID},
+      				success: function(res) {
+      					swal(res.response, res.message, res.icon);
+      				},
+      				error: function () {
+      					swal("Gagal!", "Data tidak terhapus!", "error");
+      				}
+      			});
+      		});
+      	}
 
 		$(document).ready(function() {
 

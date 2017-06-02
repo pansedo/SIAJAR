@@ -145,45 +145,64 @@ if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
 					?>
 				</div>
 
-				<div class="col-xl-9 col-lg-8" id="accordion">
+				<div class="col-xl-9 col-lg-8">
+					<section class="card card-inversed">
+						<header class="card-header">
+							Kumpulan Materi
+							<div class="btn-group" style='float: right;'>
+								<a href="" class="btn btn-sm btn-rounded">+ Tambah Materi</a>
+							</div>
+						</header>
+						<div class="card-block" id="accordion">
 				<?php
 					$no	= 1;
-					foreach ($infoMateri as $materi) {
-						echo '<article class="box-typical profile-post panel">
-								<div class="profile-post-header">
-									<div class="user-card-row">
-										<div class="tbl-row">
-											<div class="tbl-cell tbl-cell-photo">
-												<a href="#demo'.$no.'" data-toggle="collapse" data-parent="#accordion">
-													<img src="assets/img/folder.png" alt="">
-												</a>
-											</div>
-											<div class="tbl-cell">
-												<div class="user-card-row-name"><a href="#demo'.$no.'" data-toggle="collapse" data-parent="#accordion">'.$materi['judul'].'</a></div>
-												<div class="color-blue-grey-lighter">'.($materi['date_created'] == $materi['date_modified'] ? "Diterbitkan " : "Diperbarui ").selisih_waktu($materi['date_modified']).'</div>
-											</div>
-											<div class="tbl-cell" align="right">';
-											if ($_SESSION['lms_id'] == $materi['creator']) {
-												echo '<a href="?act=update&md='.$infoModul['_id'].'&ma='.$materi['_id'].'" class="shared" title="Edit" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Memperbarui isi dari Materi yang sudah dibuat." style="right: 35px">
-														<i class="font-icon font-icon-pencil")"></i>
+					if ($infoMateri->count() > 0) {
+						foreach ($infoMateri as $materi) {
+							echo '<article class="box-typical profile-post panel">
+									<div class="profile-post-header">
+										<div class="user-card-row">
+											<div class="tbl-row">
+												<div class="tbl-cell tbl-cell-photo">
+													<a href="#demo'.$no.'" data-toggle="collapse" data-parent="#accordion">
+														<img src="assets/img/folder.png" alt="">
 													</a>
-													<a onclick="remove(\''.$materi['_id'].'\')"   class="shared" title="Hapus" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Menghapus Materi yang sudah dibuat.">
-														<i class="font-icon font-icon-trash")"></i>
-													</a>';
-											}
-						echo '				</div>
+												</div>
+												<div class="tbl-cell">
+													<div class="user-card-row-name"><a href="#demo'.$no.'" data-toggle="collapse" data-parent="#accordion">'.$materi['judul'].'</a></div>
+													<div class="color-blue-grey-lighter">'.($materi['date_created'] == $materi['date_modified'] ? "Diterbitkan " : "Diperbarui ").selisih_waktu($materi['date_modified']).'</div>
+												</div>
+												<div class="tbl-cell" align="right">';
+												if ($_SESSION['lms_id'] == $materi['creator']) {
+													echo '<a href="?act=update&md='.$infoModul['_id'].'&ma='.$materi['_id'].'" class="shared" title="Edit" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Memperbarui isi dari Materi yang sudah dibuat." style="right: 35px">
+															<i class="font-icon font-icon-pencil")"></i>
+														</a>
+														<a onclick="remove(\''.$materi['_id'].'\')"   class="shared" title="Hapus" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Menghapus Materi yang sudah dibuat.">
+															<i class="font-icon font-icon-trash")"></i>
+														</a>';
+												}
+							echo '				</div>
+											</div>
 										</div>
 									</div>
-								</div>
-								<div id="demo'.$no.'" class="profile-post-content collapse">
-									'.$materi['file'].'
-								</div>
-							</article>
-						';
-						$no++;
+									<div id="demo'.$no.'" class="profile-post-content collapse">
+										'.$materi['file'].'
+									</div>
+								</article>
+							';
+							$no++;
+						}
+					}else {
+						echo '	<article class="box-typical profile-post">
+									<div class="profile-post-content" align="center">
+										<span>
+										 Belum ada Materi saat ini.
+										</span>
+									</div>
+								</article>';
 					}
 				?>
-
+						</div>
+					</section>
 				</div>
 			</div><!--.row-->
 
@@ -235,6 +254,31 @@ if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
 		function clearText(elementID){
 			$(elementID).html("");
 		}
+
+		function remove(ID){
+      		swal({
+      		  title: "Apakah anda yakin?",
+      		  text: "Data yang sudah dihapus tidak dapat dikembalikan!",
+      		  type: "warning",
+      		  showCancelButton: true,
+			  	confirmButtonText: "Setuju!",
+      			confirmButtonClass: "btn-danger",
+      		  closeOnConfirm: false,
+      		  showLoaderOnConfirm: true
+      		}, function () {
+      			$.ajax({
+      				type: 'POST',
+      				url: 'url-API/Kelas/Posting/',
+      				data: {"act": "remv", "ID": ID},
+      				success: function(res) {
+      					swal(res.response, res.message, res.icon);
+      				},
+      				error: function () {
+      					swal("Gagal!", "Data tidak terhapus!", "error");
+      				}
+      			});
+      		});
+      	}
 
 		function createEditorInstance(lang, wiriseditorparameters) {
 			var toolbar = ['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent',

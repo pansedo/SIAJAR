@@ -7,7 +7,13 @@ $modulClass = new Modul();
 
 if(isset($_POST['addModul'])){
 	$nama = mysql_escape_string($_POST['namamodul']);
-	$rest = $modulClass->addModul($nama, $_GET['id'], $_SESSION['lms_id']);
+
+	if (!empty($_POST['idmodul'])) {
+		$rest = $modulClass->setModul($nama, $_GET['id'], $_POST['idmodul']);
+	}else{
+		$rest = $modulClass->addModul($nama, $_GET['id'], $_SESSION['lms_id']);
+	}
+
 	if ($rest['status'] == "Success") {
 		echo "<script>alert('".$rest['status']."'); document.location='mapel.php?id=".$rest['IDMapel']."'</script>";
 	}
@@ -36,6 +42,7 @@ $listModul	= $modulClass->getListbyMapel($_GET['id']);
 					<div class="form-group row">
 						<label for="namamodul" class="col-md-3 form-control-label">Nama Modul</label>
 						<div class="col-md-9">
+							<input type="hidden" name="idmodul" id="idmodul" class="" maxlength="11" />
 							<input type="text" class="form-control" name="namamodul" id="namamodul" placeholder="Nama Modul" title="Nama Modul" data-toggle="popover" data-placement="bottom" data-trigger="hover" data-content="Silahkan isikan Nama Modul yang akan dibuat!" />
 						</div>
 					</div>
@@ -125,7 +132,7 @@ $listModul	= $modulClass->getListbyMapel($_GET['id']);
 							Alur Pembelajaran
 							<span class="label label-pill label-primary"><?=$infoMapel['modul']?></span>
 							<div class="btn-group" style='float: right;'>
-								<button type="button" class="btn btn-sm btn-rounded btn-inline" data-toggle="modal" data-target="#addModul">+ Tambah Modul</button>
+								<button type="button" class="btn btn-sm btn-rounded btn-inline" onclick="add()">+ Tambah Modul</button>
 							</div>
 						</header>
 						<div>
@@ -147,8 +154,8 @@ $listModul	= $modulClass->getListbyMapel($_GET['id']);
 													<p><?=selisih_waktu($modul['date_created'])?></p>
 												</div>
 												<div class="tbl-cell" align="right">
-													<a title="Edit" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Memperbarui Modul yang sudah dibuat."><i class="font-icon font-icon-pencil"></i></a>
-													<a title="Hapus" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Menghapus Modul yang sudah dibuat."><i class="font-icon font-icon-trash"></i></a>
+													<a onclick="edit('<?=$modul['_id']?>')" title="Edit" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Memperbarui Modul yang sudah dibuat."><i class="font-icon font-icon-pencil"></i></a>
+													<a onclick="remove('<?=$modul['_id']?>')" title="Hapus" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Menghapus Modul yang sudah dibuat."><i class="font-icon font-icon-trash"></i></a>
 												</div>
 											</div>
 										</div>
@@ -190,6 +197,70 @@ $listModul	= $modulClass->getListbyMapel($_GET['id']);
 		function clearText(elementID){
 			$(elementID).html("");
 		}
+
+		function add(){
+      		$('#addModul').trigger("reset");
+      		$('#addModul').modal('show');
+			$('#addModulLabel').text(
+      		   $('#addModulLabel').text().replace('Edit Modul', 'Tambah Modul')
+      		).show();
+      	};
+
+		function edit(ID){
+      		$('#addModul').trigger("reset");
+      		$('#addModulLabel').text(
+      		   $('#addModulLabel').text().replace('Tambah Modul', 'Edit Modul')
+      		).show();
+			// $('#addModul').modal('show');
+      		$.ajax({
+      			type: 'POST',
+      			url: 'url-API/Kelas/Modul/',
+      			data: {"action": "show", "ID": ID},
+      			success: function(res) {
+      				if(res.data._id.$id){
+      					$('#addModul').modal('show');
+      					$('#idmodul').val(ID);
+      					$('#namamodul').val(res.data.nama);
+      				}else {
+      					swal("Gagal!", "Data tidak ditemukan!", "error");
+      				}
+      			},
+      			error: function () {
+      				swal("Gagal!", "Gagal mencari data!", "error");
+      			}
+      		});
+      	}
+
+		function remove(ID){
+      		swal({
+      		  title: "Apakah anda yakin?",
+      		  text: "Data yang sudah dihapus tidak dapat dikembalikan!",
+      		  type: "warning",
+      		  showCancelButton: true,
+			  	confirmButtonText: "Setuju!",
+      			confirmButtonClass: "btn-danger",
+      		  closeOnConfirm: false,
+      		  showLoaderOnConfirm: true
+      		}, function () {
+      			$.ajax({
+      				type: 'POST',
+      				url: 'url-API/Kelas/Modul/',
+      				data: {"action": "remv", "ID": ID},
+      				success: function(res) {
+						swal({
+				            title: res.response,
+				            text: res.message,
+				            type: res.icon
+				        }, function() {
+				            location.reload();
+				        });
+      				},
+      				error: function () {
+      					swal("Gagal!", "Data tidak terhapus!", "error");
+      				}
+      			});
+      		});
+      	}
 
 		$(document).ready(function() {
 			$(".fancybox").fancybox({
