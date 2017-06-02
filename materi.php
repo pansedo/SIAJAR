@@ -212,44 +212,10 @@ if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
 <?php
 	require('includes/footer-top.php');
 ?>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/codemirror.min.js"></script>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/mode/xml/xml.min.js"></script>
-
-	<script type="text/javascript" src="assets/editor/js/froala_editor.pkgd.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/froala_wiris/integration/WIRISplugins.js?viewer=image"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/froala_wiris/wiris.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/align.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/char_counter.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/code_beautifier.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/code_view.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/colors.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/draggable.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/emoticons.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/entities.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/file.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/font_size.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/font_family.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/fullscreen.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/image.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/image_manager.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/line_breaker.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/inline_style.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/link.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/lists.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/paragraph_format.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/paragraph_style.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/quick_insert.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/quote.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/table.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/save.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/url.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/video.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/help.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/print.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/special_characters.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/word_paste.min.js"></script>
-
 	<script>
+		$(document).ready(function() {
+			$('.note-statusbar').hide();
+		});
 
 		function clearText(elementID){
 			$(elementID).html("");
@@ -268,10 +234,16 @@ if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
       		}, function () {
       			$.ajax({
       				type: 'POST',
-      				url: 'url-API/Kelas/Posting/',
-      				data: {"act": "remv", "ID": ID},
+      				url: 'url-API/Kelas/Modul/Materi',
+      				data: {"action": "remv", "ID": ID},
       				success: function(res) {
-      					swal(res.response, res.message, res.icon);
+						swal({
+				            title: res.response,
+				            text: res.message,
+				            type: res.icon
+				        }, function() {
+				            location.reload();
+				        });
       				},
       				error: function () {
       					swal("Gagal!", "Data tidak terhapus!", "error");
@@ -279,118 +251,6 @@ if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
       			});
       		});
       	}
-
-		function createEditorInstance(lang, wiriseditorparameters) {
-			var toolbar = ['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent',
-		                    'indent', 'quote', '-', 'insertLink', 'insertImage', 'insertVideo', 'insertFile', 'insertTable', 'wirisEditor', 'wirisChemistry', '|', 'emoticons', 'specialCharacters', 'insertHR', 'selectAll', 'clearFormatting', '|', 'print'];
-			$('#editor').froalaEditor({
-		        // Add the custom buttons in the toolbarButtons list, after the separator.
-		        iframe: true,
-				theme: 'gray',
-		        //       toolbarInline: true,
-		        charCounterCount: false,
-		        imageEditButtons: ['imageDisplay', 'imageAlign', 'imageRemove'],
-		        toolbarButtons: toolbar,
-		        toolbarButtonsMD: toolbar,
-		        toolbarButtonsSM: toolbar,
-		        toolbarButtonsXS: toolbar,
-				toolbarSticky: false,
-		        htmlAllowedTags:   ['.*'],
-		        htmlAllowedAttrs: ['.*'],
-				linkAutoPrefix: 'https://localhost/siajar/',
-		        language: lang,
-		        imageResize : false,
-		        key: 'lrqpD6E-11cyeI-7A11lE-13B-13==',
-		        imageUploadURL: 'url-API/Editor/upload.php',
-		        fileUploadURL: 'url-API/Editor/upload.php',
-		        videoUploadURL: 'url-API/Editor/upload.php'
-		    }).on('froalaEditor.image.removed', function (e, editor, $img) {
-
-				var imageDeleted = String($img.attr("src")).split("/").pop();
-
-		        $.ajax({
-		            // Request method.
-		            method: "POST",
-
-		            // Request URL.
-		            url: "url-API/Editor/delete.php",
-
-		            // Request params.
-		            data: {
-		                file: imageDeleted
-		            }
-		        })
-		        .done (function (data) {
-		            console.log ('image was deleted '+data);
-		        })
-		        .fail (function () {
-		            console.log ('image delete problem');
-		        })
-		    }).on('froalaEditor.file.unlink', function (e, editor, link) {
-
-				var fileDeleted = String(link).split("/").pop();
-
-		        $.ajax({
-		            // Request method.
-		            method: "POST",
-
-		            // Request URL.
-		            url: "url-API/Editor/delete.php",
-
-		            // Request params.
-		            data: {
-		                file: fileDeleted
-		            }
-		        })
-		        .done (function (data) {
-		            console.log ('file was deleted '+data);
-		        })
-		    }).on('froalaEditor.video.removed', function (e, editor, $video) {
-
-		        var videoDeletedURL = $video.context.lastChild.src;
-
-		        $.ajax({
-		            // Request method.
-		            method: "POST",
-
-		            // Request URL.
-		            url: "url-API/Editor/delete.php",
-
-		            // Request params.
-		            data: {
-		                file: videoDeletedURL.split("/").pop()
-		            }
-		        })
-		        .done (function (data) {
-		            console.log ('video was deleted '+data);
-		        })
-		    });
-		}
-
-		// Destroy action.
-		$('#btn-cancel').on('click', function () {
-
-			if ($('#editor').data('froala.editor')) {
-				$('#editor').froalaEditor('destroy');
-				$('#materi-preview').show();
-				$('#materi-editor').hide();
-			}
-		});
-
-		// Initialize action.
-		$('#btn-tambah, #btn-edit').on('click', function () {
-
-			if (!$('#editor').data('froala.editor')) {
-				createEditorInstance('en', {});
-				$('#editor').froalaEditor('html.set', $('#preview').html());
-				$('#materi-preview').hide();
-				$('#materi-editor').show();
-			}
-		});
-
-		$(document).ready(function() {
-			$('.note-statusbar').hide();
-		});
 	</script>
 
 	<script src="assets/js/app.js"></script>
