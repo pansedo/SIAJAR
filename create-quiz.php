@@ -132,13 +132,13 @@ $listModul	= $modulClass->getListbyMapel($_GET['id']);
 							</header>
 							<div class="box-typical-inner">
 								<ul class="side-menu-list">
-									<li class="blue opened">
+									<li class="blue ">
 										<a href="scheduler.html">
 							                <i class="font-icon font-icon-home active"></i>
 							                <span class="lbl">Modul</span>
 							            </a>
 									</li>
-									<li class="blue">
+									<li class="blue opened">
 							            <a href="create-quiz.php?id=<?=$_GET['id'];?>">
 							                <i class="font-icon font-icon-notebook"></i>
 							                <span class="lbl">Kelola Kuis</span>
