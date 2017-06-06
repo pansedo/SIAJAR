@@ -24,7 +24,7 @@
 					</a>
 				</li>
 				<li class="blue <?php if($menuModul==4){echo 'opened';} ?>">
-					<a href="#">
+					<a href="create-quiz.php?modul=<?=$_GET['modul']?>">
 						<i class="font-icon font-icon-zigzag <?php if($menuModul==4){echo 'active';} ?>"></i>
 						<span class="lbl">Kuis</span>
 					</a>

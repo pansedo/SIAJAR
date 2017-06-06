@@ -4,14 +4,15 @@ require("includes/header-menu.php");
 
 $mapelClass = new Mapel();
 $modulClass = new Modul();
+$quizClass  = new Quiz();
 
-if(isset($_POST['addModul'])){
-	$nama = mysql_escape_string($_POST['namamodul']);
+if(isset($_POST['addQuiz'])){
+	$nama = mysql_escape_string($_POST['namakuis']);
 
 	if (!empty($_POST['idmodul'])) {
-		$rest = $modulClass->setModul($nama, $_GET['id'], $_POST['idmodul']);
+		$rest = $quizClass->setModul($nama, $_GET['modul'], $_POST['idmodul']);
 	}else{
-		$rest = $modulClass->addModul($nama, $_GET['id'], $_SESSION['lms_id']);
+		$rest = $quizClass->addQuiz($nama, $_GET['modul'], $_SESSION['lms_id']);
 	}
 
 	if ($rest['status'] == "Success") {
@@ -19,8 +20,9 @@ if(isset($_POST['addModul'])){
 	}
 }
 
-$infoMapel	= $mapelClass->getInfoMapel($_GET['id']);
-$listModul	= $modulClass->getListbyMapel($_GET['id']);
+$infoMapel	= $mapelClass->getInfoMapel($_GET['modul']);
+$listQuiz	= $quizClass->getListbyModul($_GET['modul']);
+$infoModul		= $modulClass->getInfoModul($_GET['modul']);
 ?>
 	<div class="modal fade"
 		 id="updateMapel"
@@ -68,19 +70,19 @@ $listModul	= $modulClass->getListbyMapel($_GET['id']);
 					<button type="button" class="modal-close" data-dismiss="modal" aria-label="Close">
 						<i class="font-icon-close-2"></i>
 					</button>
-					<h4 class="modal-title" id="addModulLabel">Tambah Modul</h4>
+					<h4 class="modal-title" id="addModulLabel">Tambah Kuis</h4>
 				</div>
 				<div class="modal-body">
 					<div class="form-group row">
-						<label for="namamodul" class="col-md-3 form-control-label">Nama Modul</label>
+						<label for="namamodul" class="col-md-3 form-control-label">Nama Kuis</label>
 						<div class="col-md-9">
 							<input type="hidden" name="idmodul" id="idmodul" class="" maxlength="11" />
-							<input type="text" class="form-control" name="namamodul" id="namamodul" placeholder="Nama Modul" title="Nama Modul" data-toggle="popover" data-placement="bottom" data-trigger="hover" data-content="Silahkan isikan Nama Modul yang akan dibuat!" />
+							<input type="text" class="form-control" name="namakuis" id="namamodul" placeholder="Nama Kuis" title="Nama Kuis" data-toggle="popover" data-placement="bottom" data-trigger="hover" data-content="Silahkan isikan Nama Modul yang akan dibuat!" />
 						</div>
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="submit" name="addModul" value="send" class="btn btn-rounded btn-primary">Simpan</button>
+					<button type="submit" name="addQuiz" value="send" class="btn btn-rounded btn-primary">Simpan</button>
 					<button type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Tutup</button>
 				</div>
 				</form>
@@ -125,93 +127,66 @@ $listModul	= $modulClass->getListbyMapel($_GET['id']);
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-xl-3 col-lg-4">
-					<aside id="menu-fixed" class="profile-side" style="margin: 0 0 20px">
-						<section class="box-typical">
-							<header class="box-typical-header-sm bordered">
-								Menu
-							</header>
-							<div class="box-typical-inner">
-								<ul class="side-menu-list">
-									<li class="blue ">
-										<a href="scheduler.html">
-							                <i class="font-icon font-icon-home active"></i>
-							                <span class="lbl">Modul</span>
-							            </a>
-									</li>
-									<li class="blue opened">
-							            <a href="create-quiz.php?id=<?=$_GET['id'];?>">
-							                <i class="font-icon font-icon-notebook"></i>
-							                <span class="lbl">Kelola Kuis</span>
-							            </a>
-							        </li>
-									<li class="blue">
-										<a href="scheduler.html">
-											<i class="font-icon font-icon-zigzag"></i>
-											<span class="lbl">Perkembangan</span>
-										</a>
-									</li>
-								</ul>
-							</div>
-						</section>
-
-					</aside><!--.profile-side-->
+					<?php
+						require("includes/modul-menu.php");
+					?>
 				</div>
 
 				<div class="col-xl-9 col-lg-8">
 					<section class="widget widget-activity">
 						<header class="widget-header">
-							Alur Pembelajaran
+							Create Quis
 							<span class="label label-pill label-primary"><?=$infoMapel['modul']?></span>
-							<div class="btn-group" style='float: right;'>
-								<button type="button" class="btn btn-sm btn-rounded btn-inline" onclick="add()" title="Tambah" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menambahkan Modul baru.">+ Tambah Modul</button>
-							</div>
+							
 						</header>
 						<div>
+						<div class="card-block" id="accordion">
 							<?php
-								foreach ($listModul as $modul) {
-									?>
-									<div class="widget-activity-item">
+					$no	= 1;
+					// print_r($listQuiz);
+					if ($listQuiz->count() > 0) {
+						foreach ($listQuiz as $materi) {
+							echo '<article class="box-typical profile-post panel">
+									<div class="profile-post-header">
 										<div class="user-card-row">
 											<div class="tbl-row">
 												<div class="tbl-cell tbl-cell-photo">
-													<a href="materi.php?modul=<?=$modul['_id']?>">
+													<a href="#demo'.$no.'" data-toggle="collapse" data-parent="#accordion">
 														<img src="assets/img/folder.png" alt="">
 													</a>
 												</div>
 												<div class="tbl-cell">
-													<p>
-														<a href="materi.php?modul=<?=$modul['_id']?>" class="semibold"><?=$modul['nama']?></a>
-													</p>
-													<p><?=selisih_waktu($modul['date_created'])?></p>
+													<div class="user-card-row-name"><a href="#demo'.$no.'" data-toggle="collapse" data-parent="#accordion">'.$materi['nama'].'</a></div>
+													<div class="color-blue-grey-lighter">'.($materi['date_created'] == $materi['date_modified'] ? "Diterbitkan " : "Diperbarui ").selisih_waktu($materi['date_modified']).'</div>
 												</div>
-												<div class="tbl-cell" align="right">
-													<a onclick="edit('<?=$modul['_id']?>')" title="Edit" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk memperbarui Modul yang sudah dibuat."><i class="font-icon font-icon-pencil"></i></a>
-													<a onclick="remove('<?=$modul['_id']?>')" title="Hapus" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menghapus Modul yang sudah dibuat."><i class="font-icon font-icon-trash"></i></a>
-												</div>
+												<div class="tbl-cell" align="right">';
+												if ($_SESSION['lms_id'] == $materi['creator']) {
+													echo '<a href="?act=update&md='.$infoModul['_id'].'&ma='.$materi['_id'].'" class="shared" title="Edit" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk memperbarui isi dari Materi yang sudah dibuat." style="right: 35px">
+															<i class="font-icon font-icon-pencil")"></i>
+														</a>
+														<a onclick="remove(\''.$materi['_id'].'\')"   class="shared" title="Hapus" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menghapus Materi yang sudah dibuat.">
+															<i class="font-icon font-icon-trash")"></i>
+														</a>';
+												}
+							echo '				</div>
 											</div>
 										</div>
 									</div>
-									<?php
-								}
-							?>
-							<div class="widget-activity-item">
-								<div class="user-card-row">
-									<div class="tbl-row">
-										<div class="tbl-cell tbl-cell-photo">
-											<a href="#">
-												<img src="assets/img/folder-na.png" alt="">
-											</a>
-										</div>
-										<div class="tbl-cell">
-											<p>
-												<a href="#" class="semibold">Modul Non Aktif</a>
-												added a new product
-												<a href="#">Free UI Kit</a>
-											</p>
-											<p>Just Now</p>
-										</div>
+								</article>
+							';
+							$no++;
+						}
+					}else {
+						echo '	<article class="box-typical profile-post">
+									<div class="profile-post-content" align="center">
+										<span>
+										 Belum ada Kuis saat ini. <br />
+										<button type="button" class="btn btn-sm btn-inline" onclick="add()" title="Tambah" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menambahkan Modul baru.">+ Buat Baru</button> atau <a  href="">Muat ulang</a>
+										</span>
 									</div>
-								</div>
+								</article>';
+					}
+				?>
 							</div>
 						</div>
 					</section><!--.widget-tasks-->
