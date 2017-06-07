@@ -14,14 +14,20 @@ class Materi
         }
     }
 
-    public function getInfoMateri($idModul){
+    public function getTotalMateri($idModul){
         $query  = $this->db->materi->find(array("id_modul" => $idModul));
         return $query;
     }
 
-    public function addMateri($idModul, $judul, $materi, $user){
+    public function getInfoMateri($idMateri){
+		$ID     = new MongoId($idMateri);
+        $query  = $this->db->materi->findOne(array("_id" => $ID));
+        return $query;
+    }
+
+    public function addMateri($idModul, $judul, $materi, $status, $user){
         $newID  = "";
-        $insert = array("id_modul"=>$idModul, "judul" => $judul, "file" => $materi, "creator" => "$user", "date_created"=>date('Y-m-d H:i:s'), "date_modified"=>date('Y-m-d H:i:s'));
+        $insert = array("id_modul"=>$idModul, "judul" => $judul, "isi" => $materi, "file"=>"", "status"=>$status, "creator" => "$user", "date_created"=>date('Y-m-d H:i:s'), "date_modified"=>date('Y-m-d H:i:s'));
 
         $this->db->materi->insert($insert);
 
@@ -36,18 +42,18 @@ class Materi
         return $result;
     }
 
-    public function updateMateri($idModul, $judul, $materi){
+    public function updateMateri($idMateri, $judul, $materi, $status){
 
-        $update   = array('$set' => array("file"=>$materi, "judul"=>$judul, "date_modified"=>date('Y-m-d H:i:s')));
+        $update   = array('$set' => array("judul"=>$judul, "isi"=>$materi, "status"=>$status, "date_modified"=>date('Y-m-d H:i:s')));
 
         try {
-            $this->db->materi->update(array("id_modul" => $idModul), $update);
+            $this->db->materi->update(array("_id" => new MongoId($idMateri)), $update);
             $status     = "Success";
         } catch(MongoCursorException $e) {
             $status     = "Failed";
         }
 
-        $result = array("status" => $status, "IDModul" => $idModul);
+        $result = array("status" => $status, "IDMateri" => $idMateri);
         return $result;
     }
 
