@@ -152,7 +152,7 @@ $infoModul		= $modulClass->getInfoModul($_GET['modul']);
 											<div class="tbl-row">
 												<div class="tbl-cell tbl-cell-photo">
 													<a href="#demo'.$no.'" data-toggle="collapse" data-parent="#accordion">
-														<img src="assets/img/folder.png" alt="">
+														<img src="assets/img/test-quiz.png" alt="">
 													</a>
 												</div>
 												<div class="tbl-cell">
