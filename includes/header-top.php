@@ -66,5 +66,6 @@ function selisih_waktu($timestamp){
     <link rel="stylesheet" href="assets/css/lib/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/main.css">
 	<link rel="stylesheet" href="assets/css/separate/pages/widgets.min.css">
+	<script src="assets/js/lib/bootstrap-sweetalert/sweetalert.min.js"></script>
 </head>
 <body>

@@ -5,11 +5,26 @@ require("includes/header-menu.php");
 $mapelClass 	= new Mapel();
 $modulClass 	= new Modul();
 $materiClass 	= new Materi();
+$kelasClass		= new Kelas();
 
 $menuModul		= 2;
 $infoModul		= $modulClass->getInfoModul($_GET['modul']);
 $infoMapel		= $mapelClass->getInfoMapel($infoModul['id_mapel']);
 $infoMateri		= $materiClass->getTotalMateri($_GET['modul']);
+
+$hakKelas		= $kelasClass->getKeanggotaan($infoMapel['id_kelas'], $_SESSION['lms_id']);
+if(!$hakKelas['status']){
+	echo "<script>
+			swal({
+				title: 'Maaf!',
+				text: 'Anda tidak terdaftar pada Kelas ini.',
+				type: 'error'
+			}, function() {
+				 window.location = 'index.php';
+			});
+		</script>";
+		die();
+}
 
 if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
 
@@ -75,15 +90,22 @@ if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
 					<section class="card card-inversed">
 						<header class="card-header">
 							Kumpulan Materi
-							<div class="btn-group" style='float: right;'>
-								<a href="materi-action.php?modul=<?=$infoModul['_id']?>" title="Tambah" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menambahkan materi baru." class="btn btn-sm btn-rounded">+ Tambah Materi</a>
-							</div>
+
+							<?php
+								if($infoModul['creator'] == $_SESSION['lms_id']){
+									echo '<div class="btn-group" style="float: right;">
+										<a href="materi-action.php?modul='.$infoModul['_id'].'" title="Tambah" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menambahkan materi baru." class="btn btn-sm btn-rounded">+ Tambah Materi</a>
+									</div>';
+								}
+							?>
+
 						</header>
 						<div class="card-block" id="accordion">
 				<?php
 					$no	= 1;
 					if ($infoMateri->count() > 0) {
 						foreach ($infoMateri as $materi) {
+							if ($_SESSION['lms_id'] == $materi['creator']) {
 							echo '<article class="box-typical profile-post panel">
 									<div class="profile-post-header">
 										<div class="user-card-row">
@@ -95,26 +117,46 @@ if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
 												</div>
 												<div class="tbl-cell">
 													<div class="user-card-row-name"><a href="#demo'.$no.'" data-toggle="collapse" data-parent="#accordion">'.$materi['judul'].'</a></div>
-													<div class="color-blue-grey-lighter">'.($materi['date_created'] == $materi['date_modified'] ? "Diterbitkan " : "Diperbarui ").selisih_waktu($materi['date_modified']).'</div>
+													<div class="color-blue-grey-lighter">'.($materi['date_created'] == $materi['date_modified'] ? "" : "Diperbarui ").selisih_waktu($materi['date_modified']).'</div>
 												</div>
-												<div class="tbl-cell" align="right">';
-												if ($_SESSION['lms_id'] == $materi['creator']) {
-													echo '<a href="materi-action.php?act=update&modul='.$infoModul['_id'].'&materi='.$materi['_id'].'" class="shared" title="Edit" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk memperbarui isi dari Materi yang sudah dibuat." style="right: 35px">
-															<i class="font-icon font-icon-pencil")"></i>
-														</a>
-														<a onclick="remove(\''.$materi['_id'].'\')"   class="shared" title="Hapus" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menghapus Materi yang sudah dibuat.">
-															<i class="font-icon font-icon-trash")"></i>
-														</a>';
-												}
-							echo '				</div>
+												<div class="tbl-cell" align="right">
+													<span class="label label-'.($materi['status'] == "publish" ? "success" : "primary").'" style="margin-right: 20px">'.ucfirst($materi['status']).'</span>
+													<a href="materi-action.php?act=update&modul='.$infoModul['_id'].'&materi='.$materi['_id'].'" class="shared" title="Edit" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk memperbarui isi dari Materi yang sudah dibuat." style="right: 35px">
+														<i class="font-icon font-icon-pencil")"></i>
+													</a>
+													<a onclick="remove(\''.$materi['_id'].'\')"   class="shared" title="Hapus" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menghapus Materi yang sudah dibuat.">
+														<i class="font-icon font-icon-trash")"></i>
+													</a>
+												</div>
 											</div>
 										</div>
 									</div>
 									<div id="demo'.$no.'" class="profile-post-content collapse">
 										'.$materi["isi"].'
 									</div>
-								</article>
-							';
+								</article>';
+							}else {
+								echo '<article class="box-typical profile-post panel">
+										<div class="profile-post-header">
+											<div class="user-card-row">
+												<div class="tbl-row">
+													<div class="tbl-cell tbl-cell-photo">
+														<a href="#demo'.$no.'" data-toggle="collapse" data-parent="#accordion">
+															<img src="assets/img/folder.png" alt="">
+														</a>
+													</div>
+													<div class="tbl-cell">
+														<div class="user-card-row-name"><a href="#demo'.$no.'" data-toggle="collapse" data-parent="#accordion">'.$materi['judul'].'</a></div>
+														<div class="color-blue-grey-lighter">'.($materi['date_created'] == $materi['date_modified'] ? "Diterbitkan " : "Diperbarui ").selisih_waktu($materi['date_modified']).'</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div id="demo'.$no.'" class="profile-post-content collapse">
+											'.$materi["isi"].'
+										</div>
+									</article>';
+							}
 							$no++;
 						}
 					}else {
@@ -180,7 +222,7 @@ if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
 	</script>
 
 	<script src="assets/js/app.js"></script>
-	<script type="text/javascript" src="./assets/tinymce4/js/wirislib.js"></script>
+	<script type="text/javascript" src="./assets/tinymce4/js/tinymce/plugins/tiny_mce_wiris/integration/WIRISplugins.js?viewer=image"></script>
 
 
 <?php

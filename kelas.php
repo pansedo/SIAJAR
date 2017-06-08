@@ -12,6 +12,21 @@ $infoKelas	= $kelasClass->getInfoKelas($_GET['id']);
 // var_dump($infoKelas);
 $listMapel	= $mapelClass->getListbyKelas($_GET['id']);
 
+$hakKelas	= $kelasClass->getKeanggotaan($_GET['id'], $_SESSION['lms_id']);
+$anggota	= in_array($_SESSION['lms_id'], array_values($infoKelas['list_member'])) ? true : false;
+if(!$anggota){
+	echo "<script>
+			swal({
+				title: 'Maaf!',
+				text: 'Anda tidak terdaftar pada Kelas ini.',
+				type: 'error'
+			}, function() {
+				 window.location = 'index.php';
+			});
+		</script>";
+		die();
+}
+
 if(isset($_POST['addMapel'])){
 	$nama	= mysql_escape_string($_POST['namamapel']);
 	$kelas	= mysql_escape_string($_GET['id']);
@@ -150,10 +165,16 @@ if(isset($_POST['updateKelas'])){
 					</div>
 				</div>
 			</div>
+		<?php
+		if ($hakKelas['status'] == 1) {
+		?>
 			<button type="button" class="change-cover" onclick="update()">
 				<i class="font-icon font-icon-pencil"></i>
 				Pengaturan Kelas
 			</button>
+		<?php
+		}
+		?>
 		</div><!--.profile-header-photo-->
 
 		<div class="container-fluid">
@@ -163,6 +184,9 @@ if(isset($_POST['updateKelas'])){
 						<section class="box-typical">
 							<header class="box-typical-header-sm bordered">
 								Kode Kelas
+							<?php
+							if ($hakKelas['status'] == 1) {
+							?>
 								<div class="btn-group" style='float: right;'>
 									<button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 										Aksi
@@ -171,6 +195,9 @@ if(isset($_POST['updateKelas'])){
 		                                <a class="dropdown-item" href="#"><span class="font-icon font-icon-lock"></span>Kunci Kelas</a>
 									</div>
 								</div>
+							<?php
+							}
+							?>
 							</header>
 							<div class="box-typical-inner">
 								<p style="font-size: 2em; text-decoration: underline; font-weight:bold; text-align: center;"><?=$infoKelas['kode']?></p>
@@ -187,6 +214,10 @@ if(isset($_POST['updateKelas'])){
 						<section class="box-typical">
 							<header class="box-typical-header-sm bordered">
 								Daftar Mata Pelajaran
+
+							<?php
+							if ($hakKelas['status'] == 1 || $hakKelas['status'] == 2) {
+							?>
 								<div class="btn-group" style='float: right;'>
 									<button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 										Aksi
@@ -196,6 +227,9 @@ if(isset($_POST['updateKelas'])){
 		                                <a class="dropdown-item" href="#"><span class="font-icon font-icon-pencil"></span>Kelola Mata Pelajaran</a>
 									</div>
 								</div>
+							<?php
+							}
+							?>
 							</header>
 							<div class="box-typical-inner" id="listMapel">
 								<p style="text-align: center;">

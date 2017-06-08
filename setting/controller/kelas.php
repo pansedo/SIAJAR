@@ -35,10 +35,22 @@ class Kelas
 		$ID     = new MongoId($idkelas);
         $query  = $this->db->kelas->findOne(array("_id" => $ID));
 		if($query['_id']){
-			$query1	= $this->db->anggota_kelas->find(array("id_kelas" => $idkelas))->count();
-			$query['member'] = $query1;
+			$query1	= $this->db->anggota_kelas->find(array("id_kelas" => $idkelas));
+            $query['member'] = $query1->count();
+			if ($query['member'] > 0) {
+			    foreach ($query1 as $member) {
+			        $query['list_member'][]  = $member['id_user'];
+			    }
+			}
+            $data   = $query;
 		}
-        return $query;
+        return $data;
+    }
+
+    public function getKeanggotaan($idkelas, $iduser){
+        $data	= $this->db->anggota_kelas->findOne(array('id_kelas'=>$idkelas, 'id_user'=>"$iduser"));
+        
+        return $data;
     }
 
     public function addKelas($nama, $user){
@@ -73,7 +85,7 @@ class Kelas
                     $status     = "Failed";
                     $message    = "Kamu sudah bergabung kedalam Kelas ini!";
                 }else{
-                    $relation   = $this->db->anggota_kelas->insert(array("id_user"=>"$user", "id_kelas"=>"$query[_id]", "status"=>"3"));
+                    $relation   = $this->db->anggota_kelas->insert(array("id_user"=>"$user", "id_kelas"=>"$query[_id]", "status"=>"4"));
                     $status     = "Success";
                     $message    = "Kamu berhasil bergabung kedalam Kelas!";
                     $newID      = "$query[_id]";

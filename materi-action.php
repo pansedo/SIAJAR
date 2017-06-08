@@ -77,6 +77,17 @@ if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
                             <h5 class="with-border">Perubahan Materi</h5>
                             <form id="form_tambah" method="POST">
                                 <div class="form-group row">
+                                    <label class="col-md-2 form-control-label">Terbitkan ?</label>
+                                    <div class="col-md-8">
+                                        <div class="radio">
+            								<input type="radio" name="publikasi" id="radio-1" value="publish" <?=$infoMateri['status'] == "publish" ? "checked" : ""?> >
+            								<label for="radio-1">Ya </label> &nbsp;
+            								<input type="radio" name="publikasi" id="radio-2" value="draft" <?=$infoMateri['status'] == "draft" ? "checked" : ""?>>
+            								<label for="radio-2">Tidak </label>
+            							</div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
                                     <label class="col-md-2 form-control-label">Judul materi</label>
                                     <div class="col-md-8">
                                         <input type="text" class="form-control" name="judul" placeholder="Judul dari materi" value="<?=$infoMateri['judul']?>" required="require" />
@@ -94,19 +105,6 @@ if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group row">
-                                    <label class="col-md-2 form-control-label">Terbitkan ?</label>
-                                    <div class="col-md-8">
-                                        <div class="radio">
-            								<input type="radio" name="publikasi" id="radio-1" value="publish" <?=$infoMateri['status'] == "publish" ? "checked" : ""?> >
-            								<label for="radio-1">Ya </label>
-            							</div>
-            							<div class="radio">
-            								<input type="radio" name="publikasi" id="radio-2" value="draft" <?=$infoMateri['status'] == "draft" ? "checked" : ""?>>
-            								<label for="radio-2">Tidak </label>
-            							</div>
-                                    </div>
-                                </div>
                                 <hr>
                                 <div class="form-group pull-right">
                                     <button type="submit" name="updateMateri" class="btn">Simpan</button>
@@ -120,6 +118,18 @@ if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
 						<div class="card-block">
                             <h5 class="with-border">Penambahan Materi</h5>
                             <form id="form_tambah" method="POST">
+                                <div class="form-group row">
+                                    <label class="col-md-2 form-control-label">Terbitkan ?</label>
+                                    <div class="col-md-8">
+                                        <div class="radio">
+            								<input type="radio" name="publikasi" id="radio-1" value="publish">
+            								<label for="radio-1">Ya </label>
+                                            &nbsp;
+            								<input type="radio" name="publikasi" id="radio-2" value="draft" checked>
+            								<label for="radio-2">Tidak </label>
+            							</div>
+                                    </div>
+                                </div>
             					<div class="form-group row">
             						<label class="col-md-2 form-control-label">Judul materi</label>
             						<div class="col-md-8">
@@ -136,19 +146,6 @@ if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
                     					</div>
             						</div>
             					</div>
-                                <div class="form-group row">
-                                    <label class="col-md-2 form-control-label">Terbitkan ?</label>
-                                    <div class="col-md-8">
-                                        <div class="radio">
-            								<input type="radio" name="publikasi" id="radio-1" value="publish">
-            								<label for="radio-1">Ya </label>
-            							</div>
-            							<div class="radio">
-            								<input type="radio" name="publikasi" id="radio-2" value="draft" checked>
-            								<label for="radio-2">Tidak </label>
-            							</div>
-                                    </div>
-                                </div>
                                 <hr>
                                 <div class="form-group pull-right">
 									<button type="submit" name="addMateri" class="btn">Tambah</button>
