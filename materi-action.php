@@ -98,11 +98,11 @@ if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
                                     <label class="col-md-2 form-control-label">Terbitkan ?</label>
                                     <div class="col-md-8">
                                         <div class="radio">
-            								<input type="radio" name="publikasi" id="radio-1" value="publish">
+            								<input type="radio" name="publikasi" id="radio-1" value="publish" <?=$infoMateri['status'] == "publish" ? "checked" : ""?> >
             								<label for="radio-1">Ya </label>
             							</div>
             							<div class="radio">
-            								<input type="radio" name="publikasi" id="radio-2" value="draft" checked>
+            								<input type="radio" name="publikasi" id="radio-2" value="draft" <?=$infoMateri['status'] == "draft" ? "checked" : ""?>>
             								<label for="radio-2">Tidak </label>
             							</div>
                                     </div>
