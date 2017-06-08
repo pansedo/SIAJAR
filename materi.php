@@ -1,12 +1,5 @@
 <?php
 require("includes/header-top.php");
-?>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/codemirror.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/mode/xml/xml.min.js"></script>
-<link type="text/css" rel="stylesheet" href="./assets/tinymce4/css/prism.css" />
-<script type="text/javascript" src="./assets/tinymce4/js/prism.js"></script>
-
-<?php
 require("includes/header-menu.php");
 
 $mapelClass 	= new Mapel();
@@ -187,6 +180,8 @@ if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
 	</script>
 
 	<script src="assets/js/app.js"></script>
+	<script type="text/javascript" src="./assets/tinymce4/js/wirislib.js"></script>
+
 
 <?php
 	require('includes/footer-bottom.php');
