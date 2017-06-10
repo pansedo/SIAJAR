@@ -382,7 +382,7 @@ if(isset($_POST['updateKelas'])){
 														</div>
 													';
 										if ($_SESSION['lms_id'] == $posting['creator']) {
-										echo '		<a class="shared" onclick="remove(\''.$posting['_id'].'\')" title="Hapus" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menghapus kiriman yang sudah dibuat.">
+										echo '		<a class="shared" onclick="removePost(\''.$posting['_id'].'\')" title="Hapus" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menghapus kiriman yang sudah dibuat.">
 														<i class="font-icon font-icon-trash"></i>
 													</a>';
 										}
@@ -464,7 +464,7 @@ if(isset($_POST['updateKelas'])){
       		).show();
       	}
 
-		function remove(ID){
+		function removePost(ID){
       		swal({
       		  title: "Apakah anda yakin?",
       		  text: "Data yang sudah dihapus tidak dapat dikembalikan!",
