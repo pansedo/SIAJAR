@@ -3,15 +3,15 @@
 require("includes/header-top.php");
 require("includes/header-menu.php");
 
-
 $kelasClass = new Kelas();
 $mapelClass = new Mapel();
+$userClass	= new User();
 
 $infoKelas	= $kelasClass->getInfoKelas($_GET['id']);
 
 $hakKelas	= $kelasClass->getKeanggotaan($_GET['id'], $_SESSION['lms_id']);
-$anggota	= in_array($_SESSION['lms_id'], array_values($infoKelas['list_member'])) ? true : false;
-if(!$anggota){
+// $anggota	= in_array($_SESSION['lms_id'], array_values($infoKelas['list_member'])) ? true : false;
+if(!$hakKelas['status']){
 	echo "<script>
 			swal({
 				title: 'Maaf!',
@@ -128,6 +128,20 @@ if(isset($_POST['updateKelas'])){
 }
 
 ?>
+<link rel="stylesheet" href="assets/css/lib/datatables-net/datatables.min.css">
+<link rel="stylesheet" href="assets/css/separate/vendor/datatables-net.min.css">
+<style media="screen">
+	tr:last-child td {
+		border-bottom: 1px solid #d8e2e7;
+	}
+	.user-name{
+		font-size: 1.1em;
+		font-weight: bold;
+	}
+	.table a{
+		border: none;
+	}
+</style>
 	<div class="modal fade"
 		 id="updateKelas"
 		 tabindex="-1"
@@ -211,18 +225,12 @@ if(isset($_POST['updateKelas'])){
 										<div class="tbl-row">
 											<div class="tbl-cell">
 												<p class="title"><?=$infoKelas['nama']?></p>
-												<p>Kelas</p>
+												<p>Anggota Kelas</p>
 											</div>
 											<div class="tbl-cell tbl-cell-stat">
 												<div class="inline-block">
-													<p class="title"><a style="color: #fff" href="anggota-kelas.php?id=<?=$_GET['id']?>"><?=$infoKelas['member']?></a></p>
-													<p><a style="color: #fff" href="anggota-kelas.php?id=<?=$_GET['id']?>" title="Anggota Kelas" data-toggle="popover" data-placement="bottom" data-trigger="hover" data-content="Lihat Anggota disini!">Anggota</a></p>
-												</div>
-											</div>
-											<div class="tbl-cell tbl-cell-stat">
-												<div class="inline-block">
-													<p id="jumlahMapel" class="title">0</p>
-													<p>Mata Pelajaran</p>
+													<p class="title"><?=$infoKelas['member']?></p>
+													<p>Anggota</p>
 												</div>
 											</div>
 										</div>
@@ -327,116 +335,87 @@ if(isset($_POST['updateKelas'])){
 				</div>
 
 				<div class="col-xl-9 col-lg-8">
-					<section class="tabs-section">
-
-						<div class="tab-content no-styled profile-tabs">
-							<form class="box-typical" method="post" action="">
-								<textarea class="write-something" name="textPost" id="textPost" placeholder="Apa yang ingin anda beritahukan?" required></textarea>
-								<div class="box-typical-footer">
-									<div class="tbl">
-										<div class="tbl-row">
-											<div class="tbl-cell">
-												<button type="button" class="btn-icon" title="lampiran tautan">
-													<i class="font-icon font-icon-earth"></i>
-												</button>
-												<button type="button" class="btn-icon" title="lampiran gambar">
-													<i class="font-icon font-icon-picture"></i>
-												</button>
-												<button type="button" class="btn-icon">
-													<i class="font-icon font-icon-calend"></i>
-												</button>
-												<button type="button" class="btn-icon">
-													<i class="font-icon font-icon-video-fill"></i>
-												</button>
-											</div>
-											<div class="tbl-cell tbl-cell-action">
-												<button type="submit" name="postingText" class="btn btn-rounded">Send</button>
-											</div>
-										</div>
-									</div>
-								</div>
-							</form><!--.box-typical-->
-
+					<section class="widget widget-tasks card-default">
+						<header class="card-header">
+							Daftar Anggota kelas
+						</header>
+						<div class="widget-tasks-item">
+							<table id="example" class="display table table-striped" cellspacing="0" width="100%">
+								<thead style="display:none;">
+									<tr>
+										<th>Foto</th>
+										<th>Nama dan Sekolah</th>
+										<th>Aksi</th>
+									</tr>
+								</thead>
+								<tbody>
 							<?php
-								$listPosting	= $kelasClass->postingKelas($_GET['id']);
-
-								if ($listPosting['count'] > 0) {
-									// echo "<pre>";
-									// print_r($listPosting['data']);
-									// echo "</pre>";
-									foreach ($listPosting['data'] as $posting) {
-										echo '	<article class="box-typical profile-post">
-													<div class="profile-post-header">
-														<div class="user-card-row">
-															<div class="tbl-row">
-																<div class="tbl-cell tbl-cell-photo">
-																	<a href="#">
-																		<img src="assets/img/photo-64-2.jpg" alt="">
-																	</a>
-																</div>
-																<div class="tbl-cell">
-																	<div class="user-card-row-name"><a href="#">'.$posting['user'].'</a></div>
-																	<div class="color-blue-grey-lighter">'.selisih_waktu($posting['date_created']).'</div>
-																</div>
-															</div>
-														</div>
-													';
-										if ($_SESSION['lms_id'] == $posting['creator']) {
-										echo '		<a class="shared" onclick="remove(\''.$posting['_id'].'\')" title="Hapus" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menghapus kiriman yang sudah dibuat.">
-														<i class="font-icon font-icon-trash"></i>
-													</a>';
-										}
-										echo '		</div>
-													<div class="profile-post-content">
-														<p>
-															'.nl2br($posting['isi_postingan']).'
-														</p>
-													</div>
-												</article>';
+							if ($infoKelas['member'] > 0) {
+								foreach (array_values($infoKelas['list_member']) as $data) {
+									$menu		= '';
+									$infoUser	= $userClass->GetData($data);
+									$infoHak	= $kelasClass->getKeanggotaan($_GET['id'], "$infoUser[_id]");
+									switch ($infoHak['status']) {
+									    case 1:
+									        $posisi	= "Guru Kelas";
+									        break;
+									    case 2:
+									        $posisi	= "Guru Mata Pelajaran";
+									        break;
+									    case 3:
+									        $posisi	= "Co-Teacher";
+									        break;
+										default:
+											$posisi	= "Anggota";
+											break;
 									}
-								}else {
-									echo '	<article class="box-typical profile-post">
-												<div class="profile-post-content">
-													<p align="center">
-													 Belum ada Postingan saat ini.
-													</p>
-												</div>
-											</article>';
+
+									if ($infoUser['status'] == 'guru') {
+										if ($infoHak['status'] == 2 || $infoHak['status'] == 3) {
+											$menu		= '<div class="btn-group" style="float: right;">
+																<button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+																	Aksi
+																</button>
+																<div class="dropdown-menu dropdown-menu-right">
+																	<div class="radio">
+																		<a class="dropdown-item" href="#">
+																			<input type="radio" name="statusGuru" id="statusGuru2" value="2" '.($infoHak['status'] == 2 ? "checked" : "").' >
+																			<label for="statusGuru2">Guru Mata Pelajaran </label>
+																		</a>
+																		<a class="dropdown-item" href="#">
+																			<input type="radio" name="statusGuru" id="statusGuru3" value="3" '.($infoHak['status'] == 3 ? "checked" : "").' >
+																			<label for="statusGuru3">Co-Teacher </label>
+																		</a>
+																	</div>
+																	<div class="dropdown-divider"></div>
+																	<a class="dropdown-item" href="#">Hapus Anggota</a>
+																</div>
+															</div>';
+										}
+									}elseif ($infoUser['status'] == 'siswa') {
+										$menu		= '<div class="btn-group" style="float: right;">
+															<button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+																Aksi
+															</button>
+															<div class="dropdown-menu dropdown-menu-right">
+																<a class="dropdown-item" href="#">Hapus Anggota</a>
+															</div>
+														</div>';
+									}
+
+									$image		= empty($infoUser['foto']) ? "<img src='assets/img/avatar-2-128.png' style='max-width: 75px; max-height: 75px;' />" : "<img src='".$infoUser['foto']."' style='max-width: 75px; max-height: 75px;' />" ;
+									echo "	<tr>
+												<td width='80px;'>".$image."</td>
+												<td><span class='user-name'>$infoUser[nama]</span> <br> <span style='font-size: 0.9em;'>$infoUser[sekolah] <br> ".ucfirst($infoUser['status'])." (".$posisi.")</span></td>
+												<td width='70px;' class='shared'>".($hakKelas['status'] == 1 ? $menu : '')."</td>
+											</tr>";
 								}
-
+							}
 							?>
-							<!-- <article class="box-typical profile-post">
-								<div class="profile-post-header">
-									<div class="user-card-row">
-										<div class="tbl-row">
-											<div class="tbl-cell tbl-cell-photo">
-												<a href="#">
-													<img src="assets/img/photo-64-2.jpg" alt="">
-												</a>
-											</div>
-											<div class="tbl-cell">
-												<div class="user-card-row-name"><a href="#">Pansera Guru</a> &nbsp; &gt; &nbsp; <a href="#">Contoh Kelas 1</a></div>
-												<div class="color-blue-grey-lighter">3 hari lalu</div>
-											</div>
-										</div>
-									</div>
-									<a href="#" class="shared">
-										<i class="font-icon font-icon-share"></i>
-									</a>
-								</div>
-								<div class="profile-post-content">
-									<p>
-										Pengumuman<br />
-										<br />
-										Besok kelas di liburkan, kepada seluruh Tutor harap memberitahu siswa/i yang berada di masing-masing TKB.<br />
-										<br />
-										Terima Kasih
-									</p>
-								</div>
-							</article> -->
-
-						</div><!--.tab-content-->
-					</section><!--.tabs-section-->
+								</tbody>
+							</table>
+						</div>
+					</section><!--.widget-tasks-->
 				</div>
 			</div><!--.row-->
 		</div><!--.container-fluid-->
@@ -445,16 +424,25 @@ if(isset($_POST['updateKelas'])){
 <?php
 	require('includes/footer-top.php');
 ?>
-<script src="assets/js/lib/autoresize/autoresize-textarea.js"></script>
+<script src="assets/js/lib/datatables-net/datatables.min.js"></script>
+
+<script>
+	$(function() {
+		$('#example').DataTable({
+			"order": [[ 1, "asc" ]],
+			'responsive' : true,
+			'bInfo' : false,
+			'bLengthChange' : false,
+			'pagingType' : 'simple',
+			"lengthMenu": [[20, 50, -1], [20, 50, "All"]]
+		});
+	});
+</script>
 
 	<script>
 		function clearText(elementID){
 			$(elementID).html("");
 		}
-
-		$(function(){
-	      $('#textPost').autoResize();
-	    });
 
 		function update(){
       		$('#updateKelas').trigger("reset");
@@ -558,15 +546,11 @@ if(isset($_POST['updateKelas'])){
 				}
 			});
 
-			$(".fancybox").fancybox({
-				padding: 0,
-				openEffect	: 'none',
-				closeEffect	: 'none'
-			});
-
 		});
 	</script>
+
 <script src="assets/js/app.js"></script>
+
 <?php
 	require('includes/footer-bottom.php');
 ?>
