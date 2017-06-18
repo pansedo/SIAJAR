@@ -208,13 +208,13 @@ if(isset($_POST['addModul'])){
 										<div class="user-card-row">
 											<div class="tbl-row">
 												<div class="tbl-cell tbl-cell-photo">
-													<a href="materi.php?modul=<?=$modul['_id']?>">
+													<a href="modul.php?id=<?=$modul['_id']?>">
 														<img src="assets/img/folder.png" alt="">
 													</a>
 												</div>
 												<div class="tbl-cell">
 													<p>
-														<a href="materi.php?modul=<?=$modul['_id']?>" class="semibold"><?=$modul['nama']?></a>
+														<a href="modul.php?id=<?=$modul['_id']?>" class="semibold"><?=$modul['nama']?></a>
 													</p>
 													<p><?=selisih_waktu($modul['date_created'])?></p>
 												</div>
