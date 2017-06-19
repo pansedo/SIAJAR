@@ -28,7 +28,7 @@ if(isset($method['action'])){
 
 		echo $Json;
 	}
-	
+
 	if($method['action'] == 'showList'){
         $catch  = $table2->find(array("id_user" => $method['ID']));
 		$count  = $catch->count();
@@ -56,14 +56,31 @@ if(isset($method['action'])){
 
 		echo $Json;
 	}
-	
-	if($method['action'] == 'joinKelas'){
-        $catch  = $table->findOne(array("kode" => $method['kode']));
-		if($catch){
-			
-		}
-			
-        $resp   = array('count'=>$count, 'data'=>$data);
+
+	if($method['action'] == 'lockKelas'){
+        $ID     = $method['ID'];
+        $userID = $method['user'];
+        $catch  = $table->findOne(array("_id" => new MongoId($ID), "creator"=> $userID));
+        if (isset($catch['_id'])) {
+            if($catch['status'] == 'LOCKED'){
+                $update     = array('$set' => array("status"=>"", "date_modified"=>date('Y-m-d H:i:s')));
+                $message    = "Kelas berhasil dibuka.";
+            }else {
+                $update     = array('$set' => array("status"=>"LOCKED", "date_modified"=>date('Y-m-d H:i:s')));
+                $message    = "Kelas berhasil dikunci.";
+            }
+
+            try {
+                $table->update(array("_id" => new MongoId($ID)), $update);
+                $status     = "Success";
+            } catch(MongoCursorException $e) {
+                $status     = "Failed 1.";
+            }
+        } else {
+            $status     = "Failed 2.";
+        }
+
+        $resp   = array('status'=>$status, "message"=>$message);
 		$Json   = json_encode($resp);
 		header('Content-Type: application/json');
 

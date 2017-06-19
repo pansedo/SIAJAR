@@ -8,9 +8,9 @@ $materiClass 	= new Materi();
 $kelasClass		= new Kelas();
 
 $menuModul		= 2;
-$infoModul		= $modulClass->getInfoModul($_GET['modul']);
+$infoModul		= $modulClass->getInfoModul($_GET['id']);
 $infoMapel		= $mapelClass->getInfoMapel($infoModul['id_mapel']);
-$infoMateri		= $materiClass->getTotalMateri($_GET['modul']);
+$infoMateri		= $materiClass->getTotalMateri($_GET['id']);
 
 $hakKelas		= $kelasClass->getKeanggotaan($infoMapel['id_kelas'], $_SESSION['lms_id']);
 if(!$hakKelas['status']){
@@ -30,9 +30,9 @@ if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
 
 
 	if(isset($_POST['addMateri'])){
-		$rest 	= $materiClass->addMateri($_GET['modul'], $_POST['judul'], $_POST['isi'], $_SESSION['lms_id']);
+		$rest 	= $materiClass->addMateri($_GET['id'], $_POST['judul'], $_POST['isi'], $_SESSION['lms_id']);
 	}else{
-		$rest 	= $materiClass->updateMateri($_GET['modul'], $_POST['judul'], $_POST['isi']);
+		$rest 	= $materiClass->updateMateri($_GET['id'], $_POST['judul'], $_POST['isi']);
 	}
 
 	if ($rest['status'] == "Success") {

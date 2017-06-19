@@ -4,6 +4,26 @@ require("includes/header-menu.php");
 
 $mapelClass = new Mapel();
 $modulClass = new Modul();
+$kelasClass = new Kelas();
+
+$infoMapel	= $mapelClass->getInfoMapel($_GET['id']);
+$listModul	= $modulClass->getListbyMapel($_GET['id']);
+$infoKelas	= $kelasClass->getInfoKelas($infoMapel['id_kelas']);
+
+$hakKelas	= $kelasClass->getKeanggotaan($infoMapel['id_kelas'], $_SESSION['lms_id']);
+$anggota	= in_array($_SESSION['lms_id'], array_values($infoKelas['list_member'])) ? true : false;
+if(!$anggota){
+	echo "<script>
+			swal({
+				title: 'Maaf!',
+				text: 'Anda tidak terdaftar pada Kelas ini.',
+				type: 'error'
+			}, function() {
+				 window.location = 'index.php';
+			});
+		</script>";
+		die();
+}
 
 if(isset($_POST['addModul'])){
 	$nama = mysql_escape_string($_POST['namamodul']);
@@ -19,8 +39,6 @@ if(isset($_POST['addModul'])){
 	}
 }
 
-$infoMapel	= $mapelClass->getInfoMapel($_GET['id']);
-$listModul	= $modulClass->getListbyMapel($_GET['id']);
 ?>
 	<div class="modal fade"
 		 id="updateMapel"
@@ -116,10 +134,16 @@ $listModul	= $modulClass->getListbyMapel($_GET['id']);
 					</div>
 				</div>
 			</div>
+			<?php
+			if ($_SESSION['lms_id'] == $infoMapel['creator']) {
+			?>
 			<button type="button" class="change-cover" onclick="update()">
 				<i class="font-icon font-icon-pencil"></i>
 				Pengaturan Mata Pelajaran
 			</button>
+			<?php
+			}
+			?>
 		</div><!--.profile-header-photo-->
 
 		<div class="container-fluid">
@@ -162,9 +186,19 @@ $listModul	= $modulClass->getListbyMapel($_GET['id']);
 						<header class="widget-header">
 							Alur Pembelajaran
 							<span class="label label-pill label-primary"><?=$infoMapel['modul']?></span>
-							<div class="btn-group" style='float: right;'>
-								<button type="button" class="btn btn-sm btn-rounded btn-inline" onclick="add()" title="Tambah" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menambahkan Modul baru.">+ Tambah Modul</button>
-							</div>
+						<?php
+						if ($hakKelas['status'] == 1 || $hakKelas['status'] == 2) {
+							if(($hakKelas['status'] == 2) && ($infoMapel['creator'] == $_SESSION['lms_id'])){
+								echo '<div class="btn-group" style="float: right;">
+										<button type="button" class="btn btn-sm btn-rounded btn-inline" onclick="add()" title="Tambah" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menambahkan Modul baru.">+ Tambah Modul</button>
+									</div>';
+							}elseif($hakKelas['status'] == 1) {
+								echo '<div class="btn-group" style="float: right;">
+										<button type="button" class="btn btn-sm btn-rounded btn-inline" onclick="add()" title="Tambah" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menambahkan Modul baru.">+ Tambah Modul</button>
+									</div>';
+							}
+						}
+						?>
 						</header>
 						<div>
 							<?php
@@ -174,20 +208,26 @@ $listModul	= $modulClass->getListbyMapel($_GET['id']);
 										<div class="user-card-row">
 											<div class="tbl-row">
 												<div class="tbl-cell tbl-cell-photo">
-													<a href="materi.php?modul=<?=$modul['_id']?>">
+													<a href="modul.php?id=<?=$modul['_id']?>">
 														<img src="assets/img/folder.png" alt="">
 													</a>
 												</div>
 												<div class="tbl-cell">
 													<p>
-														<a href="materi.php?modul=<?=$modul['_id']?>" class="semibold"><?=$modul['nama']?></a>
+														<a href="modul.php?id=<?=$modul['_id']?>" class="semibold"><?=$modul['nama']?></a>
 													</p>
 													<p><?=selisih_waktu($modul['date_created'])?></p>
 												</div>
+										<?php
+										if ($_SESSION['lms_id'] == $modul['creator']) {
+										?>
 												<div class="tbl-cell" align="right">
 													<a onclick="edit('<?=$modul['_id']?>')" title="Edit" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk memperbarui Modul yang sudah dibuat."><i class="font-icon font-icon-pencil"></i></a>
 													<a onclick="remove('<?=$modul['_id']?>')" title="Hapus" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menghapus Modul yang sudah dibuat."><i class="font-icon font-icon-trash"></i></a>
 												</div>
+										<?php
+										}
+										?>
 											</div>
 										</div>
 									</div>

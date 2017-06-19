@@ -5,9 +5,9 @@ class Kelas
     public function __construct() {
         try {
             global $db;
-            $tableName = 'kelas';
-            $this->db = $db;
-            $this->db->table = $this->db->$tableName;
+            $tableName  = 'kelas';
+            $this->db   = $db;
+            $this->table= $this->db->$tableName;
         } catch(Exception $e) {
             echo "Database Not Connection";
             exit();
@@ -23,7 +23,7 @@ class Kelas
             $hasil  .= $karakter{$acak};
             # code...
         }
-        $cek    = $this->db->table->find(array("kode" => $hasil))->count();
+        $cek    = $this->table->find(array("kode" => $hasil))->count();
         if ($cek > 0) {
             $this->acakKodeKelas(6);
         }
@@ -35,17 +35,29 @@ class Kelas
 		$ID     = new MongoId($idkelas);
         $query  = $this->db->kelas->findOne(array("_id" => $ID));
 		if($query['_id']){
-			$query1	= $this->db->anggota_kelas->find(array("id_kelas" => $idkelas))->count();
-			$query['member'] = $query1;
+			$query1	= $this->db->anggota_kelas->find(array("id_kelas" => $idkelas));
+            $query['member'] = $query1->count();
+			if ($query['member'] > 0) {
+			    foreach ($query1 as $member) {
+			        $query['list_member'][]  = $member['id_user'];
+			    }
+			}
+            $data   = $query;
 		}
-        return $query;
+        return $data;
+    }
+
+    public function getKeanggotaan($idkelas, $iduser){
+        $data	= $this->db->anggota_kelas->findOne(array('id_kelas'=>$idkelas, 'id_user'=>"$iduser"));
+
+        return $data;
     }
 
     public function addKelas($nama, $user){
         $newID  = "";
         $kode   = $this->acakKodeKelas(6);
         $insert = array("nama" => $nama, 'kode'=> $kode, "tentang"=>"", "status"=>"", "creator" => "$user", "date_created"=>date('Y-m-d H:i:s'), "date_modified"=>date('Y-m-d H:i:s'));
-                  $this->db->table->insert($insert);
+                  $this->table->insert($insert);
         $newID  = $insert['_id'];
         if ($newID) {
             $status     = "Success";
@@ -60,9 +72,27 @@ class Kelas
         return $result;
     }
 
+    public function updateKelas($nama, $tentang, $kelas){
+        $update     = array('$set' => array("nama"=>$nama, "tentang"=>$tentang, "date_modified"=>date('Y-m-d H:i:s')));
+
+          try {
+              $this->table->update(array("_id" => new MongoId($kelas)), $update);
+              $status   = "success";
+              $judul    = "Berhasil!";
+              $message  = "Pengaturan Kelas berhasil disimpan.";
+          } catch(MongoCursorException $e) {
+              $status   = "error";
+              $judul    = "Maaf!";
+              $message  = "Pengaturan Kelas gagal disimpan.";
+          }
+
+        $result = array("status" => $status, "judul" => $judul, "message"=>$message, "IDKelas" => $kelas);
+        return $result;
+    }
+
     public function joinKelas($kode, $user){
         $newID  = "";
-        $query  = $this->db->table->findOne(array("kode" => $kode));
+        $query  = $this->table->findOne(array("kode" => $kode));
         if (isset($query['_id'])) {
             if ($query['status'] == 'LOCKED') {
                 $status     = "Locked";
@@ -73,7 +103,7 @@ class Kelas
                     $status     = "Failed";
                     $message    = "Kamu sudah bergabung kedalam Kelas ini!";
                 }else{
-                    $relation   = $this->db->anggota_kelas->insert(array("id_user"=>"$user", "id_kelas"=>"$query[_id]", "status"=>"3"));
+                    $relation   = $this->db->anggota_kelas->insert(array("id_user"=>"$user", "id_kelas"=>"$query[_id]", "status"=>"4"));
                     $status     = "Success";
                     $message    = "Kamu berhasil bergabung kedalam Kelas!";
                     $newID      = "$query[_id]";
@@ -140,7 +170,7 @@ class Kelas
                     $userID	    = new MongoId($isi['creator']);
                     $idkelas    = new MongoId($isi['id_kelas']);
                     $query3     = $this->db->user->findOne(array('_id' => $userID));
-                    $query4     = $this->db->table->findOne(array('_id' => $idkelas));
+                    $query4     = $this->table->findOne(array('_id' => $idkelas));
                     $data[$index]['user']   = $query3['nama'];
                     $data[$index]['kelas']  = $query4['nama'];
                 }
