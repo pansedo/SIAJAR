@@ -17,7 +17,7 @@ $modulClass 	= new Modul();
 $materiClass 	= new Materi();
 
 $menuModul		= 2;
-$infoModul		= $modulClass->getInfoModul($_GET['modul']);
+$infoModul		= $modulClass->getInfoModul($_GET['id']);
 $infoMapel		= $mapelClass->getInfoMapel($infoModul['id_mapel']);
 $infoMateri		= $materiClass->getInfoMateri($_GET['materi']);
 

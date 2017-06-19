@@ -21,8 +21,8 @@ if(isset($_POST['addQuiz'])){
 }
 
 $menuModul		= 4;
-$listQuiz	= $quizClass->getListbyModul($_GET['modul']);
-$infoModul	= $modulClass->getInfoModul($_GET['modul']);
+$listQuiz	= $quizClass->getListbyModul($_GET['id']);
+$infoModul	= $modulClass->getInfoModul($_GET['id']);
 $infoMapel	= $mapelClass->getInfoMapel($infoModul['id_mapel']);
 ?>
 	<div class="modal fade"
