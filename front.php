@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-<title>Edua</title>
+<title>SEAMOLEC - LEARNING MANAGEMENT SYSTEM</title>
 <link rel="stylesheet" type="text/css" href="assets/css/lib/front/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="assets/css/lib/front/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="assets/css/lib/front/edua-icons.css">
@@ -17,7 +17,7 @@
 <link rel="stylesheet" type="text/css" href="assets/css/lib/front/style.css">
 <link rel="stylesheet" type="text/css" href="assets/css/lib/front/loader.css">
 
-<link rel="icon" href="assets/img/front/favicon.png">
+<link href="assets/img/favicon.ico" rel="shortcut icon">
 
 </head>
 
@@ -33,11 +33,6 @@
 <header>
   <nav class="navbar navbar-default navbar-sticky bootsnav pushy">
     <div class="container"> 
-       <div id="menu_bars" class="right">
-        <span class="t1"></span>
-        <span class="t2"></span>
-        <span class="t3"></span>
-      </div>
       <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
           <i class="fa fa-bars"></i>
@@ -48,147 +43,13 @@
       </div>
       <div class="collapse navbar-collapse" id="navbar-menu">
         <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOut">
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" >Home</a>
-            <ul class="dropdown-menu">
-              <li><a href="index.html">Home 01</a></li>
-              <li><a href="index2.html">Home 02</a></li>
-              <li><a href="index3.html">Home 03</a></li>
-              <li><a href="index4.html">Home 04</a></li>
-            </ul>
+
+          <li><a href="index.php">Login</a>
           </li>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" >courses</a>
-            <ul class="dropdown-menu">
-              <li><a href="courses.html">Courses</a></li>
-              <li><a href="course_detail.html">Courses Detail</a></li>
-            </ul>
-          </li>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" >events</a>
-            <ul class="dropdown-menu">
-              <li><a href="event.html">events</a></li>
-              <li><a href="event_detail.html">Events Detail</a></li>
-            </ul>
-          </li>
-          
-          <li class="dropdown megamenu-fw">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Pages</a>
-            <ul class="dropdown-menu megamenu-content" role="menu">
-              <li>
-                <div class="row">
-                  <div class="col-menu col-md-3">
-                    <h6 class="title">Pages</h6>
-                    <div class="content">
-                      <ul class="menu-col">
-                        <li><a href="about.html">About</a></li>
-                        <li><a href="testinomial.html">Testinomial</a></li>
-                        <li><a href="teachers.html">Teachers</a></li>
-                        <li><a href="pricing.html">Pricings</a></li>
-                      </ul>
-                    </div> 
-                  </div>
-                  <div class="col-menu col-md-3">
-                    <h6 class="title">Blog</h6>
-                    <div class="content">
-                      <ul class="menu-col">
-                        <li><a href="blog.html">Blog 01</a></li>
-                        <li><a href="blog2.html">Blog 02</a></li>
-                        <li><a href="blog3.html">Blog 03</a></li>
-                        <li><a href="blog_detail.html">Blog Detail</a></li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div class="col-menu col-md-3">
-                    <h6 class="title">Shop</h6>
-                    <div class="content">
-                      <ul class="menu-col">
-                        <li><a href="shop.html">Shop</a></li>
-                        <li><a href="shop_detail.html">Shop Detail</a></li>
-                        <li><a href="shop_cart.html">Cart</a></li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div class="col-menu col-md-3">
-                    <h6 class="title">Others</h6>
-                    <div class="content">
-                      <ul class="menu-col">
-                        <li><a href="gallery.html">Gallery</a></li>
-                        <li><a href="faq.html">Faq</a></li>
-                        <li><a href="404.html">404</a></li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </li>
-          <li><a href="blog.html">Blog</a></li>
-          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="index.php">Register</a>
         </ul>
       </div>
     </div>
-    <div class="sidebar_menu">
-        <nav class="pushmenu pushmenu-right">
-          <a class="push-logo" href="index3.html"><img src="assets/img/front/logo.png" alt="logo"></a>
-          <ul class="push_nav centered">
-            <li class="dropdown clearfix">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" ><span>01.</span>Home</a>
-            <ul class="dropdown-menu">
-              <li><a href="index.html">Home 01</a></li>
-              <li><a href="index2.html">Home 02</a></li>
-              <li><a href="index3.html">Home 03</a></li>
-              <li><a href="index4.html">Home 04</a></li>
-            </ul>
-          </li>
-          <li class="dropdown clearfix">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <span>02.</span> courses</a>
-            <ul class="dropdown-menu">
-              <li><a href="courses.html">Courses</a></li>
-              <li><a href="course_detail.html">Courses Detail</a></li>
-            </ul>
-          </li>
-          <li class="dropdown clearfix">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <span>03.</span>events</a>
-            <ul class="dropdown-menu">
-              <li><a href="event.html">events</a></li>
-              <li><a href="event_detail.html">events Detail</a></li>
-            </ul>
-          </li>
-            <li class="dropdown clearfix">
-              <a href="#." class="dropdown-toggle" data-toggle="dropdown"> <span>04.</span> Pages</a>
-              <ul class="dropdown-menu clearfix">
-                <li><a href="shop.html">Shop</a></li>
-                <li><a href="shop_detail.html">Shop Detail</a></li>
-                <li><a href="shop_cart.html">Cart</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="testinomial.html">Testinomial</a></li>
-                <li><a href="teachers.html">Teachers</a></li>
-                <li><a href="pricing.html">Pricings</a></li>
-                <li><a href="gallery.html">Gallery</a></li>
-                <li><a href="faq.html">Faq</a></li>
-                <li><a href="404.html">404</a></li>
-              </ul>
-            </li>
-            <li class="dropdown clearfix">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <span>05.</span> Blog</a>
-            <ul class="dropdown-menu">
-              <li><a href="blog.html">Blog 01</a></li>
-              <li><a href="blog2.html">Blog 02</a></li>
-              <li><a href="blog3.html">Blog 03</a></li>
-              <li><a href="blog_detail.html">Blog Detail</a></li>
-            </ul>
-          </li>
-            <li><a href="contact.html"> <span>06.</span> Contact Us</a></li>
-          </ul>
-          <div class="clearfix"></div>
-          <ul class="social_icon black top25 bottom20">
-          <li><a href="#." class="facebook"><i class="fa fa-facebook"></i></a></li>
-          <li><a href="#." class="twitter"><i class="icon-twitter4"></i></a></li>
-          <li><a href="#." class="instagram"><i class="icon-instagram"></i></a></li>
-        </ul>
-        </nav>
-      </div>   
   </nav>
 </header>
 
@@ -209,14 +70,14 @@
       <div class="item">
         <div class="rotate_caption text-center">
           <h1>Selamat datang di Siajar</h1>
-          <p>Cara paling aman dan termudah bagi pendidik untuk menghubungkan <br> berkolaborasi dengan siswa, orang tua, dan satu sama lain.</p>
+          <p>Cara paling aman dan termudah bagi pendidik untuk menghubungkan <br> berkolaborasi dengan guru dan siswa.</p>
           <a href="#." class="border_radius btn_common blue">Buat akun Gratis</a>
         </div>
       </div>
       <div class="item">
         <div class="rotate_caption text-center">
           <h1>Selamat datang di Siajar</h1>
-          <p>Cara paling aman dan termudah bagi pendidik untuk menghubungkan <br> berkolaborasi dengan siswa, orang tua, dan satu sama lain.</p>
+          <p>Cara paling aman dan termudah bagi pendidik untuk menghubungkan <br> berkolaborasi dengan guru dan siswa.</p>
           <a href="#." class="border_radius btn_common yellow">Masuk</a>
           </div>
       </div>
@@ -231,40 +92,40 @@
   <div class="container">
     <div class="row">
       <div class="col-md-7 col-sm-6 priorty wow fadeInLeft">
-        <h2 class="heading bottom25">Welcome to Edua Theme <span class="divider-left"></span></h2>
-        <p class="half_space">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-        <p>consectetur id. Aenean sit amet massa eu velit commodo cursus fringilla a tellus. Morbi eros urna, mollis porta feugiat non, ornare eu augue. 
-        Sed rhoncus est sit amet diam tempus, et tristique est vive, sectur at dapibus id, luctus at odio. Proin mattis congue tristique 
-        eu augue. Sed rhoncus est.</p>
+        <h2 class="heading bottom25">Selamat datang di SIAJAR LMS <span class="divider-left"></span></h2>
+        <p class="half_space">Fokus pada mengajar bukan pada tulis-menulis 
+       Dengan fitur-fitur intuitif dan penyimpanan tidak terbatas, membuat grup dengan cepat, 
+        mengelola kemajuan dan banyak lagi. 
+       Siajar telah dirancang untuk memberikan kontrol sepenuhnya terhadap kelas digitalmu.</p>
         <div class="row">
           <div class="col-md-6">
             <div class="about-post">
             <a href="#." class="border_radius"><img src="assets/img/front/hands.png" alt="hands"></a>
-            <h4>Good Planning</h4>
-            <p>Renean sit amet massa</p>
+            <h4>Jadwal</h4>
+            <p>dapat diatur sesuai dengan kelas</p>
             </div>
             <div class="about-post">
             <a href="#." class="border_radius"><img src="assets/img/front/awesome.png" alt="hands"></a>
-            <h4>Happy Students</h4>
-            <p>Renean sit amet massa</p>
+            <h4>Siswa Senang</h4>
+            <p>Siswa dapat belajar dengan menyenangkan dan mudah di gunakan</p>
             </div>
           </div>
           <div class="col-md-6">
             <div class="about-post">
             <a href="#." class="border_radius"><img src="assets/img/front/maintenance.png" alt="hands"></a>
-            <h4>Our Courses</h4>
-            <p>Renean sit amet massa</p>
+            <h4>Bahan Ajar</h4>
+            <p>Bahan ajar yang dapat disesuaikan oleh guru</p>
             </div>
             <div class="about-post">
             <a href="#." class="border_radius"><img src="assets/img/front/home.png" alt="hands"></a>
-            <h4>Our Teachers</h4>
-            <p>Renean sit amet massa</p>
+            <h4>Guru & Siswa</h4>
+            <p>dapat terhubung dalam satu kelas</p>
             </div>
           </div>
         </div>
       </div>
       <div class="col-md-5 col-sm-6 wow fadeInRight">
-         <img src="assets/img/front/about.jpg" alt="our priorties" class="img-responsive" style="width:100%;">
+         <img src="assets/img/front/42580.jpg" alt="our priorties" class="img-responsive" style="width:100%;">
       </div>
     </div>
   </div>
@@ -286,21 +147,7 @@
          <h4 class="text-capitalize bottom20 margin10">Unlimited Features</h4>
          <p class="no_bottom">Keep away from people who try to belittle your ambitions. Small people always do that but the really great.</p>
       </div>
-      <div class="col-sm-4 icon_box text-center heading_space wow fadeInUp" data-wow-delay="500ms">
-         <i class="icon-globe"></i>
-         <h4 class="text-capitalize bottom20 margin10">Unlimited Features</h4>
-         <p class="no_bottom">Keep away from people who try to belittle your ambitions. Small people always do that but the really great.</p>
-      </div>
-      <div class="col-sm-4 icon_box text-center heading_space wow fadeInUp" data-wow-delay="400ms">
-         <i class="icon-layers"></i>
-         <h4 class="text-capitalize bottom20 margin10">Unlimited Features</h4>
-         <p class="no_bottom">Keep away from people who try to belittle your ambitions. Small people always do that but the really great.</p>
-      </div>
-      <div class="col-sm-4 icon_box text-center heading_space wow fadeInUp" data-wow-delay="500ms">
-         <i class="icon-laptop"></i>
-         <h4 class="text-capitalize bottom20 margin10">Unlimited Features</h4>
-         <p class="no_bottom">Keep away from people who try to belittle your ambitions. Small people always do that but the really great.</p>
-      </div>
+    
       </div>
     </div>
   </div>
@@ -316,144 +163,27 @@
       <div class="col-md-3 col-sm-6 col-xs-6 counters-item text-center wow fadeInUp" data-wow-delay="300ms">
         <i class="icon-checkmark3"></i>
         <strong data-to="1235">0</strong>
-        <p>Project Completed</p>
+        <p>Guru</p>
       </div>
       <div class="col-md-3 col-sm-6 col-xs-6 counters-item text-center wow fadeInUp" data-wow-delay="400ms">
         <i class="icon-trophy"></i>
         <strong data-to="78">0</strong>
-        <p>Awards Won</p>
+        <p>Siswa</p>
       </div>
       <div class="col-md-3 col-sm-6 col-xs-6 counters-item text-center wow fadeInUp" data-wow-delay="500ms">
         <i class=" icon-icons20"></i>
         <strong data-to="186">0</strong>
-        <p>Hours of Work / Month</p>
+        <p>Kelas</p>
       </div>
       <div class="col-md-3 col-sm-6 col-xs-6 counters-item text-center wow fadeInUp" data-wow-delay="600ms">
         <i class="icon-happy"></i>
         <strong data-to="89">0</strong>
-        <p>Satisfied Clients</p>
+        <p>Bahan Ajar</p>
       </div>
     </div>
   </div>
 </section>
 <!--Fun Facts-->
-
-
-<!-- News-->
-<section id="news" class="padding">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12 wow fadeInDown">
-       <h2 class="heading heading_space">Latest News <span class="divider-left"></span></h2>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="slider_wrapper">
-          <div id="news_slider" class="owl-carousel">
-            <div class="item">
-              <div class="content_wrap">
-                <div class="image">
-                  <img src="assets/img/front/news1.jpg" alt="Edua" class="img-responsive border_radius">
-                </div>
-                <div class="news_box border_radius">
-                  <h4><a href="blog_detail.html">4 Springtime Color Schemes to Try at Home</a></h4>
-                  <ul class="commment">
-                    <li><a href="#."><i class="icon-icons20"></i>June 6, 2016</a></li>
-                    <li><a href="#."><i class="icon-comment"></i> 02</a></li>
-                  </ul>
-                  <p>We offer the most complete house Services in the country...</p>
-                  <a href="blog_detail.html" class="readmore">Read More</a>
-                </div>
-              </div>
-            </div>
-            <div class="item">
-              <div class="content_wrap">
-                <div class="image">
-                  <img src="assets/img/front/news2.jpg" alt="Edua" class="img-responsive border_radius">
-                </div>
-                <div class="news_box border_radius">
-                  <h4><a href="blog_detail.html"> Springtime Color Schemes to Try at Home</a></h4>
-                  <ul class="commment">
-                    <li><a href="#."><i class="icon-icons20"></i>June 6, 2016</a></li>
-                    <li><a href="#."><i class="icon-comment"></i> 02</a></li>
-                  </ul>
-                  <p>We offer the most complete house Services in the country...</p>
-                  <a href="blog_detail.html" class="readmore">Read More</a>
-                </div>
-              </div>
-            </div>
-            <div class="item">
-              <div class="content_wrap">
-                <div class="image">
-                  <img src="assets/img/front/news3.jpg" alt="Edua" class="img-responsive border_radius">
-                </div>
-                <div class="news_box border_radius">
-                  <h4><a href="blog_detail.html">4 Springtime Color Schemes to Try at Home</a></h4>
-                  <ul class="commment">
-                    <li><a href="#."><i class="icon-icons20"></i>June 6, 2016</a></li>
-                    <li><a href="#."><i class="icon-comment"></i> 02</a></li>
-                  </ul>
-                  <p>We offer the most complete house Services in the country...</p>
-                  <a href="blog_detail.html" class="readmore">Read More</a>
-                </div>
-              </div>
-            </div>
-            <div class="item">
-              <div class="content_wrap">
-                <div class="image">
-                  <img src="assets/img/front/news1.jpg" alt="Edua" class="img-responsive border_radius">
-                </div>
-                <div class="news_box border_radius">
-                  <h4><a href="blog_detail.html">4 Springtime Color Schemes to Try at Home</a></h4>
-                  <ul class="commment">
-                    <li><a href="#."><i class="icon-icons20"></i>June 6, 2016</a></li>
-                    <li><a href="#."><i class="icon-comment"></i> 02</a></li>
-                  </ul>
-                  <p>We offer the most complete house Services in the country...</p>
-                  <a href="blog_detail.html" class="readmore">Read More</a>
-                </div>
-              </div>
-            </div>
-            <div class="item">
-              <div class="content_wrap">
-                <div class="image">
-                  <img src="assets/img/front/news2.jpg" alt="Edua" class="img-responsive border_radius">
-                </div>
-                <div class="news_box border_radius">
-                  <h4><a href="blog_detail.html">4 Springtime Color Schemes to Try at Home</a></h4>
-                  <ul class="commment">
-                    <li><a href="#."><i class="icon-icons20"></i>June 6, 2016</a></li>
-                    <li><a href="#."><i class="icon-comment"></i> 02</a></li>
-                  </ul>
-                  <p>We offer the most complete house Services in the country...</p>
-                  <a href="blog_detail.html" class="readmore">Read More</a>
-                </div>
-              </div>
-            </div>
-            <div class="item">
-              <div class="content_wrap">
-                <div class="image">
-                  <img src="assets/img/front/news3.jpg" alt="Edua" class="img-responsive border_radius">
-                </div>
-                <div class="news_box border_radius">
-                  <h4><a href="blog_detail.html">4 Springtime Color Schemes to Try at Home</a></h4>
-                  <ul class="commment">
-                    <li><a href="#."><i class="icon-icons20"></i>June 6, 2016</a></li>
-                    <li><a href="#."><i class="icon-comment"></i> 02</a></li>
-                  </ul>
-                  <p>We offer the most complete house Services in the country...</p>
-                  <a href="blog_detail.html" class="readmore">Read More</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 
 
 <!--FOOTER-->

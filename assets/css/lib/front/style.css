@@ -1015,10 +1015,12 @@ nav.navbar.bootsnav.sticked .navbar-brand, nav.navbar.bootsnav.navbar-fixed .nav
   padding:10px  0;
 }
 nav.navbar.bootsnav .navbar-brand img, nav.navbar.bootsnav.navbar-fixed.no-background .navbar-brand img{
-	width:110px;
+	/*width:110px;*/
+	height: 50px;
 }
 nav.navbar.bootsnav.sticked .navbar-brand img, nav.navbar.bootsnav.navbar-fixed .navbar-brand img{
-	width:90px;
+	height: 50px;
+	/*width:90px;*/
 }
 nav.navbar.bootsnav ul.nav > li{
 	margin:0 20px;
