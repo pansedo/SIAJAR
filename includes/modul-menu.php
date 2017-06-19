@@ -6,13 +6,13 @@
 		<div class="box-typical-inner">
 			<ul class="side-menu-list">
 				<!-- <li class="blue <?php if($menuModul==1){echo 'opened';} ?>">
-					<a href="prasyarat.php?modul=<?=$_GET['modul']?>">
+					<a href="prasyarat.php?modul=<?=$_GET['id']?>">
 		                <i class="font-icon font-icon-home <?php if($menuModul==1){echo 'active';} ?>"></i>
 		                <span class="lbl">Prasyarat</span>
 		            </a>
 				</li> -->
 				<li class="blue <?php if($menuModul==2){echo 'opened';} ?>">
-		            <a href="materi.php?modul=<?=$_GET['modul']?>">
+		            <a href="modul.php?modul=<?=$_GET['modul']?>">
 		                <i class="font-icon font-icon-notebook <?php if($menuModul==2){echo 'active';} ?>"></i>
 		                <span class="lbl">Materi</span>
 		            </a>
