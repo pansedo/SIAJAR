@@ -53,7 +53,7 @@ $userProfil	= $userClass->GetData($_SESSION['lms_id']);
 								<div class="tbl">
 									<div class="tbl-row">
 										<div class="tbl-cell">
-											<span class="number">3</span>
+											<span class="number" id="jmlKelas">0</span>
 											kelas yang diikuti
 										</div>
 									</div>
