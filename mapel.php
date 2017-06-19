@@ -39,6 +39,33 @@ if(isset($_POST['addModul'])){
 	}
 }
 
+if(isset($_POST['updateMapel'])){
+	if ($hakKelas['status'] == 1 || $hakKelas['status'] == 2) {
+		$nama	= mysql_escape_string($_POST['namaMapelupdate']);
+		$rest	= $mapelClass->updateMapel($nama, $_GET['id']);
+
+		echo	"<script>
+					swal({
+						title: '$rest[judul]',
+						text: '$rest[message]',
+						type: '$rest[status]'
+					}, function() {
+						 window.location = 'mapel.php?id=$rest[IDMapel]';
+					});
+				</script>";
+	}else {
+		echo	"<script>
+					swal({
+						title: 'Maaf!',
+						text: 'Anda tidak memiliki kewenangan dalam merubah Pengaturan kelas.',
+						type: 'error'
+					}, function() {
+						 window.location = 'index.php';
+					});
+				</script>";
+	}
+}
+
 ?>
 	<div class="modal fade"
 		 id="updateMapel"
@@ -59,6 +86,7 @@ if(isset($_POST['addModul'])){
 					<div class="form-group row">
 						<label for="namaMapelupdate" class="col-md-3 form-control-label">Mata Pelajaran</label>
 						<div class="col-md-9">
+							<input type="hidden" class="form-control" name="idMapelupdate" id="idMapelupdate"  />
 							<input type="text" class="form-control" name="namaMapelupdate" id="namaMapelupdate" placeholder="Nama Mata Pelajaran" />
 						</div>
 					</div>
@@ -284,6 +312,7 @@ if(isset($_POST['addModul'])){
       		   $('#updateMapelLabel').text().replace('Tambah Modul', 'Pengaturan Mata Pelajaran')
       		).show();
 			$('#namaMapelupdate').val("<?=$infoMapel['nama']?>");
+			$('#idMapelupdate').val("<?=$_GET['id']?>");
       	}
 
 		function edit(ID){
