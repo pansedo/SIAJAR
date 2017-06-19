@@ -20,24 +20,6 @@ $userProfil	= $userClass->GetData($_SESSION['lms_id']);
 												<p class="title"><?=$_SESSION['lms_name']?></p>
 												<p><?=ucfirst($_SESSION['lms_status'])?></p>
 											</div>
-											<div class="tbl-cell tbl-cell-stat">
-												<div class="inline-block">
-													<p class="title">15</p>
-													<p>Tugas</p>
-												</div>
-											</div>
-											<div class="tbl-cell tbl-cell-stat">
-												<div class="inline-block">
-													<p class="title">8</p>
-													<p>Sudah</p>
-												</div>
-											</div>
-											<div class="tbl-cell tbl-cell-stat">
-												<div class="inline-block">
-													<p class="title">7</p>
-													<p>Belum</p>
-												</div>
-											</div>
 										</div>
 									</div>
 								</div>
@@ -71,7 +53,7 @@ $userProfil	= $userClass->GetData($_SESSION['lms_id']);
 								<div class="tbl">
 									<div class="tbl-row">
 										<div class="tbl-cell">
-											<span class="number">3</span>
+											<span class="number" id="jmlKelas">0</span>
 											kelas yang diikuti
 										</div>
 									</div>
@@ -79,15 +61,12 @@ $userProfil	= $userClass->GetData($_SESSION['lms_id']);
 							</section>';
 						}elseif (strtolower($_SESSION['lms_status']) == 'guru') {
 							echo '<section class="box-typical profile-side-stat">
+								<header class="box-typical-header-sm bordered">Mengampu</header>
 								<div class="tbl">
 									<div class="tbl-row">
 										<div class="tbl-cell">
-											<span class="number">11</span>
-											berkas
-										</div>
-										<div class="tbl-cell">
-											<span class="number">20</span>
-											dokumen
+											<span class="number" id="jmlKelas">0</span>
+											Kelas
 										</div>
 									</div>
 								</div>
@@ -236,6 +215,7 @@ $userProfil	= $userClass->GetData($_SESSION['lms_id']);
 				data: {"action": "showList", "ID": "<?=$_SESSION['lms_id']?>"},
 				success: function(res) {
 					$('#listKelas').html('');
+					$('#jmlKelas').html(res.data.length);
 					if(res.data.length > 0){
 						for(i=0; i<=res.data.length; i++){
 							$('#listKelas').append('<p class="line-with-icon">'+
