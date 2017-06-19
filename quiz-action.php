@@ -5,6 +5,7 @@ require("includes/header-menu.php");
 $mapelClass = new Mapel();
 $modulClass = new Modul();
 $quizClass  = new Quiz();
+$soalClass	= new Soal();
 
 if(isset($_POST['addQuiz'])){
 	$nama = mysql_escape_string($_POST['namakuis']);
@@ -21,8 +22,10 @@ if(isset($_POST['addQuiz'])){
 }
 
 $menuModul		= 4;
-$listQuiz	= $quizClass->getListbyModul($_GET['modul']);
-$infoModul	= $modulClass->getInfoModul($_GET['modul']);
+$infoQuiz	= $quizClass->getInfoQuiz($_GET['qz']);
+$listSoal	= $soalClass->getListbyQuiz($_GET['qz']);
+// $infoSoal	= $soalClass->getInfoSoal($)
+$infoModul	= $modulClass->getInfoModul($_GET['md']);
 $infoMapel	= $mapelClass->getInfoMapel($infoModul['id_mapel']);
 ?>
 	<div class="modal fade"
@@ -128,16 +131,38 @@ $infoMapel	= $mapelClass->getInfoMapel($infoModul['id_mapel']);
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-xl-3 col-lg-4">
-					<?php
-						require("includes/modul-menu.php");
-					?>
+					<aside id="menu-fixed" class="profile-side" style="margin: 0 0 20px">
+						<section class="box-typical">
+							<header class="box-typical-header-sm bordered">
+								<input type="text" class="form-control" name="nama" value="<?=$infoQuiz['nama']?>">
+							</header>
+							<div class="box-typical-inner">
+								<fieldset class="form-group">
+									<label class="form-label semibold" for="exampleInput">Durasi</label>
+									<input type="text" class="form-control" id="exampleInput" placeholder="0">
+									<small class="text-muted">Lama Pengerjaan dalam satuan menit.</small>
+								</fieldset>
+								<fieldset class="form-group">
+									<label class="form-label semibold" for="exampleInput">Tanggal Mulai</label>
+									<input type="text" class="form-control" id="exampleInput" placeholder="dd/mm/yyyy">
+									
+								</fieldset>
+								<fieldset class="form-group">
+									<label class="form-label semibold" for="exampleInput">Tanggal Selesai</label>
+									<input type="text" class="form-control" id="exampleInput" placeholder="dd/mm/yyyy">
+									
+								</fieldset>
+							</div>
+						</section>
+
+					</aside><!--.profile-side-->
 				</div>
 
 				<div class="col-xl-9 col-lg-8">
 					<section class="widget widget-activity">
 						<header class="widget-header">
-							<?//?>
-							<span class="label label-pill label-primary"><?//=$infoMapel['modul']?></span>
+							Soal Kuis Paket Soal - <?=$infoQuiz['nama']?>
+							
 							
 						</header>
 						<div>
@@ -145,8 +170,8 @@ $infoMapel	= $mapelClass->getInfoMapel($infoModul['id_mapel']);
 							<?php
 					$no	= 1;
 					// print_r($listQuiz);
-					if ($listQuiz->count() > 0) {
-						foreach ($listQuiz as $materi) {
+					if ($listSoal->count() > 0) {
+						foreach ($listSoal as $materi) {
 							echo '<article class="box-typical profile-post panel">
 									<div class="profile-post-header">
 										<div class="user-card-row">
@@ -173,10 +198,11 @@ $infoMapel	= $mapelClass->getInfoMapel($infoModul['id_mapel']);
 											</div>
 										</div>
 									</div>
-									<div id="demo'.$no.'" class="profile-post-content collapse">
-										Durasi :'.$materi["durasi"].' <br />
-										Tanggal Berakhir :'.$materi["end_date"].' <br />
-									</div>
+									<div id="demo'.$no.'" class="profile-post-content collapse">';
+										if ($list) {
+											# code...
+										}
+							echo '	</div>
 								</article>
 							';
 							$no++;
@@ -185,8 +211,8 @@ $infoMapel	= $mapelClass->getInfoMapel($infoModul['id_mapel']);
 						echo '	<article class="box-typical profile-post">
 									<div class="profile-post-content" align="center">
 										<span>
-										 Belum ada Kuis saat ini. <br />
-										<button type="button" class="btn btn-sm btn-inline" onclick="add()" title="Tambah" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menambahkan Modul baru.">+ Buat Baru</button>
+										 Belum ada Soal pada kuis ini saat ini. <br />
+										<button type="button" class="btn btn-sm btn-inline" onclick="add()" title="Tambah" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menambahkan Modul baru.">+ Buat Soal Pertama</button>
 										</span>
 									</div>
 								</article>';

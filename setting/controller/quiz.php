@@ -15,13 +15,14 @@ class Quiz
         }
     }
 
-    public function getInfoQuiz($idQuiz){
-		$ID     = new MongoId($idMapel);
+    public function getInfoQuiz($id){
+		$ID     = new MongoId($id);
         $query  = $this->db->quiz->findOne(array("_id" => $ID));
 		if($query['_id']){
-			$query1	= $this->db->modul->find(array("id_mapel" => $idMapel))->count();
+			$query1	= $this->db->modul->find(array("id_mapel" => $id))->count();
 			$query['modul'] = $query1;
 		}
+        // print_r($query);
         return $query;
     }
 
