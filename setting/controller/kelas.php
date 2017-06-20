@@ -11,9 +11,14 @@ class Kelas
         } catch(Exception $e) {
             echo "Database Not Connection";
             exit();
-        }
+        } 
     }
-
+    public function CountKelas()
+    {
+        $query =  $this -> table -> find();
+        $count = $query->count();
+        return $count;
+    }
     public function acakKodeKelas($jumlahKarakter)
     {
         $karakter   = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";

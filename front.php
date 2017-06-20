@@ -1,3 +1,17 @@
+<?php
+include 'setting/connection.php';
+spl_autoload_register(function ($class) {
+  include 'setting/controller/' .$class . '.php';
+});
+  $ClassUser = new User();
+  $ClassKelas = new Kelas();
+  $ClassMedia = new media();
+  $countguru = $ClassUser->CountGuru();
+  $countsiswa = $ClassUser->CountSiswa();
+  $countkelas = $ClassKelas->CountKelas();
+  $countmedia = $ClassMedia->CountMedia();
+?>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -133,19 +147,28 @@
     <div class="row">
     <div class="icon_wrap padding-bottom-half clearfix">
       <div class="col-sm-4 icon_box text-center heading_space wow fadeInUp" data-wow-delay="300ms">
-         <i class="icon-icons9"></i>
-         <h4 class="text-capitalize bottom20 margin10">Unlimited Features</h4>
-         <p class="no_bottom">Keep away from people who try to belittle your ambitions. Small people always do that but the really great.</p>
+         <i class="fa fa-user" aria-hidden="true"></i>
+         <h4 class="text-capitalize bottom20 margin10">Mudah</h4>
+         <p class="no_bottom" style="text-align: justify;">Dengan fitur-fitur intuitif dan penyimpanan yang tidak terbatas dengan Gudang Media, 
+         dengan cepat membuat grup, memberikan pekerjaan rumah,
+          menjadwalkan kuis, mengelola kemajuan dan banyak lagi. 
+          Dengan segala sesuatu pada satu platform, 
+          Siajar memperkuat dan meningkatkan apa yang telah anda lakukan di dalam kelas.</p>
       </div>
       <div class="col-sm-4 icon_box text-center heading_space wow fadeInUp" data-wow-delay="400ms">
-         <i class="icon-icons9"></i>
-         <h4 class="text-capitalize bottom20 margin10">Unlimited Features</h4>
-         <p class="no_bottom">Keep away from people who try to belittle your ambitions. Small people always do that but the really great.</p>
+         <i class="fa fa-users" aria-hidden="true"></i>
+         <h4 class="text-capitalize bottom20 margin10">Aman</h4>
+         <p class="no_bottom" style="text-align: justify;">Siajar dirancang untuk memberikan kontrol penuh atas kelas digital Anda. 
+         Dengan alat yang memungkinkan Anda menentukan siapa yang dapat gabung dengan grup, memantau aktivitas 
+         anggota.</p>
       </div>
       <div class="col-sm-4 icon_box text-center heading_space wow fadeInUp" data-wow-delay="500ms">
          <i class="icon-icons20"></i>
-         <h4 class="text-capitalize bottom20 margin10">Unlimited Features</h4>
-         <p class="no_bottom">Keep away from people who try to belittle your ambitions. Small people always do that but the really great.</p>
+         <h4 class="text-capitalize bottom20 margin10">Serba Guna</h4>
+         <p class="no_bottom" style="text-align: justify;" >Apakah Anda ingin menciptakan ruang kelas tanpa kertas, 
+         membina keterampilan kewarganegaraan digital, mengintegrasikan konten 
+         pendidikan dari Gudang Media, atau tumbuh jaringan pembelajaran profesional Anda, 
+         Anda dpt mempersonalisasikan bagaimana Anda menggunakan Siajar.</p>
       </div>
     
       </div>
@@ -161,23 +184,23 @@
     <h2 class="hidden">hidden</h2>
     <div class="row number-counters">
       <div class="col-md-3 col-sm-6 col-xs-6 counters-item text-center wow fadeInUp" data-wow-delay="300ms">
-        <i class="icon-checkmark3"></i>
-        <strong data-to="1235">0</strong>
-        <p>Guru</p>
+        <i class="fa fa-user" aria-hidden="true"></i>
+        <strong data-to="<?php echo $countguru ;?>">0</strong>
+        <p>Guru </p>
       </div>
       <div class="col-md-3 col-sm-6 col-xs-6 counters-item text-center wow fadeInUp" data-wow-delay="400ms">
-        <i class="icon-trophy"></i>
-        <strong data-to="78">0</strong>
+         <i class="fa fa-users" aria-hidden="true"></i>
+        <strong data-to="<?php echo $countsiswa ;?>">0</strong>
         <p>Siswa</p>
       </div>
       <div class="col-md-3 col-sm-6 col-xs-6 counters-item text-center wow fadeInUp" data-wow-delay="500ms">
-        <i class=" icon-icons20"></i>
-        <strong data-to="186">0</strong>
+        <i class="fa fa-home" aria-hidden="true"></i>
+        <strong data-to="<?php echo $countkelas ;?>">0</strong>
         <p>Kelas</p>
       </div>
       <div class="col-md-3 col-sm-6 col-xs-6 counters-item text-center wow fadeInUp" data-wow-delay="600ms">
-        <i class="icon-happy"></i>
-        <strong data-to="89">0</strong>
+        <i class="fa fa-book" aria-hidden="true"></i>
+        <strong data-to="<?php echo $countmedia ;?>">0</strong>
         <p>Bahan Ajar</p>
       </div>
     </div>
@@ -191,19 +214,19 @@
   <div class="container">
     <div class="row">
       <div class="col-md-4 col-sm-4 footer_panel bottom25">
-        <h3 class="heading bottom25">About Us<span class="divider-left"></span></h3>
-        <a href="index3.html" class="footer_logo bottom25"><img src="assets/img/front/logo-white.png" alt="Edua"></a>
-        <p>We offer the most complete house renovating services in the country, from kitchen design to bathroom remodeling.</p>
-        <ul class="social_icon top25">
+        <h3 class="heading bottom25">Tentang SIAJAR<span class="divider-left"></span></h3>
+        <a href="index3.html" class="footer_logo bottom25"><img src="assets/img/front/logo.png" width="150px" alt="Edua"></a>
+        <p>SIAJAR adalah sebuah platform Learning Management System yang di desain untuk sistem pembelajaran masyarakat indonesia</p>
+       <!--  <ul class="social_icon top25">
           <li><a href="#." class="facebook"><i class="fa fa-facebook"></i></a></li>
           <li><a href="#." class="twitter"><i class="icon-twitter4"></i></a></li>
           <li><a href="#." class="dribble"><i class="icon-dribbble5"></i></a></li>
           <li><a href="#." class="instagram"><i class="icon-instagram"></i></a></li>
           <li><a href="#." class="vimo"><i class="icon-vimeo4"></i></a></li>
-        </ul>
+        </ul> -->
       </div>
       <div class="col-md-4 col-sm-4 footer_panel bottom25">
-        <h3 class="heading bottom25">Quick Links<span class="divider-left"></span></h3>
+       <!--  <h3 class="heading bottom25">Quick Links<span class="divider-left"></span></h3>
         <ul class="links">
           <li><a href="#."><i class="icon-chevron-small-right"></i>Home</a></li>
           <li><a href="#."><i class="icon-chevron-small-right"></i>Company</a></li>
@@ -215,13 +238,15 @@
           <li><a href="#."><i class="icon-chevron-small-right"></i>Shop</a></li>
           <li><a href="#."><i class="icon-chevron-small-right"></i>Privacy Policy</a></li>
           <li><a href="#."><i class="icon-chevron-small-right"></i>Contact Us</a></li>
-        </ul>
+        </ul> -->
       </div>
       <div class="col-md-4 col-sm-4 footer_panel bottom25">
-        <h3 class="heading bottom25">Keep in Touch <span class="divider-left"></span></h3>
-        <p class=" address"><i class="icon-map-pin"></i>198 West 21th Street Victoria 8007, Australia</p>
-        <p class=" address"><i class="icon-phone"></i>(654) 332-112-222</p>
-        <p class=" address"><i class="icon-mail"></i><a href="mailto:Edua@info.com">Edua@info.com</a></p>
+        <h3 class="heading bottom25">SEAMEO SEAMOLEC <span class="divider-left"></span></h3>
+        <p class=" address"><i class="icon-map-pin"></i>Kompleks Universitas Terbuka 
+Jl. Cabe Raya, Pondok Cabe Pamulang - 15418
+Tangerang Selatan, Indonesia</p>
+        <p class=" address"><i class="icon-phone"></i>(62-21) 742 3725, 742 4154</p>
+        <p class=" address"><i class="icon-mail"></i><a href="mailto:secretariat@seamolec.org">secretariat@seamolec.org</a></p>
         <img src="assets/img/front/footer-map.png" alt="we are here" class="img-responsive">
       </div>
     </div>
@@ -231,7 +256,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-12 text-center">
-        <p>Copyright &copy; 2016 <a href="#.">Edua</a>. all rights reserved.</p>
+        <p>Copyright &copy; 2017 <a href="#.">SIAJAR - SEAMOLEC</a>. all rights reserved.</p>
       </div>
     </div>
   </div>

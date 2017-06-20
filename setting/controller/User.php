@@ -17,11 +17,24 @@ class User
     }
 
 	public function GetData($user) {
-        $criteria = array('_id' => new MongoId($user));
-		$getprofile = $this -> table -> findOne($criteria);
+      $criteria = array('_id' => new MongoId($user));
+  		$getprofile = $this -> table -> findOne($criteria);
 
-		return $getprofile;
+  		return $getprofile;
 	}
+
+  public function CountGuru()
+  {
+      $query =  $this -> table -> find(array("status"=>"guru"));
+     $count = $query->count();
+     return $count;
+  }
+  public function CountSiswa()
+  {
+      $query =  $this -> table -> find(array("status"=>"siswa"));
+     $count = $query->count();
+     return $count;
+  }
 
     public function UpdateProfile($id_profile, $password,$username,$nama,$email,$jenis_kelamin,$sekolah,$status,$foto){
         global $db;
