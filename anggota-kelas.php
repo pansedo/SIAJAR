@@ -379,16 +379,16 @@ if(isset($_POST['updateKelas'])){
 																<div class="dropdown-menu dropdown-menu-right">
 																	<div class="radio">
 																		<a class="dropdown-item" href="#">
-																			<input type="radio" name="statusGuru" id="statusGuru2" value="2" '.($infoHak['status'] == 2 ? "checked" : "").' >
+																			<input type="radio" name="statusGuru" id="statusGuru2" onclick="cPriv(\''.$infoUser['_id'].'\', 2)" value="2" '.($infoHak['status'] == 2 ? "checked" : "").' >
 																			<label for="statusGuru2">Guru Mata Pelajaran </label>
 																		</a>
 																		<a class="dropdown-item" href="#">
-																			<input type="radio" name="statusGuru" id="statusGuru3" value="3" '.($infoHak['status'] == 3 ? "checked" : "").' >
+																			<input type="radio" name="statusGuru" id="statusGuru3" onclick="cPriv(\''.$infoUser['_id'].'\', 3)" value="3" '.($infoHak['status'] == 3 ? "checked" : "").' >
 																			<label for="statusGuru3">Co-Teacher </label>
 																		</a>
 																	</div>
 																	<div class="dropdown-divider"></div>
-																	<a class="dropdown-item" href="#">Hapus Anggota</a>
+																	<a class="dropdown-item" onclick="remove(\''.$infoUser['_id'].'\')">Hapus Anggota</a>
 																</div>
 															</div>';
 										}
@@ -398,7 +398,7 @@ if(isset($_POST['updateKelas'])){
 																Aksi
 															</button>
 															<div class="dropdown-menu dropdown-menu-right">
-																<a class="dropdown-item" href="#">Hapus Anggota</a>
+																<a class="dropdown-item" onclick="remove(\''.$infoUser['_id'].'\')">Hapus Anggota</a>
 															</div>
 														</div>';
 									}
@@ -427,46 +427,35 @@ if(isset($_POST['updateKelas'])){
 <script src="assets/js/lib/datatables-net/datatables.min.js"></script>
 
 <script>
-	$(function() {
-		$('#example').DataTable({
-			"order": [[ 1, "asc" ]],
-			'responsive' : true,
-			'bInfo' : false,
-			'bLengthChange' : false,
-			'pagingType' : 'simple',
-			"lengthMenu": [[20, 50, -1], [20, 50, "All"]]
-		});
-	});
-</script>
+	var table;
 
-	<script>
-		function clearText(elementID){
-			$(elementID).html("");
-		}
+	function clearText(elementID){
+		$(elementID).html("");
+	}
 
-		function update(){
-      		$('#updateKelas').trigger("reset");
-      		$('#updateKelas').modal("show");
-      		$('#updateKelasLabel').text(
-      		   $('#updateKelasLabel').text().replace('Tambah Modul', 'Pengaturan Kelas')
-      		).show();
-      	}
+	function update(){
+  		$('#updateKelas').trigger("reset");
+  		$('#updateKelas').modal("show");
+  		$('#updateKelasLabel').text(
+  		   $('#updateKelasLabel').text().replace('Tambah Modul', 'Pengaturan Kelas')
+  		).show();
+  	}
 
 		function remove(ID){
       		swal({
       		  title: "Apakah anda yakin?",
-      		  text: "Data yang sudah dihapus tidak dapat dikembalikan!",
+      		  text: "Menghapus anggota dari grup ini.",
       		  type: "warning",
       		  showCancelButton: true,
-			  	confirmButtonText: "Setuju!",
+			  	confirmButtonText: "Ya",
       			confirmButtonClass: "btn-danger",
       		  closeOnConfirm: false,
       		  showLoaderOnConfirm: true
       		}, function () {
       			$.ajax({
       				type: 'POST',
-      				url: 'url-API/Kelas/Posting/',
-      				data: {"act": "remv", "ID": ID},
+      				url: 'url-API/Kelas/',
+      				data: {"action": "removeAnggota", "ID": ID, "kelas": "<?=$_GET['id']?>"},
       				success: function(res) {
       					swal(res.response, res.message, res.icon);
       				},
@@ -477,77 +466,100 @@ if(isset($_POST['updateKelas'])){
       		});
       	}
 
-		function lockKelas(ID){
-			var isiText = '';
-			if(ID == 1){
-				isiText = 'Saat Kelas di Kunci, maka tidak ada yang dapt bergabung ke dalam Kelas hingga anda membukanya kembali.';
-			}else {
-				isiText = 'Kelas akan dibuka, sehingga siapa saja yang memiliki Kode Kelas ini dapat bergabung ke dalam Kelas.';
+	function cPriv(ID, Priv){
+		$.ajax({
+			type: 'POST',
+			url: 'url-API/Kelas/',
+			data: {"action": "cPriv", "ID": ID, "hak_akses" : Priv, "kelas": "<?=$_GET['id']?>"},
+			success: function(res) {
+				table.reload();
+		// 		swal(res.status, res.message, res.icon);
+			},
+			error: function () {
+				swal("Gagal!", "Data tidak berubah!", "error");
 			}
-      		swal({
-      		  title: "Apakah anda yakin?",
-      		  text: isiText,
-      		  type: "warning",
-      		  showCancelButton: true,
-			  	confirmButtonText: "Setuju!",
-      			confirmButtonClass: "btn-warning",
-      		  closeOnConfirm: false,
-      		  showLoaderOnConfirm: true
-      		}, function () {
-      			$.ajax({
-      				type: 'POST',
-      				url: 'url-API/Kelas/',
-      				data: {"action": "lockKelas", "ID": "<?=$_GET['id']?>", "user": "<?=$_SESSION['lms_id']?>"},
-      				success: function(res) {
-						if(res.status == 'Success'){
-							swal({
-								title: 'Berhasil!',
-								text: res.message,
-								type: 'success'
-							}, function() {
-								 window.location = "kelas.php?id=<?=$_GET['id']?>";
-							});
-						}else {
-							swal('Maaf!', 'Kelas tidak berhasil di Kunci.', 'error');
-						}
-      				},
-      				error: function () {
-      					swal("Maaf!", "Data tidak berhasil diubah!", "error");
-      				}
-      			});
-      		});
-      	}
-
-		$(document).ready(function() {
-
-			$.ajax({
-				type: 'POST',
-				url: 'url-API/Kelas/Mapel/',
-				data: {"action": "showList", "ID": "<?=$_GET['id']?>"},
-				success: function(res) {
-					$('#listMapel').html('');
-					$('#jumlahMapel').html(res.data.length);
-					if(res.data.length > 0){
-						for(i=0; i<=res.data.length; i++){
-							$('#listMapel').append('<p class="line-with-icon">'+
-									'<i class="font-icon font-icon-folder"></i>'+
-									'<a href="mapel.php?id='+res.data[i]._id.$id+'">'+res.data[i].nama+'</a>'+
-								'</p>');
-						}
-					}else{
-						$('#listMapel').append('<p style="text-align:center;">'+
-									'Belum ada Mata Pelajaran'+
-								'</p>');
-					}
-				},
-				error: function (XMLHttpRequest, textStatus, errorThrown) {
-					// console.log('ERROR !');
-					 alert(textStatus);
-				}
-			});
-
 		});
-	</script>
+  	}
+
+	function lockKelas(ID){
+		var isiText = '';
+		if(ID == 1){
+			isiText = 'Saat Kelas di Kunci, maka tidak ada yang dapt bergabung ke dalam Kelas hingga anda membukanya kembali.';
+		}else {
+			isiText = 'Kelas akan dibuka, sehingga siapa saja yang memiliki Kode Kelas ini dapat bergabung ke dalam Kelas.';
+		}
+  		swal({
+  		  title: "Apakah anda yakin?",
+  		  text: isiText,
+  		  type: "warning",
+  		  showCancelButton: true,
+		  	confirmButtonText: "Setuju!",
+  			confirmButtonClass: "btn-warning",
+  		  closeOnConfirm: false,
+  		  showLoaderOnConfirm: true
+  		}, function () {
+  			$.ajax({
+  				type: 'POST',
+  				url: 'url-API/Kelas/',
+  				data: {"action": "lockKelas", "ID": "<?=$_GET['id']?>", "user": "<?=$_SESSION['lms_id']?>"},
+  				success: function(res) {
+					if(res.status == 'Success'){
+						swal({
+							title: 'Berhasil!',
+							text: res.message,
+							type: 'success'
+						}, function() {
+							 window.location = "kelas.php?id=<?=$_GET['id']?>";
+						});
+					}else {
+						swal('Maaf!', 'Kelas tidak berhasil di Kunci.', 'error');
+					}
+  				},
+  				error: function () {
+  					swal("Maaf!", "Data tidak berhasil diubah!", "error");
+  				}
+  			});
+  		});
+  	}
+
+	$(document).ready(function() {
+		table = $('#example').DataTable({
+			"order": [[ 1, "asc" ]],
+			'responsive' : true,
+			'bInfo' : false,
+			'bLengthChange' : false,
+			'pagingType' : 'simple',
+			"lengthMenu": [[20, 50, -1], [20, 50, "All"]]
+		});
+
+		$.ajax({
+			type: 'POST',
+			url: 'url-API/Kelas/Mapel/',
+			data: {"action": "showList", "ID": "<?=$_GET['id']?>"},
+			success: function(res) {
+				$('#listMapel').html('');
+				$('#jumlahMapel').html(res.data.length);
+				if(res.data.length > 0){
+					for(i=0; i<=res.data.length; i++){
+						$('#listMapel').append('<p class="line-with-icon">'+
+								'<i class="font-icon font-icon-folder"></i>'+
+								'<a href="mapel.php?id='+res.data[i]._id.$id+'">'+res.data[i].nama+'</a>'+
+							'</p>');
+					}
+				}else{
+					$('#listMapel').append('<p style="text-align:center;">'+
+								'Belum ada Mata Pelajaran'+
+							'</p>');
+				}
+			},
+			error: function (XMLHttpRequest, textStatus, errorThrown) {
+				// console.log('ERROR !');
+				 alert(textStatus);
+			}
+		});
+
+	});
+</script>
 
 <script src="assets/js/app.js"></script>
 

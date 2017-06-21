@@ -12,7 +12,7 @@ if(isset($_POST['addKelas'])){
 
 if(isset($_POST['joinKelas'])){
 	$kode = mysql_escape_string($_POST['kodekelas']);
-	$rest = $kelasClass->joinKelas($kode, $_SESSION['lms_id']);
+	$rest = $kelasClass->joinKelas($kode, $_SESSION['lms_id'], $_SESSION['lms_status']);
 	if ($rest['status'] == "Success") {
 		echo "<script>alert('".$rest['message']."'); document.location='kelas.php?id=".$rest['IDKelas']."'</script>";
 	}else{
@@ -205,12 +205,20 @@ if(isset($_POST['joinKelas'])){
 	                                <span class="font-icon font-icon-users"></span> Kelas
 	                                <span class="lbl"></span>
 	                            </a>
+								<?php
+									if($_SESSION['lms_status'] == "guru"){
+										echo '<div class="dropdown-menu" aria-labelledby="dd-header-marketing">
+			                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#addKelas"><span class="font-icon font-icon-plus"></span>Tambah Kelas</a>
+			                                <a class="dropdown-item" href="#"><span class="font-icon font-icon-pencil"></span>Kelola Kelas</a>
+			                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#joinKelas"><span class="font-icon font-icon-user"></span>Gabung Kelas</a>
+			                            </div>';
+									}else {
+										echo '<div class="dropdown-menu" aria-labelledby="dd-header-marketing">
+			                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#joinKelas"><span class="font-icon font-icon-user"></span>Gabung Kelas</a>
+			                            </div>';
+									}
+								?>
 
-	                            <div class="dropdown-menu" aria-labelledby="dd-header-marketing">
-	                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#addKelas"><span class="font-icon font-icon-plus"></span>Tambah Kelas</a>
-	                                <a class="dropdown-item" href="#"><span class="font-icon font-icon-pencil"></span>Kelola Kelas</a>
-	                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#joinKelas"><span class="font-icon font-icon-user"></span>Gabung Kelas</a>
-	                            </div>
 	                        </div>
 							<div class="dropdown dropdown-typical">
 							   <a href="#" class="dropdown-toggle no-arr">
