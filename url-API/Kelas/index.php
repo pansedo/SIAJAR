@@ -86,6 +86,40 @@ if(isset($method['action'])){
 
 		echo $Json;
 	}
+
+    if($method['action'] == 'removeAnggota'){
+        $delete = array("id" => new MongoId($method['ID']));
+        $data   = $table->remove($delete);
+        $resp   = array('response'=>'Terhapus!', 'message'=>'Data berhasil dihapus!', 'icon'=>'success');
+		$Json   = json_encode($resp);
+		header('Content-Type: application/json');
+
+		echo $Json;
+	}
+
+    if($method['action'] == 'cPriv'){
+        $ID     = $method['ID'];
+        $priv   = $method['hak_akses'];
+        $kelas  = $method['kelas'];
+        $update     = array('$set' => array("status"=>$priv));
+
+        try {
+            $table2->update(array("id_user" => $ID, "id_kelas" => $kelas), $update);
+            $status     = "Success";
+            $message    = "Hak Akses Berubah.";
+            $icon       = "success";
+        } catch(MongoCursorException $e) {
+            $status     = "Failed 1.";
+            $message    = "Gagal Berubah.";
+            $icon       = "error";
+        }
+
+        $resp   = array("status"=>$status, "message"=>$message, "icon"=>$icon);
+		$Json   = json_encode($resp);
+		header('Content-Type: application/json');
+
+		echo $Json;
+	}
 }
 
 ?>

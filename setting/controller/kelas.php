@@ -11,9 +11,14 @@ class Kelas
         } catch(Exception $e) {
             echo "Database Not Connection";
             exit();
-        }
+        } 
     }
-
+    public function CountKelas()
+    {
+        $query =  $this -> table -> find();
+        $count = $query->count();
+        return $count;
+    }
     public function acakKodeKelas($jumlahKarakter)
     {
         $karakter   = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -90,7 +95,7 @@ class Kelas
         return $result;
     }
 
-    public function joinKelas($kode, $user){
+    public function joinKelas($kode, $user, $privilege){
         $newID  = "";
         $query  = $this->table->findOne(array("kode" => $kode));
         if (isset($query['_id'])) {
@@ -103,7 +108,8 @@ class Kelas
                     $status     = "Failed";
                     $message    = "Kamu sudah bergabung kedalam Kelas ini!";
                 }else{
-                    $relation   = $this->db->anggota_kelas->insert(array("id_user"=>"$user", "id_kelas"=>"$query[_id]", "status"=>"4"));
+                    $hak        = $privilege == "guru" ? 3 : 4;
+                    $relation   = $this->db->anggota_kelas->insert(array("id_user"=>"$user", "id_kelas"=>"$query[_id]", "status"=>$hak));
                     $status     = "Success";
                     $message    = "Kamu berhasil bergabung kedalam Kelas!";
                     $newID      = "$query[_id]";
