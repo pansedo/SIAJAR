@@ -17,7 +17,7 @@ $modulClass 	= new Modul();
 $materiClass 	= new Materi();
 
 $menuModul		= 2;
-$infoModul		= $modulClass->getInfoModul($_GET['id']);
+$infoModul		= $modulClass->getInfoModul($_GET['modul']);
 $infoMapel		= $mapelClass->getInfoMapel($infoModul['id_mapel']);
 $infoMateri		= $materiClass->getInfoMateri($_GET['materi']);
 
@@ -106,6 +106,7 @@ if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
                                     </div>
                                 </div>
                                 <hr>
+                                <a href="" >+ Tambah Pilihan</a>
                                 <div class="form-group pull-right">
                                     <button type="submit" name="updateMateri" class="btn">Simpan</button>
                                     <button type="button" class="btn btn-default" onclick="history.go(-1)">Batal</button>

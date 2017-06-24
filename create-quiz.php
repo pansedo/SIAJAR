@@ -21,8 +21,8 @@ if(isset($_POST['addQuiz'])){
 }
 
 $menuModul		= 4;
-$listQuiz	= $quizClass->getListbyModul($_GET['id']);
-$infoModul	= $modulClass->getInfoModul($_GET['id']);
+$listQuiz	= $quizClass->getListbyModul($_GET['modul']);
+$infoModul	= $modulClass->getInfoModul($_GET['modul']);
 $infoMapel	= $mapelClass->getInfoMapel($infoModul['id_mapel']);
 ?>
 	<div class="modal fade"
@@ -102,8 +102,8 @@ $infoMapel	= $mapelClass->getInfoMapel($infoModul['id_mapel']);
 									<div class="tbl info-tbl">
 										<div class="tbl-row">
 											<div class="tbl-cell">
-												<p class="title"><?=$infoMapel['nama']?></p>
-												<p>Mata Pelajaran</p>
+												<p class="title">Modul <?=$infoModul['nama']?></p>
+												<p>Mata Pelajaran <?=$infoMapel['nama']?></p>
 											</div>
 											<div class="tbl-cell tbl-cell-stat">
 												<div class="inline-block">

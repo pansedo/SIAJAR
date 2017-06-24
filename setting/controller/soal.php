@@ -24,7 +24,7 @@ class Soal
     }
 
     public function getListbyQuiz($idQuiz){
-        $query =  $this->db->soal->find(array("id_quiz"=>"$idQuiz"));
+        $query =  $this->db->soal->find(array("id_paket"=>"$idQuiz"));
         return $query;
     }
 
@@ -34,20 +34,34 @@ class Soal
     }
 
     public function getListJawaban($idSoal){
-        $query =  $this->db->opsi_soal->find(array("id_soal"=>"$idModul"));
+        // print_r("$idSoal");
+        $query =  $this->db->opsi_soal->find(array("id_soal"=>"$idSoal"));
+        return $query;
     }
 
-    public function addSoal($soal, $idPaket, $user){
+    public function addSoal($soal, $jawaban, $benar, $id_paket, $user){
         $newID  = "";
-        $insert = array("nama" => $nama, "creator" => "$user", "date_created"=>date('Y-m-d H:i:s'), "date_modified"=>date('Y-m-d H:i:s'));
-        $paketsoal = $this->db->paket_soal->insert($insert);
+        $insert = array("id_paket"=>"$id_paket","jenis" => "pg","soal" => $soal, "creator" => "$user", "date_created"=>date('Y-m-d H:i:s'), "date_modified"=>date('Y-m-d H:i:s'));
+        $paketsoal = $this->db->soal->insert($insert);
+        $idSoal = $insert['_id'];
         if ($paketsoal) {
             $status ="Sukses";
+                $i = 0;
+            foreach ($jawaban as $jawab) {
+                // $i = $i++;
+                if ($benar = $i++) {
+                    $status = "benar";
+                }else{
+                    $status = "salah";
+                }
+                $inserts = array("id_soal" => "$idSoal", "text" => $jawab, "status"=>"$status" );
+                $inserttag = $this->db->opsi_soal->insert($inserts);
+            }
         }else {
             $status     = "Failed";
         }
 
-        $result = array("status" => $status, "IDMapel" => $mapel);
+        $result = array("status" => $status);
         return $result;
     }
 

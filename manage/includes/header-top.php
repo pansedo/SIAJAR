@@ -20,5 +20,6 @@
     <link rel="stylesheet" href="../assets/css/lib/font-awesome/font-awesome.min.css">
     <link rel="stylesheet" href="../assets/css/lib/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="../assets/css/main.css">
+    <script src="../assets/js/lib/jquery/jquery.min.js"></script>
 </head>
 <body class="with-side-menu">

@@ -1,5 +1,44 @@
 <?php
 require("includes/header-top.php");
+?>
+<script type="text/javascript" src="./assets/tinymce4/js/tinymce/tinymce.min.js"></script>
+<script type="text/javascript">
+		tinymce.init({
+    		selector: '.myeditablediv',
+    		height : 100,
+        	menubar: false,
+        	auto_focus:true,
+        	
+        	
+        // To avoid TinyMCE path conversion from base64 to blob objects.
+        // https://www.tinymce.com/docs/configure/file-image-upload/#images_dataimg_filter
+        images_dataimg_filter : function(img) {
+            return img.hasAttribute('internal-blob');
+        },
+        setup : function(ed)
+        {
+            ed.on('init', function()
+            {
+                this.getDoc().body.style.fontSize = '16px';
+                this.getDoc().body.style.fontFamily = 'Arial, "Helvetica Neue", Helvetica, sans-serif';
+            });
+        },
+         plugins: [
+              "advlist autolink link image lists charmap print preview hr anchor pagebreak",
+              "searchreplace wordcount visualblocks visualchars insertdatetime media nonbreaking",
+              "table contextmenu directionality emoticons paste textcolor responsivefilemanager code tiny_mce_wiris"
+         ],
+         toolbar1: "undo redo | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | styleselect",
+         toolbar2: "| link unlink anchor | image media | forecolor backcolor | print preview | tiny_mce_wiris_formulaEditor tiny_mce_wiris_formulaEditorChemistry",
+         image_advtab: true
+  		});
+</script>
+<!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/codemirror.min.js"></script> -->
+<!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/mode/xml/xml.min.js"></script> -->
+
+<!-- Style for html code -->
+<link type="text/css" rel="stylesheet" href="./assets/tinymce4/css/prism.css" />
+<?php
 require("includes/header-menu.php");
 
 $mapelClass = new Mapel();
@@ -7,26 +46,25 @@ $modulClass = new Modul();
 $quizClass  = new Quiz();
 $soalClass	= new Soal();
 
-if(isset($_POST['addQuiz'])){
-	$nama = mysql_escape_string($_POST['namakuis']);
 
-	if (!empty($_POST['idmodul'])) {
-		$rest = $quizClass->setModul($nama, $_GET['modul'], $_POST['idmodul']);
-	}else{
-		$rest = $quizClass->addQuiz($nama, $_GET['modul'], $_SESSION['lms_id']);
-	}
-
-	if ($rest['status'] == "Success") {
-		echo "<script>alert('".$rest['status']."'); document.location='mapel.php?id=".$rest['IDMapel']."'</script>";
-	}
-}
 
 $menuModul		= 4;
 $infoQuiz	= $quizClass->getInfoQuiz($_GET['qz']);
-$listSoal	= $soalClass->getListbyQuiz($_GET['qz']);
+$listSoal	= $soalClass->getListbyQuiz($infoQuiz['id_paket']);
+// print_r($listSoal);
 // $infoSoal	= $soalClass->getInfoSoal($)
 $infoModul	= $modulClass->getInfoModul($_GET['md']);
 $infoMapel	= $mapelClass->getInfoMapel($infoModul['id_mapel']);
+$opsi=2;
+
+if(isset($_POST['addQuiz'])){
+	// print_r($_POST);
+	$soal 		= $_POST['soal'];
+	$jawaban 	= $_POST['jawaban'];
+	$benar 		= $_POST['benar'];
+
+	$soalClass->addSoal($soal,$jawaban,$benar,$infoQuiz['id_paket'], $_SESSION['lms_id']);
+}
 ?>
 	<div class="modal fade"
 		 id="updateMapel"
@@ -61,15 +99,15 @@ $infoMapel	= $mapelClass->getInfoMapel($infoModul['id_mapel']);
 		</div>
 	</div><!--.modal-->
 
-	<div class="modal fade"
+	<div class="modal fade bd-example-modal-lg"
 		 id="addModul"
 		 tabindex="-1"
 		 role="dialog"
 		 aria-labelledby="addModulLabel"
 		 aria-hidden="true">
-		<div class="modal-dialog" role="document">
+		<div class="modal-dialog modal-lg" role="document">
 			<div class="modal-content">
-				<form method="POST">
+				<form id="form_tambah" method="POST">
 				<div class="modal-header">
 					<button type="button" class="modal-close" data-dismiss="modal" aria-label="Close">
 						<i class="font-icon-close-2"></i>
@@ -77,13 +115,26 @@ $infoMapel	= $mapelClass->getInfoMapel($infoModul['id_mapel']);
 					<h4 class="modal-title" id="addModulLabel">Tambah Kuis</h4>
 				</div>
 				<div class="modal-body">
-					<div class="form-group row">
-						<label for="namamodul" class="col-md-3 form-control-label">Nama Kuis</label>
-						<div class="col-md-9">
-							<input type="hidden" name="idmodul" id="idmodul" class="" maxlength="11" />
-							<input type="text" class="form-control" name="namakuis" id="namamodul" placeholder="Nama Kuis" title="Nama Kuis" data-toggle="popover" data-placement="bottom" data-trigger="hover" data-content="Silahkan isikan Nama Modul yang akan dibuat!" />
-						</div>
+					<fieldset class="form-group">
+						<label class="form-label semibold" for="exampleInput">Soal</label>
+						<textarea class ="myeditablediv" name="soal" ></textarea>
+					</fieldset>
+					<label class="form-label semibold" for="exampleInput">Jawaban</label>
+					<hr />
+					<fieldset class="form-group">
+						<label class="form-label " for="exampleInput">Pilhan 1</label>
+						<textarea class ="myeditablediv" name="jawaban[]" ></textarea>
+						Atur Jawaban Benar <input type="radio" name="benar" value="0" checked="checked">
+					</fieldset>
+					<fieldset class="form-group">
+						<label class="form-label " for="exampleInput">Pilihan 2</label>
+						<textarea class="myeditablediv" name="jawaban[]" ></textarea> 
+						Atur Jawaban Benar <input type="radio" name="benar" value="1">
+					</fieldset>
+					<div class ="opsitambahan">
+						
 					</div>
+					<a style="align:right;color:#009dff;" id="tambahopsi" onclick="tambahOpsi();">+ Tambah Pilihan</a>
 				</div>
 				<div class="modal-footer">
 					<button type="submit" name="addQuiz" value="send" class="btn btn-rounded btn-primary">Simpan</button>
@@ -105,8 +156,8 @@ $infoMapel	= $mapelClass->getInfoMapel($infoModul['id_mapel']);
 									<div class="tbl info-tbl">
 										<div class="tbl-row">
 											<div class="tbl-cell">
-												<p class="title"><?=$infoMapel['nama']?></p>
-												<p>Mata Pelajaran</p>
+												<p class="title">Modul <?=$infoModul['nama']?></p>
+												<p>Mata Pelajaran <?=$infoMapel['nama']?></p>
 											</div>
 											<div class="tbl-cell tbl-cell-stat">
 												<div class="inline-block">
@@ -136,7 +187,7 @@ $infoMapel	= $mapelClass->getInfoMapel($infoModul['id_mapel']);
 							<header class="box-typical-header-sm bordered">
 								<input type="text" class="form-control" name="nama" value="<?=$infoQuiz['nama']?>">
 							</header>
-							<div class="box-typical-inner">
+							<div class="box-typical-inner" id="opsitambahan">
 								<fieldset class="form-group">
 									<label class="form-label semibold" for="exampleInput">Durasi</label>
 									<input type="text" class="form-control" id="exampleInput" placeholder="0">
@@ -152,6 +203,10 @@ $infoMapel	= $mapelClass->getInfoMapel($infoModul['id_mapel']);
 									<input type="text" class="form-control" id="exampleInput" placeholder="dd/mm/yyyy">
 									
 								</fieldset>
+								<!-- <div class ="opsitambahan"> -->
+						
+					<!-- </div> -->
+					<a style="align:right;color:#009dff;" onclick="tambahOpsi();">+ Tambah Pilihan</a>
 							</div>
 						</section>
 
@@ -162,7 +217,10 @@ $infoMapel	= $mapelClass->getInfoMapel($infoModul['id_mapel']);
 					<section class="widget widget-activity">
 						<header class="widget-header">
 							Soal Kuis Paket Soal - <?=$infoQuiz['nama']?>
-							
+							<div class="btn-group" style="float:right;">
+									<button type="button" class="btn btn-sm btn-inline" onclick="add()" title="Tambah" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menambahkan Modul baru.">+ Tambah Soal</button>
+								
+							</div>
 							
 						</header>
 						<div>
@@ -182,7 +240,7 @@ $infoMapel	= $mapelClass->getInfoMapel($infoModul['id_mapel']);
 													</a>
 												</div>
 												<div class="tbl-cell">
-													<div class="user-card-row-name"><a href="#demo'.$no.'" data-toggle="collapse" data-parent="#accordion">'.$materi['nama'].'</a></div>
+													<div class="user-card-row-name"><a href="#demo'.$no.'" data-toggle="collapse" data-parent="#accordion">'.$materi['soal'].'</a></div>
 													<div class="color-blue-grey-lighter">'.($materi['date_created'] == $materi['date_modified'] ? "Diterbitkan " : "Diperbarui ").selisih_waktu($materi['date_modified']).'</div>
 												</div>
 												<div class="tbl-cell" align="right">';
@@ -199,9 +257,23 @@ $infoMapel	= $mapelClass->getInfoMapel($infoModul['id_mapel']);
 										</div>
 									</div>
 									<div id="demo'.$no.'" class="profile-post-content collapse">';
-										if ($list) {
-											# code...
+										$idSoal = $materi['_id'];
+										$listJawaban = $soalClass->getListJawaban($idSoal);
+										foreach ($listJawaban as $jawaban) {
+											echo '<article class="box-typical profile-post panel">
+													<div class="profile-post-header">
+														<div class="user-card-row">
+															<div class="tbl-row">
+															'.$jawaban['text'].'
+															</div>
+														</div>
+													</div>
+												</article>';
 										}
+										// print_r($listJawaban);
+										// if ($list) {
+										// 	# code...
+										// }
 							echo '	</div>
 								</article>
 							';
@@ -229,6 +301,94 @@ $infoMapel	= $mapelClass->getInfoMapel($infoModul['id_mapel']);
 <?php
 	require('includes/footer-top.php');
 ?>
+<script>
+				var i = 2;
+				var j = 1;
+			function tambahOpsi(){
+					i = i+1;
+					j = j+1;
+				// js.src = "./assets/tinymce4/js/tinymce/plugins/tiny_mce_wiris/integration/WIRISplugins.js?viewer=image";
+				// js.src = "./assets/tinymce4/js/tinymce/tinymce.min.js";
+
+				$(".opsitambahan").append("<fieldset class='form-group'><label class='form-label' for='exampleInput'>Pilihan "+i+"</label><textarea class='myeditablediv' name='jawaban[]' ></textarea>Atur Jawaban Benar <input type='radio' name='benar' value='"+j+"'></fieldset>");
+
+			tinymce.init({
+	    		selector: '.myeditablediv',
+	    		height : 100,
+	        	menubar: false,
+	        	auto_focus:true,
+	        // To avoid TinyMCE path conversion from base64 to blob objects.
+	        // https://www.tinymce.com/docs/configure/file-image-upload/#images_dataimg_filter
+	        images_dataimg_filter : function(img) {
+	            return img.hasAttribute('internal-blob');
+	        },
+	        setup : function(ed)
+	        {
+	            ed.on('init', function()
+	            {
+	                this.getDoc().body.style.fontSize = '16px';
+	                this.getDoc().body.style.fontFamily = 'Arial, "Helvetica Neue", Helvetica, sans-serif';
+	            });
+	        },
+	         plugins: [
+	              "advlist autolink link image lists charmap print preview hr anchor pagebreak",
+	              "searchreplace wordcount visualblocks visualchars insertdatetime media nonbreaking",
+	              "table contextmenu directionality emoticons paste textcolor responsivefilemanager code tiny_mce_wiris"
+	         ],
+	         toolbar1: "undo redo | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | styleselect",
+	         toolbar2: "| link unlink anchor | image media | forecolor backcolor | print preview | tiny_mce_wiris_formulaEditor tiny_mce_wiris_formulaEditorChemistry",
+	         image_advtab: true
+	  		});
+
+				
+
+				
+			}
+					
+
+		$(document).ready(function() {
+			$('.note-statusbar').hide();
+			
+		});
+
+		function clearText(elementID){
+			$(elementID).html("");
+		}
+
+		function remove(ID){
+      		swal({
+      		  title: "Apakah anda yakin?",
+      		  text: "Data yang sudah dihapus tidak dapat dikembalikan!",
+      		  type: "warning",
+      		  showCancelButton: true,
+			  	confirmButtonText: "Setuju!",
+      			confirmButtonClass: "btn-danger",
+      		  closeOnConfirm: false,
+      		  showLoaderOnConfirm: true
+      		}, function () {
+      			$.ajax({
+      				type: 'POST',
+      				url: 'url-API/Kelas/Modul/Materi/',
+      				data: {"action": "remv", "ID": ID},
+      				success: function(res) {
+						swal({
+				            title: res.response,
+				            text: res.message,
+				            type: res.icon
+				        }, function() {
+				            location.reload();
+				        });
+      				},
+      				error: function () {
+      					swal("Gagal!", "Data tidak terhapus!", "error");
+      				}
+      			});
+      		});
+      	}
+	</script>
+
+    <script type="text/javascript" src="./assets/tinymce4/js/wirislib.js"></script>
+	<script type="text/javascript" src="./assets/tinymce4/js/prism.js"></script>
 
 	<script>
 		function clearText(elementID){
