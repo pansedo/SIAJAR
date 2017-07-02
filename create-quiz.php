@@ -12,7 +12,7 @@ if(isset($_POST['addQuiz'])){
 	if (!empty($_POST['idmodul'])) {
 		$rest = $quizClass->setModul($nama, $_GET['modul'], $_POST['idmodul']);
 	}else{
-		$rest = $quizClass->addQuiz($nama, $_GET['modul'], $_SESSION['lms_id']);
+		$rest = $quizClass->addQuiz($nama, $_GET['modul'], $_POST['durasi'],$_POST['mulai'],$_POST['selesai'], $_SESSION['lms_id']);
 	}
 
 	if ($rest['status'] == "Success") {
@@ -75,11 +75,35 @@ $infoMapel	= $mapelClass->getInfoMapel($infoModul['id_mapel']);
 				</div>
 				<div class="modal-body">
 					<div class="form-group row">
-						<label for="namamodul" class="col-md-3 form-control-label">Nama Kuis</label>
-						<div class="col-md-9">
-							<input type="hidden" name="idmodul" id="idmodul" class="" maxlength="11" />
-							<input type="text" class="form-control" name="namakuis" id="namamodul" placeholder="Nama Kuis" title="Nama Kuis" data-toggle="popover" data-placement="bottom" data-trigger="hover" data-content="Silahkan isikan Nama Modul yang akan dibuat!" />
-						</div>
+
+							<div class="form-group row">
+								<label for="namamodul" class="col-md-3 form-control-label">Nama Kuis</label>
+								<input type="hidden" name="idmodul" id="idmodul" class="" maxlength="11" />
+								<div class="col-md-9">
+									<input type="text" class="form-control" name="namakuis" id="namamodul" placeholder="Nama Kuis" title="Nama Kuis" data-toggle="popover" data-placement="bottom" data-trigger="hover" data-content="Silahkan isikan Nama Modul yang akan dibuat!" />
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-md-3 form-control-label" name="durasi" for="exampleInput">Durasi</label>
+								<div class="col-md-9">
+										<input type="number" class="form-control" name="durasi" id="exampleInput" placeholder="0" maxlength="3">
+										<small class="text-muted">Lama Pengerjaan dalam satuan menit.</small>
+								</div>
+										
+							</div>
+							<div class="form-group row">
+								<label class="col-md-3 form-control-label"  for="exampleInput">Tanggal Mulai</label>
+								<div class="col-md-9">
+								<input type="date" class="form-control" name="mulai" id="exampleInput" placeholder="dd/mm/yyyy">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-md-3 form-control-label" for="exampleInput">Tanggal Selesai</label>
+								<div class="col-md-9">
+								<input type="date" class="form-control" name="selesai" id="exampleInput" placeholder="dd/mm/yyyy">
+								</div>
+								
+							</div>
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -186,7 +210,7 @@ $infoMapel	= $mapelClass->getInfoMapel($infoModul['id_mapel']);
 									<div class="profile-post-content" align="center">
 										<span>
 										 Belum ada Kuis saat ini. <br />
-										<button type="button" class="btn btn-sm btn-inline" onclick="add()" title="Tambah" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menambahkan Modul baru.">+ Buat Baru</button>
+										<button type="button" class="btn btn-sm btn-inline" onclick="add()" title="Tambah" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menambahkan Quiz baru.">+ Buat Baru</button>
 										</span>
 									</div>
 								</article>';

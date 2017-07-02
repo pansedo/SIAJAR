@@ -63,7 +63,18 @@ if(isset($_POST['addQuiz'])){
 	$jawaban 	= $_POST['jawaban'];
 	$benar 		= $_POST['benar'];
 
+// print_r($benar);
 	$soalClass->addSoal($soal,$jawaban,$benar,$infoQuiz['id_paket'], $_SESSION['lms_id']);
+}
+
+if (isset($_POST['updateInfoQuiz'])) {
+	# code...
+	$nama = $_POST['nama'];
+	$durasi = $_POST['durasi'];
+	$mulai = $_POST['mulai'];
+	$selesai = $_POST['selesai'];
+
+	$quizClass->updateQuiz($_GET['qz'], $nama, $durasi, $mulai,$selesai);
 }
 ?>
 	<div class="modal fade"
@@ -117,18 +128,18 @@ if(isset($_POST['addQuiz'])){
 				<div class="modal-body">
 					<fieldset class="form-group">
 						<label class="form-label semibold" for="exampleInput">Soal</label>
-						<textarea class ="myeditablediv" name="soal" ></textarea>
+						<textarea class ="myeditablediv" id="soal" name="soal" ></textarea>
 					</fieldset>
 					<label class="form-label semibold" for="exampleInput">Jawaban</label>
 					<hr />
 					<fieldset class="form-group">
 						<label class="form-label " for="exampleInput">Pilhan 1</label>
-						<textarea class ="myeditablediv" name="jawaban[]" ></textarea>
+						<textarea class ="myeditablediv" id="jawab1" name="jawaban[]" ></textarea>
 						Atur Jawaban Benar <input type="radio" name="benar" value="0" checked="checked">
 					</fieldset>
 					<fieldset class="form-group">
 						<label class="form-label " for="exampleInput">Pilihan 2</label>
-						<textarea class="myeditablediv" name="jawaban[]" ></textarea> 
+						<textarea class="myeditablediv" id="jawab2" name="jawaban[]" ></textarea> 
 						Atur Jawaban Benar <input type="radio" name="benar" value="1">
 					</fieldset>
 					<div class ="opsitambahan">
@@ -183,30 +194,32 @@ if(isset($_POST['addQuiz'])){
 			<div class="row">
 				<div class="col-xl-3 col-lg-4">
 					<aside id="menu-fixed" class="profile-side" style="margin: 0 0 20px">
+					<form method="POST" action="">
 						<section class="box-typical">
 							<header class="box-typical-header-sm bordered">
 								<input type="text" class="form-control" name="nama" value="<?=$infoQuiz['nama']?>">
 							</header>
 							<div class="box-typical-inner" id="opsitambahan">
+							
 								<fieldset class="form-group">
-									<label class="form-label semibold" for="exampleInput">Durasi</label>
-									<input type="text" class="form-control" id="exampleInput" placeholder="0">
+									<label class="form-label semibold" name="durasi" for="exampleInput">Durasi</label>
+									<input type="number" class="form-control" name="durasi" id="exampleInput" placeholder="0" value="<?=$infoQuiz['durasi']?>" maxlength="3">
 									<small class="text-muted">Lama Pengerjaan dalam satuan menit.</small>
 								</fieldset>
 								<fieldset class="form-group">
-									<label class="form-label semibold" for="exampleInput">Tanggal Mulai</label>
-									<input type="text" class="form-control" id="exampleInput" placeholder="dd/mm/yyyy">
-									
+									<label class="form-label semibold"  for="exampleInput">Tanggal Mulai</label>
+									<input type="date" class="form-control" name="mulai" id="exampleInput" value="<?=$infoQuiz['start_date']?>" placeholder="mm/dd/yyyy">
 								</fieldset>
 								<fieldset class="form-group">
 									<label class="form-label semibold" for="exampleInput">Tanggal Selesai</label>
-									<input type="text" class="form-control" id="exampleInput" placeholder="dd/mm/yyyy">
+									<input type="date" class="form-control" name="selesai" id="exampleInput" value="<?=$infoQuiz['end_date']?>" placeholder="mm/dd/yyyy">
 									
 								</fieldset>
 								<!-- <div class ="opsitambahan"> -->
-						
+								<button class="btn " name="updateInfoQuiz">Simpan</button>
+							</form>
 					<!-- </div> -->
-					<a style="align:right;color:#009dff;" onclick="tambahOpsi();">+ Tambah Pilihan</a>
+					<!-- <a style="align:right;color:#009dff;" onclick="tambahOpsi();">+ Tambah Pilihan</a> -->
 							</div>
 						</section>
 
@@ -245,12 +258,14 @@ if(isset($_POST['addQuiz'])){
 												</div>
 												<div class="tbl-cell" align="right">';
 												if ($_SESSION['lms_id'] == $materi['creator']) {
-													echo '<a href="quiz-action.php?act=update&md='.$infoModul['_id'].'&qz='.$materi['_id'].'" class="shared" title="Edit" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk memperbarui isi dari Materi yang sudah dibuat." style="right: 35px">
+													// echo '<a onclick="edit(\''.$materi['_id'].'\')" title="Edit" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk memperbarui Modul yang sudah dibuat."><i class="font-icon font-icon-pencil"></i></a>
+													echo '<<a href="edit-quiz.php?act=update&md='.$_GET['md'].'&qz='.$_GET['qz'].'&id='.$materi['_id'].'" class="shared" title="Edit" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk memperbarui isi dari Materi yang sudah dibuat." style="right: 35px">
 															<i class="font-icon font-icon-pencil")"></i>
-														</a>
 														<a onclick="remove(\''.$materi['_id'].'\')"   class="shared" title="Hapus" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menghapus Materi yang sudah dibuat.">
 															<i class="font-icon font-icon-trash")"></i>
 														</a>';
+
+													
 												}
 							echo '				</div>
 											</div>
@@ -263,9 +278,12 @@ if(isset($_POST['addQuiz'])){
 											echo '<article class="box-typical profile-post panel">
 													<div class="profile-post-header">
 														<div class="user-card-row">
-															<div class="tbl-row">
-															'.$jawaban['text'].'
-															</div>
+															
+															<div class="col-md-11">'.$jawaban['text'].'</div>' ;
+															if ($jawaban['status'] == "benar") {
+																echo '<div class="col-md-1"><i class="fa fa-check success"></i></div>';
+															};	
+											echo	'		
 														</div>
 													</div>
 												</article>';
@@ -413,20 +431,21 @@ if(isset($_POST['addQuiz'])){
       	}
 
 		function edit(ID){
-      		$('#addModul').trigger("reset");
+      		$('#addModul').trigger("reset").show();
       		$('#addModulLabel').text(
-      		   $('#addModulLabel').text().replace('Tambah Modul', 'Edit Modul')
+      		   $('#addModulLabel').text().replace('Tambah Kuis', 'Edit Soal')
       		).show();
-			// $('#addModul').modal('show');
+			$('#addModul').modal('show');
       		$.ajax({
       			type: 'POST',
-      			url: 'url-API/Kelas/Modul/',
+      			url: 'url-API/Kelas/Modul/Quiz/Soal/',
       			data: {"action": "show", "ID": ID},
       			success: function(res) {
       				if(res.data._id.$id){
       					$('#addModul').modal('show');
       					$('#idmodul').val(ID);
-      					$('#namamodul').val(res.data.nama);
+      					$('#soal').val(res.data.text);
+      					alert(data);
       				}else {
       					swal("Gagal!", "Data tidak ditemukan!", "error");
       				}
@@ -450,7 +469,7 @@ if(isset($_POST['addQuiz'])){
       		}, function () {
       			$.ajax({
       				type: 'POST',
-      				url: 'url-API/Kelas/Modul/',
+      				url: 'url-API/Kelas/Modul/Quiz/Soal/',
       				data: {"action": "remv", "ID": ID},
       				success: function(res) {
 						swal({

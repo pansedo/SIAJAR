@@ -45,23 +45,63 @@ class Soal
         $paketsoal = $this->db->soal->insert($insert);
         $idSoal = $insert['_id'];
         if ($paketsoal) {
-            $status ="Sukses";
+            $hasil ="Sukses";
                 $i = 0;
+                // echo "benar = ".$benar."<br />";
+                $b = $benar;
             foreach ($jawaban as $jawab) {
-                // $i = $i++;
-                if ($benar = $i++) {
+                // echo $i .' = '.$benar.'<br />';
+                // echo "if ".$benar ."=". $i.")"; 
+                
+                if ($benar = $i) {
                     $status = "benar";
                 }else{
                     $status = "salah";
                 }
+                $i = $i+1;
                 $inserts = array("id_soal" => "$idSoal", "text" => $jawab, "status"=>"$status" );
                 $inserttag = $this->db->opsi_soal->insert($inserts);
+
             }
+            echo "<script>alert('".$rest['status']."'); document.location='quiz-action.php?md=".$_GET['md']."&qz=".$_GET['qz']."</script>";
         }else {
-            $status     = "Failed";
+            $hasil     = "Failed";
         }
 
-        $result = array("status" => $status);
+        $result = array("hasil" => $hasil);
+        return $result;
+    }
+
+    public function updateSoal($id, $soal, $jawaban, $benar, $id_paket, $user){
+        $newID  = "";
+        $edit = array("id_paket"=>"$id_paket","jenis" => "pg","soal" => $soal, "creator" => "$user", "date_created"=>date('Y-m-d H:i:s'), "date_modified"=>date('Y-m-d H:i:s'));
+        $paketsoal = $this->db->soal->update(array("_id"=> new MongoId($id)),array('$set'=>$edit));
+        
+        if ($paketsoal) {
+            $status1 ="Sukses";
+            $deleteopsi = array("id_soal" => "$id");
+            $hapusopsi = $this->db->opsi_soal->remove($deleteopsi);
+                $i = 0;
+                $b = $benar;
+            foreach ($jawaban as $jawab) {
+                // echo $i .' = '.$benar.'<br />';
+                // echo "if ".$benar ."=". $i.")"; 
+                
+                if ($benar = $i) {
+                    $status = "benar";
+                }else{
+                    $status = "salah";
+                }
+                $i = $i+1;
+                $inserts = array("id_soal" => "$id", "text" => $jawab, "status"=>"$status" );
+                $inserttag = $this->db->opsi_soal->insert($inserts);
+            }
+            
+        }else {
+            $status1     = "Failed";
+        }
+
+        $result = array("status" => $status1);
         return $result;
     }
 
