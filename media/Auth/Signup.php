@@ -72,7 +72,7 @@ if (isset($_POST['register'])) {
                         </select>
                     </div>
                     <input type="submit" value='Sign up' name='register' class="btn btn-rounded btn-success sign-up">
-                    <p class="sign-note">Belum mempunyai akun? <a href="Signin.php">Masuk</a></p>
+                    <p class="sign-note">Sudah mempunyai akun <a href="Signin.php">Masuk</a></p>
                     <!--<button type="button" class="close">
                         <span aria-hidden="true">&times;</span>
                     </button>-->

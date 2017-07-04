@@ -2,48 +2,20 @@
 	include 'header.php';
 	include 'menu.php';
 
-	$classKategori = new Kategori();
 	$classMedia = new Media();
-	$classTag = new Tag();
+	$classPengaduan = new Pengaduan();
 
-	$getkategoriutama = $classKategori->GetKategoriUtama();
+	$getpengaduan = $classPengaduan->GetPengaduan();
 	$getMedia = $classMedia->GetMedia();
 
- 
-	if (isset($_POST['tambah_media'])) {
-        $judul = mysql_escape_string($_POST['judul']);
-        $deskripsi = mysql_escape_string($_POST['deskripsi']);
-        $kategori = mysql_escape_string($_POST['kategori']);
-        $tags = mysql_escape_string($_POST['tags']);
-        $tautan = mysql_escape_string($_POST['tautan']);
-        $dokumen = mysql_escape_string($_FILES['dokumen']['name']);
-        $image = mysql_escape_string($_FILES['image']['name']);
-        $iduser = "58ec5cf21192a6e8180018bf";
-        $classMedia->CreateMedia($iduser,$judul,$deskripsi,$kategori,$tags,$tautan,$dokumen,$image); 
-	}  
+	if (isset($_POST['nonaktif'])) {
+		$idpengaduan = mysql_escape_string($_POST['idpengaduan']);
+		$keterangan = mysql_escape_string($_POST['keterangan']);
+		$statuspengaduan = mysql_escape_string($_POST['nonaktif']);
 
-	if (isset($_POST['edit_media'])) {
-		$id           = base64_decode($_GET['id']);
-		$judul = mysql_escape_string($_POST['judul']);
-        $deskripsi = mysql_escape_string($_POST['deskripsi']);
-        $kategori = mysql_escape_string($_POST['kategori']);
-        $tags = mysql_escape_string($_POST['tags']);
-        if (isset($_POST['tautan'])) {
-        	$tautan = mysql_escape_string($_POST['tautan']);
-        }else{
-        	$tautan = "";
-        }
-        if (isset($_FILES['dokumen'])) {
-         	$dokumen = mysql_escape_string($_FILES['dokumen']['name']);
-         }else{
-         	$dokumen ="";
-         } 
-        $image = mysql_escape_string($_FILES['image']['name']);
-        $iduser = "58ec5cf21192a6e8180018bf";
-        $gambar_lama = mysql_escape_string($_POST['gambar_lama']);
-        $file_lama = mysql_escape_string($_POST['file_lama']);
-        $classMedia->EditMedia($id,$iduser,$judul,$deskripsi,$kategori,$tags,$tautan,$dokumen,$image,$gambar_lama,$file_lama); 
+		 $classPengaduan->CheckPengaduan($idpengaduan,$keterangan,$statuspengaduan); 
 	}
+ 	
 
 ?>
 	<?php
@@ -143,18 +115,12 @@
 								<div class="subtitle">Gudang Media </div>
 							</div>
 						</div>
-						<div class="col-md-2">
-							<div class="tbl-cell" >
-							<br>
-								<a class="btn btn-primary" href="?action=tambah" style="text-align: right ">Media Baru</a>
-							</div>
-						</div>
 					</div> 
 				</header>
 				<section class="card">
 					<div class="card-block">
 					<?php
-						if ($getMedia == "null") {
+						if ($getpengaduan == "null") {
 							echo "Data Tidak Ada";
 						}else{
 					?>
@@ -163,11 +129,10 @@
 							<tr>
 								<th>No</th>
 								<th>User</th>
-								<th>Judul</th>
-								<th>Deskripsi</th>
-								<th>Kategori</th>
-								<th>Aktif</th>
-								<th>Status</th>
+								<th>Media</th>
+								<th>Keterangan</th>
+								<th>Status Pengaduan</th>
+								<th>Action</th>
 							</tr>
 							</thead>
 							<tbody>
@@ -175,18 +140,56 @@
 								<?php 
 									$no = 1;
 
-									foreach ($getMedia as $data) {
+									foreach ($getpengaduan as $data) {
 										?>
 										<tr>
 											<td><?php echo $no; ?></td>
 											<td><?php echo $data['nama_user']; ?></td>
-											<td><?php echo $data['judul']; ?></td>
-											<td><?php echo $data['deskripsi']; ?></td>
-											<td><?php echo $data['kategori']; ?></td>
-											<td><?php echo $data['active']; ?></td>
+											<td><?php echo $data['media']; ?></td>
+											<td><?php echo $data['keterangan']; ?></td>
 											<td>
-											<a class="btn btn-inline btn-info" href="?action=edit&id=<?=base64_encode($data['_id']);?>" >Edit</a>
-                                				&nbsp <a class="btn btn-inline btn-danger" href="?action=deleteMedia&id=<?=base64_encode($data['_id']);?>" >Hapus</a>
+												<?php 
+													if ($data['statuspengaduan'] == "check") {
+														echo "<a href='#' class='btn btn-primary btn-sm'>Check</a>";
+													}else{
+														echo "<a href='#' class='btn btn-danger btn-sm'>Check</a>";
+													}
+													echo '&nbsp &nbsp';
+													if ($data['dokumenactive'] == "active") {
+														echo "<a href='#' class='btn btn-primary btn-sm'>Dokumen</a>";
+													}else{
+														echo "<a href='#' class='btn btn-danger btn-sm'>Dokumen</a>";
+													}
+												?>
+											</td>
+											<td>
+											<a class="btn btn-inline btn-info" href="?action=edit&id=<?=base64_encode($data['_id']);?>" >Detail Media</a>
+											<!-- <a class="btn btn-inline btn-danger" href="?action=edit&id=<?=base64_encode($data['_id']);?>" >Non Aktif Media</a> -->
+											<button type="button" class="btn btn btn-inline btn-warning" data-toggle="modal" data-target="#myModal<?php echo $no;?>">
+											  Non Aktif Media
+											</button>
+											<div class="modal fade" id="myModal<?php echo $no;?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+											<form  action="#" method="POST" role="form" enctype="multipart/form-data">
+											  <div class="modal-dialog" role="document">
+											    <div class="modal-content">
+											      <div class="modal-header">
+											        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+											        <h4 class="modal-title" id="myModalLabel"><?php echo $data['media']; ?></h4>
+											      </div>
+											      <div class="modal-body">
+													<textarea class="form-control" name="keterangan" style=" width:100%" placeholder="Keterangan NonAktif Media"></textarea>
+											      </div>
+											      <div class="modal-footer">
+													<input type="hidden" name="idpengaduan" value="<?php echo $data['idpengaduan'];?>">
+											        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+													<button type="submit" class="btn btn-default btn-success" name="nonaktif" value="active"  >Check Pengaduan</button>
+													<button type="submit" class="btn btn-default btn-danger" name="nonaktif" value="nonactive" >Non Aktif Media</button>
+											      </div>
+											    </div>
+											  </div>
+											</form>
+											</div>
+
 											 </td> 
 										</tr>
 										<?php

@@ -12,8 +12,6 @@
         $status     = $_SESSION['lms_status'];
     }
 
-    $classMedia = new Media();
-    $getMediaCount = $classMedia->GetMediabyUserCount($id_users);
     $classProfile = new Profile();
 	$FuncProfile = $classProfile->GetData($id_users);
 
@@ -80,12 +78,9 @@
 								<img src="Assets/foto/<?php if ($FuncProfile['foto'] != NULL) {echo $FuncProfile['foto'];}else{echo "no_picture.png";} ?>" alt=""/>
 							</div>
 							<div class="profile-card-name"><?php echo $FuncProfile['nama'];?></div>
-							<div class="profile-card-status"><?php echo $FuncProfile['sekolah'];?></div>
+							<div class="profile-card-status"><?php echo $FuncProfile['status'];?></div>
 							<!-- <div class="profile-card-location">Asal Sekolah</div> -->
-							<button style="margin-top:10px;" type="button" class="btn btn-rounded">Follow</button>
-							<button style="margin-top:10px;" type="button" class="btn btn-danger btn-rounded">Wishlist</button>
 						</div>
-
 						<div class="profile-statistic tbl">
 							<div class="tbl-row">
 								<div class="tbl-cell">
@@ -111,6 +106,7 @@
 							 
 						</ul>
 					</section>
+				
 				</div>
 				<div class="col-lg-9 col-lg-pull-6 col-md-6 col-sm-6">
 				<!-- Mulai Buku Content -->

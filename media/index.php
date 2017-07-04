@@ -26,6 +26,7 @@
 							<div class="friends-list">
 								<article class="friends-list-item">
 									<?php 
+
 										foreach ($getMediaTerbanyak as $orang) {
 											?>
 											<div class="user-card-row">
@@ -74,8 +75,12 @@
 					
 					
 					<?php
-						$no = 1;
-
+					$no = 1;
+					if ($getMedia == 0) {
+						# code...
+						echo "Belum ada dokumen";
+					}else{
+						
 						foreach ($getMediaPagging as $data) {
 						$date = date_create($data['date_created']);
 					?>
@@ -120,6 +125,7 @@
 						</div>
 						<?php
 							}
+						}
 						?>
 						<!-- Selesai Buku Content -->
 						
