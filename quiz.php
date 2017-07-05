@@ -1,12 +1,3 @@
-<script type="text/javascript">
-    setInterval(function(){
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.open("GET", "response.php", false);
-        xmlhttp.send(null);
-        document.getElementById("timer").innerHTML   = xmlhttp.responseText;
-    }, 1000);
-</script>
-
 <?php
 require("includes/header-top.php");
 ?>
@@ -20,10 +11,18 @@ $quizClass 	    = new Quiz();
 $soalClass 	    = new Soal();
 
 $infoQuiz	    = $quizClass->getInfoQuiz($_GET['id']);
-$nilaiQuiz      = $quizClass->submitQuiz($_SESSION['lms_id'], $_GET['id']);
+$idModul        = $infoQuiz['id_modul'];
 
 $list_soal      = $soalClass->getListSoalbyQuiz($_GET['id']);
 $jumlah_soal    = $soalClass->getNumberbyQuiz($_GET['id']);
+
+if(isset($_GET['submit'])){
+    $nilaiQuiz      = $quizClass->hitungNilaiQuiz($_SESSION['lms_id'], $_GET['id']);
+    $quizClass->submitQuiz($_SESSION['lms_id'], $_GET['id'], $nilaiQuiz);
+
+    header( "Location: create-quiz.php?modul=$idModul");
+    die();
+}
 
 ?>
 	<div class="page-content">
@@ -103,6 +102,18 @@ $jumlah_soal    = $soalClass->getNumberbyQuiz($_GET['id']);
 			$('.note-statusbar').hide();
 		});
 
+        setInterval(function(){
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.open("GET", "response.php", false);
+            xmlhttp.send(null);
+            document.getElementById("timer").innerHTML   = xmlhttp.responseText;
+            if(xmlhttp.responseText == "00:00:00"){
+                alert('Waktu Habis');
+                window.onbeforeunload = null;
+                document.location.href="quiz.php?id=<?php echo $_GET['id']; ?>&submit=1";
+            }
+        }, 1000);
+
         function save_answer(id_quiz, id_soal, id_opsi_soal){
 
             $.ajax({
@@ -115,7 +126,7 @@ $jumlah_soal    = $soalClass->getNumberbyQuiz($_GET['id']);
         }
 
         $('#submit').on('click', function() {
-            document.location.href="quiz.php?id=<?php echo $_GET['id']; ?>";
+            document.location.href="quiz.php?id=<?php echo $_GET['id']; ?>&submit=1";
         });
 
         $('#next-soal').on('click', function() {

@@ -63,7 +63,7 @@ class Quiz
         return $result;
     }
 
-    public function submitQuiz($idUser, $idQuiz){
+    public function hitungNilaiQuiz($idUser, $idQuiz){
         $nilai_quiz         = 0;
         $list_jawaban_user  =  $this->db->jawaban_user->find(array("id_user"=>"$idUser", "id_quiz"=>"$idQuiz"));
 
