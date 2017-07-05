@@ -19,6 +19,13 @@ if (!isset($_SESSION['lms_id']) && !isset($_SESSION['lms_username']) && !isset($
         $email    = $_SESSION['lms_username'];
         $status     = $_SESSION['lms_status'];
 
+    
+
+        $classProfile = new Profile();
+		$FuncProfile = $classProfile->GetData($id_users);
+
+    }
+
     function selisih_waktu($timestamp){
     	$selisih = time() - strtotime($timestamp) ;
 
@@ -49,11 +56,6 @@ if (!isset($_SESSION['lms_id']) && !isset($_SESSION['lms_username']) && !isset($
 	    return $waktu;
 	}
 
-
-        $classProfile = new Profile();
-		$FuncProfile = $classProfile->GetData($id_users);
-
-    }
     $classKategori = new Kategori();
     $getkategoriutama = $classKategori->GetKategoriUtama();
 ?>  

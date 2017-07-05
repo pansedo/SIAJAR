@@ -94,7 +94,8 @@
 												<p class="color-blue-grey-lighter"><?php echo selisih_waktu(date_format($date,'d-m-Y H:i:s'));?></p>
 											</div>
 											<div class="tbl-cell tbl-cell-status">
-												<a href="#" class="font-icon font-icon-star active"></a>
+												<a href="#" class="font-icon font-icon-pencil active"></a>
+												<a href="#" class="font-icon font-icon-trash active"></a>
 											</div>
 										</div>
 									</div>
@@ -109,6 +110,11 @@
 								</div>
 								<div class="card-typical-section">
 									<div class="card-typical-linked" style="height:33px">oleh <a href="#"><?php echo $data['nama_user']; ?></a></div>
+									
+									<div class="tbl-cell tbl-cell-status" style="float:right">
+												<a href="media.php?action=edit&id=<?php echo base64_encode($data['_id']);?>" class="font-icon font-icon-pencil"></a>
+												<a href="media.php?action=edit&id=<?php echo base64_encode($data['_id']);?>" class="font-icon font-icon-trash "></a>
+											</div>
 									<!-- <a href="#" class="card-typical-likes">
 										<i class="font-icon font-icon-heart"></i>
 										123

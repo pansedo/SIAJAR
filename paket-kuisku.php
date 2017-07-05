@@ -20,10 +20,8 @@ if(isset($_POST['addQuiz'])){
 	}
 }
 
-$menuModul		= 4;
-$listQuiz	= $quizClass->getListbyModul($_GET['modul']);
-$infoModul	= $modulClass->getInfoModul($_GET['modul']);
-$infoMapel	= $mapelClass->getInfoMapel($infoModul['id_mapel']);
+$menuModul		= 1;
+$listQuiz	= $quizClass->getListbyUser($_SESSION['lms_id']);
 ?>
 	<div class="modal fade"
 		 id="updateMapel"
@@ -126,8 +124,8 @@ $infoMapel	= $mapelClass->getInfoMapel($infoModul['id_mapel']);
 									<div class="tbl info-tbl">
 										<div class="tbl-row">
 											<div class="tbl-cell">
-												<p class="title">Modul <?=$infoModul['nama']?></p>
-												<p>Mata Pelajaran <?=$infoMapel['nama']?></p>
+												<p class="title">Modul <?//=$infoModul['nama']?></p>
+												<p>Mata Pelajaran <?//=$infoMapel['nama']?></p>
 											</div>
 											<div class="tbl-cell tbl-cell-stat">
 												<div class="inline-block">
@@ -153,7 +151,7 @@ $infoMapel	= $mapelClass->getInfoMapel($infoModul['id_mapel']);
 			<div class="row">
 				<div class="col-xl-3 col-lg-4">
 					<?php
-						require("includes/modul-menu.php");
+						require("includes/paket-menu.php");
 					?>
 				</div>
 
@@ -187,7 +185,7 @@ $infoMapel	= $mapelClass->getInfoMapel($infoModul['id_mapel']);
 												<div class="tbl-cell" align="right">';
 												if ($_SESSION['lms_id'] == $materi['creator']) {
 													
-													echo '<span class="label label-'.($materi['status'] == "1" ? "success" : "primary").'" style="margin-right: 20px">'.($materi['status'] == "1" ? "Ditampilkan" : "Belum Ditampilkan").'</span>
+													echo '
 													<a href="quiz-action.php?act=update&md='.$infoModul['_id'].'&qz='.$materi['_id'].'" class="shared" title="Edit" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk memperbarui isi dari Materi yang sudah dibuat." style="right: 35px">
 															<i class="font-icon font-icon-pencil")"></i>
 														</a>
@@ -195,16 +193,16 @@ $infoMapel	= $mapelClass->getInfoMapel($infoModul['id_mapel']);
 															<i class="font-icon font-icon-trash")"></i>
 														</a>';
 												}
-							echo '				</div>
-											</div>
-										</div>
-									</div>
-									<div id="demo'.$no.'" class="profile-post-content collapse">
-										Durasi :'.$materi["durasi"].' <br />
-										Tanggal Berakhir :'.$materi["end_date"].' <br />
-									</div>
-								</article>
-							';
+							// echo '				</div>
+							// 				</div>
+							// 			</div>
+							// 		</div>
+							// 		<div id="demo'.$no.'" class="profile-post-content collapse">
+							// 			Durasi :'.$materi["durasi"].' <br />
+							// 			Tanggal Berakhir :'.$materi["end_date"].' <br />
+							// 		</div>
+							// 	</article>
+							// ';
 							$no++;
 						}
 					}else {

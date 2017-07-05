@@ -18,26 +18,35 @@ class Quiz
     public function getInfoQuiz($id){
 		$ID     = new MongoId($id);
         $query  = $this->db->quiz->findOne(array("_id" => $ID));
-		if($query['_id']){
-			$query1	= $this->db->modul->find(array("id_mapel" => $id))->count();
-			$query['modul'] = $query1;
-		}
+		
         // print_r($query);
         return $query;
     }
 
     public function getListbyModul($idModul){
         $query =  $this->db->quiz->find(array("id_modul"=>"$idModul"));
+        // if($query['_id']){
+        //     $query1 = $this->db->quiz->find(array("id_modul" => $idModul))->count();
+        //     $query['modul'] = $query1;
+        // }
         return $query;
     }
 
+    public function getListbyUser($creator){
+        $query =  $this->db->paket_soal->find(array("creator"=>"$creator"));
+        // if($query['_id']){
+        //     $query1 = $this->db->quiz->find(array("id_modul" => $idModul))->count();
+        //     $query['modul'] = $query1;
+        // }
+        return $query;
+    }
     public function addQuiz($nama, $modul, $durasi, $mulai, $selesai, $user){
         $newID  = "";
         $insert = array("nama" => $nama, "creator" => "$user", "date_created"=>date('Y-m-d H:i:s'), "date_modified"=>date('Y-m-d H:i:s'));
         $save = $this->db->paket_soal->insert($insert);
         if ($save) {
             $newID  = $insert['_id'];
-            $insert2 = array("id_modul" => $modul,"id_quiz" =>"$newID", "nama" => "$nama", "durasi"=>"$durasi","start_date"=>"$mulai","end_date"=>"$selesai", "creator" => "$user", "date_created"=>date('Y-m-d H:i:s'), "date_modified"=>date('Y-m-d H:i:s'), "status"=>"0");
+            $insert2 = array("id_modul" => $modul,"id_paket" =>"$newID", "nama" => "$nama", "durasi"=>"$durasi","start_date"=>"$mulai","end_date"=>"$selesai", "creator" => "$user", "date_created"=>date('Y-m-d H:i:s'), "date_modified"=>date('Y-m-d H:i:s'), "status"=>"0");
             $insertquiz = $this->db->quiz->insert($insert2);
             if ($insertquiz) {
                 $status ="Sukses";
@@ -54,7 +63,7 @@ class Quiz
         $newID  = "";
         $edit = array("nama" => $nama, "durasi" => "$durasi", "start_date"=>"$mulai", "end_date" => "$selesai", "date_modified"=>date('Y-m-d H:i:s'));
 
-        print_r($edit);
+        // print_r($edit);
         $update = $this->db->quiz->update(array("_id"=> new MongoId($id)),array('$set'=>$edit));
         if ($update) {
             
@@ -66,5 +75,10 @@ class Quiz
 
         $result = array("status" => $status);
         return $result;
+    }
+
+    public function duplicateQuiz($id_paket){
+        $query =  $this->db->paket_soal->find(array("_id"=> new MongoId($id_paket)));
+        // for
     }
 }

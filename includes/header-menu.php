@@ -220,6 +220,12 @@ if(isset($_POST['joinKelas'])){
 								?>
 
 	                        </div>
+	                        <div class="dropdown dropdown-typical">
+							   <a href="<?=base_url?>/paket-soalku.php" class="dropdown-toggle no-arr">
+								   <span class="font-icon font-icon-home"></span> Paket Soal
+								   <span class="lbl"></span>
+							   </a>
+						   	</div>
 							<div class="dropdown dropdown-typical">
 							   <a href="#" class="dropdown-toggle no-arr">
 								   <span class="font-icon font-icon-share"></span> Gudang Media
