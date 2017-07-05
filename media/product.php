@@ -6,10 +6,19 @@
 	$classTag = new Tag();
 	$classProfile = new Profile();
 	$classKategori = new Kategori();
+	$classPengaduan = new Pengaduan();
+
+	if (isset($_POST['reportdokumen'])) {
+		$iddokumen = mysql_escape_string($_POST['iddokumen']);
+		$keterangan = mysql_escape_string($_POST['keterangan']);
+
+		$classPengaduan->CreatePengaduan($iddokumen,$keterangan,$id_users);
+	}
+
 	if (isset($_GET['id'])) {
 		# code...
 		$id 			= base64_decode($_GET['id']);
-		$getMediaById 	= $classMedia->GetMediaBy($id);
+		$getMediaById 	= $classMedia->GetMediaBy($id); 
 		$getTagByMedia 	= $classTag->TagByMedia($id);
 		$getUserById 	= $classProfile->GetData($getMediaById['id_user']);
 		$getKategori 	= $classKategori->getkategoriutamabyId($getMediaById['id_kategori']);
@@ -51,16 +60,46 @@
 								<h3>Tag</h3>
 							</header>
 							<?php
-								foreach ($getTagByMedia as $datatag) {
+								foreach ($getTagByMedia as $datatag) { 
 									echo "<a href='' class='label label-light-grey'>".$datatag['nama']."</a>";
-								}
+								} 
 							?>
 						</section>
-
-
+						<?php
+							if (isset($id_users)) {
+								?>
+								<section class="proj-page-section proj-page-labels">
+									<center>
+										<button type="button" class="btn btn btn-inline btn-danger" data-toggle="modal" data-target="#myModal">
+											Report Dokumen
+										</button>
+									</center>
+									<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+										<form  action="#" method="POST" role="form" enctype="multipart/form-data">
+										  <div class="modal-dialog" role="document">
+										    <div class="modal-content">
+										      <div class="modal-header">
+										        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+										        <h4 class="modal-title" id="myModalLabel"><?php echo $getMediaById['judul'];?></h4>
+										      </div>
+										      <div class="modal-body">
+										      	<p> Dokumen akan di report bila tidak sesuai dengan bahan ajar pendidikan dan menyalah gunakan aturan </p>
+												<textarea class="form-control" name="keterangan" style=" width:100%; height:200px" placeholder="Alasan Report Media : <?php echo $getMediaById['judul'];?> "></textarea>
+										      </div>
+										      <div class="modal-footer">
+												<input type="hidden" name="iddokumen" value="<?php echo $getMediaById['_id'];?>">
+										        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+												<button type="submit" class="btn btn-default btn-danger" name="reportdokumen" value="nonactive" >Adukan Dokumen</button>
+										      </div>
+										    </div>
+										  </div>
+										</form>
+									</div>
+								</section>
+								<?php
+							}
+						?>
 						
-
-
 					</section>
 
 				</div>

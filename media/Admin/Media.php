@@ -28,6 +28,7 @@
         $deskripsi = mysql_escape_string($_POST['deskripsi']);
         $kategori = mysql_escape_string($_POST['kategori']);
         $tags = mysql_escape_string($_POST['tags']);
+        $statusdokumen = mysql_escape_string($_POST['statusdokumen']);
         if (isset($_POST['tautan'])) {
         	$tautan = mysql_escape_string($_POST['tautan']);
         }else{
@@ -42,7 +43,7 @@
         $iduser = "58ec5cf21192a6e8180018bf";
         $gambar_lama = mysql_escape_string($_POST['gambar_lama']);
         $file_lama = mysql_escape_string($_POST['file_lama']);
-        $classMedia->EditMedia($id,$iduser,$judul,$deskripsi,$kategori,$tags,$tautan,$dokumen,$image,$gambar_lama,$file_lama); 
+        $classMedia->EditMedia($id,$iduser,$judul,$deskripsi,$kategori,$tags,$tautan,$dokumen,$image,$gambar_lama,$file_lama,$statusdokumen); 
 	}
 
 ?>
@@ -80,7 +81,7 @@
 								
 										<fieldset class="form-group">
 											<label class="form-label">Judul</label>
-											<input type="text" name="judul" class="form-control maxlength-simple" id="exampleInput" required placeholder="Judul" maxlength="15">
+											<input type="text" name="judul" class="form-control maxlength-simple" id="exampleInput" required placeholder="Judul" >
 										</fieldset>
 										<fieldset class="form-group">
 											<label class="form-label">Deskripsi</label>
@@ -242,7 +243,7 @@
 									<div class="col-lg-8">
 										<fieldset class="form-group">
 											<label class="form-label">Judul</label>
-											<input type="text" class="form-control maxlength-simple"  name="judul" required value="<?php echo $getMediaById['judul'];?>" maxlength="15">
+											<input type="text" class="form-control maxlength-simple"  name="judul" required value="<?php echo $getMediaById['judul'];?>" >
 										</fieldset>
 										<fieldset class="form-group">
 											<label class="form-label">Deskripsi</label>
@@ -319,16 +320,36 @@
 												
 											</div>
 										</fieldset>
-										<fieldset class="form-group">
-											<label class="form-label">Tags</label>
-											<textarea id="tags-editor-textarea" name="tags">
-												<?php
-													foreach ($getTagByMedia as $datatag) {
-														echo $datatag['nama'].",";
-													}
-												?>
-											</textarea>
-										</fieldset>
+										<div class="row">
+										<div class="col-lg-3">
+												<label class="form-label">Active</label>
+												<select id="option" name="statusdokumen"  class="bootstrap-select">
+												   <?php
+												   		if ($getMediaById['active'] == 'active') {
+												   			echo "<option value='active' selected>Dokumen Active</option> ";
+												   			echo "<option value='nonactive' >Dokumen Non-Active</option> ";
+												   		}elseif ($getMediaById['active'] == 'nonactive') {
+												   			echo "<option value='active' >Dokumen Active</option> ";
+												   			echo "<option value='nonactive' selected>Dokumen Non-Active</option> ";
+												   		}
+												   ?>
+												</select>
+											</div>
+											<div class="col-lg-9">
+												<fieldset class="form-group">
+													<label class="form-label">Tags</label>
+													<textarea id="tags-editor-textarea" name="tags">
+														<?php
+															foreach ($getTagByMedia as $datatag) {
+																echo $datatag['nama'].",";
+															}
+														?>
+													</textarea>
+												</fieldset>
+											</div>
+											
+										</div>
+										
 									</div>
 								</div>
 								<div style="text-align: right">

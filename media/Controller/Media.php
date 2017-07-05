@@ -493,7 +493,7 @@ class Media
     	umask($old);
     }
 
-    public function EditMedia($id,$iduser,$judul,$deskripsi,$kategori,$tags,$tautan,$dokumen,$image,$gambar_lama,$file_lama)
+    public function EditMedia($id,$iduser,$judul,$deskripsi,$kategori,$tags,$tautan,$dokumen,$image,$gambar_lama,$file_lama,$statusdokumen)
     {
 
     	if ($dokumen != "") {
@@ -540,6 +540,7 @@ class Media
 						"deskripsi" => $deskripsi,
 						"id_kategori" => $kategori,
 						"tautan" => $tautan,
+						"active" => $statusdokumen,
 						"path_document" => $direktori_dokumen,
 		    	 		"date_modified" => date("Y-m-d H:i:s")
 					);
@@ -555,6 +556,7 @@ class Media
 							"id_kategori" => $kategori,
 							"path_image" => $direktori_image,
 							"tautan" => $tautan,
+							"active" => $statusdokumen,
 							"path_document" => $direktori_dokumen,
 			    	 		"date_modified" => date("Y-m-d H:i:s")
 						);
@@ -563,6 +565,7 @@ class Media
 				    		"id_user" => "$iduser",
 							"judul" => $judul,
 							"deskripsi" => $deskripsi,
+							"active" => $statusdokumen,
 							"id_kategori" => $kategori,
 							"tautan" => $tautan,
 			    	 		"date_modified" => date("Y-m-d H:i:s")
@@ -581,6 +584,7 @@ class Media
 		    		"id_user" => "$iduser",
 					"judul" => $judul,
 					"deskripsi" => $deskripsi,
+					"active" => $statusdokumen,
 					"id_kategori" => $kategori,
 					"tautan" => $tautan,
 	    	 		"date_modified" => date("Y-m-d H:i:s")
@@ -594,6 +598,7 @@ class Media
 			    		"id_user" => "$iduser",
 						"judul" => $judul,
 						"deskripsi" => $deskripsi,
+						"active" => $statusdokumen,
 						"id_kategori" => $kategori,
 						"path_image" => $direktori_image,
 						"tautan" => $tautan,
@@ -604,6 +609,7 @@ class Media
 				    		"id_user" => "$iduser",
 							"judul" => $judul,
 							"deskripsi" => $deskripsi,
+							"active" => $statusdokumen,
 							"id_kategori" => $kategori,
 							"tautan" => $tautan,
 			    	 		"date_modified" => date("Y-m-d H:i:s")
