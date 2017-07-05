@@ -20,9 +20,10 @@ if(isset($_POST['addQuiz'])){
 	}
 }
 
-$infoMapel	= $mapelClass->getInfoMapel($_GET['modul']);
+$menuModul	= 4;
+$infoModul	= $modulClass->getInfoModul($_GET['modul']);
+$infoMapel	= $mapelClass->getInfoMapel($infoModul['id_mapel']);
 $listQuiz	= $quizClass->getListbyModul($_GET['modul']);
-$infoModul		= $modulClass->getInfoModul($_GET['modul']);
 ?>
 	<div class="modal fade"
 		 id="updateMapel"
@@ -101,14 +102,8 @@ $infoModul		= $modulClass->getInfoModul($_GET['modul']);
 									<div class="tbl info-tbl">
 										<div class="tbl-row">
 											<div class="tbl-cell">
-												<p class="title"><?=$infoMapel['nama']?></p>
-												<p>Mata Pelajaran</p>
-											</div>
-											<div class="tbl-cell tbl-cell-stat">
-												<div class="inline-block">
-													<p class="title"><?=$infoMapel['modul']?></p>
-													<p>Modul</p>
-												</div>
+												<p class="title">Quiz <?=$infoModul['nama']?></p>
+												<p>Mata Pelajaran <?=$infoMapel['nama']?></p>
 											</div>
 										</div>
 									</div>
@@ -137,7 +132,7 @@ $infoModul		= $modulClass->getInfoModul($_GET['modul']);
 						<header class="widget-header">
 							Create Quis
 							<span class="label label-pill label-primary"><?=$infoMapel['modul']?></span>
-							
+
 						</header>
 						<div>
 						<div class="card-block" id="accordion">
@@ -156,7 +151,7 @@ $infoModul		= $modulClass->getInfoModul($_GET['modul']);
 													</a>
 												</div>
 												<div class="tbl-cell">
-													<div class="user-card-row-name"><a href="#demo'.$no.'" data-toggle="collapse" data-parent="#accordion">'.$materi['nama'].'</a></div>
+													<div class="user-card-row-name"><a href="quiz-start.php?id='.$materi['_id'].'">'.$materi['nama'].'</a></div>
 													<div class="color-blue-grey-lighter">'.($materi['date_created'] == $materi['date_modified'] ? "Diterbitkan " : "Diperbarui ").selisih_waktu($materi['date_modified']).'</div>
 												</div>
 												<div class="tbl-cell" align="right">';
