@@ -43,7 +43,7 @@ if(isset($_GET['submit'])){
 									<div class="tbl info-tbl">
 										<div class="tbl-row">
 											<div class="tbl-cell">
-												<p class="title">Quiz <?=$infoQuiz['nama']?></p>
+												<p class="title"><?=$infoQuiz['nama']?></p>
 												<p>Sisa Waktu <span id="timer"></span></p>
 											</div>
 										</div>

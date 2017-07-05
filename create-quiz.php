@@ -201,20 +201,12 @@ $listQuiz	= $quizClass->getListbyModul($_GET['modul']);
 													<div class="color-blue-grey-lighter"><?=($materi['date_created'] == $materi['date_modified'] ? "Diterbitkan " : "Diperbarui ").selisih_waktu($materi['date_modified'])?></div>
 												</div>
 												<div class="tbl-cell" align="right">';
-<<<<<<< HEAD
 												<?php if ($_SESSION['lms_id'] == $materi['creator']) {?>
 														<a href="quiz-action.php?act=update&md=<?=$infoModul['_id']?>&qz=<?=$materi['_id']?>" class="shared" title="Edit" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk memperbarui isi dari Materi yang sudah dibuat." style="right: 35px">
 															<i class="font-icon font-icon-pencil"></i>
 														</a>
 														<a onclick="remove(<?=$materi['_id']?>)"   class="shared" title="Hapus" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menghapus Materi yang sudah dibuat.">
 															<i class="font-icon font-icon-trash"></i>
-=======
-												if ($_SESSION['lms_id'] == $materi['creator']) {
-
-													echo '<span class="label label-'.($materi['status'] == "1" ? "success" : "primary").'" style="margin-right: 20px">'.($materi['status'] == "1" ? "Ditampilkan" : "Belum Ditampilkan").'</span>
-													<a href="quiz-action.php?act=update&md='.$infoModul['_id'].'&qz='.$materi['_id'].'" class="shared" title="Edit" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk memperbarui isi dari Materi yang sudah dibuat." style="right: 35px">
-															<i class="font-icon font-icon-pencil")"></i>
->>>>>>> 9e405cfbe7ab28ed6b07e1469ad4729b64c93451
 														</a>
 												<?php } ?>
 											</div>
