@@ -22,7 +22,7 @@ $soalClass 	    = new Soal();
 $infoQuiz	    = $quizClass->getInfoQuiz($_GET['id']);
 $nilaiQuiz      = $quizClass->submitQuiz($_SESSION['lms_id'], $_GET['id']);
 
-$list_soal      = $soalClass->getListbyQuiz($_GET['id']);
+$list_soal      = $soalClass->getListSoalbyQuiz($_GET['id']);
 $jumlah_soal    = $soalClass->getNumberbyQuiz($_GET['id']);
 
 ?>
