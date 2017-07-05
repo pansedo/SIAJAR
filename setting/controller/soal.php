@@ -17,15 +17,16 @@ class Soal
     public function getInfoSoal($idSoal){
 		$ID     = new MongoId($idSoal);
         $query  = $this->db->soal->findOne(array("_id" => $ID));
-		if($query['_id']){
-			$query1	= $this->db->soal->find(array("id_soal" => $idSoal))->count();
-			$query['modul'] = $query1;
-		}
+		
         return $query;
     }
 
     public function getListbyQuiz($idQuiz){
         $query =  $this->db->soal->find(array("id_paket"=>"$idQuiz"));
+        // if($query["soal"]){
+        //     $query1 = $this->db->soal->find(array("id_paket" => $idQuiz))->count();
+        //     $query['jmlSoal'] = $query1;
+        // }
         return $query;
     }
 
@@ -89,7 +90,7 @@ class Soal
                 $inserttag = $this->db->opsi_soal->insert($inserts);
 
             }
-            echo "<script>alert('".$rest['status']."'); document.location='quiz-action.php?md=".$_GET['md']."&qz=".$_GET['qz']."</script>";
+            echo "<script>alert('Sukses'); document.location='quiz-action.php?md=".$_GET['md']."&qz=".$_GET['qz']."</script>";
         }else {
             $hasil     = "Failed";
         }

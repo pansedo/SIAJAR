@@ -20,10 +20,8 @@ if(isset($_POST['addQuiz'])){
 	}
 }
 
-$menuModul	= 4;
-$infoModul	= $modulClass->getInfoModul($_GET['modul']);
-$infoMapel	= $mapelClass->getInfoMapel($infoModul['id_mapel']);
-$listQuiz	= $quizClass->getListbyModul($_GET['modul']);
+$menuModul		= 1;
+$listQuiz	= $quizClass->getListbyUser($_SESSION['lms_id']);
 ?>
 	<div class="modal fade"
 		 id="updateMapel"
@@ -89,7 +87,7 @@ $listQuiz	= $quizClass->getListbyModul($_GET['modul']);
 										<input type="number" class="form-control" name="durasi" id="exampleInput" placeholder="0" maxlength="3">
 										<small class="text-muted">Lama Pengerjaan dalam satuan menit.</small>
 								</div>
-
+										
 							</div>
 							<div class="form-group row">
 								<label class="col-md-3 form-control-label"  for="exampleInput">Tanggal Mulai</label>
@@ -102,7 +100,7 @@ $listQuiz	= $quizClass->getListbyModul($_GET['modul']);
 								<div class="col-md-9">
 								<input type="date" class="form-control" name="selesai" id="exampleInput" placeholder="dd/mm/yyyy">
 								</div>
-
+								
 							</div>
 					</div>
 				</div>
@@ -126,8 +124,8 @@ $listQuiz	= $quizClass->getListbyModul($_GET['modul']);
 									<div class="tbl info-tbl">
 										<div class="tbl-row">
 											<div class="tbl-cell">
-												<p class="title">Quiz <?=$infoModul['nama']?></p>
-												<p>Mata Pelajaran <?=$infoMapel['nama']?></p>
+												<p class="title">Modul <?//=$infoModul['nama']?></p>
+												<p>Mata Pelajaran <?//=$infoMapel['nama']?></p>
 											</div>
 											<div class="tbl-cell tbl-cell-stat">
 												<div class="inline-block">
@@ -153,16 +151,16 @@ $listQuiz	= $quizClass->getListbyModul($_GET['modul']);
 			<div class="row">
 				<div class="col-xl-3 col-lg-4">
 					<?php
-						require("includes/modul-menu.php");
+						require("includes/paket-menu.php");
 					?>
 				</div>
 
 				<div class="col-xl-9 col-lg-8">
 					<section class="widget widget-activity">
 						<header class="widget-header">
-							Create Quis
-							<span class="label label-pill label-primary"><?=$infoMapel['modul']?></span>
-
+							<?//?>
+							<span class="label label-pill label-primary"><?//=$infoMapel['modul']?></span>
+							
 						</header>
 						<div>
 						<div class="card-block" id="accordion">
@@ -171,82 +169,51 @@ $listQuiz	= $quizClass->getListbyModul($_GET['modul']);
 					// print_r($listQuiz);
 					if ($listQuiz->count() > 0) {
 						foreach ($listQuiz as $materi) {
-							$submittedQuiz = $quizClass->isSumbmitted((string)$_SESSION['lms_id'], (string)$materi['_id']);
-							?>
-								<article class="box-typical profile-post panel">
+							echo '<article class="box-typical profile-post panel">
 									<div class="profile-post-header">
 										<div class="user-card-row">
 											<div class="tbl-row">
 												<div class="tbl-cell tbl-cell-photo">
-													<a href="#demo<?=$no?>" data-toggle="collapse" data-parent="#accordion">
-														<?php
-															if($submittedQuiz){
-														?>
-															<img src="assets/img/quiz-icon.png" alt="">
-														<?php }else{ ?>
-															<img src="assets/img/quiz-icon-empty.png" alt="">
-														<?php } ?>
+													<a href="#demo'.$no.'" data-toggle="collapse" data-parent="#accordion">
+														<img src="assets/img/test-quiz.png" alt="">
 													</a>
 												</div>
 												<div class="tbl-cell">
-													<div class="user-card-row-name">
-														<?php
-															if($submittedQuiz){
-														?>
-															<a href="#" onclick="message()"><?=$materi['nama']?></a>
-														<?php }else{ ?>
-															<a href="quiz-start.php?id=<?=$materi['_id']?>"><?=$materi['nama']?></a>
-														<?php } ?>
-													</div>
-													<div class="color-blue-grey-lighter"><?=($materi['date_created'] == $materi['date_modified'] ? "Diterbitkan " : "Diperbarui ").selisih_waktu($materi['date_modified'])?></div>
+													<div class="user-card-row-name"><a href="#demo'.$no.'" data-toggle="collapse" data-parent="#accordion">'.$materi['nama'].'</a></div>
+													<div class="color-blue-grey-lighter">'.($materi['date_created'] == $materi['date_modified'] ? "Diterbitkan " : "Diperbarui ").selisih_waktu($materi['date_modified']).'</div>
 												</div>
 												<div class="tbl-cell" align="right">';
-<<<<<<< HEAD
-												<?php if ($_SESSION['lms_id'] == $materi['creator']) {?>
-														<a href="quiz-action.php?act=update&md=<?=$infoModul['_id']?>&qz=<?=$materi['_id']?>" class="shared" title="Edit" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk memperbarui isi dari Materi yang sudah dibuat." style="right: 35px">
-															<i class="font-icon font-icon-pencil"></i>
-														</a>
-														<a onclick="remove(<?=$materi['_id']?>)"   class="shared" title="Hapus" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menghapus Materi yang sudah dibuat.">
-															<i class="font-icon font-icon-trash"></i>
-=======
 												if ($_SESSION['lms_id'] == $materi['creator']) {
-
-													echo '<span class="label label-'.($materi['status'] == "1" ? "success" : "primary").'" style="margin-right: 20px">'.($materi['status'] == "1" ? "Ditampilkan" : "Belum Ditampilkan").'</span>
+													
+													echo '
 													<a href="quiz-action.php?act=update&md='.$infoModul['_id'].'&qz='.$materi['_id'].'" class="shared" title="Edit" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk memperbarui isi dari Materi yang sudah dibuat." style="right: 35px">
 															<i class="font-icon font-icon-pencil")"></i>
->>>>>>> 9e405cfbe7ab28ed6b07e1469ad4729b64c93451
 														</a>
-												<?php } ?>
-											</div>
-											</div>
-										</div>
-									</div>
-									<div id="demo<?=$no?>" class="profile-post-content collapse">
-										<?php
-											if($submittedQuiz){
-												$nilaiQuiz      = $quizClass->hitungNilaiQuiz($_SESSION['lms_id'], (string)$materi['_id']);
-										?>
-										Nilai Quiz :<?=$nilaiQuiz?> <br />
-										<?php }else{ ?>
-										Durasi :<?=$materi["durasi"]?> menit<br />
-										Tanggal Berakhir :<?=$materi["end_date"]?> <br />
-										<?php } ?>
-									</div>
-								</article>
-							<?php
+														<a onclick="remove(\''.$materi['_id'].'\')"   class="shared" title="Hapus" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menghapus Materi yang sudah dibuat.">
+															<i class="font-icon font-icon-trash")"></i>
+														</a>';
+												}
+							// echo '				</div>
+							// 				</div>
+							// 			</div>
+							// 		</div>
+							// 		<div id="demo'.$no.'" class="profile-post-content collapse">
+							// 			Durasi :'.$materi["durasi"].' <br />
+							// 			Tanggal Berakhir :'.$materi["end_date"].' <br />
+							// 		</div>
+							// 	</article>
+							// ';
 							$no++;
 						}
 					}else {
-						?>
-								<article class="box-typical profile-post">
+						echo '	<article class="box-typical profile-post">
 									<div class="profile-post-content" align="center">
 										<span>
 										 Belum ada Kuis saat ini. <br />
 										<button type="button" class="btn btn-sm btn-inline" onclick="add()" title="Tambah" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menambahkan Quiz baru.">+ Buat Baru</button>
 										</span>
 									</div>
-								</article>
-				<?php
+								</article>';
 					}
 				?>
 							</div>
@@ -338,18 +305,6 @@ $listQuiz	= $quizClass->getListbyModul($_GET['modul']);
       			});
       		});
       	}
-
-		function message(){
-			swal({
-                title: "Quiz Sudah Dikerjakan!",
-                text: "Anda Tidak Bisa Mengerjakannya Kembali!",
-                type: "warning",
-                confirmButtonText: "Ya",
-                confirmButtonClass: "btn-primary",
-                closeOnConfirm: true,
-                showLoaderOnConfirm: true
-            });
-		};
 
 		$(document).ready(function() {
 			$(".fancybox").fancybox({

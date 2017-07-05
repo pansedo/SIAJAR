@@ -18,6 +18,7 @@
 	$classTag = new Tag();
 
 	$FuncProfile = $classProfile->GetData($id_users);
+	$getMediaCount = $classMedia->GetMediabyUserCount($id_users);
 
 	$getkategoriutama = $classKategori->GetKategoriUtama();
 	$getMedia = $classMedia->GetMedia();

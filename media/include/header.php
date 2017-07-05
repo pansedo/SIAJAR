@@ -17,10 +17,12 @@
         $email    = $_SESSION['lms_username'];
         $status     = $_SESSION['lms_status'];
 
+
         $classProfile = new Profile();
 		$FuncProfile = $classProfile->GetData($id_users);
 
     }
+
     function selisih_waktu($timestamp){
     	$selisih = time() - strtotime($timestamp) ;
 
@@ -50,6 +52,7 @@
 
 	    return $waktu;
 	}
+
     $classKategori = new Kategori();
     $getkategoriutama = $classKategori->GetKategoriUtama();
 ?>  
