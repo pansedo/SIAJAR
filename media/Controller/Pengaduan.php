@@ -38,6 +38,36 @@
 	    	}
 		}
 
+		public function CreatePengaduan($iddokumen,$keterangan,$id_users)
+		{
+			$insert = array(
+				"id_user" => $id_users,
+			    "id_dokumen" => $iddokumen,
+			    "status" => "noncheck",
+			    "keterangan" => $keterangan,
+			    "date_created" => date("Y-m-d H:i:s"),
+    	 		"date_modified" => date("Y-m-d H:i:s")
+				);
+
+			$insertpengaduan = $this -> table -> insert($insert);
+
+			echo "<script type='text/javascript'>swal({
+					  title: 'Berhasil !',
+					  text: 'Dokumen NonAktif - Pengaduan Di Terima!',
+					  type: 'success',
+					  timer: 2000
+					}).then(
+					  function () {
+					   history.go(-1);
+					  },
+					  function (dismiss) {
+					  	history.go(-1);
+					    if (dismiss === 'timer') {
+					      console.log('I was closed by the timer')
+					    }
+					  })</script>";
+		}
+ 
 		public function CheckPengaduan($idpengaduan,$keterangan,$statuspengaduan)
 		{
 			if ($statuspengaduan == "nonactive") {
