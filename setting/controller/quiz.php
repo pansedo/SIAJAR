@@ -73,4 +73,29 @@ class Quiz
 
         return $nilai_quiz;
     }
+
+    public function submitQuiz($idUser, $idQuiz, $nilaiQuiz){
+        $update     = array('$set' => array("nilai" => $nilaiQuiz, "date_modified"=>date('Y-m-d H:i:s')));
+
+        try {
+
+            $this->db->kumpul_quiz->update(array("id_user" => $idUser, "id_quiz" => $idQuiz), $update, array("upsert" => true));
+            $status     = "Success";
+        } catch(MongoCursorException $e) {
+
+            $status     = "Failed";
+        }
+
+        return $status;
+    }
+
+    public function isSumbmitted($idUser, $idQuiz){
+        $query  = $this->db->kumpul_quiz->find(array("id_user" => $idUser, "id_quiz" => $idQuiz))->count();
+
+        if($query > 0){
+            return "1";
+        }else{
+            return "0";
+        }
+    }
 }

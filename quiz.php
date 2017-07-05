@@ -16,12 +16,19 @@ $idModul        = $infoQuiz['id_modul'];
 $list_soal      = $soalClass->getListSoalbyQuiz($_GET['id']);
 $jumlah_soal    = $soalClass->getNumberbyQuiz($_GET['id']);
 
+if(!isset($_SESSION["start_time"])){
+    header( "Location: create-quiz.php?modul=$idModul");
+}
+
 if(isset($_GET['submit'])){
+    unset($_SESSION["start_time"]);
+    unset($_SESSION["end_time"]);
+    unset($_SESSION["duration"]);
+
     $nilaiQuiz      = $quizClass->hitungNilaiQuiz($_SESSION['lms_id'], $_GET['id']);
-    $quizClass->submitQuiz($_SESSION['lms_id'], $_GET['id'], $nilaiQuiz);
+    $quizClass->submitQuiz((string)$_SESSION['lms_id'], $_GET['id'], $nilaiQuiz);
 
     header( "Location: create-quiz.php?modul=$idModul");
-    die();
 }
 
 ?>
@@ -48,7 +55,7 @@ if(isset($_GET['submit'])){
 				</div>
 			</div>
 		</div><!--.profile-header-photo-->
-        Nilai Quiz: <?php echo $nilaiQuiz; ?>
+
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-xl-12 col-lg-12">
@@ -108,9 +115,20 @@ if(isset($_GET['submit'])){
             xmlhttp.send(null);
             document.getElementById("timer").innerHTML   = xmlhttp.responseText;
             if(xmlhttp.responseText == "00:00:00"){
-                alert('Waktu Habis');
-                window.onbeforeunload = null;
-                document.location.href="quiz.php?id=<?php echo $_GET['id']; ?>&submit=1";
+                swal({
+                    title: "Maaf",
+                    text: "Waktu Anda Sudah Habis!",
+                    type: "warning",
+                    showCancelButton: false,
+                    confirmButtonText: "Ya",
+                    confirmButtonClass: "btn-primary",
+                    closeOnConfirm: false,
+                    showLoaderOnConfirm: true,
+                    allowEscapeKey: false
+                }, function () {
+                    window.onbeforeunload = null;
+                    document.location.href="quiz.php?id=<?php echo $_GET['id']; ?>&submit=1";
+                });
             }
         }, 1000);
 
@@ -126,7 +144,20 @@ if(isset($_GET['submit'])){
         }
 
         $('#submit').on('click', function() {
-            document.location.href="quiz.php?id=<?php echo $_GET['id']; ?>&submit=1";
+            swal({
+                title: "Apakah anda yakin?",
+                text: "Akan Mengumpulkan Sekarang!",
+                type: "warning",
+                showCancelButton: true,
+                cancelButtonText: "Tidak",
+                confirmButtonText: "Ya",
+                confirmButtonClass: "btn-primary",
+                closeOnConfirm: false,
+                showLoaderOnConfirm: true
+            }, function () {
+                window.onbeforeunload = null;
+                document.location.href="quiz.php?id=<?php echo $_GET['id']; ?>&submit=1";
+            });
         });
 
         $('#next-soal').on('click', function() {
