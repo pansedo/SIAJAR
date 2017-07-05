@@ -7,10 +7,8 @@
     spl_autoload_register(function ($class) {
       include 'Controller/' .$class . '.php';
     });
-    $base_url = "http://localhost/siajar/media";
-
-
-if (!isset($_SESSION['lms_id']) && !isset($_SESSION['lms_username']) && !isset($_SESSION['lms_status'])) {
+    $base_url = "http://114.4.109.108/media";
+	if (!isset($_SESSION['lms_id']) && !isset($_SESSION['lms_username']) && !isset($_SESSION['lms_status'])) {
         // header("Location:Auth/$base_url");
         // exit();
     }else{ 
@@ -19,7 +17,6 @@ if (!isset($_SESSION['lms_id']) && !isset($_SESSION['lms_username']) && !isset($
         $email    = $_SESSION['lms_username'];
         $status     = $_SESSION['lms_status'];
 
-    
 
         $classProfile = new Profile();
 		$FuncProfile = $classProfile->GetData($id_users);

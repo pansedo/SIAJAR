@@ -25,7 +25,7 @@
 
 	if (isset($_POST['tambah_media'])) {
         $judul = mysql_escape_string($_POST['judul']);
-        $deskripsi = $_POST['deskripsi'];
+        $deskripsi = mysql_escape_string($_POST['deskripsi']);
         $kategori = mysql_escape_string($_POST['kategori']);
         $tags = mysql_escape_string($_POST['tags']);
         if (isset($_POST['tautan'])) {
@@ -50,7 +50,7 @@
 		# code...
 		$id           = base64_decode($_GET['id']);
 		$judul = mysql_escape_string($_POST['judul']);
-        $deskripsi = $_POST['deskripsi'];
+        $deskripsi = mysql_escape_string($_POST['deskripsi']);
         $kategori = mysql_escape_string($_POST['kategori']);
         $tags = mysql_escape_string($_POST['tags']);
         if (isset($_POST['tautan'])) {

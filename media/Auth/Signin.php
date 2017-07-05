@@ -14,7 +14,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
-	<title>Learning Magement System </title>
+	<title>Learning Magement System</title>
 
 	<link href="../Assets/img/favicon.144x144.png" rel="apple-touch-icon" type="image/png" sizes="144x144">
 	<link href="../Assets/img/favicon.114x114.png" rel="apple-touch-icon" type="image/png" sizes="114x114">
@@ -65,6 +65,7 @@
                         </div>
                     </div>
                      <input type="submit" value='Sign in' name='login' class="btn btn-rounded">
+                    <p class="sign-note">Belum mempunyai akun? <a href="Signup.php">Daftar</a></p>
                 </form>
             </div>
         </div>

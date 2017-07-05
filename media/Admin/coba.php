@@ -14,20 +14,6 @@
     // $tes = $classMedia->accentToRegex($text);
     $classPopular = new Popular();
 
-    // $x =  $classPopular->DataTerbanyak();
-    // foreach ($x as $key) {
-    // 	 echo $key['nama_user'];
-    // 	 echo $key['count'];
-    // }
-    // $x = $classPopular->TagTerbanyak();
-    // foreach ($x as $key) {
-    // 	echo $key['_id'];
-    // }
-    // 	print_r($x);
+    echo $classPopular->DataTerbanyak();
 
-    // $x = $classMedia->classMediaByKategori("591012131192a6dc1800002a");
-    $classKategori = new Kategori();
-    $x = $classKategori-> GetKategoriSemua();
-    echo $x;
-    echo "string"; 
 ?>

@@ -19,6 +19,12 @@
 	                <span class="lbl">Kategori</span>
 	            </a>
 	        </li>
+	        <li class="blue">
+	            <a href="pengaduan.php">
+	                <i class="glyphicon glyphicon-refresh"></i>
+	                <span class="lbl">Pengaduan</span>
+	            </a>
+	        </li>
 	        <!-- <li class="blue">
 	            <a href="#">
 	                <i class="font-icon font-icon-users"></i>

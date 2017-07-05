@@ -105,9 +105,9 @@
 	                            <img src="../Assets/img/avatar-2-64.png" alt="">
 	                        </button>
 	                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd-user-menu">
-	                            <a class="dropdown-item" href="Index.php"><span class="font-icon glyphicon glyphicon-home"></span>Home</a>
-	                            <a class="dropdown-item" href="Profile.php"><span class="font-icon glyphicon glyphicon-user"></span>Profile</a>
-	                            <a class="dropdown-item" href="Setting.php"><span class="font-icon glyphicon glyphicon-cog"></span>Settings</a>
+	                            <a class="dropdown-item" href="index.php"><span class="font-icon glyphicon glyphicon-home"></span>Home</a>
+	                            <a class="dropdown-item" href="profile.php"><span class="font-icon glyphicon glyphicon-user"></span>Profile</a>
+	                            <a class="dropdown-item" href="setting.php"><span class="font-icon glyphicon glyphicon-cog"></span>Settings</a>
 	                            <div class="dropdown-divider"></div>
 	                            <a class="dropdown-item" href="../Auth/logout.php"><span class="font-icon glyphicon glyphicon-log-out"></span>Logout</a>
 	                        </div>

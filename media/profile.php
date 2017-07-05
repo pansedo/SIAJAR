@@ -3,8 +3,7 @@
 	include 'include/menu.php';
 
 	if (!isset($_SESSION['lms_id']) && !isset($_SESSION['lms_username']) && !isset($_SESSION['lms_status'])) {
-        header("Location:Auth/$base_url");
-        exit();
+        
     }else{ 
         set_time_limit(10000); 
         $id_users   = $_SESSION['lms_id'];
@@ -17,13 +16,26 @@
 	$classMedia = new Media();
 
 	$getkategoriutama = $classKategori->GetKategoriUtama();
-	$getMedia = $classMedia->GetMediabyUser($id_users);
-	$getMediaCount = $classMedia->GetMediabyUserCount($id_users);
+	
+	
 
 
     $classProfile = new Profile();
-	$FuncProfile = $classProfile->GetData($id_users);
-
+    if (isset($_GET['id'])) {
+    	# code...
+    	$FuncProfile = $classProfile->GetData($_GET['id']);
+    	$getMedia = $classMedia->GetMediabyUser($_GET['id']);
+    	$getMediaCount = $classMedia->GetMediabyUserCount($_GET['id']);
+    }else if (isset($id_users)) {
+    	# code...
+    	$FuncProfile = $classProfile->GetData($id_users);
+		$getMedia = $classMedia->GetMediabyUser($id_users);
+		$getMediaCount = $classMedia->GetMediabyUserCount($id_users);
+    }else{
+    	header("Location:index.php");
+        exit();
+		
+	}
 ?> 
 		
 	<div class="page-content">
@@ -112,9 +124,15 @@
 									<div class="card-typical-linked" style="height:33px">oleh <a href="#"><?php echo $data['nama_user']; ?></a></div>
 									
 									<div class="tbl-cell tbl-cell-status" style="float:right">
-												<a href="media.php?action=edit&id=<?php echo base64_encode($data['_id']);?>" class="font-icon font-icon-pencil"></a>
-												<a href="media.php?action=edit&id=<?php echo base64_encode($data['_id']);?>" class="font-icon font-icon-trash "></a>
-											</div>
+									<?php 
+										if ($id_users = $data['id_user']) {
+											# code...
+										
+									?>		
+										<a href="media.php?action=edit&id=<?php echo base64_encode($data['_id']);?>" class="font-icon font-icon-pencil"></a>
+										<a href="media.php?action=edit&id=<?php echo base64_encode($data['_id']);?>" class="font-icon font-icon-trash "></a>
+									<?php } ?>
+									</div>
 									<!-- <a href="#" class="card-typical-likes">
 										<i class="font-icon font-icon-heart"></i>
 										123
