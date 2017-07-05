@@ -15,14 +15,9 @@ class Quiz
         }
     }
 
-    public function getInfoQuiz($id){
-		$ID     = new MongoId($id);
+    public function getInfoQuiz($idQuiz){
+		$ID     = new MongoId($idQuiz);
         $query  = $this->db->quiz->findOne(array("_id" => $ID));
-		if($query['_id']){
-			$query1	= $this->db->modul->find(array("id_mapel" => $id))->count();
-			$query['modul'] = $query1;
-		}
-        // print_r($query);
         return $query;
     }
 
@@ -57,14 +52,25 @@ class Quiz
         print_r($edit);
         $update = $this->db->quiz->update(array("_id"=> new MongoId($id)),array('$set'=>$edit));
         if ($update) {
-            
+
                 $status ="Sukses";
-            
+
         }else {
             $status     = "Failed";
         }
 
         $result = array("status" => $status);
         return $result;
+    }
+
+    public function submitQuiz($idUser, $idQuiz){
+        $nilai_quiz         = 0;
+        $list_jawaban_user  =  $this->db->jawaban_user->find(array("id_user"=>"$idUser", "id_quiz"=>"$idQuiz"));
+
+        foreach ($list_jawaban_user as $jawaban_user) {
+            $nilai_quiz += $jawaban_user['status'];
+        }
+
+        return $nilai_quiz;
     }
 }

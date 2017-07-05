@@ -1,4 +1,5 @@
 <?php
+
 class Soal
 {
     public function __construct() {
@@ -51,8 +52,8 @@ class Soal
                 $b = $benar;
             foreach ($jawaban as $jawab) {
                 // echo $i .' = '.$benar.'<br />';
-                // echo "if ".$benar ."=". $i.")"; 
-                
+                // echo "if ".$benar ."=". $i.")";
+
                 if ($benar = $i) {
                     $status = "benar";
                 }else{
@@ -76,7 +77,7 @@ class Soal
         $newID  = "";
         $edit = array("id_paket"=>"$id_paket","jenis" => "pg","soal" => $soal, "creator" => "$user", "date_created"=>date('Y-m-d H:i:s'), "date_modified"=>date('Y-m-d H:i:s'));
         $paketsoal = $this->db->soal->update(array("_id"=> new MongoId($id)),array('$set'=>$edit));
-        
+
         if ($paketsoal) {
             $status1 ="Sukses";
             $deleteopsi = array("id_soal" => "$id");
@@ -85,8 +86,8 @@ class Soal
                 $b = $benar;
             foreach ($jawaban as $jawab) {
                 // echo $i .' = '.$benar.'<br />';
-                // echo "if ".$benar ."=". $i.")"; 
-                
+                // echo "if ".$benar ."=". $i.")";
+
                 if ($benar = $i) {
                     $status = "benar";
                 }else{
@@ -96,7 +97,7 @@ class Soal
                 $inserts = array("id_soal" => "$id", "text" => $jawab, "status"=>"$status" );
                 $inserttag = $this->db->opsi_soal->insert($inserts);
             }
-            
+
         }else {
             $status1     = "Failed";
         }

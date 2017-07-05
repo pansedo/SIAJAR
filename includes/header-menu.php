@@ -26,7 +26,7 @@ if(isset($_POST['joinKelas'])){
 
 	        <a href="<?=base_url?>" class="site-logo">
 	            <img class="hidden-md-down" src="assets/img/logo.png" alt="">
-	            <img class="hidden-lg-up" src="assets/img/logo-2-mob.png" alt="">
+	            <img class="hidden-lg-up" src="assets/img/logo-small.png" alt="">
 	        </a>
 
 	        <div class="site-header-content">

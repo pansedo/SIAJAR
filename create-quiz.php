@@ -20,10 +20,10 @@ if(isset($_POST['addQuiz'])){
 	}
 }
 
-$menuModul		= 4;
-$listQuiz	= $quizClass->getListbyModul($_GET['modul']);
+$menuModul	= 4;
 $infoModul	= $modulClass->getInfoModul($_GET['modul']);
 $infoMapel	= $mapelClass->getInfoMapel($infoModul['id_mapel']);
+$listQuiz	= $quizClass->getListbyModul($_GET['modul']);
 ?>
 	<div class="modal fade"
 		 id="updateMapel"
@@ -89,7 +89,7 @@ $infoMapel	= $mapelClass->getInfoMapel($infoModul['id_mapel']);
 										<input type="number" class="form-control" name="durasi" id="exampleInput" placeholder="0" maxlength="3">
 										<small class="text-muted">Lama Pengerjaan dalam satuan menit.</small>
 								</div>
-										
+
 							</div>
 							<div class="form-group row">
 								<label class="col-md-3 form-control-label"  for="exampleInput">Tanggal Mulai</label>
@@ -102,7 +102,7 @@ $infoMapel	= $mapelClass->getInfoMapel($infoModul['id_mapel']);
 								<div class="col-md-9">
 								<input type="date" class="form-control" name="selesai" id="exampleInput" placeholder="dd/mm/yyyy">
 								</div>
-								
+
 							</div>
 					</div>
 				</div>
@@ -126,14 +126,8 @@ $infoMapel	= $mapelClass->getInfoMapel($infoModul['id_mapel']);
 									<div class="tbl info-tbl">
 										<div class="tbl-row">
 											<div class="tbl-cell">
-												<p class="title">Modul <?=$infoModul['nama']?></p>
+												<p class="title">Quiz <?=$infoModul['nama']?></p>
 												<p>Mata Pelajaran <?=$infoMapel['nama']?></p>
-											</div>
-											<div class="tbl-cell tbl-cell-stat">
-												<div class="inline-block">
-													<p class="title"><?=$infoMapel['modul']?></p>
-													<p>Quiz</p>
-												</div>
 											</div>
 										</div>
 									</div>
@@ -160,9 +154,9 @@ $infoMapel	= $mapelClass->getInfoMapel($infoModul['id_mapel']);
 				<div class="col-xl-9 col-lg-8">
 					<section class="widget widget-activity">
 						<header class="widget-header">
-							<?//?>
-							<span class="label label-pill label-primary"><?//=$infoMapel['modul']?></span>
-							
+							Create Quis
+							<span class="label label-pill label-primary"><?=$infoMapel['modul']?></span>
+
 						</header>
 						<div>
 						<div class="card-block" id="accordion">
@@ -181,7 +175,7 @@ $infoMapel	= $mapelClass->getInfoMapel($infoModul['id_mapel']);
 													</a>
 												</div>
 												<div class="tbl-cell">
-													<div class="user-card-row-name"><a href="#demo'.$no.'" data-toggle="collapse" data-parent="#accordion">'.$materi['nama'].'</a></div>
+													<div class="user-card-row-name"><a href="quiz-start.php?id='.$materi['_id'].'">'.$materi['nama'].'</a></div>
 													<div class="color-blue-grey-lighter">'.($materi['date_created'] == $materi['date_modified'] ? "Diterbitkan " : "Diperbarui ").selisih_waktu($materi['date_modified']).'</div>
 												</div>
 												<div class="tbl-cell" align="right">';
