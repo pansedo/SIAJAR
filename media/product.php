@@ -112,9 +112,19 @@
 							<div class="tbl proj-page-team">
 								<div class="tbl-row">
 									<div class="tbl-cell">
-										<div class="title">
-											<h2><?php echo $getMediaById['judul'];?></h2>
+									<div class="row">
+										<div class="col-lg-7">
+											<div class="title">
+												<h2><?php echo $getMediaById['judul'];?></h2>
+											</div>
 										</div>
+										<div class="col-lg-5" style="text-align: right;">
+											<div class="title" >
+												<div class="sharebox" data-services="facebook google+ tumblr twitter"></div>
+											</div>
+										</div>
+									</div>
+										
 									</div>
 									<div class="tbl-cell tbl-cell-date">
 									<!-- Rating :  -->
@@ -137,6 +147,7 @@
 									<!-- <div class="tbl-cell tbl-cell-date">3 days ago - 23 min read</div> -->
 								</div>
 							</div>
+
 						</section><!--.proj-page-section-->
 
 						<section class="proj-page-section">
