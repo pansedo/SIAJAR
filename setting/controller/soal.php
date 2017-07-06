@@ -1,4 +1,5 @@
 <?php
+
 class Soal
 {
     public function __construct() {
@@ -16,15 +17,16 @@ class Soal
     public function getInfoSoal($idSoal){
 		$ID     = new MongoId($idSoal);
         $query  = $this->db->soal->findOne(array("_id" => $ID));
-		if($query['_id']){
-			$query1	= $this->db->soal->find(array("id_soal" => $idSoal))->count();
-			$query['modul'] = $query1;
-		}
+		
         return $query;
     }
 
     public function getListbyQuiz($idQuiz){
         $query =  $this->db->soal->find(array("id_paket"=>"$idQuiz"));
+        // if($query["soal"]){
+        //     $query1 = $this->db->soal->find(array("id_paket" => $idQuiz))->count();
+        //     $query['jmlSoal'] = $query1;
+        // }
         return $query;
     }
 
@@ -36,6 +38,31 @@ class Soal
     public function getListJawaban($idSoal){
         // print_r("$idSoal");
         $query =  $this->db->opsi_soal->find(array("id_soal"=>"$idSoal"));
+        return $query;
+    }
+
+    public function getListSoalbyQuiz($idQuiz){
+        $query =  $this->db->soal->find(array("id_quiz"=>"$idQuiz"));
+        return iterator_to_array($query);
+    }
+
+    public function getListOpsiSoal($idSoal){
+        $query =  $this->db->opsi_soal->find(array("id_soal"=>"$idSoal"));
+        return $query;
+    }
+
+    public function getSoalbyId($idSoal){
+        $query =  $this->db->soal->findOne(array("_id" => new MongoId($idSoal)));
+        return $query;
+    }
+
+    public function getOpsiJawabanUser($idUser, $idQuiz, $idSoal){
+        $query =  $this->db->jawaban_user->findOne(array("id_user" => "$idUser", "id_quiz" => "$idQuiz", "id_soal" => "$idSoal"));
+        return $query;
+    }
+
+    public function getNumberbyQuiz($idQuiz){
+        $query =  $this->db->soal->find(array("id_quiz"=>"$idQuiz"))->count();
         return $query;
     }
 
@@ -51,8 +78,8 @@ class Soal
                 $b = $benar;
             foreach ($jawaban as $jawab) {
                 // echo $i .' = '.$benar.'<br />';
-                // echo "if ".$benar ."=". $i.")"; 
-                
+                // echo "if ".$benar ."=". $i.")";
+
                 if ($benar = $i) {
                     $status = "benar";
                 }else{
@@ -63,7 +90,7 @@ class Soal
                 $inserttag = $this->db->opsi_soal->insert($inserts);
 
             }
-            echo "<script>alert('".$rest['status']."'); document.location='quiz-action.php?md=".$_GET['md']."&qz=".$_GET['qz']."</script>";
+            echo "<script>alert('Sukses'); document.location='quiz-action.php?md=".$_GET['md']."&qz=".$_GET['qz']."</script>";
         }else {
             $hasil     = "Failed";
         }
@@ -76,7 +103,7 @@ class Soal
         $newID  = "";
         $edit = array("id_paket"=>"$id_paket","jenis" => "pg","soal" => $soal, "creator" => "$user", "date_created"=>date('Y-m-d H:i:s'), "date_modified"=>date('Y-m-d H:i:s'));
         $paketsoal = $this->db->soal->update(array("_id"=> new MongoId($id)),array('$set'=>$edit));
-        
+
         if ($paketsoal) {
             $status1 ="Sukses";
             $deleteopsi = array("id_soal" => "$id");
@@ -85,8 +112,8 @@ class Soal
                 $b = $benar;
             foreach ($jawaban as $jawab) {
                 // echo $i .' = '.$benar.'<br />';
-                // echo "if ".$benar ."=". $i.")"; 
-                
+                // echo "if ".$benar ."=". $i.")";
+
                 if ($benar = $i) {
                     $status = "benar";
                 }else{
@@ -96,7 +123,7 @@ class Soal
                 $inserts = array("id_soal" => "$id", "text" => $jawab, "status"=>"$status" );
                 $inserttag = $this->db->opsi_soal->insert($inserts);
             }
-            
+
         }else {
             $status1     = "Failed";
         }

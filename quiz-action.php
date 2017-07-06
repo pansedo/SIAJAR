@@ -172,8 +172,8 @@ if (isset($_POST['updateInfoQuiz'])) {
 											</div>
 											<div class="tbl-cell tbl-cell-stat">
 												<div class="inline-block">
-													<p class="title"><?=$infoMapel['modul']?></p>
-													<p>Quiz</p>
+													<!-- <p class="title"><?//=$listSoal['jmlSoal']?></p> -->
+													<!-- <p>Soal</p> -->
 												</div>
 											</div>
 										</div>

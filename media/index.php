@@ -114,7 +114,7 @@
 									<p><?php //echo substr($data['deskripsi'], 0, 30)."..."; ?></p>
 								</div>
 								<div class="card-typical-section">
-									<div class="card-typical-linked" style="height:33px">oleh <a href="#"><?php echo $data['nama_user']; ?></a></div>
+									<div class="card-typical-linked" style="height:33px">oleh <a href="profile.php?id=<?=$data['id_user']?>"><?php echo $data['nama_user']; ?></a></div>
 									<!-- <a href="#" class="card-typical-likes">
 										<i class="font-icon font-icon-heart"></i>
 										123
