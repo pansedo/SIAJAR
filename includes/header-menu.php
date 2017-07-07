@@ -221,13 +221,9 @@ if(isset($_POST['joinKelas'])){
 
 	                        </div>
 	                        <div class="dropdown dropdown-typical">
-<<<<<<< HEAD
+
 							   <a href="<?=base_url?>/paket-kuis.php" class="dropdown-toggle no-arr">
 								   <span class="font-icon font-icon-archive"></span> Paket Soal
-=======
-							   <a href="<?=base_url?>/paket-kuisku.php" class="dropdown-toggle no-arr">
-								   <span class="font-icon font-icon-home"></span> Paket Soal
->>>>>>> 8c086d32aa6ddd5a0d086dddfceba71c02580b58
 								   <span class="lbl"></span>
 							   </a>
 						   	</div>
