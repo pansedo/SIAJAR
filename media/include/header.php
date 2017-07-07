@@ -95,7 +95,11 @@
 	<link rel="stylesheet"  href="Assets/js/lib/sweetalert/sweetalert2.min.css">
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
-
+	<!-- Share Icon -->
+	<script src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
+	<script src="Assets/js/lib/simple-share/jquery.sharebox.js"></script>
+	<link href="Assets/js/lib/simple-share/jquery.sharebox.css" rel="stylesheet">
+	
 	<link rel="stylesheet" type="text/css" href="Assets/css/lib/uploadfile/component.css" />
 	<script>(function(e,t,n){var r=e.querySelectorAll("html")[0];r.className=r.className.replace(/(^|\s)no-js(\s|$)/,"$1js$2")})(document,window,0);</script>
 </head>

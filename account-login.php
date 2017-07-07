@@ -30,9 +30,9 @@
             <div class="container-fluid">
                 <form method='POST' class="sign-box" id="form-login" name="form-signin_v2" onsubmit="return false;">
                     <div class="sign-avatar">
-                        <img src="assets/img/20seam.png" style="border-radius: 0px !important;" alt="">
-                    </div>
-                    <header class="sign-title">SIAJAR SEAMOLEC</header>
+                        <img src="assets/img/jabar.png" style="border-radius: 0px !important;" alt="">
+                    </div><br />
+                    <header class="sign-title">SIAJAR LMS</header>
                     <div class="form-group">
                         <input type="text" name="username" id="username" class="form-control" placeholder="Email atau nama pengguna" required />
                     </div>

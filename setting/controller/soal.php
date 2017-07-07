@@ -1,4 +1,5 @@
 <?php
+
 class Soal
 {
     public function __construct() {
@@ -40,6 +41,31 @@ class Soal
         return $query;
     }
 
+    public function getListSoalbyQuiz($idQuiz){
+        $query =  $this->db->soal->find(array("id_quiz"=>"$idQuiz"));
+        return iterator_to_array($query);
+    }
+
+    public function getListOpsiSoal($idSoal){
+        $query =  $this->db->opsi_soal->find(array("id_soal"=>"$idSoal"));
+        return $query;
+    }
+
+    public function getSoalbyId($idSoal){
+        $query =  $this->db->soal->findOne(array("_id" => new MongoId($idSoal)));
+        return $query;
+    }
+
+    public function getOpsiJawabanUser($idUser, $idQuiz, $idSoal){
+        $query =  $this->db->jawaban_user->findOne(array("id_user" => "$idUser", "id_quiz" => "$idQuiz", "id_soal" => "$idSoal"));
+        return $query;
+    }
+
+    public function getNumberbyQuiz($idQuiz){
+        $query =  $this->db->soal->find(array("id_quiz"=>"$idQuiz"))->count();
+        return $query;
+    }
+
     public function addSoal($soal, $jawaban, $benar, $id_paket, $user){
         $newID  = "";
         $insert = array("id_paket"=>"$id_paket","jenis" => "pg","soal" => $soal, "creator" => "$user", "date_created"=>date('Y-m-d H:i:s'), "date_modified"=>date('Y-m-d H:i:s'));
@@ -52,8 +78,8 @@ class Soal
                 $b = $benar;
             foreach ($jawaban as $jawab) {
                 // echo $i .' = '.$benar.'<br />';
-                // echo "if ".$benar ."=". $i.")"; 
-                
+                // echo "if ".$benar ."=". $i.")";
+
                 if ($benar = $i) {
                     $status = "benar";
                 }else{
@@ -77,7 +103,7 @@ class Soal
         $newID  = "";
         $edit = array("id_paket"=>"$id_paket","jenis" => "pg","soal" => $soal, "creator" => "$user", "date_created"=>date('Y-m-d H:i:s'), "date_modified"=>date('Y-m-d H:i:s'));
         $paketsoal = $this->db->soal->update(array("_id"=> new MongoId($id)),array('$set'=>$edit));
-        
+
         if ($paketsoal) {
             $status1 ="Sukses";
             $deleteopsi = array("id_soal" => "$id");
@@ -86,8 +112,8 @@ class Soal
                 $b = $benar;
             foreach ($jawaban as $jawab) {
                 // echo $i .' = '.$benar.'<br />';
-                // echo "if ".$benar ."=". $i.")"; 
-                
+                // echo "if ".$benar ."=". $i.")";
+
                 if ($benar = $i) {
                     $status = "benar";
                 }else{
@@ -97,7 +123,7 @@ class Soal
                 $inserts = array("id_soal" => "$id", "text" => $jawab, "status"=>"$status" );
                 $inserttag = $this->db->opsi_soal->insert($inserts);
             }
-            
+
         }else {
             $status1     = "Failed";
         }

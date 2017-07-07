@@ -335,7 +335,7 @@ if(isset($_POST['updateKelas'])){
 								<div class="box-typical-footer">
 									<div class="tbl">
 										<div class="tbl-row">
-											<div class="tbl-cell">
+											<!-- <div class="tbl-cell">
 												<button type="button" class="btn-icon" title="lampiran tautan">
 													<i class="font-icon font-icon-earth"></i>
 												</button>
@@ -348,9 +348,9 @@ if(isset($_POST['updateKelas'])){
 												<button type="button" class="btn-icon">
 													<i class="font-icon font-icon-video-fill"></i>
 												</button>
-											</div>
+											</div> -->
 											<div class="tbl-cell tbl-cell-action">
-												<button type="submit" name="postingText" class="btn btn-rounded">Send</button>
+												<button type="submit" name="postingText" class="btn btn-rounded pull-right">Send</button>
 											</div>
 										</div>
 									</div>

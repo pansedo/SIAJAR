@@ -1,27 +1,15 @@
 <?php
 require("includes/header-top.php");
 ?>
-<link rel="stylesheet" href="assets/css/separate/pages/others.min.css">
-<link rel="stylesheet" href="assets/css/lib/daterangepicker/daterangepicker.css">
+<!-- Style for html code -->
+<link rel="stylesheet" href="./assets/tinymce4/css/prism.css" type="text/css" />
+<link rel="stylesheet" href="./assets/css/separate/pages/others.min.css">
+<link rel="stylesheet" href="./assets/css/lib/daterangepicker/daterangepicker.css">
 
-<link rel="stylesheet" href="assets/editor/css/plugins/code_view.css">
-<link rel="stylesheet" href="assets/editor/css/plugins/draggable.css">
-<link rel="stylesheet" href="assets/editor/css/plugins/colors.css">
-<link rel="stylesheet" href="assets/editor/css/plugins/emoticons.css">
-<link rel="stylesheet" href="assets/editor/css/plugins/image_manager.css">
-<link rel="stylesheet" href="assets/editor/css/plugins/image.css">
-<link rel="stylesheet" href="assets/editor/css/plugins/line_breaker.css">
-<link rel="stylesheet" href="assets/editor/css/plugins/table.css">
-<link rel="stylesheet" href="assets/editor/css/plugins/char_counter.css">
-<link rel="stylesheet" href="assets/editor/css/plugins/video.css">
-<link rel="stylesheet" href="assets/editor/css/plugins/fullscreen.css">
-<link rel="stylesheet" href="assets/editor/css/plugins/file.css">
-<link rel="stylesheet" href="assets/editor/css/plugins/quick_insert.css">
-<link rel="stylesheet" href="assets/editor/css/plugins/help.css">
-<link rel="stylesheet" href="assets/editor/css/plugins/special_characters.css">
-<link type="text/css" rel="stylesheet" href="assets/editor/css/froala_style.css"/>
-<link type="text/css" rel="stylesheet" href="assets/editor/css/froala_editor.pkgd.min.css"/>
-<link type="text/css" rel="stylesheet" href="assets/editor/css/themes/gray.css"/>
+<script type="text/javascript" src="./assets/tinymce4/js/tinymce/tinymce.min.js"></script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/codemirror.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/mode/xml/xml.min.js"></script>
 
 <?php
 require("includes/header-menu.php");
@@ -34,6 +22,7 @@ $menuModul		= 3;
 $infoModul		= $modulClass->getInfoModul($_GET['modul']);
 $infoMapel		= $mapelClass->getInfoMapel($infoModul['id_mapel']);
 $infoTugas		= $tugasClass->getInfoTugas($_GET['modul']);
+$listTugas		= $tugasClass->getListTugas($_GET['modul']);
 
 if(isset($_POST['addTugas']) || isset($_POST['updateTugas'])){
 
@@ -51,58 +40,6 @@ if(isset($_POST['addTugas']) || isset($_POST['updateTugas'])){
 	}
 }
 ?>
-
-	<div class="modal fade"
-		 id="addModulPrasyarat"
-		 tabindex="-1"
-		 role="dialog"
-		 aria-labelledby="addModulLabel"
-		 aria-hidden="true">
-		<div class="modal-dialog modal-lg" role="document">
-			<div class="modal-content">
-				<form method="POST">
-				<div class="modal-header">
-					<button type="button" class="modal-close" data-dismiss="modal" aria-label="Close">
-						<i class="font-icon-close-2"></i>
-					</button>
-					<h4 class="modal-title" id="addModulLabel">Silakan Pilih Modul</h4>
-				</div>
-				<div class="modal-body">
-					<div class="files-manager-content-in" style="margin-right:0px; border-right: 0px;">
-						<div class="fm-file-grid">
-							<div class="fm-file" style="height: 150px;">
-								<div class="checkbox-bird">
-									<input type="checkbox" id="mess-1" />
-									<label for="mess-1">
-										<div class="fm-file-icon">
-											<img src="assets/img/folder.png" alt="">
-										</div>
-										<div class="fm-file-name">Inspiration</div>
-									</label>
-								</div>
-							</div>
-							<div class="fm-file" style="height: 150px;">
-								<div class="checkbox-bird">
-									<input type="checkbox" id="mess-2" />
-									<label for="mess-2">
-										<div class="fm-file-icon">
-											<img src="assets/img/folder.png" alt="">
-										</div>
-										<div class="fm-file-name">Inspiration</div>
-									</label>
-								</div>
-							</div>
-						</div>
-					</div><!--.files-manager-content-in-->
-				</div>
-				<div class="modal-footer">
-					<button type="submit" name="addModul" value="send" class="btn btn-rounded btn-primary">Simpan</button>
-					<button type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Tutup</button>
-				</div>
-				</form>
-			</div>
-		</div>
-	</div><!--.modal-->
 
 	<div class="page-content">
 		<div class="profile-header-photo">
@@ -148,23 +85,55 @@ if(isset($_POST['addTugas']) || isset($_POST['updateTugas'])){
 				</div>
 
 				<div class="col-xl-9 col-lg-8">
+					<section class="card card-default" id="tugas-editor" style="display: none;">
+						<div class="card-block">
+                            <h5 class="with-border">Pembuatan Tugas</h5>
 
-					<article id="tugas-editor" class="box-typical profile-post" style="display: none;">
+                            <form id="form_tambah" method="POST">
+                                <div class="form-group row">
+                                    <label class="col-md-2 form-control-label">Judul</label>
+                                    <div class="col-md-8">
+										<input type="text" class="form-control" name="nama" placeholder="Judul Tugas" />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-2 form-control-label">Tenggat Waktu Pengumpulan</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" name="deadline" placeholder="Tengat Waktu Tugas" />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-2 form-control-label">Isi Tugas</label>
+                                    <div class="col-md-9">
+                                        <div id="editorContainer">
+                                            <div id="toolbarLocation"></div>
+                                            <textarea id="editormce" class="form-control wrs_div_box" contenteditable="true" tabindex="0" spellcheck="false" aria-label="Rich Text Editor, example"></textarea>
+                                            <input id="editor" type="text" name="deskripsi" style="display: none;" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="form-group pull-right">
+                                    <button type="submit" name="addTugas" class="btn">Simpan</button>
+                                    <button type="button" class="btn btn-default" id="btn-cancel">Batal</button>
+                                </div>
+                            </form>
+                        </div>
+					</section>
+					<!-- <article class="box-typical profile-post" style="display: none;">
+						<h5 class="with-border">Membuat Tugas</h5>
 						<form method="POST" action="">
 							<div class="profile-post-header">
 								<div class="user-card-row">
-									<fieldset class="form-group">
+									<div class="form-group">
 										<label class="form-label semibold">Judul</label>
 										<input type="text" class="form-control" name="nama" placeholder="Judul Tugas" value="<?php echo (isset($infoTugas) ? $infoTugas['nama']: ''); ?>">
-									</fieldset>
-									<fieldset class="form-group">
-										<label class="form-label semibold">Tengat Waktu</label>
+									</div>
+									<div class="form-group">
+										<label class="form-label semibold">Tengat Waktu Pengumpulan</label>
 										<input type="text" class="form-control" name="deadline" placeholder="Tengat Waktu Tugas" value="<?php echo (isset($infoTugas) ? $infoTugas['nama']: ''); ?>">
-									</fieldset>
+									</div>
 								</div>
-								<a href="#" id="btn-cancel" class="shared">
-									<i class="font-icon font-icon-del"></i>
-								</a>
 							</div>
 
 							<textarea id="editor" name="deskripsi">
@@ -190,56 +159,104 @@ if(isset($_POST['addTugas']) || isset($_POST['updateTugas'])){
 								</div>
 							</div>
 						</form>
-					</article>
+					</article> -->
+					<section id="tugas-preview" class="card card-inversed">
+						<header class="card-header">
+							Daftar Tugas
 
-					<article id="tugas-preview" class="box-typical profile-post">
+							<?php
+								if($infoModul['creator'] == $_SESSION['lms_id']){
+									echo '<div class="btn-group" style="float: right;">
+										<button id="btn-tambah" title="Tambah" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menambahkan tugas baru." class="btn btn-sm btn-rounded">+ Tambah Tugas</button>
+									</div>';
+								}
+							?>
+						</header>
 
-						<?php
-							if(!isset($infoTugas)){
-						?>
-
-						<div class="add-customers-screen tbl">
-							<div class="add-customers-screen-in">
-								<div class="add-customers-screen-user">
-									<i class="font-icon font-icon-folder"></i>
-								</div>
-								<h2>Tugas Kosong</h2>
-								<p class="lead color-blue-grey-lighter">Belum ada tugas yang ditambahkan<br/> Klik tombol tambah tugas untuk menambahkan tugas</p>
-								<a href="#" id="btn-tambah" class="btn">Tambah Tugas</a>
-							</div>
+						<div class="card-block" id="accordion">
+							<?php
+								$no	= 1;
+								if ($listTugas->count() > 0) {
+									foreach ($listTugas as $tugas) {
+										if ($_SESSION['lms_id'] == $tugas['creator']) {
+										echo '<article class="box-typical profile-post panel">
+												<div class="profile-post-header">
+													<div class="user-card-row">
+														<div class="tbl-row">
+															<div class="tbl-cell tbl-cell-photo">
+																<a href="#demo'.$no.'" data-toggle="collapse" data-parent="#accordion">
+																	<img src="assets/img/folder.png" alt="">
+																</a>
+															</div>
+															<div class="tbl-cell">
+																<div class="user-card-row-name"><a href="#demo'.$no.'" data-toggle="collapse" data-parent="#accordion">'.$tugas['nama'].'</a></div>
+																<div class="color-blue-grey-lighter">'.($tugas['date_created'] == $tugas['date_modified'] ? "" : "Diperbarui ").selisih_waktu($tugas['date_modified']).'</div>
+															</div>
+															<div class="tbl-cell" align="right">
+																<a href="materi-action.php?act=update&modul='.$infoModul['_id'].'&materi='.$tugas['_id'].'" class="shared" title="Edit" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk memperbarui Tugas yang sudah dibuat." style="right: 35px">
+																	<i class="font-icon font-icon-pencil")"></i>
+																</a>
+																<a onclick="remove(\''.$tugas['_id'].'\')"   class="shared" title="Hapus" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menghapus Tugas yang sudah dibuat.">
+																	<i class="font-icon font-icon-trash")"></i>
+																</a>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div id="demo'.$no.'" class="profile-post-content collapse">
+													<span><b><i class="fa fa-clock-o"></i> Tenggat Waktu</b> &nbsp; : <u>'.date("d F Y", strtotime($tugas["deadline"])).'</u></span>
+													<hr style="margin: 10px 0;">
+													'.$tugas["deskripsi"].'
+													<br />
+													<hr style="margin: 10px 0;">
+													<a href="tugas-action.php?act=kerjakan&modul='.$_GET['modul'].'&tugas='.$tugas['_id'].'" class="btn btn-rounded btn-primary">Kerjakan</a>
+												</div>
+											</article>';
+										}else {
+											echo '<article class="box-typical profile-post panel">
+													<div class="profile-post-header">
+														<div class="user-card-row">
+															<div class="tbl-row">
+																<div class="tbl-cell tbl-cell-photo">
+																	<a href="#demo'.$no.'" data-toggle="collapse" data-parent="#accordion">
+																		<img src="assets/img/folder.png" alt="">
+																	</a>
+																</div>
+																<div class="tbl-cell">
+																	<div class="user-card-row-name"><a href="#demo'.$no.'" data-toggle="collapse" data-parent="#accordion">'.$tugas['nama'].'</a></div>
+																	<div class="color-blue-grey-lighter">'.($tugas['date_created'] == $tugas['date_modified'] ? "Diterbitkan " : "Diperbarui ").selisih_waktu($tugas['date_modified']).'</div>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div id="demo'.$no.'" class="profile-post-content collapse">
+														<span><b><i class="fa fa-clock-o"></i> Tenggat Waktu</b> &nbsp; : <u>'.date("d F Y", strtotime($tugas["deadline"])).'</u></span>
+														<hr style="margin: 10px 0;">
+														'.$tugas["deskripsi"].'
+														<br />
+														<hr style="margin: 10px 0;">
+														<a href="tugas-action.php?act=kerjakan&modul='.$_GET['modul'].'&tugas='.$tugas['_id'].'" class="btn btn-rounded btn-primary">Kerjakan</a>
+													</div>
+												</article>';
+										}
+										$no++;
+									}
+								}else {
+									echo '	<article class="box-typical profile-post">
+												<div class="add-customers-screen tbl">
+													<div class="add-customers-screen-in">
+														<div class="add-customers-screen-user">
+															<i class="font-icon font-icon-notebook"></i>
+														</div>
+														<h2>Tugas Kosong</h2>
+														<p class="lead color-blue-grey-lighter">Belum ada tugas yang tersedia</p>
+													</div>
+												</div>
+											</article>';
+								}
+							?>
 						</div>
-
-						<?php
-							}else{
-						?>
-
-						<div class="profile-post-header">
-							<div class="user-card-row">
-								<div class="tbl-row">
-									<div class="tbl-cell tbl-cell-photo">
-										<a href="#">
-											<img src="assets/img/folder.png" alt="">
-										</a>
-									</div>
-									<div class="tbl-cell">
-										<div class="user-card-row-name"><a href="#"><?=$infoTugas['nama']?></a></div>
-										<div class="color-blue-grey-lighter"><?php echo ($infoTugas['date_created'] == $infoTugas['date_modified'] ? "Diterbitkan pada " : "Diperbarui pada ").$infoTugas['date_modified']; ?></div>
-									</div>
-								</div>
-							</div>
-							<a href="#" id="btn-edit" class="shared">
-								<i class="font-icon font-icon-pencil"></i>
-							</a>
-						</div>
-
-						<div id="preview" class="profile-post-content">
-							<?=$infoTugas['deskripsi']?>
-						</div>
-
-						<?php
-							}
-						?>
-					</article>
+					</section>
 				</div>
 			</div><!--.row-->
 
@@ -249,137 +266,49 @@ if(isset($_POST['addTugas']) || isset($_POST['updateTugas'])){
 <?php
 	require('includes/footer-top.php');
 ?>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/codemirror.min.js"></script>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/mode/xml/xml.min.js"></script>
-
-	<script type="text/javascript" src="assets/editor/js/froala_editor.pkgd.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/froala_wiris/integration/WIRISplugins.js?viewer=image"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/froala_wiris/wiris.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/align.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/char_counter.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/code_beautifier.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/code_view.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/colors.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/draggable.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/emoticons.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/entities.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/file.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/font_size.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/font_family.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/fullscreen.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/image.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/image_manager.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/line_breaker.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/inline_style.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/link.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/lists.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/paragraph_format.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/paragraph_style.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/quick_insert.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/quote.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/table.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/save.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/url.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/video.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/help.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/print.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/special_characters.min.js"></script>
-	<script type="text/javascript" src="assets/editor/js/plugins/word_paste.min.js"></script>
 
 	<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 	<script type="text/javascript" src="assets/js/lib/daterangepicker/daterangepicker.js"></script>
 
 	<script>
+		$("#form_tambah").submit(function(e){
+			$("#editor").val(tinyMCE.get('editormce').getContent());
+		});
 
 		function clearText(elementID){
 			$(elementID).html("");
 		}
 
-		function createEditorInstance(lang, wiriseditorparameters) {
-			var toolbar = ['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent',
-		                    'indent', 'quote', '-', 'insertLink', 'insertImage', 'insertVideo', 'insertFile', 'insertTable', 'wirisEditor', 'wirisChemistry', '|', 'emoticons', 'specialCharacters', 'insertHR', 'selectAll', 'clearFormatting', '|', 'print'];
-			$('#editor').froalaEditor({
-		        // Add the custom buttons in the toolbarButtons list, after the separator.
-		        iframe: true,
-				theme: 'gray',
-		        //       toolbarInline: true,
-		        charCounterCount: false,
-		        toolbarButtons: toolbar,
-		        toolbarButtonsMD: toolbar,
-		        toolbarButtonsSM: toolbar,
-		        toolbarButtonsXS: toolbar,
-				toolbarSticky: false,
-		        htmlAllowedTags:   ['.*'],
-		        htmlAllowedAttrs: ['.*'],
-				linkAutoPrefix: 'https://localhost/siajar/',
-		        language: lang,
-		        imageResize : false,
-		        key: 'lrqpD6E-11cyeI-7A11lE-13B-13==',
-		        imageUploadURL: 'url-API/Editor/upload.php',
-		        fileUploadURL: 'url-API/Editor/upload.php',
-		        videoUploadURL: 'url-API/Editor/upload.php'
-		    }).on('froalaEditor.image.removed', function (e, editor, $img) {
-
-				var imageDeleted = String($img.attr("src")).split("/").pop();
-
-		        $.ajax({
-		            // Request method.
-		            method: "POST",
-
-		            // Request URL.
-		            url: "url-API/Editor/delete.php",
-
-		            // Request params.
-		            data: {
-		                file: imageDeleted
-		            }
-		        })
-		        .done (function (data) {
-		            console.log ('image was deleted '+data);
-		        })
-		        .fail (function () {
-		            console.log ('image delete problem');
-		        })
-		    }).on('froalaEditor.file.unlink', function (e, editor, link) {
-
-				var fileDeleted = String(link).split("/").pop();
-
-		        $.ajax({
-		            // Request method.
-		            method: "POST",
-
-		            // Request URL.
-		            url: "url-API/Editor/delete.php",
-
-		            // Request params.
-		            data: {
-		                file: fileDeleted
-		            }
-		        })
-		        .done (function (data) {
-		            console.log ('file was deleted '+data);
-		        })
-		    }).on('froalaEditor.video.removed', function (e, editor, $video) {
-
-		        var videoDeletedURL = $video.context.lastChild.src;
-
-		        $.ajax({
-		            // Request method.
-		            method: "POST",
-
-		            // Request URL.
-		            url: "url-API/Editor/delete.php",
-
-		            // Request params.
-		            data: {
-		                file: videoDeletedURL.split("/").pop()
-		            }
-		        })
-		        .done (function (data) {
-		            console.log ('video was deleted '+data);
-		        })
-		    });
-		}
+		function remove(ID){
+      		swal({
+      		  title: "Apakah anda yakin?",
+      		  text: "Data yang sudah dihapus tidak dapat dikembalikan!",
+      		  type: "warning",
+      		  showCancelButton: true,
+			  	confirmButtonText: "Setuju!",
+      			confirmButtonClass: "btn-danger",
+      		  closeOnConfirm: false,
+      		  showLoaderOnConfirm: true
+      		}, function () {
+      			$.ajax({
+      				type: 'POST',
+      				url: 'url-API/Kelas/Modul/Tugas/',
+      				data: {"action": "remv", "ID": ID},
+      				success: function(res) {
+						swal({
+				            title: res.response,
+				            text: res.message,
+				            type: res.icon
+				        }, function() {
+				            location.reload();
+				        });
+      				},
+      				error: function () {
+      					swal("Gagal!", "Data tidak terhapus!", "error");
+      				}
+      			});
+      		});
+      	}
 
 		$("#ohyeah").click(function(){
 			$.ajax({
@@ -399,23 +328,14 @@ if(isset($_POST['addTugas']) || isset($_POST['updateTugas'])){
 
 		// Destroy action.
 		$('#btn-cancel').on('click', function () {
-
-			if ($('#editor').data('froala.editor')) {
-				$('#editor').froalaEditor('destroy');
-				$('#tugas-preview').show();
-				$('#tugas-editor').hide();
-			}
+			$('#tugas-preview').show();
+			$('#tugas-editor').hide();
 		});
 
 		// Initialize action.
 		$('#btn-tambah, #btn-edit').on('click', function () {
-
-			if (!$('#editor').data('froala.editor')) {
-				createEditorInstance('en', {});
-				$('#editor').froalaEditor('html.set', $('#preview').html());
-				$('#tugas-preview').hide();
-				$('#tugas-editor').show();
-			}
+			$('#tugas-preview').hide();
+			$('#tugas-editor').show();
 		});
 
 		$(document).ready(function() {
@@ -444,6 +364,8 @@ if(isset($_POST['addTugas']) || isset($_POST['updateTugas'])){
 	</script>
 
 	<script src="assets/js/app.js"></script>
+	<script type="text/javascript" src="./assets/tinymce4/js/wirislib.js"></script>
+	<script type="text/javascript" src="./assets/tinymce4/js/prism.js"></script>
 
 <?php
 	require('includes/footer-bottom.php');
