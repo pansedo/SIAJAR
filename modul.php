@@ -116,7 +116,7 @@ if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
 													</a>
 												</div>
 												<div class="tbl-cell">
-													<div class="user-card-row-name"><a href="#demo'.$no.'" data-toggle="collapse" data-parent="#accordion">'.$materi['judul'].'</a></div>
+													<div class="user-card-row-name"><a href="#demo'.$no.'" data-toggle="collapse" data-parent="#accordion">'.$no.'. '.$materi['judul'].'</a></div>
 													<div class="color-blue-grey-lighter">'.($materi['date_created'] == $materi['date_modified'] ? "" : "Diperbarui ").selisih_waktu($materi['date_modified']).'</div>
 												</div>
 												<div class="tbl-cell" align="right">
@@ -163,10 +163,14 @@ if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
 						}
 					}else {
 						echo '	<article class="box-typical profile-post">
-									<div class="profile-post-content" align="center">
-										<span>
-										 Belum ada Materi saat ini.
-										</span>
+									<div class="add-customers-screen tbl">
+										<div class="add-customers-screen-in">
+											<div class="add-customers-screen-user">
+												<i class="font-icon font-icon-tasks"></i>
+											</div>
+											<h2>Tugas Kosong</h2>
+											<p class="lead color-blue-grey-lighter">Belum ada tugas yang tersedia</p>
+										</div>
 									</div>
 								</article>';
 					}

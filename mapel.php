@@ -185,17 +185,11 @@ if(isset($_POST['updateMapel'])){
 							<div class="box-typical-inner">
 								<ul class="side-menu-list">
 									<li class="blue opened">
-										<a href="scheduler.html">
+										<a href="mapel.php?id=<?=$_GET['id']?>">
 							                <i class="font-icon font-icon-home active"></i>
 							                <span class="lbl">Modul</span>
 							            </a>
 									</li>
-									<li class="blue">
-							            <a href="create-quiz.php?id=<?=$_GET['id'];?>">
-							                <i class="font-icon font-icon-notebook"></i>
-							                <span class="lbl">Kelola Kuis</span>
-							            </a>
-							        </li>
 									<li class="blue">
 										<a href="scheduler.html">
 											<i class="font-icon font-icon-zigzag"></i>

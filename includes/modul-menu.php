@@ -13,20 +13,20 @@
 				</li> -->
 				<li class="blue <?php if($menuModul==2){echo 'opened';} ?>">
 		            <a href="modul.php?modul=<?=$_GET['modul']?>">
-		                <i class="font-icon font-icon-notebook <?php if($menuModul==2){echo 'active';} ?>"></i>
+		                <i class="fa fa-book <?php if($menuModul==2){echo 'active';} ?>"></i>
 		                <span class="lbl">Materi</span>
 		            </a>
 		        </li>
 				<li class="blue <?php if($menuModul==3){echo 'opened';} ?>">
 					<a href="tugas.php?modul=<?=$_GET['modul']?>">
-						<i class="font-icon font-icon-zigzag <?php if($menuModul==3){echo 'active';} ?>"></i>
+						<i class="font-icon font-icon-notebook <?php if($menuModul==3){echo 'active';} ?>"></i>
 						<span class="lbl">Tugas</span>
 					</a>
 				</li>
 				<li class="blue <?php if($menuModul==4){echo 'opened';} ?>">
 					<a href="create-quiz.php?modul=<?=$_GET['modul']?>">
 						<i class="font-icon font-icon-zigzag <?php if($menuModul==4){echo 'active';} ?>"></i>
-						<span class="lbl">Kuis</span>
+						<span class="lbl">Ulangan</span>
 					</a>
 				</li>
 			</ul>

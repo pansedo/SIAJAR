@@ -32,7 +32,7 @@ if(isset($_POST['joinKelas'])){
 	        <div class="site-header-content">
 	            <div class="site-header-content-in">
 	                <div class="site-header-shown">
-	                    <div class="dropdown dropdown-notification notif">
+	                    <!-- <div class="dropdown dropdown-notification notif">
 	                        <a href="#"
 	                           class="header-alarm dropdown-toggle active"
 	                           id="dd-notification"
@@ -83,9 +83,9 @@ if(isset($_POST['joinKelas'])){
 	                                <a href="#">See more</a>
 	                            </div>
 	                        </div>
-	                    </div>
+	                    </div> -->
 
-	                    <div class="dropdown dropdown-notification messages">
+	                    <!-- <div class="dropdown dropdown-notification messages">
 	                        <a href="#"
 	                           class="header-alarm dropdown-toggle active"
 	                           id="dd-messages"
@@ -115,7 +115,7 @@ if(isset($_POST['joinKelas'])){
 	                                </ul>
 	                                <!--<button type="button" class="create">
 	                                    <i class="font-icon font-icon-pen-square"></i>
-	                                </button>-->
+	                                </button>--
 	                            </div>
 	                            <div class="tab-content">
 	                                <div class="tab-pane active" id="tab-incoming" role="tabpanel">
@@ -171,7 +171,7 @@ if(isset($_POST['joinKelas'])){
 	                                <a href="#">See more</a>
 	                            </div>
 	                        </div>
-	                    </div>
+	                    </div> -->
 
 	                    <div class="dropdown user-menu">
 	                        <button class="dropdown-toggle" id="dd-user-menu" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -221,13 +221,13 @@ if(isset($_POST['joinKelas'])){
 
 	                        </div>
 	                        <div class="dropdown dropdown-typical">
-							   <a href="<?=base_url?>/paket-soalku.php" class="dropdown-toggle no-arr">
+							   <a href="<?=base_url?>/paket-kuisku.php" class="dropdown-toggle no-arr">
 								   <span class="font-icon font-icon-home"></span> Paket Soal
 								   <span class="lbl"></span>
 							   </a>
 						   	</div>
 							<div class="dropdown dropdown-typical">
-							   <a href="#" class="dropdown-toggle no-arr">
+							   <a href="<?=base_url?>/media" class="dropdown-toggle no-arr">
 								   <span class="font-icon font-icon-share"></span> Gudang Media
 								   <span class="lbl"></span>
 							   </a>

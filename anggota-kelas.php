@@ -230,7 +230,7 @@ if(isset($_POST['updateKelas'])){
 											<div class="tbl-cell tbl-cell-stat">
 												<div class="inline-block">
 													<p class="title"><?=$infoKelas['member']?></p>
-													<p>Anggota</p>
+													<p>Anggota Kelas</p>
 												</div>
 											</div>
 										</div>
@@ -472,8 +472,8 @@ if(isset($_POST['updateKelas'])){
 			url: 'url-API/Kelas/',
 			data: {"action": "cPriv", "ID": ID, "hak_akses" : Priv, "kelas": "<?=$_GET['id']?>"},
 			success: function(res) {
-				table.reload();
-		// 		swal(res.status, res.message, res.icon);
+				// table.reload();
+				swal(res.status, res.message, res.icon);
 			},
 			error: function () {
 				swal("Gagal!", "Data tidak berubah!", "error");
