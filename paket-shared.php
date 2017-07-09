@@ -20,7 +20,7 @@ if(isset($_POST['addQuiz'])){
 	}
 }
 
-$menuModul		= 1;
+$menuModul		= 2;
 $listQuiz	= $quizClass->getListbyUser($_SESSION['lms_id']);
 ?>
 	<div class="modal fade"
@@ -124,8 +124,8 @@ $listQuiz	= $quizClass->getListbyUser($_SESSION['lms_id']);
 									<div class="tbl info-tbl">
 										<div class="tbl-row">
 											<div class="tbl-cell">
-												<p class="title">Modul <?//=$infoModul['nama']?></p>
-												<p>Mata Pelajaran <?//=$infoMapel['nama']?></p>
+												<p class="title">Daftar Paket Soal <?//=$infoModul['nama']?></p>
+												<p>Paket soal yang pernah dibuat <?//=$infoMapel['nama']?></p>
 											</div>
 											<div class="tbl-cell tbl-cell-stat">
 												<div class="inline-block">
@@ -168,7 +168,7 @@ $listQuiz	= $quizClass->getListbyUser($_SESSION['lms_id']);
 					$no	= 1;
 					// print_r($listQuiz);
 					if ($listQuiz->count() > 0) {
-						foreach ($listQuiz as $materi) {
+						foreach ($listQuiz as $data) {
 							echo '<article class="box-typical profile-post panel">
 									<div class="profile-post-header">
 										<div class="user-card-row">
@@ -179,18 +179,18 @@ $listQuiz	= $quizClass->getListbyUser($_SESSION['lms_id']);
 													</a>
 												</div>
 												<div class="tbl-cell">
-													<div class="user-card-row-name"><a href="#demo'.$no.'" data-toggle="collapse" data-parent="#accordion">'.$materi['nama'].'</a></div>
-													<div class="color-blue-grey-lighter">'.($materi['date_created'] == $materi['date_modified'] ? "Diterbitkan " : "Diperbarui ").selisih_waktu($materi['date_modified']).'</div>
+													<div class="user-card-row-name"><a href="#demo'.$no.'" data-toggle="collapse" data-parent="#accordion">'.$data['nama'].'</a></div>
+													<div class="color-blue-grey-lighter">'.($data['date_created'] == $data['date_modified'] ? "Diterbitkan " : "Diperbarui ").selisih_waktu($data['date_modified']).'</div>
 												</div>
 												<div class="tbl-cell" align="right">';
-												if ($_SESSION['lms_id'] == $materi['creator']) {
+												if ($_SESSION['lms_id'] == $data['creator']) {
 													
 													echo '
-													<a href="quiz-action.php?act=update&md='.$infoModul['_id'].'&qz='.$materi['_id'].'" class="shared" title="Edit" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk memperbarui isi dari Materi yang sudah dibuat." style="right: 35px">
-															<i class="font-icon font-icon-pencil")"></i>
+													<a href="quiz-action.php?act=view&qz='.$data['_id'].'" class="shared" title="View" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk melihat list soal dari paket soal ini." style="right: 35px">
+															<i class="font-icon font-icon-eye")"></i>
 														</a>
-														<a onclick="remove(\''.$materi['_id'].'\')"   class="shared" title="Hapus" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menghapus Materi yang sudah dibuat.">
-															<i class="font-icon font-icon-trash")"></i>
+														<a onclick="remove(\''.$data['_id'].'\')"   class="shared" title="Duplikat" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menghapus Paket Soal yang sudah dibuat.">
+															<i class="font-icon font-icon-doc")"></i>
 														</a>';
 												}
 							// echo '				</div>

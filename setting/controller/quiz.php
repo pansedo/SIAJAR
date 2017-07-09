@@ -53,9 +53,10 @@ class Quiz
             }
         }else {
             $status     = "Failed";
+            $newID = "";
         }
 
-        $result = array("status" => $status);
+        $result = array("status" => $status, "idQuiz" => $newID);
         return $result;
     }
 
