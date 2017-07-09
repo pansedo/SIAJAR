@@ -35,7 +35,7 @@ if(isset($_POST['addMapel'])){
 			echo	"<script>
 						swal({
 							title: 'Berhasil!',
-							text: 'Mata Pelajaran dgn nama \'$kelas\' berhasil dibuat!',
+							text: 'Mata Pelajaran dgn nama \'$nama\' berhasil dibuat!',
 							type: 'success'
 						}, function() {
 							 window.location = 'mapel.php?id=".$rest['IDMapel']."';

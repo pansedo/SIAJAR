@@ -37,7 +37,7 @@ if(isset($_POST['addMapel'])){
 			echo	"<script>
 						swal({
 							title: 'Berhasil!',
-							text: 'Mata Pelajaran dgn nama \'$kelas\' berhasil dibuat!',
+							text: 'Mata Pelajaran dgn nama \'$nama\' berhasil dibuat!',
 							type: 'success'
 						}, function() {
 							 window.location = 'mapel.php?id=".$rest['IDMapel']."';
@@ -227,12 +227,12 @@ if(isset($_POST['updateKelas'])){
 										<div class="tbl-row">
 											<div class="tbl-cell">
 												<p class="title"><?=$infoKelas['nama']?></p>
-												<p>Anggota Kelas</p>
+												<p>Kelas</p>
 											</div>
 											<div class="tbl-cell tbl-cell-stat">
 												<div class="inline-block">
-													<p class="title"><?=$infoKelas['member']?></p>
-													<p>Anggota Kelas</p>
+													<p class="title"><?=$infoMapel->count()?></p>
+													<p>Mata Pelajaran</p>
 												</div>
 											</div>
 										</div>
@@ -340,6 +340,13 @@ if(isset($_POST['updateKelas'])){
 					<section class="widget widget-tasks card-default">
 						<header class="card-header">
 							Daftar Mata Pelajaran
+							<?php
+							if ($hakKelas['status'] == 1 || $hakKelas['status'] == 2) {
+								echo '<div class="btn-group" style="float: right;">
+										<button type="button" class="btn btn-sm btn-rounded" data-toggle="modal" data-target="#addMapel" title="Tambah" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menambahkan Mata Pelajaran baru.">+ Tambah Mata Pelajaran</button>
+									</div>';
+							}
+							?>
 						</header>
 						<div class="widget-tasks-item">
 							<table id="example" class="display table table-striped" cellspacing="0" width="100%">
@@ -358,8 +365,7 @@ if(isset($_POST['updateKelas'])){
 														Aksi
 													</button>
 													<div class="dropdown-menu dropdown-menu-right">
-														<div class="dropdown-divider"></div>
-														<a class="dropdown-item" onclick="remove(\''.$infoUser['_id'].'\')">Hapus Anggota</a>
+														<a class="dropdown-item" onclick="remove(\''.$data['_id'].'\')">Hapus Mata Pelajaran</a>
 													</div>
 												</div>';
 
@@ -401,8 +407,8 @@ if(isset($_POST['updateKelas'])){
 
 		function remove(ID){
       		swal({
-      		  title: "Apakah anda yakin?",
-      		  text: "Menghapus anggota dari grup ini.",
+      		  title: "Hapus Mata Pelajaran?",
+      		  text: "Semua data akan hilang dan tidak dapat dikembalikan.",
       		  type: "warning",
       		  showCancelButton: true,
 			  	confirmButtonText: "Ya",
@@ -412,10 +418,16 @@ if(isset($_POST['updateKelas'])){
       		}, function () {
       			$.ajax({
       				type: 'POST',
-      				url: 'url-API/Kelas/',
-      				data: {"action": "removeAnggota", "ID": ID, "kelas": "<?=$_GET['id']?>"},
+      				url: 'url-API/Kelas/Mapel/',
+      				data: {"action": "removeMapel", "ID": ID},
       				success: function(res) {
-      					swal(res.response, res.message, res.icon);
+						swal({
+							title: res.response,
+							text: res.message,
+							type: res.icon
+						}, function() {
+							location.reload();
+						});
       				},
       				error: function () {
       					swal("Gagal!", "Data tidak terhapus!", "error");
@@ -423,21 +435,6 @@ if(isset($_POST['updateKelas'])){
       			});
       		});
       	}
-
-	function cPriv(ID, Priv){
-		$.ajax({
-			type: 'POST',
-			url: 'url-API/Kelas/',
-			data: {"action": "cPriv", "ID": ID, "hak_akses" : Priv, "kelas": "<?=$_GET['id']?>"},
-			success: function(res) {
-				// table.reload();
-				swal(res.status, res.message, res.icon);
-			},
-			error: function () {
-				swal("Gagal!", "Data tidak berubah!", "error");
-			}
-		});
-  	}
 
 	function lockKelas(ID){
 		var isiText = '';

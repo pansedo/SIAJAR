@@ -35,7 +35,7 @@ if(isset($_POST['addMapel'])){
 			echo	"<script>
 						swal({
 							title: 'Berhasil!',
-							text: 'Mata Pelajaran dgn nama \'$kelas\' berhasil dibuat!',
+							text: 'Mata Pelajaran dgn nama \'$nama\' berhasil dibuat!',
 							type: 'success'
 						}, function() {
 							 window.location = 'mapel.php?id=".$rest['IDMapel']."';
@@ -221,8 +221,8 @@ if(isset($_POST['updateKelas'])){
 											</div>
 											<div class="tbl-cell tbl-cell-stat">
 												<div class="inline-block">
-													<p id="jumlahMapel" class="title">0</p>
-													<p>Mata Pelajaran</p>
+													<p class="title" id="jumlahMapel"><a style="color: #fff" href="mapel-kelas.php?id=<?=$_GET['id']?>">0</a></p>
+													<p><a style="color: #fff" href="mapel-kelas.php?id=<?=$_GET['id']?>" title="Mata Pelajaran" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Lihat Mata Pelajaran disini!">Mata Pelajaran</a></p>
 												</div>
 											</div>
 										</div>
@@ -365,14 +365,13 @@ if(isset($_POST['updateKelas'])){
 									// print_r($listPosting['data']);
 									// echo "</pre>";
 									foreach ($listPosting['data'] as $posting) {
+										$image		= empty($posting['user_foto']) ? "<img src='assets/img/avatar-2-128.png' style='max-width: 75px; max-height: 75px;' />" : "<img src='".$infoUser['foto']."' style='max-width: 75px; max-height: 75px;' />" ;
 										echo '	<article class="box-typical profile-post">
 													<div class="profile-post-header">
 														<div class="user-card-row">
 															<div class="tbl-row">
 																<div class="tbl-cell tbl-cell-photo">
-																	<a href="#">
-																		<img src="assets/img/photo-64-2.jpg" alt="">
-																	</a>
+																	<a href="#">'.$image.'</a>
 																</div>
 																<div class="tbl-cell">
 																	<div class="user-card-row-name"><a href="#">'.$posting['user'].'</a></div>

@@ -145,7 +145,7 @@ if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
 												<div class="tbl-row">
 													<div class="tbl-cell tbl-cell-photo">
 														<a href="#demo'.$no.'" data-toggle="collapse" data-parent="#accordion">
-															<img src="assets/img/assignment.png" alt="">
+															<img src="assets/img/book.png" alt="">
 														</a>
 													</div>
 													<div class="tbl-cell">

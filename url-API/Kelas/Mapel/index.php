@@ -51,6 +51,16 @@ if(isset($method['action'])){
 
 		echo $Json;
 	}
+
+    if($method['action'] == 'removeMapel'){
+        $delete = array("_id" => new MongoId($method['ID']));
+        $data   = $table->remove($delete);
+        $resp   = array('response'=>'Terhapus!', 'message'=>'Data berhasil dihapus!', 'icon'=>'success');
+		$Json   = json_encode($resp);
+		header('Content-Type: application/json');
+
+		echo $Json;
+	}
 }
 
 ?>

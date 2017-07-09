@@ -157,17 +157,16 @@ $userProfil	= $userClass->GetData($_SESSION['lms_id']);
 
 								if ($listPosting['count'] > 0) {
 									foreach ($listPosting['data'] as $posting) {
+										$image		= empty($posting['user_foto']) ? "<img src='assets/img/avatar-2-128.png' style='max-width: 75px; max-height: 75px;' />" : "<img src='".$infoUser['foto']."' style='max-width: 75px; max-height: 75px;' />" ;
 										echo '	<article class="box-typical profile-post">
 													<div class="profile-post-header">
 														<div class="user-card-row">
 															<div class="tbl-row">
 																<div class="tbl-cell tbl-cell-photo">
-																	<a href="#">
-																		<img src="assets/img/photo-64-2.jpg" alt="">
-																	</a>
+																	<a href="#">'.$image.'</a>
 																</div>
 																<div class="tbl-cell">
-																	<div class="user-card-row-name"><a href="#">'.$posting['user'].'</a> &nbsp; &gt; &nbsp; <a href="kelas.php?id='.$posting['id_kelas'].'">'.$posting['kelas'].'</a></div>
+																	<div class="user-card-row-name"><a href="#"><b>'.$posting['user'].'</b></a> &nbsp; <i class="fa fa-play" style="font-size: 70%; display: inline-block;"></i> &nbsp; <a href="kelas.php?id='.$posting['id_kelas'].'"><b>'.$posting['kelas'].'</b></a></div>
 																	<div class="color-blue-grey-lighter">'.selisih_waktu($posting['date_created']).'</div>
 																</div>
 															</div>

@@ -11,7 +11,7 @@ class Kelas
         } catch(Exception $e) {
             echo "Database Not Connection";
             exit();
-        } 
+        }
     }
     public function CountKelas()
     {
@@ -67,7 +67,7 @@ class Kelas
         if ($newID) {
             $status     = "Success";
             $message    = "Kelas $nama Berhasil ditambahkan!";
-            $relation   = $this->db->anggota_kelas->insert(array("id_user"=>"$user", "id_kelas"=>"$newID", "status"=>"1"));
+            $relation   = $this->db->anggota_kelas->insert(array( "id_user"=>"$user", "id_kelas"=>"$newID", "status"=>"1", "date_modified"=>date('Y-m-d H:i:s') ));
         }else {
             $status     = "Failed";
             $message    = "Kelas $nama Gagal ditambahkan!";
@@ -109,7 +109,7 @@ class Kelas
                     $message    = "Kamu sudah bergabung kedalam Kelas ini!";
                 }else{
                     $hak        = $privilege == "guru" ? 3 : 4;
-                    $relation   = $this->db->anggota_kelas->insert(array("id_user"=>"$user", "id_kelas"=>"$query[_id]", "status"=>$hak));
+                    $relation   = $this->db->anggota_kelas->insert( array( "id_user"=>"$user", "id_kelas"=>"$query[_id]", "status"=>$hak, "date_modified"=>date('Y-m-d H:i:s') ) );
                     $status     = "Success";
                     $message    = "Kamu berhasil bergabung kedalam Kelas!";
                     $newID      = "$query[_id]";
@@ -148,7 +148,8 @@ class Kelas
                 $data[$index] = $isi;
                 $userID	= new MongoId($isi['creator']);
                 $query2 = $this->db->user->findOne(array('_id' => $userID));
-                $data[$index]['user']   = $query2['nama'];
+                $data[$index]['user']       = $query2['nama'];
+                $data[$index]['user_foto']  = $query2['foto'];
             }
         }
 
