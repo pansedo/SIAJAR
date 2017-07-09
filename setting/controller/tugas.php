@@ -24,9 +24,9 @@ class Tugas
         return $query;
     }
 
-    public function addTugas($idModul, $nama, $deskripsi, $deadline, $user){
+    public function addTugas($idTugas, $nama, $deskripsi, $deadline, $user){
 
-        $insert = array("id_modul"=>$idModul, "nama" => $nama, "deskripsi" => $deskripsi, "deadline" => $deadline, "creator" => "$user", "date_created"=>date('Y-m-d H:i:s'), "date_modified"=>date('Y-m-d H:i:s'));
+        $insert = array("id_modul"=>$idTugas, "nama" => $nama, "deskripsi" => $deskripsi, "deadline" => $deadline, "creator" => "$user", "date_created"=>date('Y-m-d H:i:s'), "date_modified"=>date('Y-m-d H:i:s'));
 
         $this->table->insert($insert);
 
@@ -40,12 +40,12 @@ class Tugas
         return $result;
     }
 
-    public function updateTugas($idModul, $nama, $deskripsi, $deadline){
+    public function updateTugas($idTugas, $nama, $deskripsi, $deadline){
 
         $update   = array('$set' => array("nama" => $nama, "deskripsi" => $deskripsi, "deadline" => $deadline, "date_modified"=>date('Y-m-d H:i:s')));
 
         try {
-            $this->table->update(array("id_modul" => $idModul), $update);
+            $this->table->update(array("_id" => new MongoId($idTugas)), $update);
             $status     = "Success";
         } catch(MongoCursorException $e) {
             $status     = "Failed";

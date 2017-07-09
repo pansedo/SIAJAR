@@ -43,6 +43,8 @@ if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
 }
 ?>
 
+<link rel="stylesheet" href="./assets/css/separate/pages/others.min.css">
+
 	<div class="page-content">
 		<div class="profile-header-photo">
 			<div class="profile-header-photo-in">
@@ -112,7 +114,7 @@ if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
 											<div class="tbl-row">
 												<div class="tbl-cell tbl-cell-photo">
 													<a href="#demo'.$no.'" data-toggle="collapse" data-parent="#accordion">
-														<img src="assets/img/folder.png" alt="">
+														<img src="assets/img/book.png" alt="">
 													</a>
 												</div>
 												<div class="tbl-cell">
@@ -143,7 +145,7 @@ if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
 												<div class="tbl-row">
 													<div class="tbl-cell tbl-cell-photo">
 														<a href="#demo'.$no.'" data-toggle="collapse" data-parent="#accordion">
-															<img src="assets/img/folder.png" alt="">
+															<img src="assets/img/assignment.png" alt="">
 														</a>
 													</div>
 													<div class="tbl-cell">
@@ -166,10 +168,10 @@ if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
 									<div class="add-customers-screen tbl">
 										<div class="add-customers-screen-in">
 											<div class="add-customers-screen-user">
-												<i class="font-icon font-icon-tasks"></i>
+												<i class="fa fa-book"></i>
 											</div>
-											<h2>Tugas Kosong</h2>
-											<p class="lead color-blue-grey-lighter">Belum ada tugas yang tersedia</p>
+											<h2>Materi Kosong</h2>
+											<p class="lead color-blue-grey-lighter">Belum ada materi  yang tersedia saat ini.</p>
 										</div>
 									</div>
 								</article>';

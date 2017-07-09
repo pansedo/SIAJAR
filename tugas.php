@@ -30,7 +30,7 @@ if(isset($_POST['addTugas']) || isset($_POST['updateTugas'])){
 	if(isset($_POST['addTugas'])){
 		$rest 	= $tugasClass->addTugas($_GET['modul'], $_POST['nama'], $_POST['deskripsi'], $_POST['deadline'], $_SESSION['lms_id']);
 	}else{
-		$rest 	= $tugasClass->updateTugas($_GET['modul'], $_POST['nama'], $_POST['deskripsi'], $_POST['deadline']);
+		$rest 	= $tugasClass->updateTugas($_POST['ID'], $_POST['nama'], $_POST['deskripsi'], $_POST['deadline']);
 	}
 
 	if ($rest['status'] == "Success") {
@@ -52,13 +52,13 @@ if(isset($_POST['addTugas']) || isset($_POST['updateTugas'])){
 									<div class="tbl info-tbl">
 										<div class="tbl-row">
 											<div class="tbl-cell">
-												<p class="title"><?=$infoMapel['nama']?></p>
-												<p>Mata Pelajaran</p>
+												<p class="title">Tugas <?=$infoModul['nama']?></p>
+												<p>Mata Pelajaran <?=$infoMapel['nama']?></p>
 											</div>
 											<div class="tbl-cell tbl-cell-stat">
 												<div class="inline-block">
-													<p class="title"><?=$infoMapel['modul']?></p>
-													<p>Modul</p>
+													<p class="title"><?=$listTugas->count();?></p>
+													<p>Tugas</p>
 												</div>
 											</div>
 										</div>
@@ -87,19 +87,20 @@ if(isset($_POST['addTugas']) || isset($_POST['updateTugas'])){
 				<div class="col-xl-9 col-lg-8">
 					<section class="card card-default" id="tugas-editor" style="display: none;">
 						<div class="card-block">
-                            <h5 class="with-border">Pembuatan Tugas</h5>
+                            <h5 class="with-border" id="judul-editor">Pembuatan Tugas</h5>
 
                             <form id="form_tambah" method="POST">
                                 <div class="form-group row">
                                     <label class="col-md-2 form-control-label">Judul</label>
                                     <div class="col-md-8">
-										<input type="text" class="form-control" name="nama" placeholder="Judul Tugas" />
+										<input type="text" class="form-control" id="nama" name="nama" placeholder="Judul Tugas" />
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-2 form-control-label">Tenggat Waktu Pengumpulan</label>
                                     <div class="col-md-8">
-                                        <input type="text" class="form-control" name="deadline" placeholder="Tengat Waktu Tugas" />
+                                        <input type="text" class="form-control" id="deadline" name="deadline" placeholder="Tengat Waktu Tugas" required/>
+                                        <input type="hidden" class="form-control" id="IDTugas" name="ID" placeholder="ID Tugas" />
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -114,52 +115,13 @@ if(isset($_POST['addTugas']) || isset($_POST['updateTugas'])){
                                 </div>
                                 <hr>
                                 <div class="form-group pull-right">
-                                    <button type="submit" name="addTugas" class="btn">Simpan</button>
+                                    <button type="submit" id="btn-submit" name="addTugas" class="btn">Simpan</button>
                                     <button type="button" class="btn btn-default" id="btn-cancel">Batal</button>
                                 </div>
                             </form>
                         </div>
 					</section>
-					<!-- <article class="box-typical profile-post" style="display: none;">
-						<h5 class="with-border">Membuat Tugas</h5>
-						<form method="POST" action="">
-							<div class="profile-post-header">
-								<div class="user-card-row">
-									<div class="form-group">
-										<label class="form-label semibold">Judul</label>
-										<input type="text" class="form-control" name="nama" placeholder="Judul Tugas" value="<?php echo (isset($infoTugas) ? $infoTugas['nama']: ''); ?>">
-									</div>
-									<div class="form-group">
-										<label class="form-label semibold">Tengat Waktu Pengumpulan</label>
-										<input type="text" class="form-control" name="deadline" placeholder="Tengat Waktu Tugas" value="<?php echo (isset($infoTugas) ? $infoTugas['nama']: ''); ?>">
-									</div>
-								</div>
-							</div>
 
-							<textarea id="editor" name="deskripsi">
-							</textarea>
-
-							<div class="box-typical-footer">
-								<div class="tbl">
-									<div class="tbl-row">
-										<div class="tbl-cell tbl-cell-action">
-											<?php
-												if(!isset($infoTugas)){
-											?>
-											<button type="submit" name="addTugas" class="btn btn-rounded pull-right">Terbitkan</button>
-											<?php
-										}else{
-											?>
-											<button type="submit" name="updateTugas" class="btn btn-rounded pull-right">Perbarui</button>
-										<?php
-										}
-										?>
-										</div>
-									</div>
-								</div>
-							</div>
-						</form>
-					</article> -->
 					<section id="tugas-preview" class="card card-inversed">
 						<header class="card-header">
 							Daftar Tugas
@@ -185,7 +147,7 @@ if(isset($_POST['addTugas']) || isset($_POST['updateTugas'])){
 														<div class="tbl-row">
 															<div class="tbl-cell tbl-cell-photo">
 																<a href="#demo'.$no.'" data-toggle="collapse" data-parent="#accordion">
-																	<img src="assets/img/folder.png" alt="">
+																	<img src="assets/img/assignment.png" alt="">
 																</a>
 															</div>
 															<div class="tbl-cell">
@@ -193,7 +155,7 @@ if(isset($_POST['addTugas']) || isset($_POST['updateTugas'])){
 																<div class="color-blue-grey-lighter">'.($tugas['date_created'] == $tugas['date_modified'] ? "" : "Diperbarui ").selisih_waktu($tugas['date_modified']).'</div>
 															</div>
 															<div class="tbl-cell" align="right">
-																<a href="materi-action.php?act=update&modul='.$infoModul['_id'].'&materi='.$tugas['_id'].'" class="shared" title="Edit" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk memperbarui Tugas yang sudah dibuat." style="right: 35px">
+																<a onclick="edit(\''.$tugas['_id'].'\')" class="shared" id="btn-edit" title="Edit" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk memperbarui Tugas yang sudah dibuat." style="right: 35px">
 																	<i class="font-icon font-icon-pencil")"></i>
 																</a>
 																<a onclick="remove(\''.$tugas['_id'].'\')"   class="shared" title="Hapus" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menghapus Tugas yang sudah dibuat.">
@@ -203,23 +165,31 @@ if(isset($_POST['addTugas']) || isset($_POST['updateTugas'])){
 														</div>
 													</div>
 												</div>
-												<div id="demo'.$no.'" class="profile-post-content collapse">
-													<span><b><i class="fa fa-clock-o"></i> Tenggat Waktu</b> &nbsp; : <u>'.date("d F Y", strtotime($tugas["deadline"])).'</u></span>
-													<hr style="margin: 10px 0;">
-													'.$tugas["deskripsi"].'
-													<br />
-													<hr style="margin: 10px 0;">
-													<a href="tugas-action.php?act=kerjakan&modul='.$_GET['modul'].'&tugas='.$tugas['_id'].'" class="btn btn-rounded btn-primary">Kerjakan</a>
+												<div id="demo'.$no.'" class="collapse">
+													<div class="profile-post-content">
+														<span><b><i class="fa fa-clock-o"></i> Tenggat Waktu</b> &nbsp; : <u>'.date("d F Y", strtotime($tugas["deadline"])).'</u></span>
+														<hr style="margin: 10px 0;">
+														'.$tugas["deskripsi"].'
+													</div>
+													<div class="box-typical-footer">
+														<div class="tbl">
+															<div class="tbl-row">
+																<div class="tbl-cell tbl-cell-action">
+																	<a href="tugas-action.php?act=kerjakan&modul='.$_GET['modul'].'&tugas='.$tugas['_id'].'" class="btn btn-rounded btn-primary pull-right">Kerjakan</a>
+																</div>
+															</div>
+														</div>
+													</div>
 												</div>
 											</article>';
-										}else {
+										} else {
 											echo '<article class="box-typical profile-post panel">
 													<div class="profile-post-header">
 														<div class="user-card-row">
 															<div class="tbl-row">
 																<div class="tbl-cell tbl-cell-photo">
 																	<a href="#demo'.$no.'" data-toggle="collapse" data-parent="#accordion">
-																		<img src="assets/img/folder.png" alt="">
+																		<img src="assets/img/assignment.png" alt="">
 																	</a>
 																</div>
 																<div class="tbl-cell">
@@ -229,13 +199,21 @@ if(isset($_POST['addTugas']) || isset($_POST['updateTugas'])){
 															</div>
 														</div>
 													</div>
-													<div id="demo'.$no.'" class="profile-post-content collapse">
-														<span><b><i class="fa fa-clock-o"></i> Tenggat Waktu</b> &nbsp; : <u>'.date("d F Y", strtotime($tugas["deadline"])).'</u></span>
-														<hr style="margin: 10px 0;">
-														'.$tugas["deskripsi"].'
-														<br />
-														<hr style="margin: 10px 0;">
-														<a href="tugas-action.php?act=kerjakan&modul='.$_GET['modul'].'&tugas='.$tugas['_id'].'" class="btn btn-rounded btn-primary">Kerjakan</a>
+													<div id="demo'.$no.'" class="collapse">
+														<div class="profile-post-content">
+															<span><b><i class="fa fa-clock-o"></i> Tenggat Waktu</b> &nbsp; : <u>'.date("d F Y", strtotime($tugas["deadline"])).'</u></span>
+															<hr style="margin: 10px 0;">
+															'.$tugas["deskripsi"].'
+														</div>
+														<div class="box-typical-footer">
+															<div class="tbl">
+																<div class="tbl-row">
+																	<div class="tbl-cell tbl-cell-action">
+																		<a href="tugas-action.php?act=kerjakan&modul='.$_GET['modul'].'&tugas='.$tugas['_id'].'" class="btn btn-rounded btn-primary pull-right">Kerjakan</a>
+																	</div>
+																</div>
+															</div>
+														</div>
 													</div>
 												</article>';
 										}
@@ -246,7 +224,7 @@ if(isset($_POST['addTugas']) || isset($_POST['updateTugas'])){
 												<div class="add-customers-screen tbl">
 													<div class="add-customers-screen-in">
 														<div class="add-customers-screen-user">
-															<i class="font-icon font-icon-notebook"></i>
+															<i class="fa fa-file-text-o"></i>
 														</div>
 														<h2>Tugas Kosong</h2>
 														<p class="lead color-blue-grey-lighter">Belum ada tugas yang tersedia</p>
@@ -310,6 +288,27 @@ if(isset($_POST['addTugas']) || isset($_POST['updateTugas'])){
       		});
       	}
 
+		function edit(ID){
+      		$('#judul-editor').text(
+      		   $('#judul-editor').text().replace('Pembuatan', 'Perubahan')
+      		).show();
+      		$.ajax({
+      			type: 'POST',
+      			url: 'url-API/Kelas/Modul/Tugas/',
+      			data: {"action": "show", "ID": ID},
+      			success: function(res) {
+  					$('#IDTugas').val(ID);
+  					$('#deadline').val(res.data.deadline);
+  					$('#nama').val(res.data.nama);
+					tinyMCE.activeEditor.setContent(res.data.deskripsi);
+  					$('#btn-submit').attr('name', 'updateTugas');
+      			},
+      			error: function () {
+      				swal("Error!", "Cannot fetch data!", "error");
+      			}
+      		});
+      	}
+
 		$("#ohyeah").click(function(){
 			$.ajax({
 				type: 'POST',
@@ -330,10 +329,13 @@ if(isset($_POST['addTugas']) || isset($_POST['updateTugas'])){
 		$('#btn-cancel').on('click', function () {
 			$('#tugas-preview').show();
 			$('#tugas-editor').hide();
+			$('#form_tambah').trigger("reset");
+			$('#btn-submit').attr('name', 'addTugas');
 		});
 
 		// Initialize action.
 		$('#btn-tambah, #btn-edit').on('click', function () {
+			$('#form_tambah').trigger("reset");
 			$('#tugas-preview').hide();
 			$('#tugas-editor').show();
 		});

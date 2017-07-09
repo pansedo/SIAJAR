@@ -478,9 +478,15 @@ if(isset($_POST['updateKelas'])){
       			$.ajax({
       				type: 'POST',
       				url: 'url-API/Kelas/Posting/',
-      				data: {"act": "remv", "ID": ID},
+      				data: {"action": "remv", "ID": ID},
       				success: function(res) {
-      					swal(res.response, res.message, res.icon);
+						swal({
+							title: res.response,
+							text: res.message,
+							type: res.icon
+						}, function() {
+							 location.reload();
+						});
       				},
       				error: function () {
       					swal("Gagal!", "Data tidak terhapus!", "error");

@@ -173,7 +173,7 @@ $userProfil	= $userClass->GetData($_SESSION['lms_id']);
 															</div>
 														</div>';
 														if ($_SESSION['lms_id'] == $posting['creator']) {
-														echo '		<a class="shared" onclick="remove(\''.$posting['_id'].'\')" title="Hapus" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menghapus Kiriman yang sudah dibuat.">
+														echo '		<a class="shared" onclick="removePost(\''.$posting['_id'].'\')" title="Hapus" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menghapus Kiriman yang sudah dibuat.">
 																		<i class="font-icon font-icon-trash"></i>
 																	</a>';
 														}
@@ -208,6 +208,37 @@ $userProfil	= $userClass->GetData($_SESSION['lms_id']);
 ?>
 
 	<script>
+		function removePost(ID){
+			swal({
+			  title: "Apakah anda yakin?",
+			  text: "Data yang sudah dihapus tidak dapat dikembalikan!",
+			  type: "warning",
+			  showCancelButton: true,
+				confirmButtonText: "Setuju!",
+				confirmButtonClass: "btn-danger",
+			  closeOnConfirm: false,
+			  showLoaderOnConfirm: true
+			}, function () {
+				$.ajax({
+					type: 'POST',
+					url: 'url-API/Kelas/Posting/',
+					data: {"action": "remv", "ID": ID},
+					success: function(res) {
+						swal({
+							title: res.response,
+							text: res.message,
+							type: res.icon
+						}, function() {
+							 location.reload();
+						});
+					},
+					error: function () {
+						swal("Gagal!", "Data tidak terhapus!", "error");
+					}
+				});
+			});
+		}
+
 		$(document).ready(function() {
 			$.ajax({
 				type: 'POST',
@@ -241,34 +272,11 @@ $userProfil	= $userClass->GetData($_SESSION['lms_id']);
 				closeEffect	: 'none'
 			});
 
-			function removePost(ID){
-	      		swal({
-	      		  title: "Apakah anda yakin?",
-	      		  text: "Data yang sudah dihapus tidak dapat dikembalikan!",
-	      		  type: "warning",
-	      		  showCancelButton: true,
-				  	confirmButtonText: "Setuju!",
-	      			confirmButtonClass: "btn-danger",
-	      		  closeOnConfirm: false,
-	      		  showLoaderOnConfirm: true
-	      		}, function () {
-	      			$.ajax({
-	      				type: 'POST',
-	      				url: 'url-API/Kelas/Posting/',
-	      				data: {"act": "remv", "ID": ID},
-	      				success: function(res) {
-	      					swal(res.response, res.message, res.icon);
-	      				},
-	      				error: function () {
-	      					swal("Gagal!", "Data tidak terhapus!", "error");
-	      				}
-	      			});
-	      		});
-	      	}
 		});
 		// error gara-gara  'sudo /edx/bin/update edx-platform master'
 	</script>
-<script src="assets/js/app.js"></script>
+
+	<script src="assets/js/app.js"></script>
 <?php
 	require('includes/footer-bottom.php');
 ?>

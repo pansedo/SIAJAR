@@ -67,6 +67,8 @@ if(isset($_POST['updateMapel'])){
 }
 
 ?>
+<link rel="stylesheet" href="./assets/css/separate/pages/others.min.css">
+
 	<div class="modal fade"
 		 id="updateMapel"
 		 tabindex="-1"
@@ -224,39 +226,54 @@ if(isset($_POST['updateMapel'])){
 						</header>
 						<div>
 							<?php
-								foreach ($listModul as $modul) {
-									?>
-									<div class="widget-activity-item">
-										<div class="user-card-row">
-											<div class="tbl-row">
-												<div class="tbl-cell tbl-cell-photo">
-													<a href="modul.php?modul=<?=$modul['_id']?>">
-														<img src="assets/img/folder.png" alt="">
-													</a>
-												</div>
-												<div class="tbl-cell">
-													<p>
-														<a href="modul.php?modul=<?=$modul['_id']?>" class="semibold"><?=$modul['nama']?></a>
-													</p>
-													<p><?=selisih_waktu($modul['date_created'])?></p>
-												</div>
-										<?php
-										if ($_SESSION['lms_id'] == $modul['creator']) {
+								if ($listModul->count() > 0) {
+									$no = 1;
+									foreach ($listModul as $modul) {
 										?>
-												<div class="tbl-cell" align="right">
-													<a onclick="edit('<?=$modul['_id']?>')" title="Edit" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk memperbarui Modul yang sudah dibuat."><i class="font-icon font-icon-pencil"></i></a>
-													<a onclick="remove('<?=$modul['_id']?>')" title="Hapus" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menghapus Modul yang sudah dibuat."><i class="font-icon font-icon-trash"></i></a>
+										<div class="widget-activity-item">
+											<div class="user-card-row">
+												<div class="tbl-row">
+													<div class="tbl-cell tbl-cell-photo">
+														<a href="modul.php?modul=<?=$modul['_id']?>">
+															<img src="assets/img/folder.png" alt="">
+														</a>
+													</div>
+													<div class="tbl-cell">
+														<p>
+															<a href="modul.php?modul=<?=$modul['_id']?>" class="semibold"><?=''.$no.'. '.$modul['nama']?></a>
+														</p>
+														<p><?=selisih_waktu($modul['date_created'])?></p>
+													</div>
+											<?php
+											if ($_SESSION['lms_id'] == $modul['creator']) {
+											?>
+													<div class="tbl-cell" align="right">
+														<a onclick="edit('<?=$modul['_id']?>')" title="Edit" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk memperbarui Modul yang sudah dibuat."><i class="font-icon font-icon-pencil"></i></a>
+														<a onclick="remove('<?=$modul['_id']?>')" title="Hapus" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menghapus Modul yang sudah dibuat."><i class="font-icon font-icon-trash"></i></a>
+													</div>
+											<?php
+											}
+											?>
 												</div>
-										<?php
-										}
-										?>
 											</div>
 										</div>
-									</div>
-									<?php
+										<?php
+										$no++;
+									}
+								}else {
+									echo '
+												<div class="add-customers-screen tbl">
+													<div class="add-customers-screen-in">
+														<div class="add-customers-screen-user">
+															<i class="fa fa-file-text-o"></i>
+														</div>
+														<h2>Modul masih Kosong</h2>
+														<p class="lead color-blue-grey-lighter">Belum ada modul yang tersedia saat ini.</p>
+													</div>
+												</div>';
 								}
 							?>
-							<div class="widget-activity-item">
+							<!-- <div class="widget-activity-item">
 								<div class="user-card-row">
 									<div class="tbl-row">
 										<div class="tbl-cell tbl-cell-photo">
@@ -274,7 +291,7 @@ if(isset($_POST['updateMapel'])){
 										</div>
 									</div>
 								</div>
-							</div>
+							</div> -->
 						</div>
 					</section><!--.widget-tasks-->
 				</div>
