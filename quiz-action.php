@@ -8,8 +8,8 @@ require("includes/header-top.php");
     		height : 100,
         	menubar: false,
         	auto_focus:true,
-        	
-        	
+
+
         // To avoid TinyMCE path conversion from base64 to blob objects.
         // https://www.tinymce.com/docs/configure/file-image-upload/#images_dataimg_filter
         images_dataimg_filter : function(img) {
@@ -139,11 +139,11 @@ if (isset($_POST['updateInfoQuiz'])) {
 					</fieldset>
 					<fieldset class="form-group">
 						<label class="form-label " for="exampleInput">Pilihan 2</label>
-						<textarea class="myeditablediv" id="jawab2" name="jawaban[]" ></textarea> 
+						<textarea class="myeditablediv" id="jawab2" name="jawaban[]" ></textarea>
 						Atur Jawaban Benar <input type="radio" name="benar" value="1">
 					</fieldset>
 					<div class ="opsitambahan">
-						
+
 					</div>
 					<a style="align:right;color:#009dff;" id="tambahopsi" onclick="tambahOpsi();">+ Tambah Pilihan</a>
 				</div>
@@ -184,10 +184,10 @@ if (isset($_POST['updateInfoQuiz'])) {
 					</div>
 				</div>
 			</div>
-			<button type="button" class="change-cover" onclick="update()">
+			<!-- <button type="button" class="change-cover" onclick="update()">
 				<i class="font-icon font-icon-pencil"></i>
 				Pengaturan Mata Pelajaran
-			</button>
+			</button> -->
 		</div><!--.profile-header-photo-->
 
 		<div class="container-fluid">
@@ -200,7 +200,7 @@ if (isset($_POST['updateInfoQuiz'])) {
 								<input type="text" class="form-control" name="nama" value="<?=$infoQuiz['nama']?>">
 							</header>
 							<div class="box-typical-inner" id="opsitambahan">
-							
+
 								<fieldset class="form-group">
 									<label class="form-label semibold" name="durasi" for="exampleInput">Durasi</label>
 									<input type="number" class="form-control" name="durasi" id="exampleInput" placeholder="0" value="<?=$infoQuiz['durasi']?>" maxlength="3">
@@ -213,7 +213,7 @@ if (isset($_POST['updateInfoQuiz'])) {
 								<fieldset class="form-group">
 									<label class="form-label semibold" for="exampleInput">Tanggal Selesai</label>
 									<input type="date" class="form-control" name="selesai" id="exampleInput" value="<?=$infoQuiz['end_date']?>" placeholder="mm/dd/yyyy">
-									
+
 								</fieldset>
 								<!-- <div class ="opsitambahan"> -->
 								<button class="btn " name="updateInfoQuiz">Simpan</button>
@@ -232,9 +232,9 @@ if (isset($_POST['updateInfoQuiz'])) {
 							Soal Kuis Paket Soal - <?=$infoQuiz['nama']?>
 							<div class="btn-group" style="float:right;">
 									<button type="button" class="btn btn-sm btn-inline" onclick="add()" title="Tambah" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menambahkan Modul baru.">+ Tambah Soal</button>
-								
+
 							</div>
-							
+
 						</header>
 						<div>
 						<div class="card-block" id="accordion">
@@ -265,7 +265,7 @@ if (isset($_POST['updateInfoQuiz'])) {
 															<i class="font-icon font-icon-trash")"></i>
 														</a>';
 
-													
+
 												}
 							echo '				</div>
 											</div>
@@ -278,12 +278,12 @@ if (isset($_POST['updateInfoQuiz'])) {
 											echo '<article class="box-typical profile-post panel">
 													<div class="profile-post-header">
 														<div class="user-card-row">
-															
+
 															<div class="col-md-11">'.$jawaban['text'].'</div>' ;
 															if ($jawaban['status'] == "benar") {
 																echo '<div class="col-md-1"><i class="fa fa-check success"></i></div>';
-															};	
-											echo	'		
+															}
+											echo	'
 														</div>
 													</div>
 												</article>';
@@ -358,15 +358,15 @@ if (isset($_POST['updateInfoQuiz'])) {
 	         image_advtab: true
 	  		});
 
-				
 
-				
+
+
 			}
-					
+
 
 		$(document).ready(function() {
 			$('.note-statusbar').hide();
-			
+
 		});
 
 		function clearText(elementID){

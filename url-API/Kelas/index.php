@@ -88,8 +88,8 @@ if(isset($method['action'])){
 	}
 
     if($method['action'] == 'removeAnggota'){
-        $delete = array("id" => new MongoId($method['ID']));
-        $data   = $table->remove($delete);
+        $delete = array("id_user" => $method['ID'], "id_kelas"=>$method['kelas']);
+        $data   = $table2->remove($delete);
         $resp   = array('response'=>'Terhapus!', 'message'=>'Data berhasil dihapus!', 'icon'=>'success');
 		$Json   = json_encode($resp);
 		header('Content-Type: application/json');

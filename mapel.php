@@ -94,7 +94,7 @@ if(isset($_POST['updateMapel'])){
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-rounded btn-danger pull-left" onclick="" name="hapusKelas"><i class="font-icon-trash"></i> Hapus Mata Pelajaran</button>
+					<button type="button" class="btn btn-rounded btn-danger pull-left" onclick="" name="hapusMapel"><i class="font-icon-trash"></i> Hapus Mata Pelajaran</button>
 					<button type="submit" class="btn btn-rounded btn-primary" name="updateMapel" value="send" >Simpan</button>
 					<button type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Tutup</button>
 				</div>

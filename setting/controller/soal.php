@@ -7,7 +7,7 @@ class Soal
             global $db;
             $tableName = 'soal';
             $this->db = $db;
-            $this->db->table = $this->db->$tableName;
+            $this->table = $this->db->$tableName;
         } catch(Exception $e) {
             echo "Database Not Connection";
             exit();
@@ -16,22 +16,22 @@ class Soal
 
     public function getInfoSoal($idSoal){
 		$ID     = new MongoId($idSoal);
-        $query  = $this->db->soal->findOne(array("_id" => $ID));
-		
+        $query  = $this->table->findOne(array("_id" => $ID));
+
         return $query;
     }
 
     public function getListbyQuiz($idQuiz){
-        $query =  $this->db->soal->find(array("id_paket"=>"$idQuiz"));
+        $query =  $this->table->find(array("id_paket"=>"$idQuiz"));
         // if($query["soal"]){
-        //     $query1 = $this->db->soal->find(array("id_paket" => $idQuiz))->count();
+        //     $query1 = $this->table->find(array("id_paket" => $idQuiz))->count();
         //     $query['jmlSoal'] = $query1;
         // }
         return $query;
     }
 
     public function getListbySoal($idSoal){
-        $query =  $this->db->soal->find(array("id_soal"=>"$idSoal"));
+        $query =  $this->table->find(array("id_soal"=>"$idSoal"));
         return $query;
     }
 
@@ -42,7 +42,7 @@ class Soal
     }
 
     public function getListSoalbyQuiz($idQuiz){
-        $query =  $this->db->soal->find(array("id_quiz"=>"$idQuiz"));
+        $query =  $this->table->find(array("id_quiz"=>"$idQuiz"));
         return iterator_to_array($query);
     }
 
@@ -52,7 +52,7 @@ class Soal
     }
 
     public function getSoalbyId($idSoal){
-        $query =  $this->db->soal->findOne(array("_id" => new MongoId($idSoal)));
+        $query =  $this->table->findOne(array("_id" => new MongoId($idSoal)));
         return $query;
     }
 
@@ -62,14 +62,14 @@ class Soal
     }
 
     public function getNumberbyQuiz($idQuiz){
-        $query =  $this->db->soal->find(array("id_quiz"=>"$idQuiz"))->count();
+        $query =  $this->table->find(array("id_quiz"=>"$idQuiz"))->count();
         return $query;
     }
 
     public function addSoal($soal, $jawaban, $benar, $id_paket, $user){
         $newID  = "";
         $insert = array("id_paket"=>"$id_paket","jenis" => "pg","soal" => $soal, "creator" => "$user", "date_created"=>date('Y-m-d H:i:s'), "date_modified"=>date('Y-m-d H:i:s'));
-        $paketsoal = $this->db->soal->insert($insert);
+        $paketsoal = $this->table->insert($insert);
         $idSoal = $insert['_id'];
         if ($paketsoal) {
             $hasil ="Sukses";
@@ -80,7 +80,7 @@ class Soal
                 // echo $i .' = '.$benar.'<br />';
                 // echo "if ".$benar ."=". $i.")";
 
-                if ($benar = $i) {
+                if ($benar == $i) {
                     $status = "benar";
                 }else{
                     $status = "salah";
@@ -102,7 +102,7 @@ class Soal
     public function updateSoal($id, $soal, $jawaban, $benar, $id_paket, $user){
         $newID  = "";
         $edit = array("id_paket"=>"$id_paket","jenis" => "pg","soal" => $soal, "creator" => "$user", "date_created"=>date('Y-m-d H:i:s'), "date_modified"=>date('Y-m-d H:i:s'));
-        $paketsoal = $this->db->soal->update(array("_id"=> new MongoId($id)),array('$set'=>$edit));
+        $paketsoal = $this->table->update(array("_id"=> new MongoId($id)),array('$set'=>$edit));
 
         if ($paketsoal) {
             $status1 ="Sukses";
@@ -114,7 +114,7 @@ class Soal
                 // echo $i .' = '.$benar.'<br />';
                 // echo "if ".$benar ."=". $i.")";
 
-                if ($benar = $i) {
+                if ($benar == $i) {
                     $status = "benar";
                 }else{
                     $status = "salah";

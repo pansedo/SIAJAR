@@ -17,6 +17,7 @@ require("includes/header-menu.php");
 $mapelClass 	= new Mapel();
 $modulClass 	= new Modul();
 $tugasClass 	= new Tugas();
+$kelasClass		= new Kelas();
 
 $menuModul		= 3;
 $infoModul		= $modulClass->getInfoModul($_GET['modul']);
@@ -24,8 +25,22 @@ $infoMapel		= $mapelClass->getInfoMapel($infoModul['id_mapel']);
 $infoTugas		= $tugasClass->getInfoTugas($_GET['modul']);
 $listTugas		= $tugasClass->getListTugas($_GET['modul']);
 
-if(isset($_POST['addTugas']) || isset($_POST['updateTugas'])){
+$hakKelas		= $kelasClass->getKeanggotaan($infoMapel['id_kelas'], $_SESSION['lms_id']);
+if(!$hakKelas['status']){
+	echo "<script>
+			swal({
+				title: 'Maaf!',
+				text: 'Anda tidak terdaftar pada Kelas / Kelas tidak tsb tidak ada.',
+				type: 'error'
+			}, function() {
+				 window.location = 'index.php';
+			});
+		</script>";
+		die();
+}
 
+
+if(isset($_POST['addTugas']) || isset($_POST['updateTugas'])){
 
 	if(isset($_POST['addTugas'])){
 		$rest 	= $tugasClass->addTugas($_GET['modul'], $_POST['nama'], $_POST['deskripsi'], $_POST['deadline'], $_SESSION['lms_id']);

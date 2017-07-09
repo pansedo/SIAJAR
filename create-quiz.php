@@ -200,7 +200,7 @@ $listQuiz	= $quizClass->getListbyModul($_GET['modul']);
 													</div>
 													<div class="color-blue-grey-lighter"><?=($materi['date_created'] == $materi['date_modified'] ? "Diterbitkan " : "Diperbarui ").selisih_waktu($materi['date_modified'])?></div>
 												</div>
-												<div class="tbl-cell" align="right">';
+												<div class="tbl-cell" align="right">
 												<?php if ($_SESSION['lms_id'] == $materi['creator']) {?>
 														<a href="quiz-action.php?act=update&md=<?=$infoModul['_id']?>&qz=<?=$materi['_id']?>" class="shared" title="Edit" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk memperbarui isi dari Ujian yang sudah dibuat." style="right: 35px">
 															<i class="font-icon font-icon-pencil"></i>

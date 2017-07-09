@@ -8,6 +8,8 @@ $mapelClass = new Mapel();
 $userClass	= new User();
 
 $infoKelas	= $kelasClass->getInfoKelas($_GET['id']);
+$infoMapel	= $mapelClass->getListbyKelas($_GET['id']);
+$infoUser	= $userClass->GetData($_SESSION['lms_id']);
 
 $hakKelas	= $kelasClass->getKeanggotaan($_GET['id'], $_SESSION['lms_id']);
 // $anggota	= in_array($_SESSION['lms_id'], array_values($infoKelas['list_member'])) ? true : false;
@@ -337,88 +339,33 @@ if(isset($_POST['updateKelas'])){
 				<div class="col-xl-9 col-lg-8">
 					<section class="widget widget-tasks card-default">
 						<header class="card-header">
-							Daftar Anggota kelas
+							Daftar Mata Pelajaran
 						</header>
 						<div class="widget-tasks-item">
 							<table id="example" class="display table table-striped" cellspacing="0" width="100%">
 								<thead style="display:none;">
 									<tr>
-										<th>Foto</th>
-										<th>Nama dan Sekolah</th>
+										<th>Nama Mata Pelajaran</th>
 										<th>Aksi</th>
 									</tr>
 								</thead>
 								<tbody>
 							<?php
-							if ($infoKelas['member'] > 0) {
-								foreach (array_values($infoKelas['list_member']) as $data) {
-									$menu		= '';
-									$infoUser	= $userClass->GetData($data);
-									$infoHak	= $kelasClass->getKeanggotaan($_GET['id'], "$infoUser[_id]");
-									switch ($infoHak['status']) {
-									    case 1:
-									        $posisi	= "Guru Kelas";
-									        break;
-									    case 2:
-									        $posisi	= "Guru Mata Pelajaran";
-									        break;
-									    case 3:
-									        $posisi	= "Co-Teacher";
-									        break;
-										default:
-											$posisi	= "Anggota";
-											break;
-									}
+							if ($infoMapel->count() > 0) {
+								foreach ($infoMapel as $data) {
+									$menu	= '<div class="btn-group" style="float: right;">
+													<button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+														Aksi
+													</button>
+													<div class="dropdown-menu dropdown-menu-right">
+														<div class="dropdown-divider"></div>
+														<a class="dropdown-item" onclick="remove(\''.$infoUser['_id'].'\')">Hapus Anggota</a>
+													</div>
+												</div>';
 
-									if ($infoUser['status'] == 'guru') {
-										if ($infoHak['status'] == 2 || $infoHak['status'] == 3) {
-											$menu		= '<div class="btn-group" style="float: right;">
-																<button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-																	Aksi
-																</button>
-																<div class="dropdown-menu dropdown-menu-right">
-																	<div class="radio">
-																		<a class="dropdown-item" href="#">
-																			<input type="radio" name="statusGuru" id="statusGuru2" onclick="cPriv(\''.$infoUser['_id'].'\', 2)" value="2" '.($infoHak['status'] == 2 ? "checked" : "").' >
-																			<label for="statusGuru2">Guru Mata Pelajaran </label>
-																		</a>
-																		<a class="dropdown-item" href="#">
-																			<input type="radio" name="statusGuru" id="statusGuru3" onclick="cPriv(\''.$infoUser['_id'].'\', 3)" value="3" '.($infoHak['status'] == 3 ? "checked" : "").' >
-																			<label for="statusGuru3">Co-Teacher </label>
-																		</a>
-																	</div>
-																	<div class="dropdown-divider"></div>
-																	<a class="dropdown-item" onclick="remove(\''.$infoUser['_id'].'\')">Hapus Anggota</a>
-																</div>
-															</div>';
-										}
-									}elseif ($infoUser['status'] == 'siswa') {
-										$menu		= '<div class="btn-group" style="float: right;">
-															<button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-																Aksi
-															</button>
-															<div class="dropdown-menu dropdown-menu-right">
-																<a class="dropdown-item" onclick="remove(\''.$infoUser['_id'].'\')">Hapus Anggota</a>
-															</div>
-														</div>';
-									}
-									$menuAnggota = '';
-									if ($_SESSION['lms_id'] == $infoUser['_id']) {
-										$menuAnggota	= '<div class="btn-group" style="float: right;">
-															<button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-																Aksi
-															</button>
-															<div class="dropdown-menu dropdown-menu-right">
-																<a class="dropdown-item" onclick="out(\''.$infoUser['_id'].'\')">Keluar Kelas</a>
-															</div>
-														</div>';
-									}
-
-									$image		= empty($infoUser['foto']) ? "<img src='assets/img/avatar-2-128.png' style='max-width: 75px; max-height: 75px;' />" : "<img src='".$infoUser['foto']."' style='max-width: 75px; max-height: 75px;' />" ;
 									echo "	<tr>
-												<td width='80px;'>".$image."</td>
-												<td><span class='user-name'>$infoUser[nama]</span> <br> <span style='font-size: 0.9em;'>$infoUser[sekolah] <br> ".ucfirst($infoUser['status'])." (".$posisi.")</span></td>
-												<td width='70px;' class='shared'>".($hakKelas['status'] == 1 ? $menu : $menuAnggota)."</td>
+												<td><span class='user-name'>$data[nama]</span></td>
+												<td width='70px;' class='shared'>".($hakKelas['status'] == 1 ? $menu : '')."</td>
 											</tr>";
 								}
 							}
@@ -455,7 +402,7 @@ if(isset($_POST['updateKelas'])){
 		function remove(ID){
       		swal({
       		  title: "Apakah anda yakin?",
-      		  text: "Menghapus anggota dari kelas ini.",
+      		  text: "Menghapus anggota dari grup ini.",
       		  type: "warning",
       		  showCancelButton: true,
 			  	confirmButtonText: "Ya",
@@ -469,37 +416,6 @@ if(isset($_POST['updateKelas'])){
       				data: {"action": "removeAnggota", "ID": ID, "kelas": "<?=$_GET['id']?>"},
       				success: function(res) {
       					swal(res.response, res.message, res.icon);
-      				},
-      				error: function () {
-      					swal("Gagal!", "Data tidak terhapus!", "error");
-      				}
-      			});
-      		});
-      	}
-
-		function out(ID){
-      		swal({
-      		  title: "Apakah anda yakin?",
-      		  text: "Keluar dari kelas ini.",
-      		  type: "warning",
-      		  showCancelButton: true,
-			  	confirmButtonText: "Ya",
-      			confirmButtonClass: "btn-danger",
-      		  closeOnConfirm: false,
-      		  showLoaderOnConfirm: true
-      		}, function () {
-      			$.ajax({
-      				type: 'POST',
-      				url: 'url-API/Kelas/',
-      				data: {"action": "removeAnggota", "ID": ID, "kelas": "<?=$_GET['id']?>"},
-      				success: function(res) {
-						swal({
-				            title: res.response,
-				            text: res.message,
-				            type: res.icon
-				        }, function() {
-				            window.location='<?=base_url?>';
-				        });
       				},
       				error: function () {
       					swal("Gagal!", "Data tidak terhapus!", "error");

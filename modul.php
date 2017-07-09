@@ -17,7 +17,7 @@ if(!$hakKelas['status']){
 	echo "<script>
 			swal({
 				title: 'Maaf!',
-				text: 'Anda tidak terdaftar pada Kelas ini.',
+				text: 'Anda tidak terdaftar pada Kelas / Kelas tidak tsb tidak ada.',
 				type: 'error'
 			}, function() {
 				 window.location = 'index.php';
