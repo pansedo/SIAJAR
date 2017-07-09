@@ -29,10 +29,15 @@
         <div class="page-center-in">
             <div class="container-fluid">
                 <form method='POST' class="sign-box" id="form-login" name="form-signin_v2" onsubmit="return false;">
-                    <div class="sign-avatar">
-                        <img src="assets/img/jabar.png" style="border-radius: 0px !important;" alt="">
-                    </div><br />
-                    <header class="sign-title">SIAJAR LMS</header>
+					<div style="display: flex">
+						<div class="sign-avatar">
+	                        <img src="assets/img/dikbud.png" style="border-radius: 0px !important;" alt="">
+	                    </div>
+						<div class="sign-avatar">
+	                        <img src="assets/img/jabar.png" style="border-radius: 0px !important;" alt="">
+	                    </div>
+					</div><br />
+                    <header class="sign-title">SIAJAR</header>
                     <div class="form-group">
                         <input type="text" name="username" id="username" class="form-control" placeholder="Email atau nama pengguna" required />
                     </div>
@@ -51,6 +56,8 @@
 						<a href="sign-up.html"><button type="button" style="display: inline-block" class="btn btn-primary">sebagai Guru</button></a>
 						<a href="sign-up.html"><button type="button" style="display: inline-block" class="btn btn-warning">sebagai Siswa</button></a>
 					</p>
+					<hr style="margin: 10px 0;">
+					<p align="center">Powered by <b><a href="http://seamolec.org">SEAMOLEC</a></b> &copy; 2017</p>
                 </form>
             </div>
         </div>

@@ -73,11 +73,11 @@ if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
 					</div>
 				</div>
 			</div>
-			<button type="button" class="change-cover">
+			<!-- <button type="button" class="change-cover">
 				<i class="font-icon font-icon-picture-double"></i>
 				Ganti sampul
 				<input type="file"/>
-			</button>
+			</button> -->
 		</div><!--.profile-header-photo-->
 
 		<div class="container-fluid">

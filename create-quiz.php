@@ -126,7 +126,7 @@ $listQuiz	= $quizClass->getListbyModul($_GET['modul']);
 									<div class="tbl info-tbl">
 										<div class="tbl-row">
 											<div class="tbl-cell">
-												<p class="title">Quiz <?=$infoModul['nama']?></p>
+												<p class="title">Ujian <?=$infoModul['nama']?></p>
 												<p>Mata Pelajaran <?=$infoMapel['nama']?></p>
 											</div>
 											<div class="tbl-cell tbl-cell-stat">
@@ -143,10 +143,10 @@ $listQuiz	= $quizClass->getListbyModul($_GET['modul']);
 					</div>
 				</div>
 			</div>
-			<button type="button" class="change-cover" onclick="update()">
+			<!-- <button type="button" class="change-cover" onclick="update()">
 				<i class="font-icon font-icon-pencil"></i>
 				Pengaturan Mata Pelajaran
-			</button>
+			</button> -->
 		</div><!--.profile-header-photo-->
 
 		<div class="container-fluid">
@@ -160,8 +160,8 @@ $listQuiz	= $quizClass->getListbyModul($_GET['modul']);
 				<div class="col-xl-9 col-lg-8">
 					<section class="widget widget-activity">
 						<header class="widget-header">
-							Create Quis
-							<span class="label label-pill label-primary"><?=$infoMapel['modul']?></span>
+							Ujian
+							<span class="label label-pill label-primary"><?=$listQuiz->count();?></span>
 
 						</header>
 						<div>
@@ -182,9 +182,9 @@ $listQuiz	= $quizClass->getListbyModul($_GET['modul']);
 														<?php
 															if($submittedQuiz){
 														?>
-															<img src="assets/img/quiz-icon.png" alt="">
+															<img src="assets/img/quiz.png" alt="">
 														<?php }else{ ?>
-															<img src="assets/img/quiz-icon-empty.png" alt="">
+															<img src="assets/img/quiz-empty.png" alt="">
 														<?php } ?>
 													</a>
 												</div>
@@ -202,7 +202,7 @@ $listQuiz	= $quizClass->getListbyModul($_GET['modul']);
 												</div>
 												<div class="tbl-cell" align="right">';
 												<?php if ($_SESSION['lms_id'] == $materi['creator']) {?>
-														<a href="quiz-action.php?act=update&md=<?=$infoModul['_id']?>&qz=<?=$materi['_id']?>" class="shared" title="Edit" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk memperbarui isi dari Materi yang sudah dibuat." style="right: 35px">
+														<a href="quiz-action.php?act=update&md=<?=$infoModul['_id']?>&qz=<?=$materi['_id']?>" class="shared" title="Edit" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk memperbarui isi dari Ujian yang sudah dibuat." style="right: 35px">
 															<i class="font-icon font-icon-pencil"></i>
 														</a>
 														<a onclick="remove(<?=$materi['_id']?>)"   class="shared" title="Hapus" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menghapus Materi yang sudah dibuat.">
@@ -218,7 +218,7 @@ $listQuiz	= $quizClass->getListbyModul($_GET['modul']);
 											if($submittedQuiz){
 												$nilaiQuiz      = $quizClass->hitungNilaiQuiz($_SESSION['lms_id'], (string)$materi['_id']);
 										?>
-										Nilai Quiz :<?=$nilaiQuiz?> <br />
+										Nilai Ujian :<?=$nilaiQuiz?> <br />
 										<?php }else{ ?>
 										Durasi :<?=$materi["durasi"]?> menit<br />
 										Tanggal Berakhir :<?=$materi["end_date"]?> <br />
@@ -333,7 +333,7 @@ $listQuiz	= $quizClass->getListbyModul($_GET['modul']);
 
 		function message(){
 			swal({
-                title: "Quiz Sudah Dikerjakan!",
+                title: "Ujian Sudah Dikerjakan!",
                 text: "Anda Tidak Bisa Mengerjakannya Kembali!",
                 type: "warning",
                 confirmButtonText: "Ya",
