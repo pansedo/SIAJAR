@@ -78,15 +78,19 @@ class Quiz
         return $result;
     }
 
-    public function hitungNilaiQuiz($idUser, $idQuiz){
+    public function hitungNilaiQuiz($idUser, $idQuiz, $jumlah_soal){
         $nilai_quiz         = 0;
         $list_jawaban_user  =  $this->db->jawaban_user->find(array("id_user"=>"$idUser", "id_quiz"=>"$idQuiz"));
 
         foreach ($list_jawaban_user as $jawaban_user) {
-            $nilai_quiz += $jawaban_user['status'];
+            if($jawaban_user['status'] == 'benar'){
+                $nilai_quiz++;
+            }
         }
 
-        return $nilai_quiz;
+        $nilai_akhir = ($nilai_quiz/$jumlah_soal)*100;
+
+        return $nilai_akhir;
     }
 
     public function submitQuiz($idUser, $idQuiz, $nilaiQuiz){

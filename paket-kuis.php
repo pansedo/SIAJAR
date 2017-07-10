@@ -87,7 +87,7 @@ $listQuiz	= $quizClass->getListbyUser($_SESSION['lms_id']);
 										<input type="number" class="form-control" name="durasi" id="exampleInput" placeholder="0" maxlength="3">
 										<small class="text-muted">Lama Pengerjaan dalam satuan menit.</small>
 								</div>
-										
+
 							</div>
 							<div class="form-group row">
 								<label class="col-md-3 form-control-label"  for="exampleInput">Tanggal Mulai</label>
@@ -100,7 +100,7 @@ $listQuiz	= $quizClass->getListbyUser($_SESSION['lms_id']);
 								<div class="col-md-9">
 								<input type="date" class="form-control" name="selesai" id="exampleInput" placeholder="dd/mm/yyyy">
 								</div>
-								
+
 							</div>
 					</div>
 				</div>
@@ -160,7 +160,7 @@ $listQuiz	= $quizClass->getListbyUser($_SESSION['lms_id']);
 						<header class="widget-header">
 							<?//?>
 							<span class="label label-pill label-primary"><?//=$infoMapel['modul']?></span>
-							
+
 						</header>
 						<div>
 						<div class="card-block" id="accordion">
@@ -184,7 +184,7 @@ $listQuiz	= $quizClass->getListbyUser($_SESSION['lms_id']);
 												</div>
 												<div class="tbl-cell" align="right">';
 												if ($_SESSION['lms_id'] == $materi['creator']) {
-													
+
 													echo '
 													<a href="quiz-action.php?act=update&qz='.$materi['_id'].'" class="shared" title="Edit" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk memperbarui isi dari Materi yang sudah dibuat." style="right: 35px">
 															<i class="font-icon font-icon-pencil")"></i>
@@ -203,6 +203,12 @@ $listQuiz	= $quizClass->getListbyUser($_SESSION['lms_id']);
 							// 		</div>
 							// 	</article>
 							// ';
+							echo '				</div>
+											</div>
+										</div>
+									</div>
+								</article>
+							';
 							$no++;
 						}
 					}else {

@@ -115,7 +115,9 @@ if (isset($_POST['updateInfoQuiz'])) {
 		 tabindex="-1"
 		 role="dialog"
 		 aria-labelledby="addModulLabel"
-		 aria-hidden="true">
+		 aria-hidden="true"
+		 data-backdrop="static"
+		 data-keyboard="false">
 		<div class="modal-dialog modal-lg" role="document">
 			<div class="modal-content">
 				<form id="form_tambah" method="POST">
@@ -513,6 +515,8 @@ if (isset($_POST['updateInfoQuiz'])) {
 		})
 	</script>
 <script src="assets/js/app.js"></script>
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
 <?php
 	require('includes/footer-bottom.php');
 ?>

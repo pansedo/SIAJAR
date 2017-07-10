@@ -41,8 +41,8 @@ class Soal
         return $query;
     }
 
-    public function getListSoalbyQuiz($idQuiz){
-        $query =  $this->table->find(array("id_quiz"=>"$idQuiz"));
+    public function getListSoalbyQuiz($idPaket){
+        $query =  $this->table->find(array("id_paket"=>"$idPaket"));
         return iterator_to_array($query);
     }
 
@@ -62,7 +62,7 @@ class Soal
     }
 
     public function getNumberbyQuiz($idQuiz){
-        $query =  $this->table->find(array("id_quiz"=>"$idQuiz"))->count();
+        $query =  $this->table->find(array("id_paket"=>"$idQuiz"))->count();
         return $query;
     }
 
