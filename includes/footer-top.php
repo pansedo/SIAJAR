@@ -25,6 +25,12 @@
 			}
 		});
 
+		function SelectElement(ID, iniValue){
+    		var element = document.getElementById(ID);
+		    element.value = iniValue;
+			// alert(iniValue);
+	  	}
+
 		$(document).ready(function() {
 			$('[data-toggle="popover"]').popover();
 		});

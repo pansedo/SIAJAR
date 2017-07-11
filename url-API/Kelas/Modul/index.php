@@ -3,7 +3,6 @@ require("../../../setting/connection.php");
 
 $method	= $_REQUEST;
 $table  = $db->modul;
-$table2 = $db->anggota_kelas;
 
 if(isset($method['action'])){
     if($method['action'] == 'show'){
@@ -17,7 +16,7 @@ if(isset($method['action'])){
 	}
 
     if($method['action'] == 'showAll'){
-        $catch  = $table->find(array());
+        $catch  = $table->find(array("id_mapel" => $method['IDKelas']));
         foreach ($catch as $row) {
             $data[]   = $row;
         }
