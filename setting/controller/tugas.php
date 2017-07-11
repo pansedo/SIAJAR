@@ -24,6 +24,11 @@ class Tugas
         return $query;
     }
 
+    public function getStatusTugas($tugas, $user){
+        $query =  $this->db->kumpul_tugas->findOne(array("id_tugas"=>"$tugas", "id_user"=>$user));
+        return $query;
+    }
+
     public function addTugas($idTugas, $nama, $deskripsi, $deadline, $user){
 
         $insert = array("id_modul"=>$idTugas, "nama" => $nama, "deskripsi" => $deskripsi, "deadline" => $deadline, "creator" => "$user", "date_created"=>date('Y-m-d H:i:s'), "date_modified"=>date('Y-m-d H:i:s'));
