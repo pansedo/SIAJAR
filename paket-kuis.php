@@ -186,7 +186,7 @@ $listQuiz	= $quizClass->getListbyUser($_SESSION['lms_id']);
 												if ($_SESSION['lms_id'] == $materi['creator']) {
 													
 													echo '
-													<a href="quiz-action.php?act=update&qz='.$materi['_id'].'" class="shared" title="Edit" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk memperbarui isi dari Materi yang sudah dibuat." style="right: 35px">
+													<a href="paket-detail.php?id='.$materi['_id'].'" class="shared" title="Edit" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk memperbarui isi dari Materi yang sudah dibuat." style="right: 35px">
 															<i class="font-icon font-icon-pencil")"></i>
 														</a>
 														<a onclick="remove(\''.$materi['_id'].'\')"   class="shared" title="Hapus" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menghapus Materi yang sudah dibuat.">

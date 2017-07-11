@@ -23,6 +23,14 @@ class Quiz
         return $query;
     }
 
+    public function getInfoPaket($idQuiz){
+        $ID     = new MongoId($idQuiz);
+        $query  = $this->db->paket_soal->findOne(array("_id" => $ID));
+
+        // print_r($query);
+        return $query;
+    }
+
     public function getListbyModul($idModul){
         $query =  $this->db->quiz->find(array("id_modul"=>"$idModul"));
         // if($query['_id']){
