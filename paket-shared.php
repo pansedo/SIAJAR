@@ -186,10 +186,10 @@ $listQuiz	= $quizClass->getListbyUser($_SESSION['lms_id']);
 												if ($_SESSION['lms_id'] == $data['creator']) {
 													
 													echo '
-													<a href="quiz-action.php?act=view&qz='.$data['_id'].'" class="shared" title="View" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk melihat list soal dari paket soal ini." style="right: 35px">
+													<a href="paket-detail.php?id='.$data['_id'].'" class="shared" title="View" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk melihat list soal dari paket soal ini." style="right: 35px">
 															<i class="font-icon font-icon-eye")"></i>
 														</a>
-														<a onclick="remove(\''.$data['_id'].'\')"   class="shared" title="Duplikat" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menghapus Paket Soal yang sudah dibuat.">
+														<a onclick="share(\''.$data['_id'].'\')"   class="shared" title="Duplikat" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menghapus Paket Soal yang sudah dibuat.">
 															<i class="font-icon font-icon-doc")"></i>
 														</a>';
 												}
