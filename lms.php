@@ -30,8 +30,23 @@
         <link rel="stylesheet" type="text/css" href="assets/css/lib/front/bootsnav.css">
         <link rel="stylesheet" type="text/css" href="assets/css/lib/front/style.css">
         <link rel="stylesheet" type="text/css" href="assets/css/lib/front/loader.css">
+        <link rel="stylesheet" type="text/css" href="assets/css/separate/pages/login.css">
 
         <link href="assets/img/favicon.ico" rel="shortcut icon">
+
+        <style>
+            *{
+                font-family: 'Proxima Nova',sans-serif;
+            }
+
+            p{
+                line-height: 150%;
+            }
+
+            .sign-box a{
+                color: #29b7c4;
+            }
+        </style>
 
     </head>
 
@@ -47,31 +62,44 @@
              id="login"
              tabindex="-1"
              role="dialog"
-             aria-labelledby="updateMapelLabel"
+             aria-labelledby="loginLabel"
              aria-hidden="true"
              data-backdrop="static"
              data-keyboard="false">
-            <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-dialog" style="width: 350px;" role="document">
                 <div class="modal-content">
-                    <form method='POST' id="form-login" onsubmit="return false;">
+                    <form method='POST' class="sign-box" id="form-login" onsubmit="return false;">
+                    <div style="display: flex">
+                        <div class="sign-avatar">
+                            <img src="assets/img/kemendikbud.png" style="border-radius: 0px !important;" alt="">
+                        </div>
+                        <div class="sign-avatar">
+                            <img src="assets/img/jabar.png" style="border-radius: 0px !important;" alt="">
+                        </div>
+                    </div>
                     <div class="modal-header">
-                        <h4 class="modal-title text-center" id="updateMapelLabel">LMS - Login</h4>
+                        <h4 class="modal-title text-center">SIAJAR</h4>
                     </div>
                     <div class="modal-body">
                         <div class="form-group row">
                             <div class="col-md-12">
-                                <input type="text" class="form-control" name="username" id="username" placeholder="Email atau nama pengguna" />
+                                <input type="text" class="form-control" name="username" id="username" placeholder="Email atau username" required />
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-md-12">
-                                <input type="password" class="form-control" name="password" id="password" placeholder="Kata sandi" />
+                                <input type="password" class="form-control" name="password" id="password" placeholder="Kata sandi" required />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div style="float: right;">
+                                <a href="account-recovery.php">Lupa kata sandi anda ?</a>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-rounded btn-primary" name="updateMapel" value="send" >Login</button>
-                        <button type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-rounded btn-primary pull-right" name="updateMapel" value="send" >Login</button>
+                        <button type="button" class="btn btn-rounded btn-default btn-cancel" data-dismiss="modal">Batal</button>
                     </div>
                     </form>
                 </div>
@@ -82,15 +110,23 @@
              id="register"
              tabindex="-1"
              role="dialog"
-             aria-labelledby="updateMapelLabel"
+             aria-labelledby="registerLabel"
              aria-hidden="true"
              data-backdrop="static"
              data-keyboard="false">
-            <div class="modal-dialog" role="document">
+            <div class="modal-dialog" style="width: 350px;" role="document">
                 <div class="modal-content">
-                    <form method='POST' id="form-register" onsubmit="return false;">
+                    <form method='POST' class="sign-box" id="form-register" onsubmit="return false;">
+                    <div style="display: flex">
+                        <div class="sign-avatar">
+                            <img src="assets/img/kemendikbud.png" style="border-radius: 0px !important;" alt="">
+                        </div>
+                        <div class="sign-avatar">
+                            <img src="assets/img/jabar.png" style="border-radius: 0px !important;" alt="">
+                        </div>
+                    </div>
                     <div class="modal-header">
-                        <h4 class="modal-title" id="updateMapelLabel">LMS - Register</h4>
+                        <h4 class="modal-title text-center">SIAJAR</h4>
                     </div>
                     <div class="modal-body">
                         <ul class="nav nav-tabs">
@@ -102,22 +138,27 @@
                             <div id="menu1" class="tab-pane fade in active">
                                 <div class="form-group row">
                                     <div class="col-md-12">
-                                        <input type="text" class="form-control" name="kode_kelas" placeholder="Kode Kelas" />
+                                        <input type="text" class="form-control" name="kode_kelas" id="kode_kelas" placeholder="Kode Kelas" required />
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-md-12">
-                                        <input type="text" class="form-control" name="username_siswa" placeholder="Email atau nama pengguna" />
+                                        <input type="text" class="form-control" name="nama_siswa" id="nama_siswa" placeholder="Nama" required />
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-md-12">
-                                        <input type="password" class="form-control" name="password_siswa" placeholder="Kata sandi" />
+                                        <input type="text" class="form-control" name="username_siswa" id="username_siswa" placeholder="Email atau NIK" required />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-12">
+                                        <input type="password" class="form-control" name="password_siswa" id="password_siswa" placeholder="Kata sandi" required />
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-rounded btn-primary" name="submit_siswa" value="siswa">Daftar Siswa</button>
-                                    <button type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Batal</button>
+                                    <button type="submit" class="btn btn-rounded btn-primary pull-right" name="submit_siswa">Daftar Siswa</button>
+                                    <button type="button" class="btn btn-rounded btn-default btn-cancel" data-dismiss="modal"  onclick="clear();">Batal</button>
                                 </div>
                             </div>
                             <div id="menu2" class="tab-pane fade">
@@ -125,19 +166,24 @@
                                     <div class="col-md-12">
                                         <div class="form-group row">
                                             <div class="col-md-12">
-                                                <input type="text" class="form-control" name="username_guru" placeholder="Email atau nama pengguna" />
+                                                <input type="text" class="form-control" name="nama_guru" id="nama_guru" placeholder="Nama" />
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-md-12">
-                                                <input type="password" class="form-control" name="password_guru" placeholder="Kata sandi" />
+                                                <input type="text" class="form-control" name="username_guru" id="username_guru" placeholder="Email atau NIK" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-md-12">
+                                                <input type="password" class="form-control" name="password_guru" id="password_guru" placeholder="Kata sandi" />
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-rounded btn-primary" name="submit_guru" value="guru">Daftar Guru</button>
-                                    <button type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Batal</button>
+                                    <button type="submit" class="btn btn-rounded btn-primary pull-right" name="submit_guru" value="guru">Daftar Guru</button>
+                                    <button type="button" class="btn btn-rounded btn-default btn-cancel" data-dismiss="modal"  onclick="clear();">Batal</button>
                                 </div>
                             </div>
                         </div>
@@ -188,12 +234,14 @@
                             <h1>Selamat datang di Siajar</h1>
                             <p>Cara paling aman dan termudah bagi pendidik untuk menghubungkan <br> berkolaborasi dengan guru dan siswa.</p>
                             <a href="#" data-toggle="modal" data-target="#register" class="border_radius btn_common yellow">Buat akun Gratis</a>
+                            <a href="#" data-toggle="modal" data-target="#login" class="border_radius btn_common yellow">Masuk</a>
                         </div>
                     </div>
                     <div class="item">
                         <div class="rotate_caption text-center">
                             <h1>Selamat datang di Siajar</h1>
                             <p>Cara paling aman dan termudah bagi pendidik untuk menghubungkan <br> berkolaborasi dengan guru dan siswa.</p>
+                            <a href="#" data-toggle="modal" data-target="#register" class="border_radius btn_common yellow">Buat akun Gratis</a>
                             <a href="#" data-toggle="modal" data-target="#login" class="border_radius btn_common yellow">Masuk</a>
                         </div>
                     </div>
@@ -251,11 +299,17 @@
                         <div class="col-sm-4 icon_box text-center heading_space wow fadeInUp" data-wow-delay="300ms">
                             <i class="fa fa-user" aria-hidden="true"></i>
                             <h4 class="text-capitalize bottom20 margin10">Mudah</h4>
-                            <p class="no_bottom" style="text-align: justify;">Dengan fitur-fitur intuitif dan penyimpanan yang tidak terbatas dengan Gudang Media,
-                            dengan cepat membuat grup, memberikan pekerjaan rumah,
-                            menjadwalkan kuis, mengelola kemajuan dan banyak lagi.
-                            Dengan segala sesuatu pada satu platform,
-                            Siajar memperkuat dan meningkatkan apa yang telah anda lakukan di dalam kelas.</p>
+                            <p class="no_bottom" style="text-align: justify;">
+                                <?php
+                                    $isi = "Dengan fitur-fitur intuitif dan penyimpanan yang tidak terbatas dengan Gudang Media,
+                                            dengan cepat membuat grup, memberikan pekerjaan rumah,
+                                            menjadwalkan kuis, mengelola kemajuan dan banyak lagi.
+                                            Dengan segala sesuatu pada satu platform,
+                                            Siajar memperkuat dan meningkatkan apa yang telah anda lakukan di dalam kelas.";
+
+                                    echo substr($isi, 0, 362)." ...";
+                                ?>
+                            </p>
                         </div>
                         <div class="col-sm-4 icon_box text-center heading_space wow fadeInUp" data-wow-delay="400ms">
                             <i class="fa fa-users" aria-hidden="true"></i>
@@ -267,10 +321,16 @@
                         <div class="col-sm-4 icon_box text-center heading_space wow fadeInUp" data-wow-delay="500ms">
                             <i class="icon-icons20"></i>
                             <h4 class="text-capitalize bottom20 margin10">Serba Guna</h4>
-                            <p class="no_bottom" style="text-align: justify;" >Apakah Anda ingin menciptakan ruang kelas tanpa kertas,
-                            membina keterampilan kewarganegaraan digital, mengintegrasikan konten
-                            pendidikan dari Gudang Media, atau tumbuh jaringan pembelajaran profesional Anda,
-                            Anda dpt mempersonalisasikan bagaimana Anda menggunakan Siajar.</p>
+                            <p class="no_bottom" style="text-align: justify;" >
+                            <?php
+                                $isi = "Apakah Anda ingin menciptakan ruang kelas tanpa kertas,
+                                        membina keterampilan kewarganegaraan digital, mengintegrasikan konten
+                                        pendidikan dari Gudang Media, atau tumbuh jaringan pembelajaran profesional Anda,
+                                        Anda dapat mempersonalisasikan bagaimana Anda menggunakan Siajar.";
+
+                                echo substr($isi, 0, 350)." ...";
+                            ?>
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -382,6 +442,31 @@
         <script src="assets/js/lib/front/functions.js"></script>
         <script>
             $(function() {
+                var register    = "siswa";
+
+                $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+                    var target = $(e.target).attr("href") // activated tab
+                    if(target=="#menu1"){
+                        register    = "siswa";
+                        $("#kode_kelas").prop('required', true);
+                        $("#nama_siswa").prop('required', true);
+                        $("#username_siswa").prop('required', true);
+                        $("#password_siswa").prop('required', true);
+                        $("#nama_guru").prop('required', false);
+                        $("#username_guru").prop('required', false);
+                        $("#password_guru").prop('required', false);
+                    }else{
+                        register    = "guru";
+                        $("#kode_kelas").prop('required', false);
+                        $("#nama_siswa").prop('required', false);
+                        $("#username_siswa").prop('required', false);
+                        $("#password_siswa").prop('required', false);
+                        $("#nama_guru").prop('required', true);
+                        $("#username_guru").prop('required', true);
+                        $("#password_guru").prop('required', true);
+                    }
+                });
+
     			$('#form-login').submit(function() {
     				var fd = new FormData(this);
     				fd.append('action','login');
@@ -393,7 +478,11 @@
           				processData: false,
           				success: function(res){
         						alert(res.message);
-        						location.href='index.php';
+                                if(res.icon == 'error'){
+                                    location.href='lms.php';
+                                }else{
+                                    location.href='index.php';
+                                }
           				},
           				error: function(){
           					swal(res.response, res.message, res.icon);
@@ -403,8 +492,7 @@
 
                 $('#form-register').submit(function() {
                     var fd = new FormData(this);
-                    alert(JSON.stringify(fd));
-                    fd.append('action','login');
+                    fd.append('status', register);
                     $.ajax({
                         type: 'POST',
                         url: 'url-API/auth-reg.php',
@@ -413,12 +501,28 @@
                         processData: false,
                         success: function(res){
                                 alert(res.message);
-                                location.href='index.php';
+                                if(res.icon == 'error'){
+                                    location.href='lms.php';
+                                }else{
+                                    location.href='index.php';
+                                }
                         },
                         error: function(){
                             swal(res.response, res.message, res.icon);
                         }
                     });
+                });
+
+                $('.btn-cancel').click(function() {
+                    $('#username').val('');
+                    $('#password').val('');
+                    $('#kode_kelas').val('');
+                    $('#nama_siswa').val('');
+                    $('#username_siswa').val('');
+                    $('#password_siswa').val('');
+                    $('#nama_guru').val('');
+                    $('#username_guru').val('');
+                    $('#password_guru').val('');
                 });
             });
         </script>
