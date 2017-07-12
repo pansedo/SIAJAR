@@ -43,7 +43,7 @@ $userProfil	= $userClass->GetData($_SESSION['lms_id']);
 							<button type="button" class="avatar-preview avatar-preview-128">
 								<img src="assets/img/avatar-1-256.png" alt=""/>
 							</button>
-							<button type="button" id="ohyeah" class="btn btn-rounded">Kirim Pesan</button>
+							<button type="button" id="ohyeah" class="btn btn-rounded"><?=$_SESSION['lms_status'] == 'guru' ? 'Kirim Pesan' : '<span data-toggle="modal" data-target="#joinKelas"><i class="font-icon font-icon-user"></i> Gabung Kelas</span>'; ?></button>
 
 						</section>
 						<?php

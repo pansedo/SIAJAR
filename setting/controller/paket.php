@@ -15,28 +15,13 @@ class Paket
         }
     }
 
-    public function getInfoQuiz($idQuiz){
-		$ID     = new MongoId($idQuiz);
-        $query  = $this->db->quiz->findOne(array("_id" => $ID));
-
-        // print_r($query);
-        return $query;
-    }
+    
 
     public function getInfoPaket($idQuiz){
         $ID     = new MongoId($idQuiz);
         $query  = $this->db->paket_soal->findOne(array("_id" => $ID));
 
         // print_r($query);
-        return $query;
-    }
-
-    public function getListbyModul($idModul){
-        $query =  $this->db->quiz->find(array("id_modul"=>"$idModul"));
-        // if($query['_id']){
-        //     $query1 = $this->db->quiz->find(array("id_modul" => $idModul))->count();
-        //     $query['modul'] = $query1;
-        // }
         return $query;
     }
 
@@ -48,23 +33,19 @@ class Paket
         // }
         return $query;
     }
-    public function addQuiz($nama, $modul, $durasi, $mulai, $selesai, $user){
+    public function addPaket($nama, $publish, $user){
         $newID  = "";
-        $insert = array("nama" => $nama, "creator" => "$user", "date_created"=>date('Y-m-d H:i:s'), "date_modified"=>date('Y-m-d H:i:s'));
+        $insert = array("nama" => $nama, "publish" => "$publish", "creator" => "$user", "date_created"=>date('Y-m-d H:i:s'), "date_modified"=>date('Y-m-d H:i:s'));
         $save = $this->db->paket_soal->insert($insert);
         if ($save) {
             $newID  = $insert['_id'];
-            $insert2 = array("id_modul" => $modul,"id_paket" =>"$newID", "nama" => "$nama", "durasi"=>"$durasi","start_date"=>"$mulai","end_date"=>"$selesai", "creator" => "$user", "date_created"=>date('Y-m-d H:i:s'), "date_modified"=>date('Y-m-d H:i:s'), "status"=>"0");
-            $insertquiz = $this->db->quiz->insert($insert2);
-            if ($insertquiz) {
-                $status ="Sukses";
-            }
+            $status ="Sukses";
         }else {
             $status     = "Failed";
             $newID = "";
         }
 
-        $result = array("status" => $status, "idQuiz" => $newID);
+        $result = array("status" => $status, "idPaket" => $newID);
         return $result;
     }
 

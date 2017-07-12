@@ -5,18 +5,18 @@ require("includes/header-menu.php");
 $mapelClass = new Mapel();
 $modulClass = new Modul();
 $quizClass  = new Quiz();
+$paketClass  = new Paket();
 
 if(isset($_POST['addQuiz'])){
 	$nama = mysql_escape_string($_POST['namakuis']);
+	$publish = mysql_escape_string($_POST['publish']);
 
-	if (!empty($_POST['idmodul'])) {
-		$rest = $quizClass->setModul($nama, $_GET['modul'], $_POST['idmodul']);
-	}else{
-		$rest = $quizClass->addQuiz($nama, $_GET['modul'], $_POST['durasi'],$_POST['mulai'],$_POST['selesai'], $_SESSION['lms_id']);
-	}
+	
+		$rest = $paketClass->addPaket($nama, $publish, $_SESSION['lms_id']);
+	
 
-	if ($rest['status'] == "Success") {
-		echo "<script>alert('".$rest['status']."'); document.location='mapel.php?id=".$rest['IDMapel']."'</script>";
+	if ($rest['status'] == "Sukses") {
+		echo "<script>alert('".$rest['status']."'); document.location='paket-detail.php?id=".$rest['idPaket']."'</script>";
 	}
 }
 
@@ -84,21 +84,21 @@ $listQuiz	= $quizClass->getListbyUser($_SESSION['lms_id']);
 					<div class="form-group row">
 
 							<div class="form-group row">
-								<label for="namamodul" class="col-md-3 form-control-label">Nama Kuis</label>
+								<label for="namamodul" class="col-md-3 form-control-label">Nama Paket</label>
 								<input type="hidden" name="idmodul" id="idmodul" class="" maxlength="11" />
 								<div class="col-md-9">
-									<input type="text" class="form-control" name="namakuis" id="namamodul" placeholder="Nama Kuis" title="Nama Kuis" data-toggle="popover" data-placement="bottom" data-trigger="hover" data-content="Silahkan isikan Nama Modul yang akan dibuat!" />
+									<input type="text" class="form-control" name="namakuis" id="namamodul" placeholder="Nama Paket" title="Nama Paket" data-toggle="popover" data-placement="bottom" data-trigger="hover" data-content="Silahkan isikan Nama Paket Soal yang akan dibuat!" />
 								</div>
 							</div>
 							<div class="form-group row">
 								<label class="col-md-3 form-control-label" name="durasi" for="exampleInput">Bagikan</label>
 								<div class="col-md-9">
 										<div class="radio">
-											<input type="radio" name="optionsRadios" id="radio-1" value="1">
+											<input type="radio" name="publish" id="radio-1" value="1">
 											<label for="radio-1">Ya </label>
 										</div>
 										<div class="radio">
-											<input type="radio" name="optionsRadios" id="radio-2" value="0" checked>
+											<input type="radio" name="publish" id="radio-2" value="0" checked>
 											<label for="radio-2">Tidak</label>
 										</div>
 										<!-- <input type="radio" class="form-control" name="publish" id="exampleInput" placeholder="0"  value="1"> Ya -->
@@ -201,17 +201,18 @@ $listQuiz	= $quizClass->getListbyUser($_SESSION['lms_id']);
 															<i class="font-icon font-icon-trash")"></i>
 														</a>';
 												}
-							// echo '				</div>
-							// 				</div>
-							// 			</div>
-							// 		</div>
+							echo '				</div>
+											</div>
+										</div>
+									</div>
+							
+								</article>
+							';
+							$no++;
 							// 		<div id="demo'.$no.'" class="profile-post-content collapse">
 							// 			Durasi :'.$materi["durasi"].' <br />
 							// 			Tanggal Berakhir :'.$materi["end_date"].' <br />
 							// 		</div>
-							// 	</article>
-							// ';
-							$no++;
 						}
 					}else {
 						echo '	<article class="box-typical profile-post">

@@ -20,5 +20,5 @@
     $_SESSION["end_time"]   = $end_time;
 ?>
 <script type="text/javascript">
-    window.location = "quiz.php?id=<?php echo $_GET['id']; ?>";
+    window.location = "quiz.php?id=<?=$_GET['id']?>&paket=<?=$_GET['paket']?>";
 </script>

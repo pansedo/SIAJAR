@@ -5,6 +5,7 @@ require("includes/header-menu.php");
 $mapelClass = new Mapel();
 $modulClass = new Modul();
 $quizClass  = new Quiz();
+$soalClass  = new Soal();
 
 if(isset($_POST['addQuiz'])){
 	$nama = mysql_escape_string($_POST['namakuis']);
@@ -15,8 +16,8 @@ if(isset($_POST['addQuiz'])){
 		$rest = $quizClass->addQuiz($nama, $_GET['modul'], $_POST['durasi'],$_POST['mulai'],$_POST['selesai'], $_SESSION['lms_id']);
 	}
 
-	if ($rest['status'] == "Success") {
-		echo "<script>alert('".$rest['status']."'); document.location='quiz-action.php?act=update&md=".$_GET['modul']."&qz=".$materi['_id']."'</script>";
+	if ($rest['status'] == "Sukses") {
+		echo "<script>alert('".$rest['status']."'); document.location='quiz-action.php?act=update&md=".$_GET['modul']."&qz=".$rest['idQuiz']."'</script>";
 	}
 }
 
@@ -75,35 +76,30 @@ $listQuiz	= $quizClass->getListbyModul($_GET['modul']);
 				</div>
 				<div class="modal-body">
 					<div class="form-group row">
-
-							<div class="form-group row">
-								<label for="namamodul" class="col-md-3 form-control-label">Nama Kuis</label>
-								<input type="hidden" name="idmodul" id="idmodul" class="" maxlength="11" />
-								<div class="col-md-9">
-									<input type="text" class="form-control" name="namakuis" id="namamodul" placeholder="Nama Kuis" title="Nama Kuis" data-toggle="popover" data-placement="bottom" data-trigger="hover" data-content="Silahkan isikan Nama Modul yang akan dibuat!" />
-								</div>
-							</div>
-							<div class="form-group row">
-								<label class="col-md-3 form-control-label" name="durasi" for="exampleInput">Durasi</label>
-								<div class="col-md-9">
-										<input type="number" class="form-control" name="durasi" id="exampleInput" placeholder="0" maxlength="3">
-										<small class="text-muted">Lama Pengerjaan dalam satuan menit.</small>
-								</div>
-
-							</div>
-							<div class="form-group row">
-								<label class="col-md-3 form-control-label"  for="exampleInput">Tanggal Mulai</label>
-								<div class="col-md-9">
-								<input type="date" class="form-control" name="mulai" id="exampleInput" placeholder="dd/mm/yyyy">
-								</div>
-							</div>
-							<div class="form-group row">
-								<label class="col-md-3 form-control-label" for="exampleInput">Tanggal Selesai</label>
-								<div class="col-md-9">
-								<input type="date" class="form-control" name="selesai" id="exampleInput" placeholder="dd/mm/yyyy">
-								</div>
-
-							</div>
+						<label for="namamodul" class="col-md-3 form-control-label">Nama Kuis</label>
+						<input type="hidden" name="idmodul" id="idmodul" class="" maxlength="11" />
+						<div class="col-md-9">
+							<input type="text" class="form-control" name="namakuis" id="namamodul" placeholder="Nama Kuis" title="Nama Kuis" data-toggle="popover" data-placement="bottom" data-trigger="hover" data-content="Silahkan isikan Nama Modul yang akan dibuat!" />
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-md-3 form-control-label" name="durasi" for="exampleInput">Durasi</label>
+						<div class="col-md-9">
+								<input type="number" class="form-control" name="durasi" id="exampleInput" placeholder="0" maxlength="3">
+								<small class="text-muted">Lama Pengerjaan dalam satuan menit.</small>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-md-3 form-control-label"  for="exampleInput">Tanggal Mulai</label>
+						<div class="col-md-9">
+						<input type="date" class="form-control" name="mulai" id="exampleInput" placeholder="dd/mm/yyyy">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-md-3 form-control-label" for="exampleInput">Tanggal Selesai</label>
+						<div class="col-md-9">
+						<input type="date" class="form-control" name="selesai" id="exampleInput" placeholder="dd/mm/yyyy">
+						</div>
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -162,7 +158,9 @@ $listQuiz	= $quizClass->getListbyModul($_GET['modul']);
 						<header class="widget-header">
 							Ujian
 							<span class="label label-pill label-primary"><?=$listQuiz->count();?></span>
-
+							<?php if ($listQuiz->count() > 0) { ?>
+							<button type="button" class="btn btn-sm pull-right" onclick="add()" title="Tambah" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menambahkan Quiz baru.">+ Buat Kuis Baru</button>
+							<?php } ?>
 						</header>
 						<div>
 						<div class="card-block" id="accordion">
@@ -195,7 +193,7 @@ $listQuiz	= $quizClass->getListbyModul($_GET['modul']);
 														?>
 															<a href="#" onclick="message()"><?=$materi['nama']?></a>
 														<?php }else{ ?>
-															<a href="quiz-start.php?id=<?=$materi['_id']?>"><?=$materi['nama']?></a>
+															<a href="quiz-start.php?id=<?=$materi['_id']?>&paket=<?=$materi['id_paket']?>"><?=$materi['nama']?></a>
 														<?php } ?>
 													</div>
 													<div class="color-blue-grey-lighter"><?=($materi['date_created'] == $materi['date_modified'] ? "Diterbitkan " : "Diperbarui ").selisih_waktu($materi['date_modified'])?></div>
@@ -216,7 +214,8 @@ $listQuiz	= $quizClass->getListbyModul($_GET['modul']);
 									<div id="demo<?=$no?>" class="profile-post-content collapse">
 										<?php
 											if($submittedQuiz){
-												$nilaiQuiz      = $quizClass->hitungNilaiQuiz($_SESSION['lms_id'], (string)$materi['_id']);
+												$jumlah_soal    = $soalClass->getNumberbyQuiz($materi['id_paket']);
+												$nilaiQuiz      = $quizClass->hitungNilaiQuiz($_SESSION['lms_id'], (string)$materi['_id'], $jumlah_soal);
 										?>
 										Nilai Ujian :<?=$nilaiQuiz?> <br />
 										<?php }else{ ?>

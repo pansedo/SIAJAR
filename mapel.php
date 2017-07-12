@@ -5,6 +5,7 @@ require("includes/header-menu.php");
 $mapelClass = new Mapel();
 $modulClass = new Modul();
 $kelasClass = new Kelas();
+$tugasClass = new Tugas();
 
 $infoMapel	= $mapelClass->getInfoMapel($_GET['id']);
 $listModul	= $modulClass->getListbyMapel($_GET['id']);
@@ -25,18 +26,17 @@ if(!$anggota){
 		die();
 }
 
-if(isset($_POST['addModul'])){
-	$nama = mysql_escape_string($_POST['namamodul']);
-
-	if (!empty($_POST['idmodul'])) {
-		$rest = $modulClass->setModul($nama, $_GET['id'], $_POST['idmodul']);
+if(isset($_POST['addModul']) || isset($_POST['updateModul'])){
+	if (isset($_POST['updateModul'])) {
+		$rest = $modulClass->setModul($_POST, $_GET['id']);
 	}else{
-		$rest = $modulClass->addModul($nama, $_GET['id'], $_SESSION['lms_id']);
+		$rest = $modulClass->addModul($_POST, $_GET['id'], $_SESSION['lms_id']);
 	}
 
 	if ($rest['status'] == "Success") {
 		echo "<script>alert('".$rest['status']."'); document.location='mapel.php?id=".$rest['IDMapel']."'</script>";
 	}
+	// print_r($rest);
 }
 
 if(isset($_POST['updateMapel'])){
@@ -111,7 +111,7 @@ if(isset($_POST['updateMapel'])){
 		 aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
-				<form method="POST">
+				<form method="POST" id="addModulForm">
 				<div class="modal-header">
 					<button type="button" class="modal-close" data-dismiss="modal" aria-label="Close">
 						<i class="font-icon-close-2"></i>
@@ -123,12 +123,58 @@ if(isset($_POST['updateMapel'])){
 						<label for="namamodul" class="col-md-3 form-control-label">Nama Modul</label>
 						<div class="col-md-9">
 							<input type="hidden" name="idmodul" id="idmodul" class="" maxlength="11" />
-							<input type="text" class="form-control" name="namamodul" id="namamodul" placeholder="Nama Modul" title="Nama Modul" data-toggle="popover" data-placement="bottom" data-trigger="hover" data-content="Silahkan isikan Nama Modul yang akan dibuat!" />
+							<input type="text" class="form-control" name="namamodul" id="namamodul" placeholder="Nama Modul" title="Nama Modul" data-toggle="popover" data-placement="bottom" data-trigger="hover" data-content="Silahkan isikan Nama Modul yang akan dibuat!" required/>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="namamodul" class="col-md-3 form-control-label">Prasyarat Modul</label>
+						<div class="col-md-9">
+							<select class="form-control" name="prasyaratmodul" id="prasyaratmodul" title="Prasyarat Modul" data-toggle="popover" data-placement="bottom" data-trigger="hover" data-content="Silahkan pilih modul yang akan dijadikan prasyarat untuk membuka modul ini! Jika tidak ada silahkan pilih 'Tidak ada'" required>
+								<option value="0">-- Tidak ada --</option>
+								<?php
+								foreach ($listModul as $data) {
+									echo '<option value="'.$data['_id'].'">'.$data['nama'].'</option>';
+								}
+								?>
+							</select>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="nilaimateri" class="col-md-3 form-control-label">Nilai Materi</label>
+						<div class="col-md-3">
+							<div class="input-group">
+								<input type="number" min="0" max="100" value="0" class="form-control" onchange="checkTotal()" name="nilaimateri" id="nilaimateri" required>
+								<div class="input-group-addon">%</div>
+							</div>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="nilaitugas" class="col-md-3 form-control-label">Nilai Tugas</label>
+						<div class="col-md-3">
+							<div class="input-group">
+								<input type="number" min="0" max="100" value="0" class="form-control" onchange="checkTotal()" name="nilaitugas" id="nilaitugas" required>
+								<div class="input-group-addon">%</div>
+							</div>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="nilaiujian" class="col-md-3 form-control-label">Nilai Ujian</label>
+						<div class="col-md-3">
+							<div class="input-group">
+								<input type="number" min="0" max="100" value="0" class="form-control" onchange="checkTotal()" name="nilaiujian" id="nilaiujian" required>
+								<div class="input-group-addon">%</div>
+							</div>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="namamodul" class="col-md-3 form-control-label">Nilai Minimal</label>
+						<div class="col-md-2">
+							<input type="number" min="0" max="100" value="0" class="form-control" placeholder="1 - 100" name="nilaiminimal" id="nilaiminimal" required>
 						</div>
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="submit" name="addModul" value="send" class="btn btn-rounded btn-primary">Simpan</button>
+					<button type="submit" id="btn-submit" name="addModul" value="send" class="btn btn-rounded btn-primary">Simpan</button>
 					<button type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Tutup</button>
 				</div>
 				</form>
@@ -189,7 +235,7 @@ if(isset($_POST['updateMapel'])){
 									<li class="blue opened">
 										<a href="mapel.php?id=<?=$_GET['id']?>">
 							                <i class="font-icon font-icon-home active"></i>
-							                <span class="lbl">Modul</span>
+							                <span class="lbl">Pelajaran</span>
 							            </a>
 									</li>
 									<li class="blue">
@@ -229,7 +275,9 @@ if(isset($_POST['updateMapel'])){
 								if ($listModul->count() > 0) {
 									$no = 1;
 									foreach ($listModul as $modul) {
-										?>
+										// $$tugasClass->getStatusTugas($modul['_id'], $_SESSION['lms_id']);
+										
+							?>
 										<div class="widget-activity-item">
 											<div class="user-card-row">
 												<div class="tbl-row">
@@ -257,10 +305,10 @@ if(isset($_POST['updateMapel'])){
 												</div>
 											</div>
 										</div>
-										<?php
+								<?php
 										$no++;
 									}
-								}else {
+								} else {
 									echo '
 												<div class="add-customers-screen tbl">
 													<div class="add-customers-screen-in">
@@ -308,12 +356,69 @@ if(isset($_POST['updateMapel'])){
 			$(elementID).html("");
 		}
 
+		function checkTotal(){
+      		var materi 	= parseInt($('#nilaimateri').val());
+      		var tugas	= parseInt($('#nilaitugas').val());
+      		var ujian	= parseInt($('#nilaiujian').val());
+			var total	= 100;
+			var gabung	= materi+tugas+ujian;
+
+			// alert(gabung+' - '+total);
+			if (gabung > total) {
+				swal({
+					title: 'Maaf!',
+					text: 'Jumlah total nilai HARUS 100%, tidak boleh lebih ataupun kurang.',
+					type: 'warning'
+				}, function() {
+					$('#nilaimateri').val(0);
+					$('#nilaitugas').val(0);
+					$('#nilaiujian').val(0);
+				});
+
+				//	swal({
+				//		title: "Maaf!",
+				//		text: "Jumlah total nilai tidak dapat lebih dari 100%, Apakah anda mengisi kembali ?",
+				//		type: "warning",
+				//		showCancelButton: true,
+				//  	confirmButtonText: "Ya",
+	      		//		confirmButtonClass: "btn-danger",
+				//		closeOnConfirm: false,
+				//		showLoaderOnConfirm: true
+				//	}, function () {
+				//		$('#nilaimateri').val(0);
+				//		$('#nilaitugas').val(0);
+				//		$('#nilaiujian').val(0);
+				//	});
+			}
+      	};
+
 		function add(){
-      		$('#addModul').trigger("reset");
+      		$('#addModulForm').trigger("reset");
       		$('#addModul').modal('show');
 			$('#addModulLabel').text(
       		   $('#addModulLabel').text().replace('Edit Modul', 'Tambah Modul')
       		).show();
+			$('#btn-submit').attr('name', 'addModul');
+			$.ajax({
+				type: 'POST',
+				url: 'url-API/Kelas/Modul/',
+				data: {"action": "showAll", "IDKelas": '<?=$_GET['id']?>'},
+				success: function(res) {
+					if(res.data.length > 0){
+						var html	= '<option value="0">-- Tidak ada --</option>';
+			          	for(var i=0;i<res.data.length;i++){
+			       			html += '<option value="'+res.data[i]._id.$id+'">'+res.data[i].nama+'</option>';
+			          	}
+			          $("#prasyaratmodul").html('');
+			          $("#prasyaratmodul").html(html);
+				  	}else {
+				  		swal("Gagal!", "Data tidak tersedia!", "error");
+				  	}
+			  	},
+				error: function () {
+					swal("Gagal!", "Data tidak dapat diambil!", "error");
+				}
+			});
       	};
 
 		function update(){
@@ -327,28 +432,56 @@ if(isset($_POST['updateMapel'])){
       	}
 
 		function edit(ID){
-      		$('#addModul').trigger("reset");
+      		$('#addModulForm').trigger("reset");
       		$('#addModulLabel').text(
       		   $('#addModulLabel').text().replace('Tambah Modul', 'Edit Modul')
       		).show();
-			// $('#addModul').modal('show');
-      		$.ajax({
-      			type: 'POST',
-      			url: 'url-API/Kelas/Modul/',
-      			data: {"action": "show", "ID": ID},
-      			success: function(res) {
-      				if(res.data._id.$id){
-      					$('#addModul').modal('show');
-      					$('#idmodul').val(ID);
-      					$('#namamodul').val(res.data.nama);
-      				}else {
-      					swal("Gagal!", "Data tidak ditemukan!", "error");
-      				}
-      			},
-      			error: function () {
-      				swal("Gagal!", "Gagal mencari data!", "error");
-      			}
-      		});
+			$.ajax({
+				type: 'POST',
+				url: 'url-API/Kelas/Modul/',
+				data: {"action": "showAll", "IDKelas": '<?=$_GET['id']?>'},
+				success: function(res) {
+					if(res.data.length > 0){
+						var html	= '<option value="0">-- Tidak ada --</option>';
+			          	for(var i=0;i<res.data.length;i++){
+							if(res.data[i]._id.$id != ID){
+			       				html += '<option value="'+res.data[i]._id.$id+'">'+res.data[i].nama+'</option>';
+							}
+			          	}
+			          $("#prasyaratmodul").html('');
+			          $("#prasyaratmodul").html(html);
+
+					  $.ajax({
+		        			type: 'POST',
+		        			url: 'url-API/Kelas/Modul/',
+		        			data: {"action": "show", "ID": ID},
+		        			success: function(res) {
+		        				if(res.data._id.$id){
+		        					$('#btn-submit').attr('name', 'updateModul');
+		        					$('#addModul').modal('show');
+		        					$('#idmodul').val(ID);
+		        					$('#namamodul').val(res.data.nama);
+		        					$('#nilaimateri').val(res.data.nilai.materi);
+		        					$('#nilaitugas').val(res.data.nilai.tugas);
+		        					$('#nilaiujian').val(res.data.nilai.ujian);
+		        					$('#nilaiminimal').val(res.data.nilai.minimal);
+		  							SelectElement('prasyaratmodul', res.data.prasyarat);
+		        				}else {
+		        					swal("Gagal!", "Data tidak ditemukan!", "error");
+		        				}
+		        			},
+		        			error: function () {
+		        				swal("Gagal!", "Gagal mencari data!", "error");
+		        			}
+		        		});
+			        }else {
+			          swal("Error!", "Data tidak ditemukan!", "error");
+			        }
+				},
+				error: function () {
+					swal("Gagal!", "Data tidak tersedia!", "error");
+				}
+			});
       	}
 
 		function remove(ID){
@@ -390,23 +523,7 @@ if(isset($_POST['updateMapel'])){
 			});
 		});
 	</script>
-	<script>
-		$("#ohyeah").click(function(){
-			$.ajax({
-  				type: 'POST',
-  				url: 'url-API/Siswa/index.php',
-  				data: {"action": "update", "text": "tôi"},
-  				success: function(res) {
-	  				alert(res.text1);
-	  				alert(res.text2);
-	  				alert(res.text3);
-  				},
-  				error: function () {
 
-  				}
-  			});
-		})
-	</script>
 <script src="assets/js/app.js"></script>
 <?php
 	require('includes/footer-bottom.php');

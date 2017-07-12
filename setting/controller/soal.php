@@ -41,8 +41,8 @@ class Soal
         return $query;
     }
 
-    public function getListSoalbyQuiz($idQuiz){
-        $query =  $this->table->find(array("id_quiz"=>"$idQuiz"));
+    public function getListSoalbyQuiz($idPaket){
+        $query =  $this->table->find(array("id_paket"=>"$idPaket"));
         return iterator_to_array($query);
     }
 
@@ -62,7 +62,7 @@ class Soal
     }
 
     public function getNumberbyQuiz($idQuiz){
-        $query =  $this->table->find(array("id_quiz"=>"$idQuiz"))->count();
+        $query =  $this->table->find(array("id_paket"=>"$idQuiz"))->count();
         return $query;
     }
 
@@ -90,7 +90,14 @@ class Soal
                 $inserttag = $this->db->opsi_soal->insert($inserts);
 
             }
-            echo "<script>alert('Sukses'); document.location='quiz-action.php?md=".$_GET['md']."&qz=".$_GET['qz']."</script>";
+            if (isset($_GET['md'])) {
+                # code...
+                echo "<script>alert('Sukses'); document.location='quiz-action.php?md=".$_GET['md']."&qz=".$_GET['qz']."</script>";
+            }else if (isset($_GET['id'])) {
+                # code...
+                echo "<script>alert('Sukses'); document.location='paket-detail.php?id=".$_GET['id']."</script>";
+            }
+            
         }else {
             $hasil     = "Failed";
         }

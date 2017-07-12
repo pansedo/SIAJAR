@@ -13,8 +13,10 @@ $soalClass 	    = new Soal();
 $infoQuiz	    = $quizClass->getInfoQuiz($_GET['id']);
 $idModul        = $infoQuiz['id_modul'];
 
-$list_soal      = $soalClass->getListSoalbyQuiz($_GET['id']);
-$jumlah_soal    = $soalClass->getNumberbyQuiz($_GET['id']);
+if(isset($_GET['paket'])){
+    $list_soal      = $soalClass->getListSoalbyQuiz($_GET['paket']);
+    $jumlah_soal    = $soalClass->getNumberbyQuiz($_GET['paket']);
+}
 
 if(!isset($_SESSION["start_time"])){
     header( "Location: create-quiz.php?modul=$idModul");
@@ -25,7 +27,7 @@ if(isset($_GET['submit'])){
     unset($_SESSION["end_time"]);
     unset($_SESSION["duration"]);
 
-    $nilaiQuiz      = $quizClass->hitungNilaiQuiz($_SESSION['lms_id'], $_GET['id']);
+    $nilaiQuiz      = $quizClass->hitungNilaiQuiz($_SESSION['lms_id'], $_GET['id'], $jumlah_soal);
     $quizClass->submitQuiz((string)$_SESSION['lms_id'], $_GET['id'], $nilaiQuiz);
 
     header( "Location: create-quiz.php?modul=$idModul");
@@ -67,7 +69,7 @@ if(isset($_GET['submit'])){
                     <section class="card card-default">
                         <div class="card-block">
                             <h5 class="with-border">Nomor <?=$no_soal?><span class="pull-right"><?=$no_soal?> / <?=$jumlah_soal?></span></h5>
-                            <p id="soal"><?php echo $soal["deskripsi"];?></p>
+                            <p id="soal"><?php echo $soal["soal"];?></p>
                             <?php
                                 $list_opsi_soal = $soalClass->getListOpsiSoal($soal['_id']);
                                 foreach ($list_opsi_soal as $opsi_soal) {
@@ -76,7 +78,7 @@ if(isset($_GET['submit'])){
                                 <input type="radio" name="<?=$soal['_id']?>" id="<?=$opsi_soal['_id']?>" value="<?=$opsi_soal['_id']?>" onclick="save_answer('<?=$_GET['id']?>', '<?=$soal['_id']?>', '<?=$opsi_soal['_id']?>');"
                                 <?php if($opsi_soal['_id'] == $jawaban_user['id_opsi_soal']){echo "checked";} ?>
                                 >
-                                <label for="<?=$opsi_soal['_id']?>"><?=$opsi_soal['teks']?></label>
+                                <label for="<?=$opsi_soal['_id']?>"><?=$opsi_soal['text']?></label>
                             </div>
                             <?php
                                 }
@@ -156,7 +158,7 @@ if(isset($_GET['submit'])){
                 showLoaderOnConfirm: true
             }, function () {
                 window.onbeforeunload = null;
-                document.location.href="quiz.php?id=<?php echo $_GET['id']; ?>&submit=1";
+                document.location.href="quiz.php?id=<?php echo $_GET['id']; ?>&paket=<?php echo $_GET['paket']; ?>&submit=1";
             });
         });
 

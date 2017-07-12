@@ -6,7 +6,7 @@ session_start();
 ob_start();
 
 if(!isset($_SESSION['lms_id']) && is_null($_SESSION['lms_id'])){
-	header('Location: account-login.php');
+	header('Location: lms.php');
 }
 
 include 'setting/connection.php';
