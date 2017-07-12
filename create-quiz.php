@@ -158,9 +158,6 @@ $listQuiz	= $quizClass->getListbyModul($_GET['modul']);
 						<header class="widget-header">
 							Ujian
 							<span class="label label-pill label-primary"><?=$listQuiz->count();?></span>
-							<?php if ($listQuiz->count() > 0) { ?>
-							<button type="button" class="btn btn-sm pull-right" onclick="add()" title="Tambah" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menambahkan Quiz baru.">+ Buat Kuis Baru</button>
-							<?php } ?>
 						</header>
 						<div>
 						<div class="card-block" id="accordion">
@@ -188,13 +185,7 @@ $listQuiz	= $quizClass->getListbyModul($_GET['modul']);
 												</div>
 												<div class="tbl-cell">
 													<div class="user-card-row-name">
-														<?php
-															if($submittedQuiz){
-														?>
-															<a href="#" onclick="message()"><?=$materi['nama']?></a>
-														<?php }else{ ?>
-															<a href="quiz-start.php?id=<?=$materi['_id']?>&paket=<?=$materi['id_paket']?>"><?=$materi['nama']?></a>
-														<?php } ?>
+														<a href="#demo<?=$no?>" data-toggle="collapse" data-parent="#accordion"><?=$materi['nama']?></a>
 													</div>
 													<div class="color-blue-grey-lighter"><?=($materi['date_created'] == $materi['date_modified'] ? "Diterbitkan " : "Diperbarui ").selisih_waktu($materi['date_modified'])?></div>
 												</div>
@@ -206,8 +197,10 @@ $listQuiz	= $quizClass->getListbyModul($_GET['modul']);
 														<a onclick="remove(<?=$materi['_id']?>)"   class="shared" title="Hapus" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menghapus Materi yang sudah dibuat.">
 															<i class="font-icon font-icon-trash"></i>
 														</a>
-												<?php } ?>
-											</div>
+												<?php
+													}
+												?>
+												</div>
 											</div>
 										</div>
 									</div>
@@ -221,7 +214,30 @@ $listQuiz	= $quizClass->getListbyModul($_GET['modul']);
 										<?php }else{ ?>
 										Durasi :<?=$materi["durasi"]?> menit<br />
 										Tanggal Berakhir :<?=$materi["end_date"]?> <br />
-										<?php } ?>
+										<?php
+											}
+											if($_SESSION['lms_status'] == 'siswa'){
+										?>
+										<div class="row">
+											<div class="col-md-12">
+												<a href="quiz-start.php?id=<?=$materi['_id']?>&paket=<?=$materi['id_paket']?>" class="btn btn-rounded btn-primary pull-right" title="Evaluasi" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk mulai mengerjakan kuis." style="right: 35px">
+													<i class="fa fa-clock-o" aria-hidden="true"></i> Kerjakan
+												</a>
+											</div>
+										</div>
+										<?php
+											}else{
+										?>
+										<div class="row">
+											<div class="col-md-12">
+												<a href="print-quiz.php?id=<?=$materi['_id']?>&paket=<?=$materi['id_paket']?>" class="btn btn-rounded btn-primary pull-right" title="Print" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk print kuis." style="right: 60px" target="_blank">
+													<i class="fa fa-print" aria-hidden="true"></i> Print Kuis
+												</a>
+											</div>
+										</div>
+										<?php
+											}
+										?>
 									</div>
 								</article>
 							<?php
@@ -233,7 +249,7 @@ $listQuiz	= $quizClass->getListbyModul($_GET['modul']);
 									<div class="profile-post-content" align="center">
 										<span>
 										 Belum ada Kuis saat ini. <br />
-										<button type="button" class="btn btn-sm btn-inline" onclick="add()" title="Tambah" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menambahkan Quiz baru.">+ Buat Baru</button>
+										<button type="button" class="btn btn-rounded btn-sm btn-inline" onclick="add()" title="Tambah" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menambahkan Quiz baru.">+ Buat Baru</button>
 										</span>
 									</div>
 								</article>
