@@ -23,7 +23,7 @@
     $data   = $table->findOne(['username' => $username]);
 
     if (!is_null($data)) {
-        $resp = array('response'=>'Error!', 'message'=>'Username sudah digunakan silakan menggunakan username lainnya!', 'icon'=>'error');
+        $resp = array('response'=>'Error!', 'message'=>'Email/ NIK sudah digunakan!', 'icon'=>'error');
     }else{
         if($method['status'] == 'siswa'){
             $query  = $db->kelas->findOne(array("kode" => $method['kode_kelas']));

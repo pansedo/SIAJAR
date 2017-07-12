@@ -46,6 +46,15 @@
             .sign-box a{
                 color: #29b7c4;
             }
+
+            .errspan {
+                float: right;
+                margin-right: -25px;
+                margin-top: -25px;
+                position: relative;
+                z-index: 2;
+                color: red;
+            }
         </style>
 
     </head>
@@ -88,7 +97,7 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-md-12">
-                                <input type="password" class="form-control" name="password" id="password" placeholder="Kata sandi" required />
+                                <input type="password" class="form-control" name="password" id="password" placeholder="Kata sandi" data-toggle="password" required />
                             </div>
                         </div>
                         <div class="form-group row">
@@ -143,7 +152,7 @@
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-md-12">
-                                        <input type="text" class="form-control" name="nama_siswa" id="nama_siswa" placeholder="Nama" required />
+                                        <input type="text" class="form-control" name="nama_siswa" id="nama_siswa" placeholder="Nama Lengkap" required />
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -153,7 +162,13 @@
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-md-12">
-                                        <input type="password" class="form-control" name="password_siswa" id="password_siswa" placeholder="Kata sandi" required />
+                                        <input type="password" class="form-control" name="password_siswa" id="password_siswa" placeholder="Kata sandi" data-toggle="password" required />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-12">
+                                        <input type="password" class="form-control re_password_siswa" name="re_password_siswa" id="re_password_siswa" placeholder="Kata ulang sandi" data-toggle="password" />
+                                        <span id="icon_re_password_siswa"></span>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -166,7 +181,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group row">
                                             <div class="col-md-12">
-                                                <input type="text" class="form-control" name="nama_guru" id="nama_guru" placeholder="Nama" />
+                                                <input type="text" class="form-control" name="nama_guru" id="nama_guru" placeholder="Nama Lengkap" />
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -176,7 +191,13 @@
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-md-12">
-                                                <input type="password" class="form-control" name="password_guru" id="password_guru" placeholder="Kata sandi" />
+                                                <input type="password" class="form-control" name="password_guru" id="password_guru" placeholder="Kata sandi" data-toggle="password" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-md-12">
+                                                <input type="password" class="form-control re_password_guru" name="re_password_guru" id="re_password_guru" placeholder="Kata ulang sandi" data-toggle="password" />
+                                                <span id="icon_re_password_guru"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -409,18 +430,13 @@
                         <img src="assets/img/front/footer-map-white.png" alt="we are here" class="img-responsive">
                     </div>
                 </div>
-            </div>
-        </footer>
-
-        <div class="copyright">
-            <div class="container">
-                <div class="row">
+                <div class="row copyright">
                     <div class="col-md-12 text-center">
                         <p>Copyright &copy; 2017 <a href="#.">SIAJAR - SEAMOLEC</a>. all rights reserved.</p>
                     </div>
                 </div>
             </div>
-        </div>
+        </footer>
         <!--FOOTER ends-->
 
         <script src="assets/js/lib/front/jquery-2.2.3.js"></script>
@@ -440,9 +456,12 @@
         <script src="assets/js/lib/front/revolution.extension.video.min.js"></script>
         <script src="assets/js/lib/front/wow.min.js"></script>
         <script src="assets/js/lib/front/functions.js"></script>
+        <script src="assets/js/lib/front/bootstrap-show-password.js"></script>
+
         <script>
             $(function() {
-                var register    = "siswa";
+                var register        = "siswa";
+                var match_password  = false;
 
                 $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
                     var target = $(e.target).attr("href") // activated tab
@@ -455,6 +474,11 @@
                         $("#nama_guru").prop('required', false);
                         $("#username_guru").prop('required', false);
                         $("#password_guru").prop('required', false);
+                        $('#nama_guru').val('');
+                        $('#username_guru').val('');
+                        $('#password_guru').val('');
+                        $('#re_password_guru').val('');
+                        $('#icon_re_password_guru').html('');
                     }else{
                         register    = "guru";
                         $("#kode_kelas").prop('required', false);
@@ -464,6 +488,12 @@
                         $("#nama_guru").prop('required', true);
                         $("#username_guru").prop('required', true);
                         $("#password_guru").prop('required', true);
+                        $('#kode_kelas').val('');
+                        $('#nama_siswa').val('');
+                        $('#username_siswa').val('');
+                        $('#password_siswa').val('');
+                        $('#re_password_siswa').val('');
+                        $('#icon_re_password_siswa').html('');
                     }
                 });
 
@@ -491,26 +521,30 @@
     			});
 
                 $('#form-register').submit(function() {
-                    var fd = new FormData(this);
-                    fd.append('status', register);
-                    $.ajax({
-                        type: 'POST',
-                        url: 'url-API/auth-reg.php',
-                        data: fd,
-                        contentType: false,
-                        processData: false,
-                        success: function(res){
-                                alert(res.message);
-                                if(res.icon == 'error'){
-                                    location.href='lms.php';
-                                }else{
-                                    location.href='index.php';
-                                }
-                        },
-                        error: function(){
-                            swal(res.response, res.message, res.icon);
-                        }
-                    });
+                    if(match_password){
+                        var fd = new FormData(this);
+                        fd.append('status', register);
+                        $.ajax({
+                            type: 'POST',
+                            url: 'url-API/auth-reg.php',
+                            data: fd,
+                            contentType: false,
+                            processData: false,
+                            success: function(res){
+                                    alert(res.message);
+                                    if(res.icon == 'error'){
+                                        location.href='lms.php';
+                                    }else{
+                                        location.href='index.php';
+                                    }
+                            },
+                            error: function(){
+                                swal(res.response, res.message, res.icon);
+                            }
+                        });
+                    }else{
+                        alert("Konfirmasi password tidak sesuai");
+                    }
                 });
 
                 $('.btn-cancel').click(function() {
@@ -523,6 +557,30 @@
                     $('#nama_guru').val('');
                     $('#username_guru').val('');
                     $('#password_guru').val('');
+                });
+
+                $( ".re_password_siswa" ).keyup(function( event ) {
+                    re_password = $('#re_password_siswa').val();
+
+                    if(re_password == $('#password_siswa').val()){
+                        match_password = true;
+                        $('#icon_re_password_siswa').html('<i class="fa fa-check errspan" aria-hidden="true" style="color: #3ac9d6"></i>');
+                    }else{
+                        match_password = false;
+                        $('#icon_re_password_siswa').html('<i class="fa fa-times errspan" aria-hidden="true"></i>');
+                    }
+                });
+
+                $( ".re_password_guru" ).keyup(function( event ) {
+                    re_password = $('#re_password_guru').val();
+
+                    if(re_password == $('#password_guru').val()){
+                        match_password = true;
+                        $('#icon_re_password_guru').html('<i class="fa fa-check errspan" aria-hidden="true" style="color: #3ac9d6"></i>');
+                    }else{
+                        match_password = false;
+                        $('#icon_re_password_guru').html('<i class="fa fa-times errspan" aria-hidden="true"></i>');
+                    }
                 });
             });
         </script>
