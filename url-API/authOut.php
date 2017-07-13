@@ -2,5 +2,5 @@
 session_start();
 session_destroy();
 
-header('Location: ../account-login.php');
+header('Location: ../lms.php');
 ?>

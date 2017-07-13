@@ -56,8 +56,11 @@ $quizClass  = new Quiz();
 
 $menuModul		= 2;
 $infoQuiz   = $quizClass->getInfoQuiz($_GET['qz']);
-$infoModul		= $modulClass->getInfoModul($_GET['md']);
-$infoMapel		= $mapelClass->getInfoMapel($infoModul['id_mapel']);
+if (isset($_GET['md'])) {
+  $infoModul		= $modulClass->getInfoModul($_GET['md']);
+  $infoMapel    = $mapelClass->getInfoMapel($infoModul['id_mapel']);
+}
+
 $infoSoal	= $soalClass->getInfoSoal($_GET['id']);
 $listJawaban = $soalClass->getListJawaban($_GET['id']);
 
@@ -68,39 +71,32 @@ if(isset($_POST['updateQuiz'])){
     $benar      = $_POST['benar'];
 
 // print_r($benar);
-    $rest = $soalClass->updateSoal($_GET['id'],$soal,$jawaban,$benar,$infoQuiz['id_paket'], $_SESSION['lms_id']);
+    if (isset($_GET['id'])) {
+      $id_paket = $_GET['qz'];
+    }else{
+      $id_paket = $infoQuiz['id_paket'];
+    }
+    $rest = $soalClass->updateSoal($_GET['id'],$soal,$jawaban,$benar,$id_paket, $_SESSION['lms_id']);
 
     echo "string ".$rest['status'];
     if ($rest['status'] == "Sukses") {
         // echo "<pre>";
         // print_r($_POST);
         // echo "</pre>";
-        echo "<script>alert('".$rest['status']."'); document.location='quiz-action.php?act=update&md=".$_GET['md']."&qz=".$_GET['qz']."'</script>";
+        if (isset($_GET['md'])) {
+          # code...
+          echo "<script>alert('".$rest['status']."'); document.location='quiz-action.php?act=update&md=".$_GET['md']."&qz=".$_GET['qz']."'</script>";
+        }else if (isset($_GET['id'])) {
+          # code...
+          echo "<script>alert('".$rest['status']."'); document.location='paket-detail.php?id=".$_GET['qz']."'</script>";
+        }
+        
     }else{
         echo "<script>alert('Gagal Update'".$rest['status'].")</script>";
     }
 }
 
-if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
-    $judul  = mysql_escape_string(trim($_POST['judul']));
-    $isi    = $_POST['isi_materi'];
-    $stat   = $_POST['publikasi'];
-	if(isset($_POST['addMateri'])){
-		$rest   = $materiClass->addMateri($_GET['modul'], $judul, $isi, $stat, $_SESSION['lms_id']);
-	}else{
-        // $rest['status'] = "Success";
-		$rest 	= $materiClass->updateMateri($_GET['materi'], $judul, $isi, $stat);
-	}
 
-	if ($rest['status'] == "Success") {
-        // echo "<pre>";
-        // print_r($_POST);
-        // echo "</pre>";
-		echo "<script>alert('".$rest['status']."'); document.location='materi.php?modul=".$_GET['modul']."'</script>";
-	}else{
-		echo "<script>alert('Gagal Update')</script>";
-	}
-}
 ?>
 	<div class="page-content">
 		<div class="profile-header-photo">
@@ -113,8 +109,8 @@ if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
 									<div class="tbl info-tbl">
 										<div class="tbl-row">
 											<div class="tbl-cell">
-												<p class="title">Modul <?=$infoModul['nama']?></p>
-												<p>Mata Pelajaran <?=$infoMapel['nama']?></p>
+												<p class="title"><?php if (isset($_GET['md'])) {?>Modul <?=$infoModul['nama']; }?></p>
+												<p><?php if (isset($_GET['md'])) {?>Mata Pelajaran <?=$infoMapel['nama']; }?></p>
 											</div>
 										</div>
 									</div>
@@ -149,7 +145,7 @@ if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
                                     <fieldset class="form-group">
                                        <label class="form-label " for="exampleInput">Pilhan 1</label>
                                         <textarea class ="myeditablediv" name="jawaban[]" ><?=$jawaban['text'];?></textarea>
-                                        Atur Jawaban Benar <input type="radio" name="benar" value="0" checked="checked">
+                                        Atur Jawaban Benar <input type="radio" name="benar" value="0" <?php if($jawaban['status'] == "benar"){echo "checked";} ?>>
                                     </fieldset>
                                     <?php
                                     }
