@@ -23,6 +23,12 @@ class Quiz
         return $query;
     }
 
+    public function getNilaiQuiz($idQuiz, $idUser){
+        $query  = $this->db->kumpul_quiz->findOne(array("id_quiz" => "$idQuiz", "id_user" => "$idUser"));
+
+        return $query;
+    }
+
     public function getInfoPaket($idQuiz){
         $ID     = new MongoId($idQuiz);
         $query  = $this->db->paket_soal->findOne(array("_id" => $ID));

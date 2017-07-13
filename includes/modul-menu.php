@@ -1,7 +1,7 @@
 <aside id="menu-fixed" class="profile-side" style="margin: 0 0 20px">
 	<section class="box-typical">
 		<header class="box-typical-header-sm bordered">
-			<?=$infoModul['nama']?>
+			<a href="mapel.php?id=<?=$infoMapel['_id']?>" class="pull-right" title="Mata Pelajaran" data-toggle="popover" data-placement="right" data-trigger="hover" data-content="Kembali ke halaman mata pelajaran"><i class="font-icon font-icon-answer" style="color: #3ac9d6;"></i></a><?=$infoModul['nama']?>
 		</header>
 		<div class="box-typical-inner">
 			<ul class="side-menu-list">

@@ -63,6 +63,18 @@ function selisih_waktu($timestamp){
     <link rel="stylesheet" href="assets/css/lib/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/main.css">
 	<link rel="stylesheet" href="assets/css/separate/pages/widgets.min.css">
+	<link rel="stylesheet" href="assets/css/lib/datatables-net/datatables.min.css">
+	<link rel="stylesheet" href="assets/css/separate/vendor/datatables-net.min.css">
 	<script src="assets/js/lib/bootstrap-sweetalert/sweetalert.min.js"></script>
+	<style>
+		input[type="number"]::-webkit-outer-spin-button,
+		input[type="number"]::-webkit-inner-spin-button {
+			-webkit-appearance: none;
+			margin: 0;
+		}
+		input[type="number"] {
+			-moz-appearance: textfield;
+		}
+	</style>
 </head>
 <body>

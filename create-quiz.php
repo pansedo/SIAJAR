@@ -208,15 +208,16 @@ $listQuiz	= $quizClass->getListbyModul($_GET['modul']);
 										<?php
 											if($submittedQuiz){
 												$jumlah_soal    = $soalClass->getNumberbyQuiz($materi['id_paket']);
-												$nilaiQuiz      = $quizClass->hitungNilaiQuiz($_SESSION['lms_id'], (string)$materi['_id'], $jumlah_soal);
+												$nilaiQuiz      = $quizClass->getNilaiQuiz((string)$materi['_id'], $_SESSION['lms_id']);
 										?>
-										Nilai Ujian :<?=$nilaiQuiz?> <br />
+										Nilai Ujian :<?=$nilaiQuiz['nilai']?> <br />
 										<?php }else{ ?>
 										Durasi :<?=$materi["durasi"]?> menit<br />
 										Tanggal Berakhir :<?=$materi["end_date"]?> <br />
 										<?php
 											}
 											if($_SESSION['lms_status'] == 'siswa'){
+												if(!$submittedQuiz){
 										?>
 										<div class="row">
 											<div class="col-md-12">
@@ -226,6 +227,7 @@ $listQuiz	= $quizClass->getListbyModul($_GET['modul']);
 											</div>
 										</div>
 										<?php
+												}
 											}else{
 										?>
 										<div class="row">
