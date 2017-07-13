@@ -276,7 +276,7 @@ if(isset($_POST['updateMapel'])){
 									$no = 1;
 									foreach ($listModul as $modul) {
 										// $$tugasClass->getStatusTugas($modul['_id'], $_SESSION['lms_id']);
-										
+										if ($modulClass->getLearningPath($modul['prasyarat']) == "LULUS") {
 							?>
 										<div class="widget-activity-item">
 											<div class="user-card-row">
@@ -306,6 +306,37 @@ if(isset($_POST['updateMapel'])){
 											</div>
 										</div>
 								<?php
+										}else {
+								?>
+										<div class="widget-activity-item">
+											<div class="user-card-row">
+												<div class="tbl-row">
+													<div class="tbl-cell tbl-cell-photo">
+														<a href="modul.php?modul=<?=$modul['_id']?>">
+															<img src="assets/img/folder-na.png" alt="">
+														</a>
+													</div>
+													<div class="tbl-cell">
+														<p>
+															<a onclick="" class="semibold"><?=''.$no.'. '.$modul['nama']?></a>
+														</p>
+														<p><?=selisih_waktu($modul['date_created'])?></p>
+													</div>
+											<?php
+											if ($_SESSION['lms_id'] == $modul['creator']) {
+											?>
+													<div class="tbl-cell" align="right">
+														<a onclick="edit('<?=$modul['_id']?>')" title="Edit" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk memperbarui Modul yang sudah dibuat."><i class="font-icon font-icon-pencil"></i></a>
+														<a onclick="remove('<?=$modul['_id']?>')" title="Hapus" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menghapus Modul yang sudah dibuat."><i class="font-icon font-icon-trash"></i></a>
+													</div>
+											<?php
+											}
+											?>
+												</div>
+											</div>
+										</div>
+								<?php
+										}
 										$no++;
 									}
 								} else {
