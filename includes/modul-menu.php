@@ -29,6 +29,12 @@
 						<span class="lbl">Ujian</span>
 					</a>
 				</li>
+				<li class="blue <?php if($menuModul==5){echo 'opened';} ?>">
+					<a href="modul-diskusi.php?modul=<?=$_GET['modul']?>">
+						<i class="font-icon font-icon-comments <?php if($menuModul==5){echo 'active';} ?>"></i>
+						<span class="lbl">Diskusi</span>
+					</a>
+				</li>
 			</ul>
 		</div>
 	</section>

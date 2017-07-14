@@ -1,5 +1,9 @@
 <?php
 require("includes/header-top.php");
+?>
+<!-- Style for html code -->
+<link rel="stylesheet" href="./assets/css/separate/pages/others.min.css">
+<?php
 require("includes/header-menu.php");
 
 $mapelClass = new Mapel();
@@ -154,12 +158,21 @@ $listQuiz	= $quizClass->getListbyModul($_GET['modul']);
 				</div>
 
 				<div class="col-xl-9 col-lg-8">
-					<section class="widget widget-activity">
-						<header class="widget-header">
+					<section class="card card-inversed">
+						<header class="card-header">
 							Ujian
 							<span class="label label-pill label-primary"><?=$listQuiz->count();?></span>
+							<?php
+								if($infoModul['creator'] == $_SESSION['lms_id']){
+							?>
+							<div class="btn-group" style="float: right;">
+								<button type="button" onclick="add()" title="Tambah" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menambahkan Quiz baru." class="btn btn-sm btn-rounded">+ Buat Kuis</button>
+							</div>
+							<?php
+								}
+							?>
 						</header>
-						<div>
+
 						<div class="card-block" id="accordion">
 							<?php
 					$no	= 1;
@@ -247,18 +260,20 @@ $listQuiz	= $quizClass->getListbyModul($_GET['modul']);
 						}
 					}else {
 						?>
-								<article class="box-typical profile-post">
-									<div class="profile-post-content" align="center">
-										<span>
-										 Belum ada Kuis saat ini. <br />
-										<button type="button" class="btn btn-rounded btn-sm btn-inline" onclick="add()" title="Tambah" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menambahkan Quiz baru.">+ Buat Baru</button>
-										</span>
+							<article class="box-typical profile-post">
+								<div class="add-customers-screen tbl">
+									<div class="add-customers-screen-in">
+										<div class="add-customers-screen-user">
+											<i class="font-icon font-icon-notebook"></i>
+										</div>
+										<h2>Kuis Kosong</h2>
+										<p class="lead color-blue-grey-lighter">Belum ada kuis yang tersedia</p>
 									</div>
-								</article>
+								</div>
+							</article>
 				<?php
 					}
 				?>
-							</div>
 						</div>
 					</section><!--.widget-tasks-->
 				</div>
@@ -361,6 +376,8 @@ $listQuiz	= $quizClass->getListbyModul($_GET['modul']);
 		};
 
 		$(document).ready(function() {
+			$('.note-statusbar').hide();
+
 			$(".fancybox").fancybox({
 				padding: 0,
 				openEffect	: 'none',
