@@ -278,6 +278,7 @@ if(isset($_POST['updateMapel'])){
 										// $$tugasClass->getStatusTugas($modul['_id'], $_SESSION['lms_id']);
 
 										if ($modulClass->getLearningPath($modul['prasyarat']) == "LULUS") {
+									?>
 
 										<div class="widget-activity-item">
 											<div class="user-card-row">
