@@ -90,7 +90,14 @@ class Soal
                 $inserttag = $this->db->opsi_soal->insert($inserts);
 
             }
-            echo "<script>alert('Sukses'); document.location='quiz-action.php?md=".$_GET['md']."&qz=".$_GET['qz']."</script>";
+            if (isset($_GET['md'])) {
+                # code...
+                echo "<script>alert('Sukses'); document.location='quiz-action.php?md=".$_GET['md']."&qz=".$_GET['qz']."</script>";
+            }else if (isset($_GET['id'])) {
+                # code...
+                echo "<script>alert('Sukses'); document.location='paket-detail.php?id=".$_GET['id']."</script>";
+            }
+            
         }else {
             $hasil     = "Failed";
         }

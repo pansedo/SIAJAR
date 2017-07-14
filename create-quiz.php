@@ -20,8 +20,8 @@ if(isset($_POST['addQuiz'])){
 		$rest = $quizClass->addQuiz($nama, $_GET['modul'], $_POST['durasi'],$_POST['mulai'],$_POST['selesai'], $_SESSION['lms_id']);
 	}
 
-	if ($rest['status'] == "Success") {
-		echo "<script>alert('".$rest['status']."'); document.location='quiz-action.php?act=update&md=".$_GET['modul']."&qz=".$materi['_id']."'</script>";
+	if ($rest['status'] == "Sukses") {
+		echo "<script>alert('".$rest['status']."'); document.location='quiz-action.php?act=update&md=".$_GET['modul']."&qz=".$rest['idQuiz']."'</script>";
 	}
 }
 

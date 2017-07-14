@@ -1,5 +1,5 @@
 <?php
-class Quiz
+class Paket
 {
     public function __construct() {
         try {
@@ -15,34 +15,13 @@ class Quiz
         }
     }
 
-    public function getInfoQuiz($idQuiz){
-		$ID     = new MongoId($idQuiz);
-        $query  = $this->db->quiz->findOne(array("_id" => $ID));
-
-        // print_r($query);
-        return $query;
-    }
-
-    public function getNilaiQuiz($idQuiz, $idUser){
-        $query  = $this->db->kumpul_quiz->findOne(array("id_quiz" => "$idQuiz", "id_user" => "$idUser"));
-
-        return $query;
-    }
+    
 
     public function getInfoPaket($idQuiz){
         $ID     = new MongoId($idQuiz);
         $query  = $this->db->paket_soal->findOne(array("_id" => $ID));
 
         // print_r($query);
-        return $query;
-    }
-
-    public function getListbyModul($idModul){
-        $query =  $this->db->quiz->find(array("id_modul"=>"$idModul"));
-        // if($query['_id']){
-        //     $query1 = $this->db->quiz->find(array("id_modul" => $idModul))->count();
-        //     $query['modul'] = $query1;
-        // }
         return $query;
     }
 
@@ -54,30 +33,25 @@ class Quiz
         // }
         return $query;
     }
-    public function addQuiz($nama, $modul, $durasi, $mulai, $selesai, $user){
+    public function addPaket($nama, $publish, $user){
         $newID  = "";
-        $insert = array("nama" => $nama, "creator" => "$user", "date_created"=>date('Y-m-d H:i:s'), "date_modified"=>date('Y-m-d H:i:s'));
+        $insert = array("nama" => $nama, "publish" => "$publish", "creator" => "$user", "date_created"=>date('Y-m-d H:i:s'), "date_modified"=>date('Y-m-d H:i:s'));
         $save = $this->db->paket_soal->insert($insert);
         if ($save) {
             $newID  = $insert['_id'];
-            $insert2 = array("id_modul" => $modul,"id_paket" =>"$newID", "nama" => "$nama", "durasi"=>"$durasi","start_date"=>"$mulai","end_date"=>"$selesai", "creator" => "$user", "date_created"=>date('Y-m-d H:i:s'), "date_modified"=>date('Y-m-d H:i:s'), "status"=>"0");
-            $insertquiz = $this->db->quiz->insert($insert2);
-            if ($insertquiz) {
-                $status ="Sukses";
-                $IDQz = $insert2['_id'];
-            }
+            $status ="Sukses";
         }else {
             $status     = "Failed";
             $newID = "";
         }
 
-        $result = array("status" => $status, "idQuiz" => $IDQz);
+        $result = array("status" => $status, "idPaket" => $newID);
         return $result;
     }
 
-    public function updateQuiz($id, $nama, $durasi, $mulai, $selesai, $publish){
+    public function updateQuiz($id, $nama, $durasi, $mulai, $selesai){
         $newID  = "";
-        $edit = array("nama" => $nama, "durasi" => "$durasi", "start_date"=>"$mulai", "end_date" => "$selesai", "date_modified"=>date('Y-m-d H:i:s'), "status" => "$publish");
+        $edit = array("nama" => $nama, "durasi" => "$durasi", "start_date"=>"$mulai", "end_date" => "$selesai", "date_modified"=>date('Y-m-d H:i:s'));
 
         // print_r($edit);
         $update = $this->db->quiz->update(array("_id"=> new MongoId($id)),array('$set'=>$edit));
@@ -93,19 +67,15 @@ class Quiz
         return $result;
     }
 
-    public function hitungNilaiQuiz($idUser, $idQuiz, $jumlah_soal){
+    public function hitungNilaiQuiz($idUser, $idQuiz){
         $nilai_quiz         = 0;
         $list_jawaban_user  =  $this->db->jawaban_user->find(array("id_user"=>"$idUser", "id_quiz"=>"$idQuiz"));
 
         foreach ($list_jawaban_user as $jawaban_user) {
-            if($jawaban_user['status'] == 'benar'){
-                $nilai_quiz++;
-            }
+            $nilai_quiz += $jawaban_user['status'];
         }
 
-        $nilai_akhir = ($nilai_quiz/$jumlah_soal)*100;
-
-        return $nilai_akhir;
+        return $nilai_quiz;
     }
 
     public function submitQuiz($idUser, $idQuiz, $nilaiQuiz){

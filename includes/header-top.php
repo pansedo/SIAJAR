@@ -1,5 +1,5 @@
 <?php
-define('base_url', 'http://pansera.ok/siajar_lms');
+define('base_url', 'http://localhost/siajar');
 date_default_timezone_set('Asia/Jakarta');
 // error_reporting(0);
 session_start();

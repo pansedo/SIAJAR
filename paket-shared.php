@@ -158,6 +158,7 @@ $listQuiz	= $quizClass->getListbyUser($_SESSION['lms_id']);
 				<div class="col-xl-9 col-lg-8">
 					<section class="widget widget-activity">
 						<header class="widget-header">
+							Paket Soal
 							<?//?>
 							<span class="label label-pill label-primary"><?//=$infoMapel['modul']?></span>
 							

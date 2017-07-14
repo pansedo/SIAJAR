@@ -73,8 +73,9 @@ if (isset($_POST['updateInfoQuiz'])) {
 	$durasi = $_POST['durasi'];
 	$mulai = $_POST['mulai'];
 	$selesai = $_POST['selesai'];
+	$publish = $_POST['publish'];
 
-	$quizClass->updateQuiz($_GET['qz'], $nama, $durasi, $mulai,$selesai);
+	$quizClass->updateQuiz($_GET['qz'], $nama, $durasi, $mulai,$selesai,$publish);
 }
 ?>
 	<div class="modal fade"
@@ -217,6 +218,22 @@ if (isset($_POST['updateInfoQuiz'])) {
 									<input type="date" class="form-control" name="selesai" id="exampleInput" value="<?=$infoQuiz['end_date']?>" placeholder="mm/dd/yyyy">
 
 								</fieldset>
+								<div class="form-group row">
+								<label class="col-md-3 form-control-label" name="durasi" for="exampleInput">Terbitkan</label>
+								<div class="col-md-9">
+										<div class="radio">
+											<input type="radio" name="publish" id="radio-1" value="1" <?php if ($infoQuiz['status'] == "1") {echo "checked";} ?>>
+											<label for="radio-1">Ya </label>
+										</div>
+										<div class="radio">
+											<input type="radio" name="publish" id="radio-2" value="0" <?php if ($infoQuiz['status'] == "0") {echo "checked";} ?>>
+											<label for="radio-2">Tidak</label>
+										</div>
+										<!-- <input type="radio" class="form-control" name="publish" id="exampleInput" placeholder="0"  value="1"> Ya -->
+										
+								</div>
+										
+							</div>
 								<!-- <div class ="opsitambahan"> -->
 								<button class="btn " name="updateInfoQuiz">Simpan</button>
 							</form>
