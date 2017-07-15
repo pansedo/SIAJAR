@@ -120,6 +120,141 @@ if(isset($method['action'])){
 
 		echo $Json;
 	}
+
+    if($method['action'] == 'cTKB'){
+        $ID     = $method['ID'];
+        $tkb    = $method['tkb'];
+        $kelas  = $method['kelas'];
+        $update     = array('$set' => array("tkb"=>$tkb));
+
+        try {
+            $table2->update(array("id_user" => $ID, "id_kelas" => $kelas), $update);
+            $status     = "Berhasil";
+            $message    = "Tempat Kegiatan Belajar anda sudah diubah.";
+            $icon       = "success";
+        } catch(MongoCursorException $e) {
+            $status     = "Maaf";
+            $message    = "Tempat Kegiatan Belajar anda gagal diubah.";
+            $icon       = "error";
+        }
+
+        $resp   = array("status"=>$status, "message"=>$message, "icon"=>$icon);
+		$Json   = json_encode($resp);
+		header('Content-Type: application/json');
+
+		echo $Json;
+	}
+
+    if($method['action'] == 'daftarPerkembangan'){
+        $idmodul    = $method['Modul'];
+        $idkelas    = $method['Kelas'];
+        $nilaiModul = 0;
+        $nilaiTugas = 0;
+        $nilaiUjian = 0;
+        $users      = array();
+
+        $modul      = $db->modul->findOne(array("_id"=> new MongoId($idmodul)));
+
+        $anggota    = $table2->find(array("id_kelas" => "$idkelas", "status"=> "4"));
+        $no = 0;
+        foreach ($anggota as $listA) {
+            $user       = $db->user->findOne(array("_id" => new MongoId($listA['id_user'])));
+            $user['tkb']   = $listA['tkb'];
+
+            $cekNilaiModul  = $db->modul_kumpul->findOne(array("id_modul"=>"$idmodul", "id_user"=>$listA['id_user']));
+            // --- Nilai Membaca Materi
+            $nilaiModul     += $cekNilaiModul['nilai'];
+            $user['nilai']['modul'] = $nilaiModul;
+
+            $tugasModul =  $db->tugas->find(array("id_modul"=>"$idmodul"));
+            $jumlahTugas = $tugasModul->count();
+            if ($jumlahTugas > 0) {
+                $kumpulTugas= 0;
+                foreach ($tugasModul as $tugas) {
+                    $cekNilaiTugas  = $db->tugas_kumpul->findOne(array("id_tugas"=>"$tugas[_id]", "id_user"=>$listA['id_user']));
+
+                    // --- Nilai Tugas
+                    $nilaiTugas     += $nilaiTugas + $cekNilaiTugas['nilai'];
+                    $user['nilai']['tugas'][$kumpulTugas]   = $cekNilaiTugas['nilai'];
+                    $kumpulTugas++;
+                }
+                // --- Nilai Rata-Rata Tugas
+                $totalTugas = round(($nilaiTugas/$jumlahTugas), 2);
+
+                $evaluasi  = $db->quiz->findOne(array('id_modul' => "$idmodul"));
+                if ($evaluasi) {
+                    $cekNilaiEvaluasi   = $db->kumpul_quiz->findOne(array("id_quiz"=>"$evaluasi[_id]", "id_user"=>$listA['id_user']));
+
+                    // --- Nilai Ujian
+                    $nilaiUjian         += $cekNilaiEvaluasi['nilai'];
+                    $user['nilai']['evaluasi']   = $cekNilaiEvaluasi['nilai'];
+                }
+            } else {
+                $totalTugas = 100;
+                $evaluasi  = $db->quiz->findOne(array('id_modul' => "$idmodul"));
+                if ($evaluasi) {
+                    $cekNilaiEvaluasi   = $db->kumpul_quiz->findOne(array("id_quiz"=>"$evaluasi[_id]", "id_user"=>$listA['id_user']));
+
+                    // --- Nilai Ujian
+                    $nilaiUjian         += $cekNilaiEvaluasi['nilai'];
+                    $user['nilai']['evaluasi']   = $cekNilaiEvaluasi['nilai'];
+                }
+            }
+
+            $persentaseModul = $modul['nilai']['materi'];
+            $persentaseTugas = $modul['nilai']['tugas'];
+            $persentaseUjian = $modul['nilai']['ujian'];
+            $nilaiMinimal    = $modul['nilai']['minimal'];
+
+            $nilaiAkhirModul    = $persentaseModul == 0 ? 0 : round($nilaiModul * ($persentaseModul/100), 2);
+            $nilaiAkhirTugas    = $persentaseTugas == 0 ? 0 : round($totalTugas * ($persentaseTugas/100), 2);
+            $nilaiAkhirUjian    = $persentaseUjian == 0 ? 0 : round($nilaiUjian * ($persentaseUjian/100), 2);
+            $hasil              = round($nilaiAkhirModul + $nilaiAkhirTugas + $nilaiAkhirUjian, 2);
+
+            // Nilai Akhir
+            $user['nilai']['akhir']   = $hasil;
+
+            $no++;
+            $users[]    = $user;
+        }
+		$totalData	= count($users);
+		$totalFiltered = $totalData;
+
+		$totalFiltered	= count($users);
+
+		if($totalFiltered > 0){
+			foreach($users as $row){
+				$nestedData     = array();
+				$nestedData[]   = $row["nama"];
+				$nestedData[]   = $row["tkb"];
+				$nestedData[]   = $row["nilai"]["akhir"];
+				// $nestedData[] = $row["id"];
+				// $nestedData[] = $row["nama"]." ".$row['batch'];
+				// $nestedData[] = date("d M Y", strtotime($row["mulai"]))." s/d <br /> ".date("d M Y", strtotime($row['sampai']));
+				// $nestedData[] = date("d M Y H:i:s", strtotime($row["lastupdate"]));
+				// $nestedData[] = '<center>
+				// 										<button data-toggle="tooltip" data-placement="bottom" title="Edit"  onclick="edit('.$row["id"].')" class="btn btn-sm btn-success"><i class="fa fa-pencil"></i> </button>
+				// 										<button data-toggle="tooltip" data-placement="bottom" title="Remove"  onclick="remove('.$row["id"].')" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button>
+				// 								</center>';
+				$data[] = $nestedData;
+			}
+		}else{
+			$data	= [];
+		}
+
+		$response = array(
+						"draw"            => intval( $method['draw'] ),
+						"recordsTotal"    => intval( $totalData ),
+						"recordsFiltered" => intval( $totalFiltered ),
+						"data"            => $data,
+                        "kolom"           => $jumlahTugas + 2
+					);
+
+		$jsonResponse     = json_encode($response);
+		header('Content-Type: application/json');
+
+		echo $jsonResponse;
+    }
 }
 
 ?>

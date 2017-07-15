@@ -17,7 +17,7 @@ class User
     }
 
 	public function GetData($user) {
-      $criteria = array('_id' => new MongoId($user));
+        $criteria   = array('_id' => new MongoId($user));
   		$getprofile = $this -> table -> findOne($criteria);
 
   		return $getprofile;
