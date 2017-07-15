@@ -19,7 +19,6 @@ $materiClass 	= new Materi();
 $menuModul		= 2;
 $infoModul		= $modulClass->getInfoModul($_GET['modul']);
 $infoMapel		= $mapelClass->getInfoMapel($infoModul['id_mapel']);
-$infoMateri		= $materiClass->getInfoMateri($_GET['materi']);
 
 if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
     $judul  = mysql_escape_string(trim($_POST['judul']));
@@ -72,6 +71,7 @@ if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
 					<section class="card card-default">
                     <?php
                         if (isset($_GET['act']) && ($_GET['act'] == 'update')) {
+                            $infoMateri		= $materiClass->getInfoMateri($_GET['materi']);
                     ?>
                         <div class="card-block">
                             <h5 class="with-border">Perubahan Materi</h5>

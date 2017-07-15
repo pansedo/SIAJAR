@@ -31,6 +31,25 @@
 			// alert(iniValue);
 	  	}
 
+		function loading(){
+			$('.page-content').block({
+				message: '<div class="blockui-default-message"><i class="fa fa-circle-o-notch fa-spin"></i><h6>Mohon tunggu...</h6></div>',
+				overlayCSS:  {
+					background: '#3ac9d6',
+					opacity: 0.5,
+					cursor: 'wait'
+				},
+				css: {
+					width: '50%'
+				},
+				blockMsgClass: 'block-msg-default'
+			});
+		}
+
+		function loaded(){
+			$('.page-content').unblock();
+		}
+
 		$(document).ready(function() {
 			$('[data-toggle="popover"]').popover();
 		});

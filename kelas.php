@@ -309,7 +309,7 @@ if(isset($_POST['updateKelas'])){
 									</button>
 									<div class="dropdown-menu" style="margin-left: -100px">
 										<a class="dropdown-item" href="#" data-toggle="modal" data-target="#addMapel"><span class="font-icon font-icon-plus"></span>Tambah Mata Pelajaran</a>
-		                                <a class="dropdown-item" href="#"><span class="font-icon font-icon-pencil"></span>Kelola Mata Pelajaran</a>
+		                                <a class="dropdown-item" href="mapel-kelas.php?id=<?=$_GET['id'];?>"><span class="font-icon font-icon-pencil"></span>Kelola Mata Pelajaran</a>
 									</div>
 								</div>
 							<?php
