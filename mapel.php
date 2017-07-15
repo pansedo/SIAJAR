@@ -238,9 +238,36 @@ if(isset($_POST['updateMapel'])){
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-xl-3 col-lg-4">
+<<<<<<< HEAD
 					<?php
 						require("includes/mapel-menu.php");
 					?>
+=======
+					<aside id="menu-fixed" class="profile-side" style="margin: 0 0 20px">
+						<section class="box-typical">
+							<header class="box-typical-header-sm bordered">
+								<a href="kelas.php?id=<?=$infoKelas['_id']?>" class="pull-right" title="Kelas" data-toggle="popover" data-placement="right" data-trigger="hover" data-content="Kembali ke halaman kelas"><i class="font-icon font-icon-answer" style="color: #3ac9d6;"></i></a>Menu
+							</header>
+							<div class="box-typical-inner">
+								<ul class="side-menu-list">
+									<li class="blue opened">
+										<a href="mapel.php?id=<?=$_GET['id']?>">
+							                <i class="font-icon font-icon-home active"></i>
+							                <span class="lbl">Pelajaran</span>
+							            </a>
+									</li>
+									<li class="blue">
+										<a href="perkembangan.php?id=<?=$_GET['id']?>">
+											<i class="font-icon font-icon-zigzag"></i>
+											<span class="lbl">Perkembangan</span>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</section>
+
+					</aside><!--.profile-side-->
+>>>>>>> 0566056853f32c8b422b8d2223c4ee0b366f3c78
 				</div>
 
 				<div class="col-xl-9 col-lg-8">
@@ -267,6 +294,7 @@ if(isset($_POST['updateMapel'])){
 								if ($listModul->count() > 0) {
 									$no = 1;
 									foreach ($listModul as $modul) {
+<<<<<<< HEAD
 										if ($_SESSION['lms_status'] == 'guru') {
 							?>
 											<div class="widget-activity-item">
@@ -302,6 +330,13 @@ if(isset($_POST['updateMapel'])){
 											$prasyarat	= $modulClass->getLearningPath($modul['prasyarat'], $_SESSION['lms_id']);
 											if ($prasyarat['status'] == "Terbuka") {
 									?>
+=======
+										// $$tugasClass->getStatusTugas($modul['_id'], $_SESSION['lms_id']);
+
+										if ($modulClass->getLearningPath($modul['prasyarat']) == "LULUS") {
+									?>
+
+>>>>>>> 0566056853f32c8b422b8d2223c4ee0b366f3c78
 										<div class="widget-activity-item">
 											<div class="user-card-row">
 												<div class="tbl-row">

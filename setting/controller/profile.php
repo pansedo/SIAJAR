@@ -22,50 +22,6 @@ class Profile
 		return $getprofile; 
 	}
 
-    public function UpdateProfile($id_profile, $password,$username,$nama,$email,$jenis_kelamin,$sekolah,$status,$foto){
-        global $db;
-        
-        $update = array("username"=>$username,"password"=>$password, "nama"=>$nama,  "email"=>$email, "jk"=>$jenis_kelamin, "sekolah"=>$sekolah, "status"=>$status, "foto"=>$foto);
-        $sukses = $this -> table -> update(array("_id"=> new MongoId($id_profile)),array('$set'=>$update));
-        if ($sukses) {
-            # code...
-            echo "<script type='text/javascript'> swal({
-                                  title: 'Berhasil diperbarui!',
-                                  text: 'Profil anda berhasil diperbarui',
-                                  type: 'success',
-                                  timer: 2000
-                                }).then(
-                                  function () {
-                                    document.location.href='profile.php';
-                                  },
-                                  function (dismiss) {
-                                    document.location.href='profile.php';
-                                    if (dismiss === 'timer') {
-                                      console.log('I was closed by the timer')
-                                    }
-                                  })
-                </script>";
-        }else{
-            echo "<script type='text/javascript'> swal({
-                                  title: 'Gagal diperbarui!',
-                                  text: 'Profil anda gagal diperbarui',
-                                  type: 'error',
-                                  timer: 2000
-                                }).then(
-                                  function () {
-                                    document.location.href='profile.php';
-                                  },
-                                  function (dismiss) {
-                                    document.location.href='profile.php';
-                                    if (dismiss === 'timer') {
-                                      console.log('I was closed by the timer')
-                                    }
-                                  })
-                </script>";
-        }
-        
-    }
-
     public function UpdateSosmed($id_profile, $website,$facebook,$linkedin,$twitter){
         global $db;
         
@@ -110,6 +66,49 @@ class Profile
         
     }
 
+    public function UpdateProfile($id_profile, $password,$username,$nama,$email,$jenis_kelamin,$sekolah,$status,$foto,$prov,$kota){
+        global $db;
+        
+        $update = array("username"=>$username,"password"=>$password, "nama"=>$nama,  "email"=>$email, "jk"=>$jenis_kelamin, "sekolah"=>$sekolah, "status"=>$status, "foto"=>$foto,"date_modified"=>date('Y-m-d H:i:s'),"provinsi"=>$prov,"kota"=>$kota);
+        $sukses = $this -> table -> update(array("_id"=> new MongoId($id_profile)),array('$set'=>$update));
+        if ($sukses) {
+            # code...
+            echo "<script type='text/javascript'> swal({
+                                  title: 'Berhasil diperbarui!',
+                                  text: 'Profil anda berhasil diperbarui',
+                                  type: 'success',
+                                  timer: 2000
+                                }).then(
+                                  function () {
+                                    document.location.href='profile.php';
+                                  },
+                                  function (dismiss) {
+                                    document.location.href='profile.php';
+                                    if (dismiss === 'timer') {
+                                      console.log('I was closed by the timer')
+                                    }
+                                  })
+                </script>";
+        }else{
+            echo "<script type='text/javascript'> swal({
+                                  title: 'Gagal diperbarui!',
+                                  text: 'Profil anda gagal diperbarui',
+                                  type: 'error',
+                                  timer: 2000
+                                }).then(
+                                  function () {
+                                    document.location.href='profile.php';
+                                  },
+                                  function (dismiss) {
+                                    document.location.href='profile.php';
+                                    if (dismiss === 'timer') {
+                                      console.log('I was closed by the timer')
+                                    }
+                                  })
+                </script>";
+        }
+        
+    }
 
     public function CheckPassword($id_profile, $password, $password_baru, $pasword_confirm,$username,$nama,$email,$jenis_kelamin,$sekolah,$status,$foto){
         global $db;
@@ -209,7 +208,7 @@ class Profile
 
 
 
-    public function UpdateProfileFoto($id_profile, $password,$username,$nama,$email,$jenis_kelamin,$sekolah,$status,$foto,$foto_size,$foto_tmp,$foto_ext,$foto_lama){
+    public function UpdateProfileFoto($id_profile, $password,$username,$nama,$email,$jenis_kelamin,$sekolah,$status,$foto,$foto_size,$foto_tmp,$foto_ext,$foto_lama,$prov,$kota){
 
 
             $format = array("jpg", "jpeg", "png", "gif", "bmp");
@@ -221,6 +220,9 @@ class Profile
                 $folderDest   ='Assets/foto/'.$foto_name;
 
                 // echo "move_uploaded_file($foto_tmp, $folderDest)";
+                if ($foto_size> 2000000) {
+                  # code...
+                
                 
                     if(move_uploaded_file($foto_tmp, $folderDest) )
                     {                    // mengganti File Permission
@@ -234,7 +236,7 @@ class Profile
 
                         // Update Data
                         
-                        $update = array("username"=>$username,"password"=>$password, "nama"=>$nama,  "email"=>$email, "jk"=>$jenis_kelamin, "sekolah"=>$sekolah, "status"=>$status, "foto"=>$foto_name);
+                        $update = array("username"=>$username,"password"=>$password, "nama"=>$nama,  "email"=>$email, "jk"=>$jenis_kelamin, "sekolah"=>$sekolah, "status"=>$status, "foto"=>$foto_name,"provinsi"=>$prov,"kota"=>$kota);
                         $sukses = $this -> table -> update(array("_id"=> new MongoId($id_profile)),array('$set'=>$update));
 
                         if ($sukses) {
@@ -275,6 +277,7 @@ class Profile
                                   })
                 </script>";
                         }
+                      
                     }
                     else
                     {
@@ -295,6 +298,24 @@ class Profile
                                   })
                 </script>";    
                     }
+                  }else{
+                    echo "<script type='text/javascript'> swal({
+                                  title: 'Gagal diunggah!',
+                                  text: 'Fotp profil anda gagal diunggah maksimal ukuran 2Mb !',
+                                  type: 'error',
+                                  timer: 2000
+                                }).then(
+                                  function () {
+                                    // document.location.href='setting.php';
+                                  },
+                                  function (dismiss) {
+                                    // document.location.href='setting.php';
+                                    if (dismiss === 'timer') {
+                                      console.log('I was closed by the timer')
+                                    }
+                                  })
+                </script>";    
+                  }
             }
             else
             {

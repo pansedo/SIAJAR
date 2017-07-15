@@ -74,7 +74,7 @@ $userProfil	= $userClass->GetData($_SESSION['lms_id']);
 						}
 						?>
 
-						<section class="box-typical">
+						<!-- <section class="box-typical">
 							<header class="box-typical-header-sm bordered">Tentang Saya</header>
 							<div class="box-typical-inner">
 								<p>
@@ -86,7 +86,7 @@ $userProfil	= $userClass->GetData($_SESSION['lms_id']);
 									</ul>
 								</p>
 							</div>
-						</section>
+						</section> -->
 
 						<section class="box-typical">
 							<header class="box-typical-header-sm bordered">Info</header>
