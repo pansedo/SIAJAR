@@ -186,7 +186,7 @@ if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
 													foreach ($listCommentReply['data'] as $commentReply) {
 														$image		= empty($commentReply['user_foto']) ? "<img src='assets/img/avatar-2-128.png' style='max-width: 75px; max-height: 75px;' />" : "<img src='".$commentReply['foto']."' style='max-width: 75px; max-height: 75px;' />" ;
 													?>
-													<div class="comment-row-item" style="padding-right: 45px;">
+													<div class="comment-row-item quote" style="padding-right: 45px;">
 														<div class="tbl-row">
 															<div class="avatar-preview avatar-preview-32">
 																<a href="#"><?=$image?></a>
