@@ -178,7 +178,7 @@ if(isset($_POST['joinKelas'])){
 	                            <img src="assets/img/avatar-2-64.png" alt="">
 	                        </button>
 	                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd-user-menu">
-	                            <a class="dropdown-item" href="#"><span class="font-icon glyphicon glyphicon-cog"></span>Pengaturan</a>
+	                            <a class="dropdown-item" href="setting.php"><span class="font-icon glyphicon glyphicon-cog"></span>Pengaturan</a>
 	                            <a class="dropdown-item" href="#"><span class="font-icon glyphicon glyphicon-question-sign"></span>Bantuan</a>
 	                            <div class="dropdown-divider"></div>
 	                            <a class="dropdown-item" href="url-API/authOut.php"><span class="font-icon glyphicon glyphicon-log-out"></span>Keluar</a>
