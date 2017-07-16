@@ -47,8 +47,8 @@ class Modul
                 foreach ($tugasModul as $tugas) {
                     $cekNilaiTugas  = $this->db->tugas_kumpul->findOne(array("id_tugas"=>"$tugas[_id]", "id_user"=>"$user"));
                     $nilaiTugas     = $nilaiTugas + $cekNilaiTugas['nilai'];
-                    $nilai['tugas']['nama'] = $tugas['nama'];
-                    $nilai['tugas']['nilai']= $tugas['nilai'];
+                    // $nilai['tugas']['nama'] = $tugas['nama'];
+                    // $nilai['tugas']['nilai']= $tugas['nilai'];
                     $kumpulTugas++;
                 }
                 $totalTugas = round(($nilaiTugas/$jumlahTugas), 2);

@@ -1,7 +1,7 @@
 <aside id="menu-fixed" class="profile-side" style="margin: 0 0 20px">
     <section class="box-typical">
         <header class="box-typical-header-sm bordered">
-            Menu
+            <a href="kelas.php?id=<?=$infoKelas['_id']?>" class="pull-right" title="Kelas" data-toggle="popover" data-placement="right" data-trigger="hover" data-content="Kembali ke halaman kelas"><i class="font-icon font-icon-answer" style="color: #3ac9d6;"></i></a>Menu
         </header>
         <div class="box-typical-inner">
             <ul class="side-menu-list">
