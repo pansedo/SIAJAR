@@ -25,7 +25,12 @@ class Tugas
     }
 
     public function getStatusTugas($tugas, $user){
-        $query =  $this->db->kumpul_tugas->findOne(array("id_tugas"=>"$tugas", "id_user"=>$user));
+        $query =  $this->db->tugas_kumpul->findOne(array("id_tugas"=>"$tugas", "id_user"=>"$user"));
+        return $query;
+    }
+
+    public function getStatusQuiz($quiz, $user){
+        $query =  $this->db->kumpul_quiz->findOne(array("id_quiz"=>"$quiz", "id_user"=>"$user"));
         return $query;
     }
 

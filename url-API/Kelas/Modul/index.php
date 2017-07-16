@@ -38,6 +38,41 @@ if(isset($method['action'])){
 		echo $Json;
 	}
 
+    if($method['action'] == 'updtNMateri'){
+        $siswa  = $method['s'];
+        $modul  = $method['m'];
+        $nilai  = $method['n'];
+
+        $cekNilai   = $db->modul_kumpul->findOne(array('id_modul'=>$modul, 'id_user'=>$siswa));
+        if ($cekNilai['nilai']) {
+            $update = array("nilai" => $nilai, "date_modified"=>date('Y-m-d H:i:s'));
+            $sukses = $this->table->update(array("_id"=> new MongoId($id)),array('$set'=>$update));
+
+            $status = $sukses ? "Success" : "Failed";
+
+            $result = array("status" => $status);
+            // $result = array("status" => $kiriman, "balikan" => $kiriman['idmodul']);
+            return $result;
+        }else {
+            $insert = array("id_user"=>$siswa, "id_modul"=>$modul, "prasyarat"=>$syarat, "nilai"=>array("materi"=>$nilai1, "tugas"=>$nilai2, "ujian"=>$nilai3, "minimal"=>$nilai4), "creator"=>"$user", "date_created"=>date('Y-m-d H:i:s'), "date_modified"=>date('Y-m-d H:i:s'));
+                      $this->table->insert($insert);
+            if ($insert) {
+                $newID  = $insert['_id'];
+                $status = "Success";
+            }else {
+                $status = "Failed";
+            }
+        }
+    }
+
+    if($method['action'] == 'updtNTugas'){
+
+    }
+
+    if($method['action'] == 'updtNUjian'){
+
+    }
+
 }
 
 ?>

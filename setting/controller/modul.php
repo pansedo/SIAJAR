@@ -20,6 +20,11 @@ class Modul
         return $query;
     }
 
+    public function getStatusMateri($idModul, $user){
+        $query =  $this->db->modul_kumpul->findOne(array("id_modul"=>"$idModul", "id_user"=>"$user"));
+        return $query;
+    }
+
     public function getListbyMapel($idMapel){
         $query  = $this->table->find(array("id_mapel" => $idMapel));
         return $query;
@@ -47,8 +52,8 @@ class Modul
                 foreach ($tugasModul as $tugas) {
                     $cekNilaiTugas  = $this->db->tugas_kumpul->findOne(array("id_tugas"=>"$tugas[_id]", "id_user"=>"$user"));
                     $nilaiTugas     = $nilaiTugas + $cekNilaiTugas['nilai'];
-                    // $nilai['tugas']['nama'] = $tugas['nama'];
-                    // $nilai['tugas']['nilai']= $tugas['nilai'];
+                    $nilai['tugas']['nama'] = $tugas['nama'];
+                    $nilai['tugas']['nilai']= $cekNilaiTugas['nilai'];
                     $kumpulTugas++;
                 }
                 $totalTugas = round(($nilaiTugas/$jumlahTugas), 2);
