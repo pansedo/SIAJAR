@@ -3,6 +3,7 @@ require("includes/header-top.php");
 require("includes/header-menu.php");
 
 $userClass	= new User();
+$profilClass = new Profile();
 $userProfil	= $userClass->GetData($_SESSION['lms_id']);
 ?>
 
@@ -41,7 +42,7 @@ $userProfil	= $userClass->GetData($_SESSION['lms_id']);
 					<aside id="menu-fixed2" class="profile-side">
 						<section class="box-typical profile-side-user">
 							<button type="button" class="avatar-preview avatar-preview-128">
-								<img src="assets/img/avatar-1-256.png" alt=""/>
+								<img src="media/Assets/foto/<?php if ($FuncProfile['foto'] != NULL) {echo $FuncProfile['foto'];}else{echo "no_picture.png";} ?>" alt=""/>
 							</button>
 							<button type="button" id="ohyeah" class="btn btn-rounded"><?=$_SESSION['lms_status'] == 'guru' ? 'Kirim Pesan' : '<span data-toggle="modal" data-target="#joinKelas"><i class="font-icon font-icon-user"></i> Gabung Kelas</span>'; ?></button>
 

@@ -29,6 +29,7 @@ class Profile
         $sukses = $this -> table -> update(array("_id"=> new MongoId($id_profile)),array('$set'=>$update));
         if ($sukses) {
             # code...
+
             echo "<script type='text/javascript'> swal({
                                   title: 'Berhasil diperbarui!',
                                   text: 'Profil anda berhasil diperbarui',
@@ -74,6 +75,7 @@ class Profile
         $sukses = $this -> table -> update(array("_id"=> new MongoId($id_profile)),array('$set'=>$update));
         if ($sukses) {
             # code...
+          $_SESSION['lms_name'] = $nama;
             echo "<script type='text/javascript'> swal({
                                   title: 'Berhasil diperbarui!',
                                   text: 'Profil anda berhasil diperbarui',
@@ -131,6 +133,7 @@ class Profile
                     $sukses=$this -> table -> update(array("_id"=> $id_profile),$update);
                     if ($sukses) {
                         # code...
+                      $_SESSION['lms_name'] = $nama;
                         echo "<script type='text/javascript'> swal({
                                   title: 'Berhasil diperbarui!',
                                   text: 'Kata Sandi anda berhasil diperbarui',
