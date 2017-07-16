@@ -103,7 +103,8 @@ if(isset($_POST['updateKelas'])){
 	if ($hakKelas['status'] == 1) {
 		$nama	= mysql_escape_string($_POST['namakelasupdate']);
 		$post	= htmlentities($_POST['tentang']);
-		$rest	= $kelasClass->updateKelas($nama, $post, $_GET['id']);
+		$tkb	= $_POST['tkb'];
+		$rest	= $kelasClass->updateKelas($nama, $post, $tkb, $_GET['id']);
 
 		echo	"<script>
 					swal({
@@ -141,7 +142,18 @@ if(isset($_POST['updateKelas'])){
 	.table a{
 		border: none;
 	}
+	@media (max-width: 470px) {
+		.tb-lg {
+			display: none;
+		}
+	}
+	@media (min-width: 470px) {
+		.tb-sm {
+			display: none;
+		}
+	}
 </style>
+<link rel="stylesheet" href="assets/css/separate/elements/tags-input.css">
 	<div class="modal fade"
 		 id="updateKelas"
 		 tabindex="-1"
@@ -168,6 +180,13 @@ if(isset($_POST['updateKelas'])){
 						<label for="tentang" class="col-md-3 form-control-label">Tentang Kelas</label>
 						<div class="col-md-9">
 							<textarea class="form-control" name="tentang" id="tentang" placeholder="Deskripsikan tentang kelas anda - Maksimal 260 karakter" maxlength="260"><?=$infoKelas['tentang']?></textarea>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="tentang" class="col-md-3 form-control-label">Kelompok Belajar</label>
+						<div class="col-md-9">
+							<!-- <textarea id="tags-editor-textarea" placeholder="Nama Kelompok Belajar"></textarea> -->
+							<input type="tags" name="tkb" data-separator=' ' placeholder="" id="tags" value="<?=$infoKelas['tkb']?>" />
 						</div>
 					</div>
 				</div>
@@ -343,7 +362,7 @@ if(isset($_POST['updateKelas'])){
 							<table id="example" class="display table table-striped" cellspacing="0" width="100%">
 								<thead style="display:none;">
 									<tr>
-										<th>Foto</th>
+										<th class="tb-lg">Foto</th>
 										<th>Nama dan Sekolah</th>
 										<th>Aksi</th>
 									</tr>
@@ -351,6 +370,7 @@ if(isset($_POST['updateKelas'])){
 								<tbody>
 							<?php
 							if ($infoKelas['member'] > 0) {
+								$m	= 1;
 								foreach (array_values($infoKelas['list_member']) as $data) {
 									$menu		= '';
 									$infoUser	= $userClass->GetData($data);
@@ -371,7 +391,7 @@ if(isset($_POST['updateKelas'])){
 									}
 
 									if ($infoUser['status'] == 'guru') {
-										if ($infoHak['status'] == 2 || $infoHak['status'] == 3) {
+										if ($infoHak['status'] == 2) {
 											$menu		= '<div class="btn-group" style="float: right;">
 																<button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 																	Aksi
@@ -379,11 +399,32 @@ if(isset($_POST['updateKelas'])){
 																<div class="dropdown-menu dropdown-menu-right">
 																	<div class="radio">
 																		<a class="dropdown-item" href="#">
-																			<input type="radio" name="statusGuru" id="statusGuru2" onclick="cPriv(\''.$infoUser['_id'].'\', 2)" value="2" '.($infoHak['status'] == 2 ? "checked" : "").' >
+																			<input type="radio" name="statusGuru" id="statusGuru2" onclick="cPriv(\''.$infoUser['_id'].'\', \'status'.$m.'\', 2)" value="2" '.($infoHak['status'] == 2 ? "checked" : "").' >
 																			<label for="statusGuru2">Guru Mata Pelajaran </label>
 																		</a>
 																		<a class="dropdown-item" href="#">
-																			<input type="radio" name="statusGuru" id="statusGuru3" onclick="cPriv(\''.$infoUser['_id'].'\', 3)" value="3" '.($infoHak['status'] == 3 ? "checked" : "").' >
+																			<input type="radio" name="statusGuru" id="statusGuru3" onclick="cPriv(\''.$infoUser['_id'].'\', \'status'.$m.'\', 3)" value="3" '.($infoHak['status'] == 3 ? "checked" : "").' >
+																			<label for="statusGuru3">Co-Teacher </label>
+																		</a>
+																	</div>
+																	<div class="dropdown-divider"></div>
+																	<a class="dropdown-item" onclick="remove(\''.$infoUser['_id'].'\')">Hapus Anggota</a>
+																</div>
+															</div>';
+										}elseif ($infoHak['status'] == 3) {
+											$menu		= '<div class="btn-group" style="float: right;">
+																<button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+																	<span class="tb-lg">Aksi</span>
+																	<span class="tb-sm"><i class="fa fa-pencil"></i></span>
+																</button>
+																<div class="dropdown-menu dropdown-menu-right">
+																	<div class="radio">
+																		<a class="dropdown-item" href="#">
+																			<input type="radio" name="statusGuru" id="statusGuru2" onclick="cPriv(\''.$infoUser['_id'].'\', \'status'.$m.'\', 2)" value="2" '.($infoHak['status'] == 2 ? "checked" : "").' >
+																			<label for="statusGuru2">Guru Mata Pelajaran </label>
+																		</a>
+																		<a class="dropdown-item" href="#">
+																			<input type="radio" name="statusGuru" id="statusGuru3" onclick="cPriv(\''.$infoUser['_id'].'\', \'status'.$m.'\', 3)" value="3" '.($infoHak['status'] == 3 ? "checked" : "").' >
 																			<label for="statusGuru3">Co-Teacher </label>
 																		</a>
 																	</div>
@@ -395,7 +436,8 @@ if(isset($_POST['updateKelas'])){
 									}elseif ($infoUser['status'] == 'siswa') {
 										$menu		= '<div class="btn-group" style="float: right;">
 															<button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-																Aksi
+																<span class="tb-lg">Aksi</span>
+																<span class="tb-sm"><i class="fa fa-pencil"></i></span>
 															</button>
 															<div class="dropdown-menu dropdown-menu-right">
 																<a class="dropdown-item" onclick="remove(\''.$infoUser['_id'].'\')">Hapus Anggota</a>
@@ -404,22 +446,63 @@ if(isset($_POST['updateKelas'])){
 									}
 									$menuAnggota = '';
 									if ($_SESSION['lms_id'] == $infoUser['_id']) {
-										$menuAnggota	= '<div class="btn-group" style="float: right;">
-															<button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-																Aksi
-															</button>
-															<div class="dropdown-menu dropdown-menu-right">
-																<a class="dropdown-item" onclick="out(\''.$infoUser['_id'].'\')">Keluar Kelas</a>
-															</div>
-														</div>';
+										if ($infoHak['status'] == 3 || $infoHak['status'] == 4) {
+											$menuAnggota	= '<div class="btn-group" style="float: right;">
+																<button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+																	<span class="tb-lg">Aksi</span>
+																	<span class="tb-sm"><i class="fa fa-pencil"></i></span>
+																</button>
+																<div class="dropdown-menu dropdown-menu-right">';
+																$datatkb	= explode(',', $infoKelas['tkb']);
+																if (count($datatkb) > 0) {
+																	$no = 1;
+											$menuAnggota	.= '	<div class="radio">';
+																	foreach ($datatkb as $tkb) {
+											$menuAnggota	.= '		<a class="dropdown-item" onclick="cTKB(\''.$infoUser['_id'].'\', \''.$tkb.'\', \'namaTKB'.$no.'\', \'member'.$m.'\')" >
+																			<input type="radio" name="namaTKB" id="namaTKB'.$no.'" value="'.$tkb.'" '.(isset($infoHak['tkb']) && $infoHak['tkb'] == $tkb ? "checked" : "").' >
+																			<label for="statusGuru3">'.$tkb.' </label>
+																		</a>';
+																	$no++;
+																	}
+											$menuAnggota	.= '	</div>
+																	<div class="dropdown-divider"></div>';
+																}
+
+											$menuAnggota	.= '	<a class="dropdown-item" onclick="out(\''.$infoUser['_id'].'\')">Keluar Kelas</a>
+																</div>
+															</div>';
+										}else {
+											$menuAnggota	= '<div class="btn-group" style="float: right;">
+																<button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+																	<span class="tb-lg">Aksi</span>
+																	<span class="tb-sm"><i class="fa fa-pencil"></i></span>
+																</button>
+																<div class="dropdown-menu dropdown-menu-right">
+																	<a class="dropdown-item" onclick="out(\''.$infoUser['_id'].'\')">Keluar Kelas</a>
+																</div>
+															</div>';
+										}
+
 									}
 
 									$image		= empty($infoUser['foto']) ? "<img src='assets/img/avatar-2-128.png' style='max-width: 75px; max-height: 75px;' />" : "<img src='".$infoUser['foto']."' style='max-width: 75px; max-height: 75px;' />" ;
 									echo "	<tr>
-												<td width='80px;'>".$image."</td>
-												<td><span class='user-name'>$infoUser[nama]</span> <br> <span style='font-size: 0.9em;'>$infoUser[sekolah] <br> ".ucfirst($infoUser['status'])." (".$posisi.")</span></td>
+												<td  class='tb-lg' width='80px;'>".$image."</td>
+												<td>
+													<span class='user-name'>$infoUser[nama]</span> <br>
+													<span style='font-size: 0.9em;'>
+														$infoUser[sekolah]
+													</span><br>
+													<span style='font-size: 0.9em;' id='status$m'>
+														".ucfirst($infoUser['status'])." (".$posisi.")
+													</span><br>
+													<span style='font-size: 0.9em;' id='member$m'>
+														<b>".@$infoHak['tkb']."</b>
+													</span>
+												</td>
 												<td width='70px;' class='shared'>".($hakKelas['status'] == 1 ? $menu : $menuAnggota)."</td>
 											</tr>";
+									$m++;
 								}
 							}
 							?>
@@ -435,6 +518,7 @@ if(isset($_POST['updateKelas'])){
 <?php
 	require('includes/footer-top.php');
 ?>
+<script src="assets/js/lib/tags-input/tags-input.js"></script>
 <script src="assets/js/lib/datatables-net/datatables.min.js"></script>
 
 <script>
@@ -508,14 +592,32 @@ if(isset($_POST['updateKelas'])){
       		});
       	}
 
-	function cPriv(ID, Priv){
+	function cPriv(ID, Text, Priv){
 		$.ajax({
 			type: 'POST',
 			url: 'url-API/Kelas/',
 			data: {"action": "cPriv", "ID": ID, "hak_akses" : Priv, "kelas": "<?=$_GET['id']?>"},
 			success: function(res) {
-				// table.reload();
+				var jabatan = Priv == 2 ? 'Guru (Guru Mata Pelajaran)' : 'Guru (Co-Teacher)';
 				swal(res.status, res.message, res.icon);
+				$('#'+Text).html(jabatan)
+			},
+			error: function () {
+				swal("Gagal!", "Data tidak berubah!", "error");
+			}
+		});
+  	}
+
+	function cTKB(ID, TKB, IDTKB, Text){
+		$.ajax({
+			type: 'POST',
+			url: 'url-API/Kelas/',
+			data: {"action": "cTKB", "ID": ID, "tkb" : TKB, "kelas": "<?=$_GET['id']?>"},
+			success: function(res) {
+				$('input[type="radio"]').removeAttr('checked', '');
+				swal(res.status, res.message, res.icon);
+				$('#'+IDTKB).prop('checked','checked');
+				$('#'+Text).html('<b>'+TKB+'</b>');
 			},
 			error: function () {
 				swal("Gagal!", "Data tidak berubah!", "error");
@@ -601,6 +703,8 @@ if(isset($_POST['updateKelas'])){
 		});
 
 	});
+
+	tagsInput(document.querySelector('input[type="tags"]'));
 </script>
 
 <script src="assets/js/app.js"></script>

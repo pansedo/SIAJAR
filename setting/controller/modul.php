@@ -20,12 +20,18 @@ class Modul
         return $query;
     }
 
+    public function getStatusMateri($idModul, $user){
+        $query =  $this->db->modul_kumpul->findOne(array("id_modul"=>"$idModul", "id_user"=>"$user"));
+        return $query;
+    }
+
     public function getListbyMapel($idMapel){
         $query  = $this->table->find(array("id_mapel" => $idMapel));
         return $query;
     }
 
-    public function getLearningPath($idmodul){
+    public function getLearningPath($idmodul, $user){
+
         if ($idmodul != 0) {
             $nilaiModul     = 0;
             $nilaiTugas     = 0;
@@ -33,8 +39,10 @@ class Modul
 
             $modul          = $this->table->findOne(array("_id"=> new MongoId($idmodul)));
             if ($modul) {
-                $cekNilaiModul  = $this->table->findOne(array("id_modul"=>"$idmodul"));
+                $cekNilaiModul  = $this->db->modul_kumpul->findOne(array("id_modul"=>"$idmodul", "id_user"=>"$user"));
                 $nilaiModul     += $cekNilaiModul['nilai'];
+            }else {
+                $nilaiModul     = 100;
             }
 
             $tugasModul =  $this->db->tugas->find(array("id_modul"=>"$idmodul"));
@@ -42,22 +50,24 @@ class Modul
             if ($jumlahTugas > 0) {
                 $kumpulTugas = 0;
                 foreach ($tugasModul as $tugas) {
-                    $cekNilaiTugas  = $this->db->tugas_kumpul->findOne(array("id_tugas"=>"$tugas[_id]"));
-                    $nilaiTugas     += $cekNilaiTugas['nilai'];
+                    $cekNilaiTugas  = $this->db->tugas_kumpul->findOne(array("id_tugas"=>"$tugas[_id]", "id_user"=>"$user"));
+                    $nilaiTugas     = $nilaiTugas + $cekNilaiTugas['nilai'];
+                    $nilai['tugas']['nama'] = $tugas['nama'];
+                    $nilai['tugas']['nilai']= $cekNilaiTugas['nilai'];
                     $kumpulTugas++;
                 }
                 $totalTugas = round(($nilaiTugas/$jumlahTugas), 2);
 
                 $evaluasi  = $this->db->quiz->findOne(array('id_modul' => "$idmodul"));
                 if ($evaluasi) {
-                    $cekNilaiEvaluasi   = $this->db->kumpul_quiz->findOne(array("id_quiz"=>"$evaluasi[_id]"));
+                    $cekNilaiEvaluasi   = $this->db->kumpul_quiz->findOne(array("id_quiz"=>"$evaluasi[_id]", "id_user"=>"$user"));
                     $nilaiUjian      += $cekNilaiEvaluasi['nilai'];
                 }
             }else {
                 $totalTugas = 100;
                 $evaluasi  = $this->db->quiz->findOne(array('id_modul' => "$idmodul"));
                 if ($evaluasi) {
-                    $cekNilaiEvaluasi   = $this->db->kumpul_quiz->findOne(array("id_quiz"=>"$evaluasi[_id]"));
+                    $cekNilaiEvaluasi   = $this->db->kumpul_quiz->findOne(array("id_quiz"=>"$evaluasi[_id]", "id_user"=>"$user"));
                     $nilaiUjian      += $cekNilaiEvaluasi['nilai'];
                 }
             }
@@ -67,17 +77,29 @@ class Modul
             $persentaseUjian = $modul['nilai']['ujian'];
             $nilaiMinimal    = $modul['nilai']['minimal'];
 
-            $nilaiAkhirModul    = round($nilaiModul * $persentaseModul, 2);
-            $nilaiAkhirTugas    = round($totalTugas * $persentaseTugas, 2);
-            $nilaiAkhirUjian    = round($nilaiUjian * $persentaseUjian, 2);
+            $nilaiAkhirModul    = $persentaseModul == 0 ? 0 : round($nilaiModul * ($persentaseModul/100), 2);
+            $nilaiAkhirTugas    = $persentaseTugas == 0 ? 0 : round($totalTugas * ($persentaseTugas/100), 2);
+            $nilaiAkhirUjian    = $persentaseUjian == 0 ? 0 : round($nilaiUjian * ($persentaseUjian/100), 2);
 
             $hasil  = round($nilaiAkhirModul + $nilaiAkhirTugas + $nilaiAkhirUjian, 2);
-            $status = $hasil > $nilaiMinimal ? 'LULUS' : 'TIDAK';
+
+            $nilai['materi']    = $nilaiAkhirModul;
+            $nilai['ujian']     = $nilaiAkhirUjian;
+            $nilai['akhir']     = $hasil;
+
+            $status = $hasil >= $nilaiMinimal ? 'Terbuka' : 'Tidak';
         }else {
-            $status = 'LULUS';
+            $hasil  = 100;
+
+            $nilai['materi']    = 100;
+            $nilai['ujian']     = 100;
+            $nilai['akhir']     = $hasil;
+
+            $status = 'Terbuka';
         }
 
-        return $status;
+        $result = array("prasyarat"=>$idmodul, "status" => $status, "hasil" => $hasil, "nilai"=>$nilai);
+        return $result;
     }
 
     // public function getNilaiTugas(){

@@ -61,7 +61,7 @@ class Kelas
     public function addKelas($nama, $user){
         $newID  = "";
         $kode   = $this->acakKodeKelas(6);
-        $insert = array("nama" => $nama, 'kode'=> $kode, "tentang"=>"", "status"=>"", "creator" => "$user", "date_created"=>date('Y-m-d H:i:s'), "date_modified"=>date('Y-m-d H:i:s'));
+        $insert = array("nama" => $nama, 'kode'=> $kode, "tentang"=>"", "tkb"=>"", "status"=>"", "creator" => "$user", "date_created"=>date('Y-m-d H:i:s'), "date_modified"=>date('Y-m-d H:i:s'));
                   $this->table->insert($insert);
         $newID  = $insert['_id'];
         if ($newID) {
@@ -77,8 +77,8 @@ class Kelas
         return $result;
     }
 
-    public function updateKelas($nama, $tentang, $kelas){
-        $update     = array('$set' => array("nama"=>$nama, "tentang"=>$tentang, "date_modified"=>date('Y-m-d H:i:s')));
+    public function updateKelas($nama, $tentang, $tkb, $kelas){
+        $update     = array('$set' => array("nama"=>$nama, "tentang"=>$tentang, "tkb"=>$tkb, "date_modified"=>date('Y-m-d H:i:s')));
 
           try {
               $this->table->update(array("_id" => new MongoId($kelas)), $update);
@@ -109,7 +109,7 @@ class Kelas
                     $message    = "Kamu sudah bergabung kedalam Kelas ini!";
                 }else{
                     $hak        = $privilege == "guru" ? 3 : 4;
-                    $relation   = $this->db->anggota_kelas->insert( array( "id_user"=>"$user", "id_kelas"=>"$query[_id]", "status"=>$hak, "date_modified"=>date('Y-m-d H:i:s') ) );
+                    $relation   = $this->db->anggota_kelas->insert( array( "id_user"=>"$user", "id_kelas"=>"$query[_id]", "status"=>$hak, "tkb"=>"", "date_modified"=>date('Y-m-d H:i:s') ) );
                     $status     = "Success";
                     $message    = "Kamu berhasil bergabung kedalam Kelas!";
                     $newID      = "$query[_id]";
