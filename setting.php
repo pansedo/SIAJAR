@@ -37,6 +37,8 @@ if (isset($FuncProfile['kota'])) {
 			$foto_ext	= pathinfo($foto,PATHINFO_EXTENSION);
 			$foto_lama	= $FuncProfile['foto'];
 
+			// echo '<script>alert("'.$foto_size.'");</script>';
+
 			$classProfile->UpdateProfileFoto($id_profile, $password,$username,$nama,$email,$jenis_kelamin,$sekolah,$status,$foto,$foto_size,$foto_tmp,$foto_ext,$foto_lama,$prov,$kota);
 
 		}else{
@@ -251,7 +253,7 @@ if (isset($FuncProfile['kota'])) {
 									<fieldset class="form-group">
 										<div class="profile-card col-lg-6">
 										<div class="profile-card-photo">
-											<img src="media/Assets/foto/<?php if ($FuncProfile['foto'] != NULL) {echo $FuncProfile['foto'];}else{echo "no_picture.png";} ?>" alt=""/>
+											<img src="media/Assets/foto/<?php if ($FuncProfile['foto'] != NULL) {echo $FuncProfile['foto'];}else{echo "no_picture.png";} ?>" alt="" width="250px"/>
 										</div>
 										</div>
 										<input type="file" name="foto" class="form-control" id="exampleInput" placeholder="Nama Lengkap" >

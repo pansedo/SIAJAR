@@ -29,6 +29,7 @@ class Profile
         $sukses = $this -> table -> update(array("_id"=> new MongoId($id_profile)),array('$set'=>$update));
         if ($sukses) {
             # code...
+
             echo "<script type='text/javascript'> swal({
                                   title: 'Berhasil diperbarui!',
                                   text: 'Profil anda berhasil diperbarui',
@@ -36,10 +37,11 @@ class Profile
                                   timer: 2000
                                 }).then(
                                   function () {
-                                    document.location.href='profile.php';
+                                    document.location.href='setting.php';
+                                    alert('test');
                                   },
                                   function (dismiss) {
-                                    document.location.href='profile.php';
+                                    document.location.href='setting.php';
                                     if (dismiss === 'timer') {
                                       console.log('I was closed by the timer')
                                     }
@@ -53,10 +55,10 @@ class Profile
                                   timer: 2000
                                 }).then(
                                   function () {
-                                    document.location.href='profile.php';
+                                    document.location.href='setting.php';
                                   },
                                   function (dismiss) {
-                                    document.location.href='profile.php';
+                                    document.location.href='setting.php';
                                     if (dismiss === 'timer') {
                                       console.log('I was closed by the timer')
                                     }
@@ -73,6 +75,7 @@ class Profile
         $sukses = $this -> table -> update(array("_id"=> new MongoId($id_profile)),array('$set'=>$update));
         if ($sukses) {
             # code...
+          $_SESSION['lms_name'] = $nama;
             echo "<script type='text/javascript'> swal({
                                   title: 'Berhasil diperbarui!',
                                   text: 'Profil anda berhasil diperbarui',
@@ -80,10 +83,10 @@ class Profile
                                   timer: 2000
                                 }).then(
                                   function () {
-                                    document.location.href='profile.php';
+                                    document.location.href='setting.php';
                                   },
                                   function (dismiss) {
-                                    document.location.href='profile.php';
+                                    document.location.href='setting.php';
                                     if (dismiss === 'timer') {
                                       console.log('I was closed by the timer')
                                     }
@@ -97,10 +100,10 @@ class Profile
                                   timer: 2000
                                 }).then(
                                   function () {
-                                    document.location.href='profile.php';
+                                    document.location.href='setting.php';
                                   },
                                   function (dismiss) {
-                                    document.location.href='profile.php';
+                                    document.location.href='setting.php';
                                     if (dismiss === 'timer') {
                                       console.log('I was closed by the timer')
                                     }
@@ -130,6 +133,7 @@ class Profile
                     $sukses=$this -> table -> update(array("_id"=> $id_profile),$update);
                     if ($sukses) {
                         # code...
+                      $_SESSION['lms_name'] = $nama;
                         echo "<script type='text/javascript'> swal({
                                   title: 'Berhasil diperbarui!',
                                   text: 'Kata Sandi anda berhasil diperbarui',
@@ -137,10 +141,10 @@ class Profile
                                   timer: 2000
                                 }).then(
                                   function () {
-                                    document.location.href='profile.php';
+                                    document.location.href='setting.php';
                                   },
                                   function (dismiss) {
-                                    document.location.href='profile.php';
+                                    document.location.href='setting.php';
                                     if (dismiss === 'timer') {
                                       console.log('I was closed by the timer')
                                     }
@@ -154,10 +158,10 @@ class Profile
                                   timer: 2000
                                 }).then(
                                   function () {
-                                    document.location.href='profile.php';
+                                    document.location.href='setting.php';
                                   },
                                   function (dismiss) {
-                                    document.location.href='profile.php';
+                                    document.location.href='setting.php';
                                     if (dismiss === 'timer') {
                                       console.log('I was closed by the timer')
                                     }
@@ -217,19 +221,19 @@ class Profile
             if(in_array(strtolower($foto_ext), $format))
             {
                 $foto_name    = substr(md5(time()), 0, 9).'_'.date('dmYHIs').".".$foto_ext;
-                $folderDest   ='Assets/foto/'.$foto_name;
+                $folderDest   ='media/Assets/foto/'.$foto_name;
 
                 // echo "move_uploaded_file($foto_tmp, $folderDest)";
-                if ($foto_size> 2000000) {
+                if ($foto_size< 2000000) {
                   # code...
                 
                 
                     if(move_uploaded_file($foto_tmp, $folderDest) )
                     {                    // mengganti File Permission
-                        $lama = 'Assets/foto/'.$foto_lama;
+                        $lama = 'media/Assets/foto/'.$foto_lama;
                         if (file_exists($lama)) {
                             # code...
-                            chmod('Assets/foto/', 0777);
+                            chmod('media/Assets/foto/', 0777);
                             unlink($lama);
                         }
                         chmod($folderDest, 0744);
