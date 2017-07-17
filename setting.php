@@ -8,9 +8,9 @@ $classProfile = new Profile();
 $FuncProfile = $classProfile->GetData($_SESSION['lms_id']);
 $ProvkotClass = new Provkot();
 $listProvinsi = $ProvkotClass->getListProv();
-if (isset($FuncProfile['kota'])) {
-	# code...
-	$getKota = $ProvkotClass->getKota($FuncProfile['kota']);
+if (isset($FuncProfile['kota']) && !empty($FuncProfile['kota'])) {
+	$getKota = $ProvkotClass->getKota((int)$FuncProfile['kota']);
+	$asalKota = $getKota['nama_kab_kot'];
 }
 
 
@@ -164,26 +164,34 @@ if (isset($FuncProfile['kota'])) {
 						<section class="box-typical">
 							<header class="box-typical-header-sm bordered">Info</header>
 							<div class="box-typical-inner">
+								<?php echo (isset($userProfil['kota']) && !empty($userProfil['kota'])) ? '
 								<p class="line-with-icon">
 									<i class="font-icon font-icon-pin-2"></i>
-									Kota Bandung
-								</p>
+									<a href="#">'.$asalKota.'</a>
+								</p>' : '';
+								?>
+								<?php echo (isset($userProfil['sekolah']) && !empty($userProfil['sekolah'])) ? '
 								<p class="line-with-icon">
 									<i class="font-icon font-icon-users-two"></i>
-									<a href="#"> <?=$userProfil['sekolah']?></a>
-								</p>
+									<a href="#"> '.$userProfil['sekolah'].'</a>
+								</p>' : '';
+								?>
 								<p class="line-with-icon">
 									<i class="font-icon font-icon-user"></i>
 									<?=ucfirst($_SESSION['lms_status'])?>
 								</p>
+								<?php echo (isset($userProfil['sosmed']['facebook']) && !empty($userProfil['sosmed']['facebook'])) ? '
 								<p class="line-with-icon">
 									<i class="font-icon font-icon-facebook"></i>
-									<a href="#"> <?=$userProfil['sosmed']['facebook']?></a>
-								</p>
+									<a href="#"> '.$userProfil['sosmed']['facebook'].'</a>
+								</p>' : '';
+								?>
+								<?php echo (isset($userProfil['sosmed']['website']) && !empty($userProfil['sosmed']['website'])) ? '
 								<p class="line-with-icon">
 									<i class="font-icon font-icon-earth"></i>
-									<a href="#"> <?=$userProfil['sosmed']['website']?></a>
-								</p>
+									<a href="#"> '.$userProfil['sosmed']['website'].'</a>
+								</p>' : '';
+								?>
 								<p class="line-with-icon">
 									<i class="font-icon font-icon-calend"></i>
 									Bergabung <?=selisih_waktu($userProfil['date_created'])?>
@@ -302,7 +310,7 @@ if (isset($FuncProfile['kota'])) {
 									<fieldset class="form-group">
 										<label class="form-label semibold" for="exampleInput">Provinsi</label>
 										<select id="prov" name="provinsi" class="form-control">
-											<option value="">--->Pilih Salah Satu<--- </option>
+											<option value="">Pilih Provinsi</option>
 											<?php
 											foreach ($listProvinsi as $data) {?>
 											<option value="<?=$data['id_provinsi']?>" <?php if (isset($FuncProfile['provinsi'])){ if ($data['id_provinsi'] == $FuncProfile['provinsi']) { echo "selected";} } ?>> <?=$data['nama_provinsi']?></option>
@@ -315,7 +323,7 @@ if (isset($FuncProfile['kota'])) {
 									<fieldset class="form-group">
 										<label class="form-label semibold" for="exampleInputEmail1">Kabupaten/Kota</label>
 										<select id="kota" name="kota" class="form-control">
-											<option value="">Pilih Salah Satu </option>
+											<option value="">Pilih Provinsi dahulu</option>
 											<?php
 												if (isset($FuncProfile['kota'])) {
 													$getKota = $ProvkotClass->getKota((int)$FuncProfile['kota']);

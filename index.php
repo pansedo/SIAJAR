@@ -4,7 +4,13 @@ require("includes/header-menu.php");
 
 $userClass	= new User();
 $profilClass = new Profile();
+$ProvkotClass = new Provkot();
+
 $userProfil	= $userClass->GetData($_SESSION['lms_id']);
+if (isset($userProfil['kota']) || !empty($userProfil['kota'])) {
+	$getKota = $ProvkotClass->getKota((int)$userProfil['kota']);
+	$asalKota = $getKota['nama_kab_kot'];
+}
 ?>
 
 	<div class="page-content">
@@ -92,26 +98,34 @@ $userProfil	= $userClass->GetData($_SESSION['lms_id']);
 						<section class="box-typical">
 							<header class="box-typical-header-sm bordered">Info</header>
 							<div class="box-typical-inner">
+								<?php echo (isset($userProfil['kota']) && !empty($userProfil['kota'])) ? '
 								<p class="line-with-icon">
 									<i class="font-icon font-icon-pin-2"></i>
-									Kota Bandung
-								</p>
+									<a href="#">'.$asalKota.'</a>
+								</p>' : '';
+								?>
+								<?php echo (isset($userProfil['sekolah']) && !empty($userProfil['sekolah'])) ? '
 								<p class="line-with-icon">
 									<i class="font-icon font-icon-users-two"></i>
-									<a href="#"> <?=$userProfil['sekolah']?></a>
-								</p>
+									<a href="#"> '.$userProfil['sekolah'].'</a>
+								</p>' : '';
+								?>
 								<p class="line-with-icon">
 									<i class="font-icon font-icon-user"></i>
 									<?=ucfirst($_SESSION['lms_status'])?>
 								</p>
+								<?php echo (isset($userProfil['sosmed']['facebook']) && !empty($userProfil['sosmed']['facebook'])) ? '
 								<p class="line-with-icon">
 									<i class="font-icon font-icon-facebook"></i>
-									<a href="#"> <?=$userProfil['sosmed']['facebook']?></a>
-								</p>
+									<a href="#"> '.$userProfil['sosmed']['facebook'].'</a>
+								</p>' : '';
+								?>
+								<?php echo (isset($userProfil['sosmed']['website']) && !empty($userProfil['sosmed']['website'])) ? '
 								<p class="line-with-icon">
 									<i class="font-icon font-icon-earth"></i>
-									<a href="#"> <?=$userProfil['sosmed']['website']?></a>
-								</p>
+									<a href="#"> '.$userProfil['sosmed']['website'].'</a>
+								</p>' : '';
+								?>
 								<p class="line-with-icon">
 									<i class="font-icon font-icon-calend"></i>
 									Bergabung <?=selisih_waktu($userProfil['date_created'])?>
