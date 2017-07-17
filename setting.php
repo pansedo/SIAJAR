@@ -37,13 +37,15 @@ if (isset($FuncProfile['kota'])) {
 			$foto_ext	= pathinfo($foto,PATHINFO_EXTENSION);
 			$foto_lama	= $FuncProfile['foto'];
 
+			// echo '<script>alert("'.$foto_size.'");</script>';
+
 			$classProfile->UpdateProfileFoto($id_profile, $password,$username,$nama,$email,$jenis_kelamin,$sekolah,$status,$foto,$foto_size,$foto_tmp,$foto_ext,$foto_lama,$prov,$kota);
-		
+
 		}else{
 			$foto = $FuncProfile['foto'];
 			$classProfile->UpdateProfile($id_profile, $password,$username,$nama,$email,$jenis_kelamin,$sekolah,$status,$foto,$prov,$kota);
 		}
-			
+
 	}
 
 	if (isset($_POST['simpan_sosmed'])) {
@@ -238,7 +240,7 @@ if (isset($FuncProfile['kota'])) {
 								Kata Sandi
 							</a>
 						</li>
-						
+
 					</ul>
 				</div><!--.tabs-section-nav-->
 
@@ -251,11 +253,11 @@ if (isset($FuncProfile['kota'])) {
 									<fieldset class="form-group">
 										<div class="profile-card col-lg-6">
 										<div class="profile-card-photo">
-											<img src="media/Assets/foto/<?php if ($FuncProfile['foto'] != NULL) {echo $FuncProfile['foto'];}else{echo "no_picture.png";} ?>" alt=""/>
+											<img src="media/Assets/foto/<?php if ($FuncProfile['foto'] != NULL) {echo $FuncProfile['foto'];}else{echo "no_picture.png";} ?>" alt="" width="250px"/>
 										</div>
 										</div>
 										<input type="file" name="foto" class="form-control" id="exampleInput" placeholder="Nama Lengkap" >
-										
+
 									</fieldset>
 								</div>
 							</div>
@@ -273,7 +275,7 @@ if (isset($FuncProfile['kota'])) {
 										<input type="email" name="email" class="form-control" id="exampleInputEmail1" placeholder="Email" value="<?php echo $FuncProfile['email'];?>">
 									</fieldset>
 								</div>
-								
+
 							</div>
 							<div class="row">
 								<div class="col-lg-6">
@@ -284,7 +286,7 @@ if (isset($FuncProfile['kota'])) {
 											<option value="Laki-laki" <?php if ($FuncProfile['jk'] == "Laki-laki") { echo "selected";}?>>Laki-laki</option>
 											<option value="Perempuan" <?php if ($FuncProfile['jk'] == "Perempuan") { echo "selected";}?>>Perempuan</option>
 										</select>
-										
+
 									</fieldset>
 								</div>
 								<div class="col-lg-6">
@@ -293,7 +295,7 @@ if (isset($FuncProfile['kota'])) {
 										<input type="text" name="instansi" class="form-control" value="<?php echo $FuncProfile['sekolah'];?>"  placeholder="Instansi" >
 									</fieldset>
 								</div>
-								
+
 							</div>
 							<div class="row">
 								<div class="col-lg-6">
@@ -301,12 +303,12 @@ if (isset($FuncProfile['kota'])) {
 										<label class="form-label semibold" for="exampleInput">Provinsi</label>
 										<select id="prov" name="provinsi" class="form-control">
 											<option value="">--->Pilih Salah Satu<--- </option>
-											<?php 
+											<?php
 											foreach ($listProvinsi as $data) {?>
 											<option value="<?=$data['id_provinsi']?>" <?php if (isset($FuncProfile['provinsi'])){ if ($data['id_provinsi'] == $FuncProfile['provinsi']) { echo "selected";} } ?>> <?=$data['nama_provinsi']?></option>
 											<?php } ?>
 										</select>
-										
+
 									</fieldset>
 								</div>
 								<div class="col-lg-6">
@@ -323,7 +325,7 @@ if (isset($FuncProfile['kota'])) {
 										</select>
 									</fieldset>
 								</div>
-								
+
 							</div>
 							<button type="submit" name="simpan_profil" class="btn">Simpan</button>
 						</form>
@@ -338,7 +340,7 @@ if (isset($FuncProfile['kota'])) {
 						<div class="form-group">
 							<label class="form-label" for="hide-show-password">Facebook</label>
 							<div class="input-append input-group"><input type="text" name="facebook" class="form-control" value="<?php echo $FuncProfile['sosmed']['facebook'];?>" placeholder="fb.me/example"></div>
-						</div>						
+						</div>
 						<div class="form-group">
 							<label class="form-label" for="hide-show-password">Linkedin</label>
 							<div class="input-append input-group"><input type="text" name="linkedin" class="form-control" value="<?php echo $FuncProfile['sosmed']['linkedin'];?>" placeholder="linkedin.com/in/example"></div>
@@ -360,13 +362,13 @@ if (isset($FuncProfile['kota'])) {
 						<div class="form-group">
 							<label class="form-label" for="hide-show-password">Kata Sandi Baru</label>
 							<div class="input-append input-group"><input type="password" name="p_baru" class="form-control" placeholder="Kata Sandi Baru"></div>
-						</div>						
+						</div>
 						<div class="form-group">
 							<label class="form-label" for="hide-show-password">Ulangi Kata Sandi Baru</label>
 							<div class="input-append input-group"><input type="password" name="p_baru2" class="form-control" placeholder="Ulangi Kata Sandi Baru"></div>
 						</div>
 						<button type="submit" name="simpan_password" class="btn">Simpan</button>
-					</form>			
+					</form>
 					</div><!--.tab-pane-->
 				</div><!--.tab-content-->
 			</section>
@@ -384,7 +386,7 @@ if (isset($FuncProfile['kota'])) {
             $("#prov").change(function( event ) {
                 // alert( ""+ $(this).val());
                 $.ajax({
-                    type: "POST",           
+                    type: "POST",
                     url: "includes/option-kota.php",
                     data: { id: $(this).val() }
                 }).done(function( dt ) {
@@ -392,7 +394,7 @@ if (isset($FuncProfile['kota'])) {
                 });
             });
 
-            
+
 
         });
     </script>

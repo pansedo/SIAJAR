@@ -45,7 +45,7 @@ if(isset($method['action'])){
                 </form><!--.box-typical-->
                 <?php
                 foreach ($listTopik['data'] as $posting) {
-                    $image		= empty($posting['user_foto']) ? "<img src='assets/img/avatar-2-128.png' style='max-width: 75px; max-height: 75px;' />" : "<img src='".$infoUser['foto']."' style='max-width: 75px; max-height: 75px;' />" ;
+                    $image		= empty($posting['user_foto']) ? "<img src='assets/img/avatar-2-128.png' style='max-width: 75px; max-height: 75px;' />" : "<img src='".$posting['user_foto']."' style='max-width: 75px; max-height: 75px;' />" ;
                     $listReply	= $diskusiClass->getListReply($posting['_id']);
                 ?>
                     <article class="box-typical profile-post <?php echo ($posting['_id'] == $newID) ? 'new': '' ?>" style="border: 2px solid #d8e2e7">

@@ -90,8 +90,8 @@
 						<div class="profile-statistic tbl">
 							<div class="tbl-row">
 								<div class="tbl-cell">
-									<b><?php echo $getMediaCount; ?></b>
-									Media Bahan Ajar
+									<?php if (isset($getMediaCount)){ echo '<b>'. $getMediaCount.' 
+									Media Bahan Ajar</b>';}?>
 								</div>
 							</div>
 						</div>

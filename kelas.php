@@ -375,7 +375,7 @@ if(isset($_POST['updateKelas'])){
 									// print_r($listPosting['data']);
 									// echo "</pre>";
 									foreach ($listPosting['data'] as $posting) {
-										$image		= empty($posting['user_foto']) ? "<img src='assets/img/avatar-2-128.png' style='max-width: 75px; max-height: 75px;' />" : "<img src='".$infoUser['foto']."' style='max-width: 75px; max-height: 75px;' />" ;
+										$image		= empty($posting['user_foto']) ? "<img src='assets/img/avatar-2-128.png' style='max-width: 75px; max-height: 75px;' />" : "<img src='media/Assets/foto/".$posting['user_foto']."' style='max-width: 75px; max-height: 75px;' />" ;
 										echo '	<article class="box-typical profile-post">
 													<div class="profile-post-header">
 														<div class="user-card-row">

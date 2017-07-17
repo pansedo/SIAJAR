@@ -196,7 +196,7 @@ if(isset($_POST['updateMapel'])){
 	</div><!--.modal-->
 
 	<div class="page-content">
-		<div class="profile-header-photo">
+		<div class="profile-header-photo" style="background-image: url('assets/img/Artboard 1.png');">
 			<div class="profile-header-photo-in">
 				<div class="tbl-cell">
 					<div class="info-block">
@@ -206,8 +206,8 @@ if(isset($_POST['updateMapel'])){
 									<div class="tbl info-tbl">
 										<div class="tbl-row">
 											<div class="tbl-cell">
-												<p class="title"><?=$infoMapel['nama']?></p>
-												<p>Mata Pelajaran</p>
+												<p class="title">Mata Pelajaran <?=$infoMapel['nama']?></p>
+												<p><?=$infoKelas['nama']?></p>
 											</div>
 											<div class="tbl-cell tbl-cell-stat">
 												<div class="inline-block">
@@ -310,7 +310,7 @@ if(isset($_POST['updateMapel'])){
 													</div>
 													<div class="tbl-cell">
 														<p>
-															<a href="modul.php?modul=<?=$modul['_id']?>" class="semibold"><?=''.$no.'. '.$modul['nama']?></a>
+															<a class="semibold" title="<?=$modul['nama']?>" data-toggle="popover" data-placement="bottom" data-trigger="hover" data-content="Silahkan tekan tombol 'Buka Materi' untuk melihat materi yang tersedia."><?=''.$no.'. '.$modul['nama']?></a>
 														</p>
 														<p>
 															<!-- <?=selisih_waktu($modul['date_created'])?> -->
@@ -320,10 +320,9 @@ if(isset($_POST['updateMapel'])){
 														</p>
 													</div>
 													<div class="tbl-cell" align="right">
-														<a href="modul.php?modul=<?=$modul['_id']?>" title="Buka Materi" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Silahkan Klik 'Buka Materi' untuk melihat materi yang tersedia.">
+														<a href="modul.php?modul=<?=$modul['_id']?>" onclick="cModul('<?=$modul['_id']?>');" title="Buka Materi" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Silahkan tekan tombol 'Buka Materi' untuk melihat materi yang tersedia.">
 															<span class="tb-lg"><button type="button" class="btn btn-sm btn-rounded" name="button"><i class="fa fa-unlock"></i> Buka Materi</button></span>
 															<span class="tb-sm"><button type="button" class="btn btn-sm btn-rounded" name="button"><i class="fa fa-unlock"></i></button></span>
-
 														</a>
 													</div>
 												</div>
@@ -469,6 +468,20 @@ if(isset($_POST['updateMapel'])){
 			  	},
 				error: function () {
 					swal("Gagal!", "Data tidak dapat diambil!", "error");
+				}
+			});
+      	};
+
+		function cModul(modul){
+			$.ajax({
+				type: 'POST',
+				url: 'url-API/Kelas/Modul/',
+				data: {"action": "updtNMateri", 's':'<?=$_SESSION['lms_id']?>', 'i':modul, 'n':'100'},
+				success: function(res) {
+					console.log(res.response+' '+res.message);
+			  	},
+				error: function () {
+					console.log('Terjadi Kesalahan, Gagal melakukan aksi!');
 				}
 			});
       	};
