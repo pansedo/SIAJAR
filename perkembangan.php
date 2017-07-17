@@ -149,12 +149,15 @@ if(isset($_POST['updateMapel'])){
                     							<label class="form-control-label" for="modulFilter">Modul</label>
                                                 <select class="form-control" name="modulFilter" id="modulFilter" required>
                                                 <?php
+
                                                     $jmlhModul = $listModul->count();
                                                     if ($jmlhModul > 0) {
-                                                            echo "<option value=''>-- Pilih Modul --</option>";
+                                                        echo "<option value=''>-- Pilih Modul --</option>";
                                                         foreach ($listModul as $data) {
                                                             echo "<option value='$data[_id]'>$data[nama]</option>";
                                                         }
+                                                    }else {
+                                                        echo "<option value=''>-- Belum Tersedia --</option>";
                                                     }
                                                 ?>
                                                 </select>
