@@ -139,7 +139,7 @@ if(isset($_POST['updateMapel'])){
 				<div class="col-xl-9 col-lg-8">
 					<section class="card card-default">
 						<div class="card-block">
-                            <h5 class="with-border"><b>Perkembangan Siswa / <a href=""><?=$infoKelas['nama']?></a></b></h5>
+                            <h5 class="with-border"><b>Perkembangan Akademik / <a href=""><?=$infoKelas['nama']?></a></b></h5>
                             <div class="col-md-12">
                                 <h6>Pilah Berdasarkan : </h6>
                                 <form id="form_tambah" method="POST">
@@ -241,10 +241,10 @@ if(isset($_POST['updateMapel'])){
                                                     <th class="text-center">Nilai Membaca Materi</th>';
                             if ($jmlhTugas > 0) {
                                 foreach ($infoTugas as $value) {
-                                    $table  .= '    <th class="text-center">'.$value['nama'].'</th>';
+                                    $table  .= '    <th class="text-center">Nilai Tugas <br>'.$value['nama'].'</th>';
                                 }
                             }
-                $table  .= '                        <th class="text-center">Nilai Ujian <br> '.@$ujian[0]['nama'].'</th>
+                $table  .= '                        <th class="text-center">Nilai Evaluasi <br> '.@$ujian[0]['nama'].'</th>
                                                 </tr>
                                             </thead>
                                             <tbody>';

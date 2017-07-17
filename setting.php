@@ -114,7 +114,7 @@ if (isset($FuncProfile['kota']) && !empty($FuncProfile['kota'])) {
 					<aside id="menu-fixed2" class="profile-side">
 						<section class="box-typical profile-side-user">
 							<button type="button" class="avatar-preview avatar-preview-128">
-								<img src="assets/img/avatar-1-256.png" alt=""/>
+								<img src="media/Assets/foto/<?php if ($FuncProfile['foto'] != NULL) {echo $FuncProfile['foto'];}else{echo "no_picture.png";} ?>" alt=""/>
 							</button>
 							<button type="button" id="ohyeah" class="btn btn-rounded"><?=$_SESSION['lms_status'] == 'guru' ? 'Kirim Pesan' : '<span data-toggle="modal" data-target="#joinKelas"><i class="font-icon font-icon-user"></i> Gabung Kelas</span>'; ?></button>
 
@@ -259,10 +259,8 @@ if (isset($FuncProfile['kota']) && !empty($FuncProfile['kota'])) {
 							<div class="row">
 								<div class="col-lg-6">
 									<fieldset class="form-group">
-										<div class="profile-card col-lg-6">
-										<div class="profile-card-photo">
-											<img src="media/Assets/foto/<?php if ($FuncProfile['foto'] != NULL) {echo $FuncProfile['foto'];}else{echo "no_picture.png";} ?>" alt="" width="250px"/>
-										</div>
+										<div class="profile-card-photo" style="text-align: center;">
+											<img class="m-b" src="media/Assets/foto/<?php if ($FuncProfile['foto'] != NULL) {echo $FuncProfile['foto'];}else{echo "no_picture.png";} ?>" alt="" style="max-width: 250px; max-height: 250px;" />
 										</div>
 										<input type="file" name="foto" class="form-control" id="exampleInput" placeholder="Nama Lengkap" >
 
@@ -274,13 +272,13 @@ if (isset($FuncProfile['kota']) && !empty($FuncProfile['kota'])) {
 									 <fieldset class="form-group">
 										<label class="form-label semibold" for="exampleInputEmail1">Nama Lengkap</label>
 										<input type="text" name="nama" class="form-control" id="exampleInput" placeholder="Nama Lengkap" value="<?php echo $FuncProfile['nama'];?>">
-										<small class="text-muted">We'll never share your email with anyone else.</small>
 									</fieldset>
 								</div>
 								<div class="col-lg-6">
 									<fieldset class="form-group">
 										<label class="form-label semibold" for="exampleInputEmail1">Email</label>
 										<input type="email" name="email" class="form-control" id="exampleInputEmail1" placeholder="Email" value="<?php echo $FuncProfile['email'];?>">
+										<small class="text-muted">Kita tidak akan menyebarkan surel anda kepada siapapun.</small>
 									</fieldset>
 								</div>
 
@@ -300,7 +298,7 @@ if (isset($FuncProfile['kota']) && !empty($FuncProfile['kota'])) {
 								<div class="col-lg-6">
 									<fieldset class="form-group">
 										<label class="form-label semibold" for="exampleInputEmail1">Instansi/Sekolah</label>
-										<input type="text" name="instansi" class="form-control" value="<?php echo $FuncProfile['sekolah'];?>"  placeholder="Instansi" >
+										<input type="text" name="instansi" class="form-control" value="<?php echo $FuncProfile['sekolah'];?>"  placeholder="Nama Instansi/Sekolah" >
 									</fieldset>
 								</div>
 

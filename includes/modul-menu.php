@@ -26,7 +26,7 @@
 				<li class="blue <?php if($menuModul==4){echo 'opened';} ?>">
 					<a href="create-quiz.php?modul=<?=$_GET['modul']?>">
 						<i class="font-icon font-icon-notebook <?php if($menuModul==4){echo 'active';} ?>"></i>
-						<span class="lbl">Ujian</span>
+						<span class="lbl">Evaluasi</span>
 					</a>
 				</li>
 				<li class="blue <?php if($menuModul==5){echo 'opened';} ?>">
