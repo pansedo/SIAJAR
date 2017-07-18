@@ -1,7 +1,7 @@
 <?php
 session_start();
 require("../../../../setting/connection.php");
-require("../../../../setting/controller/diskusi.php");
+require("../../../../setting/controller/Diskusi.php");
 
 $method	        = $_REQUEST;
 $table          = $db->diskusi_modul;

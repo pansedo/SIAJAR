@@ -164,22 +164,23 @@ class Profile
             if(in_array(strtolower($foto_ext), $format))
             {
                 $foto_name    = substr(md5(time()), 0, 9).'_'.date('dmYHIs').".".$foto_ext;
+                $folderRoot   ='media/Assets/foto/';
                 $folderDest   ='media/Assets/foto/'.$foto_name;
 
                 // echo "move_uploaded_file($foto_tmp, $folderDest)";
                 if ($foto_size< 2000000) {
                   # code...
-
+				  chmod($folderRoot, 0777);
 
                     if(move_uploaded_file($foto_tmp, $folderDest) )
                     {                    // mengganti File Permission
-                        $lama = 'media/Assets/foto/'.$foto_lama;
+                        $lama = $folderRoot.$foto_lama;
                         if (file_exists($lama)) {
                             # code...
-                            chmod('media/Assets/foto/', 0777);
+                            chmod($folderRoot, 0777);
                             unlink($lama);
                         }
-                        chmod($folderDest, 0744);
+                        chmod($folderRoot, 0744);
 
                         // Update Data
 
@@ -217,18 +218,18 @@ class Profile
                     {
                         echo "<script type='text/javascript'> swal({
                                   title: 'Gagal diunggah!',
-                                  text: 'Fotp profil anda gagal diunggah cek kembali ukuran file dan koneksi internet anda!',
-                                  type: 'error',
-                                  timer: 2000
+                                  text: 'Foto profil anda gagal diunggah cek kembali ukuran file dan koneksi internet anda!',
+                                  type: 'error'
+
                                 }, function () {
-                                    location.href='setting.php';
+
 								});
                 </script>";
                     }
                   }else{
                     echo "<script type='text/javascript'> swal({
                                   title: 'Gagal diunggah!',
-                                  text: 'Fotp profil anda gagal diunggah maksimal ukuran 2Mb !',
+                                  text: 'Foto profil anda gagal diunggah maksimal ukuran 2Mb !',
                                   type: 'error',
                                   timer: 2000
                                 }, function () {
