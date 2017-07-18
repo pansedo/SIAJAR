@@ -19,12 +19,12 @@ class Profile
         $criteria = array('_id' => new MongoId($id_profile));
 		$getprofile = $this -> table -> findOne($criteria);
 
-		return $getprofile; 
+		return $getprofile;
 	}
 
     public function UpdateSosmed($id_profile, $website,$facebook,$linkedin,$twitter){
         global $db;
-        
+
         $update = array("sosmed.website"=>$website,"sosmed.facebook"=>$facebook, "sosmed.linkedin"=>$linkedin,"date_modified"=>date('Y-m-d H:i:s'));
         $sukses = $this -> table -> update(array("_id"=> new MongoId($id_profile)),array('$set'=>$update));
         if ($sukses) {
@@ -35,17 +35,9 @@ class Profile
                                   text: 'Profil anda berhasil diperbarui',
                                   type: 'success',
                                   timer: 2000
-                                }).then(
-                                  function () {
-                                    document.location.href='setting.php';
-                                    alert('test');
-                                  },
-                                  function (dismiss) {
-                                    document.location.href='setting.php';
-                                    if (dismiss === 'timer') {
-                                      console.log('I was closed by the timer')
-                                    }
-                                  })
+							  	}, function () {
+                                    location.href='setting.php';
+								});
                 </script>";
         }else{
             echo "<script type='text/javascript'> swal({
@@ -53,24 +45,17 @@ class Profile
                                   text: 'Profil anda gagal diperbarui',
                                   type: 'error',
                                   timer: 2000
-                                }).then(
-                                  function () {
-                                    document.location.href='setting.php';
-                                  },
-                                  function (dismiss) {
-                                    document.location.href='setting.php';
-                                    if (dismiss === 'timer') {
-                                      console.log('I was closed by the timer')
-                                    }
-                                  })
+                                }, function () {
+                                    location.href='setting.php';
+								});
                 </script>";
         }
-        
+
     }
 
     public function UpdateProfile($id_profile, $password,$username,$nama,$email,$jenis_kelamin,$sekolah,$status,$foto,$prov,$kota){
         global $db;
-        
+
         $update = array("username"=>$username,"password"=>$password, "nama"=>$nama,  "email"=>$email, "jk"=>$jenis_kelamin, "sekolah"=>$sekolah, "status"=>$status, "foto"=>$foto,"date_modified"=>date('Y-m-d H:i:s'),"provinsi"=>$prov,"kota"=>$kota);
         $sukses = $this -> table -> update(array("_id"=> new MongoId($id_profile)),array('$set'=>$update));
         if ($sukses) {
@@ -81,16 +66,9 @@ class Profile
                                   text: 'Profil anda berhasil diperbarui',
                                   type: 'success',
                                   timer: 2000
-                                }).then(
-                                  function () {
-                                    document.location.href='setting.php';
-                                  },
-                                  function (dismiss) {
-                                    document.location.href='setting.php';
-                                    if (dismiss === 'timer') {
-                                      console.log('I was closed by the timer')
-                                    }
-                                  })
+                                }, function () {
+                                    location.href='setting.php';
+								});
                 </script>";
         }else{
             echo "<script type='text/javascript'> swal({
@@ -98,19 +76,12 @@ class Profile
                                   text: 'Profil anda gagal diperbarui',
                                   type: 'error',
                                   timer: 2000
-                                }).then(
-                                  function () {
-                                    document.location.href='setting.php';
-                                  },
-                                  function (dismiss) {
-                                    document.location.href='setting.php';
-                                    if (dismiss === 'timer') {
-                                      console.log('I was closed by the timer')
-                                    }
-                                  })
+                                }, function () {
+                                    location.href='setting.php';
+								});
                 </script>";
         }
-        
+
     }
 
     public function CheckPassword($id_profile, $password, $password_baru, $pasword_confirm,$username,$nama,$email,$jenis_kelamin,$sekolah,$status,$foto){
@@ -122,7 +93,7 @@ class Profile
             if(password_verify($password,$hash)){
                  if ($password_baru == $pasword_confirm) {
                      # code...
-                   
+
                     $options = [
                         'cost' => 12,
                     ];
@@ -139,16 +110,9 @@ class Profile
                                   text: 'Kata Sandi anda berhasil diperbarui',
                                   type: 'success',
                                   timer: 2000
-                                }).then(
-                                  function () {
-                                    document.location.href='setting.php';
-                                  },
-                                  function (dismiss) {
-                                    document.location.href='setting.php';
-                                    if (dismiss === 'timer') {
-                                      console.log('I was closed by the timer')
-                                    }
-                                  })
+                                }, function () {
+                                    location.href='setting.php';
+								});
                             </script>";
                     }else{
                         echo "<script type='text/javascript'> swal({
@@ -156,16 +120,9 @@ class Profile
                                   text: 'Kata Sandi anda gagal diperbarui',
                                   type: 'error',
                                   timer: 2000
-                                }).then(
-                                  function () {
-                                    document.location.href='setting.php';
-                                  },
-                                  function (dismiss) {
-                                    document.location.href='setting.php';
-                                    if (dismiss === 'timer') {
-                                      console.log('I was closed by the timer')
-                                    }
-                                  })
+                                }, function () {
+                                    location.href='setting.php';
+								});
                             </script>";
                     }
 
@@ -175,16 +132,9 @@ class Profile
                                   text: 'Kata sandi baru yang anda masukan tidak sama.',
                                   type: 'error',
                                   timer: 2000
-                                }).then(
-                                  function () {
-                                    // document.location.href='setting.php';
-                                  },
-                                  function (dismiss) {
-                                    // document.location.href='setting.php';
-                                    if (dismiss === 'timer') {
-                                      console.log('I was closed by the timer')
-                                    }
-                                  })
+                                }, function () {
+                                    location.href='setting.php';
+								});
                 </script>";
                  }
             }else{
@@ -193,16 +143,9 @@ class Profile
                                   text: 'Kata sandi anda tidak sesuai.',
                                   type: 'error',
                                   timer: 2000
-                                }).then(
-                                  function () {
-                                    // document.location.href='setting.php';
-                                  },
-                                  function (dismiss) {
-                                    // document.location.href='setting.php';
-                                    if (dismiss === 'timer') {
-                                      console.log('I was closed by the timer')
-                                    }
-                                  })
+                                }, function () {
+                                    location.href='setting.php';
+								});
                 </script>";
             }
         }else{
@@ -221,45 +164,40 @@ class Profile
             if(in_array(strtolower($foto_ext), $format))
             {
                 $foto_name    = substr(md5(time()), 0, 9).'_'.date('dmYHIs').".".$foto_ext;
+                $folderRoot   ='media/Assets/foto/';
                 $folderDest   ='media/Assets/foto/'.$foto_name;
 
                 // echo "move_uploaded_file($foto_tmp, $folderDest)";
                 if ($foto_size< 2000000) {
                   # code...
-                
-                
+				  chmod($folderRoot, 0777);
+
                     if(move_uploaded_file($foto_tmp, $folderDest) )
                     {                    // mengganti File Permission
-                        $lama = 'media/Assets/foto/'.$foto_lama;
+                        $lama = $folderRoot.$foto_lama;
                         if (file_exists($lama)) {
                             # code...
-                            chmod('media/Assets/foto/', 0777);
+                            chmod($folderRoot, 0777);
                             unlink($lama);
                         }
-                        chmod($folderDest, 0744);
+                        chmod($folderRoot, 0744);
 
                         // Update Data
-                        
+
                         $update = array("username"=>$username,"password"=>$password, "nama"=>$nama,  "email"=>$email, "jk"=>$jenis_kelamin, "sekolah"=>$sekolah, "status"=>$status, "foto"=>$foto_name,"provinsi"=>$prov,"kota"=>$kota);
                         $sukses = $this -> table -> update(array("_id"=> new MongoId($id_profile)),array('$set'=>$update));
 
                         if ($sukses) {
                             # code...
-                            echo "<script type='text/javascript'> swal({
-                                                                      title: 'Berhasil diperbarui!',
-                                                                      text: 'Profil anda berhasil diperbarui',
-                                                                      type: 'success',
-                                                                      timer: 2000
-                                                                    }).then(
-                                                                      function () {
-                                                                        document.location.href='setting.php';
-                                                                      },
-                                                                      function (dismiss) {
-                                                                        document.location.href='setting.php';
-                                                                        if (dismiss === 'timer') {
-                                                                          console.log('I was closed by the timer')
-                                                                        }
-                                                                      })
+                            echo "<script type='text/javascript'>
+								swal({
+                                      title: 'Berhasil diperbarui!',
+                                      text: 'Profil anda berhasil diperbarui',
+                                      type: 'success',
+                                      timer: 2000
+                                    }, function () {
+	                                    location.href='setting.php';
+									});
                                 </script>";
                         }
                         else
@@ -269,56 +207,35 @@ class Profile
                                   text: 'Profil anda gagal diperbarui',
                                   type: 'error',
                                   timer: 2000
-                                }).then(
-                                  function () {
-                                    document.location.href='setting.php';
-                                  },
-                                  function (dismiss) {
-                                    document.location.href='setting.php';
-                                    if (dismiss === 'timer') {
-                                      console.log('I was closed by the timer')
-                                    }
-                                  })
+                                }, function () {
+                                    location.href='setting.php';
+								});
                 </script>";
                         }
-                      
+
                     }
                     else
                     {
                         echo "<script type='text/javascript'> swal({
                                   title: 'Gagal diunggah!',
-                                  text: 'Fotp profil anda gagal diunggah cek kembali ukuran file dan koneksi internet anda!',
-                                  type: 'error',
-                                  timer: 2000
-                                }).then(
-                                  function () {
-                                    // document.location.href='setting.php';
-                                  },
-                                  function (dismiss) {
-                                    // document.location.href='setting.php';
-                                    if (dismiss === 'timer') {
-                                      console.log('I was closed by the timer')
-                                    }
-                                  })
-                </script>";    
+                                  text: 'Foto profil anda gagal diunggah cek kembali ukuran file dan koneksi internet anda!',
+                                  type: 'error'
+
+                                }, function () {
+
+								});
+                </script>";
                     }
                   }else{
                     echo "<script type='text/javascript'> swal({
                                   title: 'Gagal diunggah!',
-                                  text: 'Fotp profil anda gagal diunggah maksimal ukuran 2Mb !',
+                                  text: 'Foto profil anda gagal diunggah maksimal ukuran 2Mb !',
                                   type: 'error',
                                   timer: 2000
-                                }).then(
-                                  function () {
-                                    // document.location.href='setting.php';
-                                  },
-                                  function (dismiss) {
-                                    // document.location.href='setting.php';
-                                    if (dismiss === 'timer') {
-                                      console.log('I was closed by the timer')
-                                    }
-                                  })
-                </script>";    
+                                }, function () {
+                                    location.href='setting.php';
+								});
+                </script>";
                   }
             }
             else
@@ -328,21 +245,14 @@ class Profile
                                   text: 'Jenis File tidak didukung!',
                                   type: 'error',
                                   timer: 2000
-                                }).then(
-                                  function () {
-                                    // document.location.href='setting.php';
-                                  },
-                                  function (dismiss) {
-                                    // document.location.href='setting.php';
-                                    if (dismiss === 'timer') {
-                                      console.log('I was closed by the timer')
-                                    }
-                                  })
+                                }, function () {
+                                    location.href='setting.php';
+								});
                 </script>";
             }
-               
+
     }
-            
+
             // if($surat_rujukan['name'] == ""){
             //     $ext_2 = "pdf";
             //     $surat_rujukan_size = 100;

@@ -3,15 +3,15 @@
 // spl_autoload_register(function ($class) {
 //   include '../setting/controller/' .$class . '.php';
 
-  include '../setting/controller/provkot.php';
+  include '../setting/controller/Provkot.php';
 // });
-  
+
 	$provkotClass = new Provkot();
 
     $id	= $_POST['id'];
 ?>
 <script type="text/javascript">//alert('<?=$id?>')</script>
-<option value="">-->Pilih Kabupaten/Kota<--</option>
+<option value="">Pilih Kabupaten/Kota</option>
 <?php
 	// $listKota = $provkotClass->getListProv();
 	$listKota = $provkotClass->getListKotabyProv((int)$id);

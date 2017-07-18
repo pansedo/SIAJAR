@@ -15,142 +15,84 @@ $infoMapel		= $mapelClass->getInfoMapel($_GET['id']);
 $listModul		= $modulClass->getListbyMapel($_GET['id']);
 $infoKelas		= $kelasClass->getInfoKelas($infoMapel['id_kelas']);
 
-if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
-    $judul  = mysql_escape_string(trim($_POST['judul']));
-    $isi    = $_POST['isi_materi'];
-    $stat   = $_POST['publikasi'];
-	if(isset($_POST['addMateri'])){
-		$rest   = $materiClass->addMateri($_GET['modul'], $judul, $isi, $stat, $_SESSION['lms_id']);
-	}else{
-        // $rest['status'] = "Success";
-		$rest 	= $materiClass->updateMateri($_GET['materi'], $judul, $isi, $stat);
-	}
+$hakKelas		= $kelasClass->getKeanggotaan($infoMapel['id_kelas'], $_SESSION['lms_id']);
+if(!$hakKelas['status']){
+	echo "<script>
+			swal({
+				title: 'Maaf!',
+				text: 'Anda tidak terdaftar pada Kelas / Kelas tidak tsb tidak ada.',
+				type: 'error'
+			}, function() {
+				 window.location = 'index.php';
+			});
+		</script>";
+		die();
+}
 
-	if ($rest['status'] == "Success") {
-        // echo "<pre>";
-        // print_r($_POST);
-        // echo "</pre>";
-		echo "<script>alert('".$rest['status']."'); document.location='materi.php?modul=".$_GET['modul']."'</script>";
-	}else{
-		echo "<script>alert('Gagal Update')</script>";
+if(isset($_POST['updateMapel'])){
+	if ($hakKelas['status'] == 1 || $hakKelas['status'] == 2) {
+		$nama	= mysql_escape_string($_POST['namaMapelupdate']);
+		$rest	= $mapelClass->updateMapel($nama, $_GET['id']);
+
+		echo	"<script>
+					swal({
+						title: '$rest[judul]',
+						text: '$rest[message]',
+						type: '$rest[status]'
+					}, function() {
+						 window.location = 'perkembangan.php?id=$rest[IDMapel]';
+					});
+				</script>";
+	}else {
+		echo	"<script>
+					swal({
+						title: 'Maaf!',
+						text: 'Anda tidak memiliki kewenangan dalam merubah Pengaturan kelas.',
+						type: 'error'
+					}, function() {
+						 window.location = 'index.php';
+					});
+				</script>";
 	}
 }
+
 
 ?>
 <link rel="stylesheet" href="./assets/css/separate/pages/others.min.css">
 
-	<div class="modal fade"
-		 id="updateMapel"
-		 tabindex="-1"
-		 role="dialog"
-		 aria-labelledby="updateMapelLabel"
-		 aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<form method="POST">
-				<div class="modal-header">
-					<button type="button" class="modal-close" data-dismiss="modal" aria-label="Close">
-						<i class="font-icon-close-2"></i>
-					</button>
-					<h4 class="modal-title" id="updateMapelLabel">Pengaturan Mata Pelajaran</h4>
-				</div>
-				<div class="modal-body">
-					<div class="form-group row">
-						<label for="namaMapelupdate" class="col-md-3 form-control-label">Mata Pelajaran</label>
-						<div class="col-md-9">
-							<input type="hidden" class="form-control" name="idMapelupdate" id="idMapelupdate"  />
-							<input type="text" class="form-control" name="namaMapelupdate" id="namaMapelupdate" placeholder="Nama Mata Pelajaran" />
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-rounded btn-danger pull-left" onclick="" name="hapusMapel"><i class="font-icon-trash"></i> Hapus Mata Pelajaran</button>
-					<button type="submit" class="btn btn-rounded btn-primary" name="updateMapel" value="send" >Simpan</button>
-					<button type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Tutup</button>
-				</div>
-				</form>
-			</div>
-		</div>
-	</div><!--.modal-->
-
-	<div class="modal fade"
-		 id="addModul"
-		 tabindex="-1"
-		 role="dialog"
-		 aria-labelledby="addModulLabel"
-		 aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<form method="POST" id="addModulForm">
-				<div class="modal-header">
-					<button type="button" class="modal-close" data-dismiss="modal" aria-label="Close">
-						<i class="font-icon-close-2"></i>
-					</button>
-					<h4 class="modal-title" id="addModulLabel">Tambah Modul</h4>
-				</div>
-				<div class="modal-body">
-					<div class="form-group row">
-						<label for="namamodul" class="col-md-3 form-control-label">Nama Modul</label>
-						<div class="col-md-9">
-							<input type="hidden" name="idmodul" id="idmodul" class="" maxlength="11" />
-							<input type="text" class="form-control" name="namamodul" id="namamodul" placeholder="Nama Modul" title="Nama Modul" data-toggle="popover" data-placement="bottom" data-trigger="hover" data-content="Silahkan isikan Nama Modul yang akan dibuat!" required/>
-						</div>
-					</div>
-					<div class="form-group row">
-						<label for="namamodul" class="col-md-3 form-control-label">Prasyarat Modul</label>
-						<div class="col-md-9">
-							<select class="form-control" name="prasyaratmodul" id="prasyaratmodul" title="Prasyarat Modul" data-toggle="popover" data-placement="bottom" data-trigger="hover" data-content="Silahkan pilih modul yang akan dijadikan prasyarat untuk membuka modul ini! Jika tidak ada silahkan pilih 'Tidak ada'" required>
-								<option value="0">-- Tidak ada --</option>
-								<?php
-								foreach ($listModul as $data) {
-									echo '<option value="'.$data['_id'].'">'.$data['nama'].'</option>';
-								}
-								?>
-							</select>
-						</div>
-					</div>
-					<div class="form-group row">
-						<label for="nilaimateri" class="col-md-3 form-control-label">Nilai Materi</label>
-						<div class="col-md-3">
-							<div class="input-group">
-								<input type="number" min="0" max="100" value="0" class="form-control" onchange="checkTotal()" name="nilaimateri" id="nilaimateri" required>
-								<div class="input-group-addon">%</div>
-							</div>
-						</div>
-					</div>
-					<div class="form-group row">
-						<label for="nilaitugas" class="col-md-3 form-control-label">Nilai Tugas</label>
-						<div class="col-md-3">
-							<div class="input-group">
-								<input type="number" min="0" max="100" value="0" class="form-control" onchange="checkTotal()" name="nilaitugas" id="nilaitugas" required>
-								<div class="input-group-addon">%</div>
-							</div>
-						</div>
-					</div>
-					<div class="form-group row">
-						<label for="nilaiujian" class="col-md-3 form-control-label">Nilai Ujian</label>
-						<div class="col-md-3">
-							<div class="input-group">
-								<input type="number" min="0" max="100" value="0" class="form-control" onchange="checkTotal()" name="nilaiujian" id="nilaiujian" required>
-								<div class="input-group-addon">%</div>
-							</div>
-						</div>
-					</div>
-					<div class="form-group row">
-						<label for="namamodul" class="col-md-3 form-control-label">Nilai Minimal</label>
-						<div class="col-md-2">
-							<input type="number" min="0" max="100" value="0" class="form-control" placeholder="1 - 100" name="nilaiminimal" id="nilaiminimal" required>
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="submit" id="btn-submit" name="addModul" value="send" class="btn btn-rounded btn-primary">Simpan</button>
-					<button type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Tutup</button>
-				</div>
-				</form>
-			</div>
-		</div>
-	</div><!--.modal-->
+    <div class="modal fade"
+         id="updateMapel"
+         tabindex="-1"
+         role="dialog"
+         aria-labelledby="updateMapelLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form method="POST">
+                <div class="modal-header">
+                    <button type="button" class="modal-close" data-dismiss="modal" aria-label="Close">
+                        <i class="font-icon-close-2"></i>
+                    </button>
+                    <h4 class="modal-title" id="updateMapelLabel">Pengaturan Mata Pelajaran</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <label for="namaMapelupdate" class="col-md-3 form-control-label">Mata Pelajaran</label>
+                        <div class="col-md-9">
+                            <input type="hidden" class="form-control" name="idMapelupdate" id="idMapelupdate"  />
+                            <input type="text" class="form-control" name="namaMapelupdate" id="namaMapelupdate" placeholder="Nama Mata Pelajaran" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-rounded btn-danger pull-left" onclick="" name="hapusMapel"><i class="font-icon-trash"></i> Hapus Mata Pelajaran</button>
+                    <button type="submit" class="btn btn-rounded btn-primary" name="updateMapel" value="send" >Simpan</button>
+                    <button type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Tutup</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div><!--.modal-->
 
 	<div class="page-content">
 		<div class="profile-header-photo" style="background-image: url('assets/img/Artboard 1.png');">
@@ -197,7 +139,7 @@ if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
 				<div class="col-xl-9 col-lg-8">
 					<section class="card card-default">
 						<div class="card-block">
-                            <h5 class="with-border"><b>Perkembangan Siswa / <a href=""><?=$infoKelas['nama']?></a></b></h5>
+                            <h5 class="with-border"><b>Perkembangan Akademik / <a href=""><?=$infoKelas['nama']?></a></b></h5>
                             <div class="col-md-12">
                                 <h6>Pilah Berdasarkan : </h6>
                                 <form id="form_tambah" method="POST">
@@ -207,18 +149,24 @@ if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
                     							<label class="form-control-label" for="modulFilter">Modul</label>
                                                 <select class="form-control" name="modulFilter" id="modulFilter" required>
                                                 <?php
+
                                                     $jmlhModul = $listModul->count();
                                                     if ($jmlhModul > 0) {
-                                                            echo "<option value=''>-- Pilih Modul --</option>";
+                                                        echo "<option value=''>-- Pilih Modul --</option>";
                                                         foreach ($listModul as $data) {
                                                             echo "<option value='$data[_id]'>$data[nama]</option>";
                                                         }
+                                                    }else {
+                                                        echo "<option value=''>-- Belum Tersedia --</option>";
                                                     }
                                                 ?>
                                                 </select>
                     						</fieldset>
                     					</div>
                     					<div class="col-md-6 col-sm-6">
+                                        <?php
+                                            if($_SESSION['lms_status'] == 'guru'){
+                                        ?>
                     						<fieldset class="form-group">
                                                 <label class="form-control-label" for="tkbFilter">Kelompok Belajar</label>
                                                 <select class="form-control" name="tkbFilter" id="tkbFilter">
@@ -236,6 +184,9 @@ if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
                                                 ?>
                                                 </select>
                     						</fieldset>
+                                        <?php
+                                            }
+                                        ?>
                     					</div>
                     				</div><!--.row-->
                                     <div class="row">
@@ -253,12 +204,9 @@ if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
             <?php
             if (isset($_POST['filterData'])) {
                 $idmodul    = $_POST['modulFilter'];
-                $idtkb      = $_POST['tkbFilter'];
+                $idtkb      = isset($_POST['tkbFilter']) ? $_POST['tkbFilter'] : 0;
                 $cari       =
                 $no         = 0;
-                $nilaiMateri= 0;
-                $nilaiTugas = 0;
-                $nilaiUjian = 0;
                 $siswa      = array();
 
                 // ----> Cek Tugas <---- //
@@ -291,99 +239,127 @@ if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
                                                 </tr>
                                                 <tr>
                                                     <th class="text-center">Nilai Membaca Materi</th>';
-                if ($jmlhTugas > 0) {
-                    foreach ($infoTugas as $value) {
-                        $table  .= '                <th class="text-center">'.$value['nama'].'</th>';
-                    }
-                }
-                $table  .= '                        <th class="text-center">Nilai Ujian <br> '.@$ujian[0]['nama'].'</th>
+                            if ($jmlhTugas > 0) {
+                                foreach ($infoTugas as $value) {
+                                    $table  .= '    <th class="text-center">Nilai Tugas <br>'.$value['nama'].'</th>';
+                                }
+                            }
+                $table  .= '                        <th class="text-center">Nilai Evaluasi <br> '.@$ujian[0]['nama'].'</th>
                                                 </tr>
                                             </thead>
                                             <tbody>';
 
-                // ----> Anggota Kelas <---- //
-                $listA      = $infoKelas['list_member'];
-                foreach ($listA as $dataA) {
-                    $anggota        = $kelasClass->getKeanggotaan($infoMapel['id_kelas'], $dataA);
+                // Siswa melihat Perkembangannya sendiri....
+                if ($_SESSION['lms_status'] == 'siswa') {
+                    $nilaiMateri= 0;
+                    $nilaiTugas = 0;
+                    $nilaiUjian = 0;
+                    $anggota        = $kelasClass->getKeanggotaan($infoMapel['id_kelas'], "$_SESSION[lms_id]");
 
                     if ($anggota['status'] == '4') {
-                        if ($idtkb == '0') {
-                            $siswa[]        = $userClass->GetData($dataA);
-                            $siswa[$no]['tkb']   = @$anggota['tkb'];
+                        $siswa[]        = $userClass->GetData("$_SESSION[lms_id]");
+                        $siswa[$no]['tkb']   = @$anggota['tkb'];
 
-                            // --- Nilai Membaca Materi
-                            $CekNilaiMateri = $modulClass->getStatusMateri($idmodul, $dataA);
-                            $nilaiMateri    = $nilaiMateri + $CekNilaiMateri['nilai'];
-                            $siswa[$no]['nilai']['modul'] = $nilaiMateri;
+                        // --- Nilai Membaca Materi
+                        $CekNilaiMateri = $modulClass->getStatusMateri($idmodul, "$_SESSION[lms_id]");
+                        $nilaiMateri    = $nilaiMateri + $CekNilaiMateri['nilai'];
+                        $siswa[$no]['nilai']['modul'] = $nilaiMateri;
 
-                            // --- Nilai Tugas
-                            $kumpulTugas = 0;
-                            if ($jmlhTugas > 0) {
-                                foreach ($infoTugas as $tugas) {
-                                    $cekNilaiTugas  = $tugasClass->getStatusTugas($tugas['_id'], $dataA);
-                                    $nilaiTugas     = $nilaiTugas + $cekNilaiTugas['nilai'];
-                                    $siswa[$no]['nilai']['tugas'][$kumpulTugas]['nama'] = $tugas['nama'];
-                                    $siswa[$no]['nilai']['tugas'][$kumpulTugas]['nilai']= $cekNilaiTugas['nilai'];
-                                    $kumpulTugas++;
-                                }
-                                $totalTugas = round(($nilaiTugas/$jmlhTugas), 2);
+                        // --- Melihat nilai tugas berdasarkan jumlah tugas yang tersedia.
+                        $kumpulTugas = 0;
+                        if ($jmlhTugas > 0) {
+                            $siswa[$no]['nilai']['totalTugas'] = 0;
+                            foreach ($infoTugas as $tugas) {
+                                $nilaiTugas     = 0;
+                                $cekNilaiTugas  = $tugasClass->getStatusTugas($tugas['_id'], "$_SESSION[lms_id]");
+                                $nilaiTugas     = $nilaiTugas + $cekNilaiTugas['nilai'];
+                                $siswa[$no]['nilai']['tugas'][$kumpulTugas]['id']   = $tugas['_id'];
+                                $siswa[$no]['nilai']['tugas'][$kumpulTugas]['nama'] = $tugas['nama'];
+                                $siswa[$no]['nilai']['tugas'][$kumpulTugas]['nilai']= $nilaiTugas;
+                                $siswa[$no]['nilai']['totalTugas'] += $nilaiTugas;
+                                $kumpulTugas++;
+                            }
+                            $totalTugas = round(($siswa[$no]['nilai']['totalTugas']/$jmlhTugas), 2);
 
-                                // --- Nilai Ujian
-                                if ($jmlhUjian > 0) {
-                                    $cekNilaiUjian  = $tugasClass->getStatusQuiz($ujian[0]['_id'], $dataA);
-                                    $nilaiUjian     = $nilaiUjian + $cekNilaiUjian['nilai'];
-                                    $siswa[$no]['nilai']['ujian'] = $nilaiUjian;
-                                }else {
-                                    $nilaiUjian     = 0;
-                                    $siswa[$no]['nilai']['ujian'] = $nilaiUjian;
-                                }
+                            // --- Nilai Ujian
+                            if ($jmlhUjian > 0) {
+                                $cekNilaiUjian  = $tugasClass->getStatusQuiz($ujian[0]['_id'], "$_SESSION[lms_id]");
+                                $nilaiUjian     = $nilaiUjian + $cekNilaiUjian['nilai'];
+                                $siswa[$no]['nilai']['ujian'] = $nilaiUjian;
                             }else {
-                                // --- Nilai Tugas
-                                $totalTugas = 100;
-
-                                // --- Nilai Ujian
-                                if ($jmlhUjian > 0) {
-                                    $cekNilaiUjian      = $tugasClass->getStatusQuiz($listUjian[0]['_id'], $dataA);
-                                    $nilaiUjian         = $nilaiUjian + $cekNilaiUjian['nilai'];
-                                    $siswa[$no]['nilai']['ujian'] = $nilaiUjian;
-                                }else {
-                                    $nilaiUjian     = 0;
-                                    $siswa[$no]['nilai']['ujian'] = $nilaiUjian;
-                                }
+                                $nilaiUjian     = 0;
+                                $siswa[$no]['nilai']['ujian'] = $nilaiUjian;
                             }
-
-                            $persentaseModul = $infoModul['nilai']['materi'];
-                            $persentaseTugas = $infoModul['nilai']['tugas'];
-                            $persentaseUjian = $infoModul['nilai']['ujian'];
-                            $nilaiMinimal    = $infoModul['nilai']['minimal'];
-
-                            $nilaiAkhirMateri   = $persentaseModul == 0 ? 0 : round($nilaiMateri * ($persentaseModul/100), 2);
-                            $nilaiAkhirTugas    = $persentaseTugas == 0 ? 0 : round($totalTugas * ($persentaseTugas/100), 2);
-                            $nilaiAkhirUjian    = $persentaseUjian == 0 ? 0 : round($nilaiUjian * ($persentaseUjian/100), 2);
-
-                            $hasil  = round($nilaiAkhirMateri + $nilaiAkhirTugas + $nilaiAkhirUjian, 2);
-
-                            $table  .= '    <tr>
-                                                <td class="text-center">'.$siswa[$no]['nama'].'</td>
-                                                <td class="text-center">'.$siswa[$no]['tkb'].'</td>
-                                                <td class="text-center"><h4 class="no-margin"><b><u>'.$hasil.'</u></b></h4></td>
-                                                <td class="text-center" id="tdAwal"><span id="nilaiMateri" ondblclick="updateNilai(this.id, \'tdAwal\', \''.$siswa[$no]['_id'].'\', \''.$idmodul.'\', \''.$nilaiMateri.'\')">'.$nilaiMateri.'</span></td>';
-                            if ($jmlhTugas > 0) {
-                                $t=1;
-                                foreach ($siswa[$no]['nilai']['tugas'] as $tableTugas) {
-                            $table  .=  '       <td class="text-center" id="tdTugas'.$t.'"><span id="nilaiTugas'.$t.'" ondblclick="updateNilai(this.id, \'tdTugas'.$t.'\', \''.$siswa[$no]['_id'].'\', \''.$idmodul.'\', \''.$tableTugas['nilai'].'\')">'.$tableTugas['nilai'].'</span></td>';
-                            $t++;
-                                }
-                            }
-
-                            $table  .= '        <td class="text-center" id="tdAkhir"><span id="nilaiUjian" ondblclick="updateNilai(this.id, \'tdAkhir\', \''.$siswa[$no]['_id'].'\', \''.$idmodul.'\', \''.$nilaiUjian.'\')">'.$nilaiUjian.'</span></td>
-                                            </tr>';
-
-                            $no++;
                         }else {
-                            if ($anggota['tkb'] == $idtkb) {
-                                $siswa[]            = $userClass->GetData($dataA);
-                                $siswa[$no]['tkb']  = @$anggota['tkb'];
+                            // --- Nilai Tugas
+                            $totalTugas = 100;
+
+                            // --- Nilai Ujian
+                            if ($jmlhUjian > 0) {
+                                $cekNilaiUjian      = $tugasClass->getStatusQuiz($listUjian[0]['_id'], "$_SESSION[lms_id]");
+                                $nilaiUjian         = $nilaiUjian + $cekNilaiUjian['nilai'];
+                                $siswa[$no]['nilai']['ujian'] = $nilaiUjian;
+                            }else {
+                                $nilaiUjian     = 0;
+                                $siswa[$no]['nilai']['ujian'] = $nilaiUjian;
+                            }
+                        }
+
+                        // Kriteria Penilaian (Persentase) yg diambil dari Pengaturan Modul.
+                        $persentaseModul = $infoModul['nilai']['materi'];
+                        $persentaseTugas = $infoModul['nilai']['tugas'];
+                        $persentaseUjian = $infoModul['nilai']['ujian'];
+                        $nilaiMinimal    = $infoModul['nilai']['minimal'];
+
+                        // Penghitungan nilai sesuai persentase yang ada pada tiap Modul.
+                        $nilaiAkhirMateri   = $persentaseModul == 0 ? 0 : round($nilaiMateri * ($persentaseModul/100), 2);
+                        $nilaiAkhirTugas    = $persentaseTugas == 0 ? 0 : round($totalTugas * ($persentaseTugas/100), 2);
+                        $nilaiAkhirUjian    = $persentaseUjian == 0 ? 0 : round($nilaiUjian * ($persentaseUjian/100), 2);
+
+                        $hasil  = round($nilaiAkhirMateri + $nilaiAkhirTugas + $nilaiAkhirUjian, 2);
+
+                        $table  .= '    <tr>
+                                            <td class="text-center">'.$siswa[$no]['nama'].'</td>
+                                            <td class="text-center">'.$siswa[$no]['tkb'].'</td>
+                                            <td class="text-center"><h4 class="no-margin"><b><u>'.$hasil.'</u></b></h4></td>
+                                            <td class="text-center">'.$nilaiMateri.'</td>';
+                        if ($jmlhTugas > 0) {
+                            $t=1;
+                            foreach ($siswa[$no]['nilai']['tugas'] as $tableTugas) {
+                                $table  .= '<td class="text-center">'.$tableTugas['nilai'].'</td>';
+                                $t++;
+                            }
+                        }
+
+                        $table  .= '        <td class="text-center">'.$nilaiUjian.'</td>
+                                        </tr>';
+
+                        $no++;
+                    }
+
+
+                    $table  .= '                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div><!--.row-->';
+
+                // Guru melihat Perkembangannya siswa/i nya....
+                }else{
+                    // ----> Anggota Kelas <---- //
+                    $listA      = $infoKelas['list_member'];
+                    foreach ($listA as $dataA) {
+                        $nilaiMateri= 0;
+                        $nilaiTugas = 0;
+                        $nilaiUjian = 0;
+                        $anggota        = $kelasClass->getKeanggotaan($infoMapel['id_kelas'], $dataA);
+
+                        if ($anggota['status'] == '4') {
+                            if ($idtkb == '0') {
+                                $siswa[]        = $userClass->GetData($dataA);
+                                $siswa[$no]['tkb']   = @$anggota['tkb'];
 
                                 // --- Nilai Membaca Materi
                                 $CekNilaiMateri = $modulClass->getStatusMateri($idmodul, $dataA);
@@ -393,14 +369,18 @@ if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
                                 // --- Nilai Tugas
                                 $kumpulTugas = 0;
                                 if ($jmlhTugas > 0) {
+                                    $siswa[$no]['nilai']['totalTugas'] = 0;
                                     foreach ($infoTugas as $tugas) {
+                                        $nilaiTugas     = 0;
                                         $cekNilaiTugas  = $tugasClass->getStatusTugas($tugas['_id'], $dataA);
                                         $nilaiTugas     = $nilaiTugas + $cekNilaiTugas['nilai'];
+                                        $siswa[$no]['nilai']['tugas'][$kumpulTugas]['id']   = $tugas['_id'];
                                         $siswa[$no]['nilai']['tugas'][$kumpulTugas]['nama'] = $tugas['nama'];
-                                        $siswa[$no]['nilai']['tugas'][$kumpulTugas]['nilai']= $cekNilaiTugas['nilai'];
+                                        $siswa[$no]['nilai']['tugas'][$kumpulTugas]['nilai']= $nilaiTugas;
+                                        $siswa[$no]['nilai']['totalTugas'] += $nilaiTugas;
                                         $kumpulTugas++;
                                     }
-                                    $totalTugas = round(($nilaiTugas/$jmlhTugas), 2);
+                                    $totalTugas = round(($siswa[$no]['nilai']['totalTugas']/$jmlhTugas), 2);
 
                                     // --- Nilai Ujian
                                     if ($jmlhUjian > 0) {
@@ -441,23 +421,102 @@ if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
                                                     <td class="text-center">'.$siswa[$no]['nama'].'</td>
                                                     <td class="text-center">'.$siswa[$no]['tkb'].'</td>
                                                     <td class="text-center"><h4 class="no-margin"><b><u>'.$hasil.'</u></b></h4></td>
-                                                    <td class="text-center" id="tdAwal"><span id="nilaiMateri" ondblclick="updateNilai(this.id, \'tdAwal\', \'materi\', \''.$siswa[$no]['_id'].'\', \''.$idmodul.'\', \''.$nilaiMateri.'\')">'.$nilaiMateri.'</span></td>';
+                                                    <td class="text-center" id="tdAwal"><span id="nilaiMateri" ondblclick="updateNilai(this.id, \'tdAwal\', \'updtNMateri\', \''.$siswa[$no]['_id'].'\', \''.$idmodul.'\', \''.$nilaiMateri.'\')">'.$nilaiMateri.'</span></td>';
                                 if ($jmlhTugas > 0) {
                                     $t=1;
                                     foreach ($siswa[$no]['nilai']['tugas'] as $tableTugas) {
-                                $table  .=  '       <td class="text-center" id="tdTugas'.$t.'"><span id="nilaiTugas'.$t.'" ondblclick="updateNilai(this.id, \'tdTugas'.$t.'\', \'tugas\', \''.$siswa[$no]['_id'].'\', \''.$idmodul.'\', \''.$tableTugas['nilai'].'\')">'.$tableTugas['nilai'].'</span></td>';
+                                $table  .=  '       <td class="text-center" id="tdTugas'.$t.'"><span id="nilaiTugas'.$t.'" ondblclick="updateNilai(this.id, \'tdTugas'.$t.'\', \'updtNTugas\', \''.$siswa[$no]['_id'].'\', \''.$tableTugas['id'].'\', \''.$tableTugas['nilai'].'\')">'.$tableTugas['nilai'].'</span></td>';
                                 $t++;
                                     }
                                 }
 
-                                $table  .= '        <td class="text-center" id="tdAkhir"><span id="nilaiUjian" ondblclick="updateNilai(this.id, \'tdAkhir\', \'ujian\', \''.$siswa[$no]['_id'].'\', \''.$idmodul.'\', \''.$nilaiUjian.'\')">'.$nilaiUjian.'</span></td>
+                                $table  .= '        <td class="text-center" id="tdAkhir"><span id="nilaiUjian" ondblclick="updateNilai(this.id, \'tdAkhir\', \'updtNUjian\', \''.$siswa[$no]['_id'].'\', \''.$ujian[0]['_id'].'\', \''.$nilaiUjian.'\')">'.$nilaiUjian.'</span></td>
                                                 </tr>';
 
                                 $no++;
+                            }else {
+                                if ($anggota['tkb'] == $idtkb) {
+                                    $siswa[]            = $userClass->GetData($dataA);
+                                    $siswa[$no]['tkb']  = @$anggota['tkb'];
+
+                                    // --- Nilai Membaca Materi
+                                    $CekNilaiMateri = $modulClass->getStatusMateri($idmodul, $dataA);
+                                    $nilaiMateri    = $nilaiMateri + $CekNilaiMateri['nilai'];
+                                    $siswa[$no]['nilai']['modul'] = $nilaiMateri;
+
+                                    // --- Nilai Tugas
+                                    $kumpulTugas = 0;
+                                    if ($jmlhTugas > 0) {
+                                        $siswa[$no]['nilai']['totalTugas'] = 0;
+                                        foreach ($infoTugas as $tugas) {
+                                            $nilaiTugas     = 0;
+                                            $cekNilaiTugas  = $tugasClass->getStatusTugas($tugas['_id'], $dataA);
+                                            $nilaiTugas     = $nilaiTugas + $cekNilaiTugas['nilai'];
+                                            $siswa[$no]['nilai']['tugas'][$kumpulTugas]['id']   = $tugas['_id'];
+                                            $siswa[$no]['nilai']['tugas'][$kumpulTugas]['nama'] = $tugas['nama'];
+                                            $siswa[$no]['nilai']['tugas'][$kumpulTugas]['nilai']= $nilaiTugas;
+                                            $siswa[$no]['nilai']['totalTugas'] += $nilaiTugas;
+                                            $kumpulTugas++;
+                                        }
+                                        $totalTugas = round(($siswa[$no]['nilai']['totalTugas']/$jmlhTugas), 2);
+
+                                        // --- Nilai Ujian
+                                        if ($jmlhUjian > 0) {
+                                            $cekNilaiUjian  = $tugasClass->getStatusQuiz($ujian[0]['_id'], $dataA);
+                                            $nilaiUjian     = $nilaiUjian + $cekNilaiUjian['nilai'];
+                                            $siswa[$no]['nilai']['ujian'] = $nilaiUjian;
+                                        }else {
+                                            $nilaiUjian     = 0;
+                                            $siswa[$no]['nilai']['ujian'] = $nilaiUjian;
+                                        }
+                                    }else {
+                                        // --- Nilai Tugas
+                                        $totalTugas = 100;
+
+                                        // --- Nilai Ujian
+                                        if ($jmlhUjian > 0) {
+                                            $cekNilaiUjian      = $tugasClass->getStatusQuiz($listUjian[0]['_id'], $dataA);
+                                            $nilaiUjian         = $nilaiUjian + $cekNilaiUjian['nilai'];
+                                            $siswa[$no]['nilai']['ujian'] = $nilaiUjian;
+                                        }else {
+                                            $nilaiUjian     = 0;
+                                            $siswa[$no]['nilai']['ujian'] = $nilaiUjian;
+                                        }
+                                    }
+
+                                    $persentaseModul = $infoModul['nilai']['materi'];
+                                    $persentaseTugas = $infoModul['nilai']['tugas'];
+                                    $persentaseUjian = $infoModul['nilai']['ujian'];
+                                    $nilaiMinimal    = $infoModul['nilai']['minimal'];
+
+                                    $nilaiAkhirMateri   = $persentaseModul == 0 ? 0 : round($nilaiMateri * ($persentaseModul/100), 2);
+                                    $nilaiAkhirTugas    = $persentaseTugas == 0 ? 0 : round($totalTugas * ($persentaseTugas/100), 2);
+                                    $nilaiAkhirUjian    = $persentaseUjian == 0 ? 0 : round($nilaiUjian * ($persentaseUjian/100), 2);
+
+                                    $hasil  = round($nilaiAkhirMateri + $nilaiAkhirTugas + $nilaiAkhirUjian, 2);
+
+                                    $table  .= '    <tr>
+                                                        <td class="text-center">'.$siswa[$no]['nama'].'</td>
+                                                        <td class="text-center">'.$siswa[$no]['tkb'].'</td>
+                                                        <td class="text-center"><h4 class="no-margin"><b><u>'.$hasil.'</u></b></h4></td>
+                                                        <td class="text-center" id="tdAwal"><span id="nilaiMateri" ondblclick="updateNilai(this.id, \'tdAwal\', \'updtNMateri\', \''.$siswa[$no]['_id'].'\', \''.$idmodul.'\', \''.$nilaiMateri.'\')">'.$nilaiMateri.'</span></td>';
+                                    if ($jmlhTugas > 0) {
+                                        $t=1;
+                                        foreach ($siswa[$no]['nilai']['tugas'] as $tableTugas) {
+                                    $table  .=  '       <td class="text-center" id="tdTugas'.$t.'"><span id="nilaiTugas'.$t.'" ondblclick="updateNilai(this.id, \'tdTugas'.$t.'\', \'updtNTugas\', \''.$siswa[$no]['_id'].'\', \''.$tableTugas['id'].'\', \''.$tableTugas['nilai'].'\')">'.$tableTugas['nilai'].'</span></td>';
+                                    $t++;
+                                        }
+                                    }
+
+                                    $table  .= '        <td class="text-center" id="tdAkhir"><span id="nilaiUjian" ondblclick="updateNilai(this.id, \'tdAkhir\', \'updtNUjian\', \''.$siswa[$no]['_id'].'\', \''.$ujian[0]['_id'].'\', \''.$nilaiUjian.'\')">'.$nilaiUjian.'</span></td>
+                                                    </tr>';
+
+                                    $no++;
+                                }
                             }
                         }
-                    }
 
+                    }
                 }
 
                 $table  .= '                </tbody>
@@ -470,9 +529,10 @@ if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
 
                 // echo "<div class='col-md-12'>
                 //         <pre>";
-                // print_r($ujian);
+                // print_r($siswa);
                 // echo "  </pre>
                 //     </div>";
+
                 echo "$table";
             }
             ?>
@@ -543,7 +603,7 @@ if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
 			$(elementID).html("");
 		}
 
-        function updateNilai(idKlik, idtd, jenis, siswa, modul, nilai){
+        function updateNilai(idKlik, idtd, jenis, siswa, id, nilai){
             // alert(idKlik+' - '+idtd+' - '+user+' - '+modul+' : '+nilai);
             $('#'+idKlik).html('<input type="number" class="form-group thVal" min="0" max="100" maxlength="3" style="padding: 5px; border: 1px solid #ddd; border-radius: 3px; z-index: 9999; text-align: center" value="'+nilai+'">');
 
@@ -559,24 +619,25 @@ if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
                 }
 
                 if (event.keyCode == 13) {
-                    $('#'+idtd).html('<span id="'+idKlik+'" ondblclick="updateNilai(\''+idKlik+'\', \''+idtd+'\', \''+jenis+'\', \''+siswa+'\', \''+modul+'\', \''+$(".thVal").val().trim()+'\')">'+$(".thVal").val().trim()+'</span>');
+                    nilai   = $(".thVal").val().trim();
+                    $('#'+idtd).html('<span id="'+idKlik+'" ondblclick="updateNilai(\''+idKlik+'\', \''+idtd+'\', \''+jenis+'\', \''+siswa+'\', \''+id+'\', \''+$(".thVal").val().trim()+'\')">'+$(".thVal").val().trim()+'</span>');
                     // $('#'+idKlik).html($(".thVal").val().trim());
-                    
+
                     $.ajax({
                         type: 'POST',
-                        url: url,
-                        data: data,
+                        url: 'url-API/Kelas/Modul/',
+                        data: {'action':jenis, 's':siswa, 'i':id, 'n':nilai},
                         success: function(res) {
     						swal({
     				            title: res.response,
     				            text: res.message,
     				            type: res.icon
     				        }, function() {
-    				            location.reload();
+    				            // location.reload();
     				        });
           				},
           				error: function () {
-          					swal("Gagal!", "Data tidak dapat diganti!", "error");
+          					swal("Maaf!", "Data tidak tersimpan!", "error");
           				}
                     });
                 }
@@ -587,6 +648,16 @@ if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
                 $('#'+idtd).html('<span id="'+idKlik+'" ondblclick="updateNilai(\''+idKlik+'\', \''+idtd+'\', \''+jenis+'\', \''+siswa+'\', \''+modul+'\', \''+$(".thVal").val().trim()+'\')">'+$(".thVal").val().trim()+'</span>');
             });
         }
+
+        function update(){
+      		$('#updateMapel').trigger("reset");
+      		$('#updateMapel').modal("show");
+      		$('#updateMapelLabel').text(
+      		   $('#updateMapelLabel').text().replace('Tambah Modul', 'Pengaturan Mata Pelajaran')
+      		).show();
+			$('#namaMapelupdate').val("<?=$infoMapel['nama']?>");
+			$('#idMapelupdate').val("<?=$_GET['id']?>");
+      	}
         //
         // var nilai;
         // var idKlik;

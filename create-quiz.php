@@ -76,20 +76,20 @@ $listQuiz	= $quizClass->getListbyModul($_GET['modul']);
 					<button type="button" class="modal-close" data-dismiss="modal" aria-label="Close">
 						<i class="font-icon-close-2"></i>
 					</button>
-					<h4 class="modal-title" id="addModulLabel">Tambah Kuis</h4>
+					<h4 class="modal-title" id="addModulLabel">Tambah Evaluasi</h4>
 				</div>
 				<div class="modal-body">
 					<div class="form-group row">
-						<label for="namamodul" class="col-md-3 form-control-label">Nama Kuis</label>
+						<label for="namamodul" class="col-md-3 form-control-label">Nama Evaluasi</label>
 						<input type="hidden" name="idmodul" id="idmodul" class="" maxlength="11" />
 						<div class="col-md-9">
-							<input type="text" class="form-control" name="namakuis" id="namamodul" placeholder="Nama Kuis" title="Nama Kuis" data-toggle="popover" data-placement="bottom" data-trigger="hover" data-content="Silahkan isikan Nama Modul yang akan dibuat!" />
+							<input type="text" class="form-control" name="namakuis" id="namamodul" placeholder="Nama Evaluasi" title="Nama Evaluasi" data-toggle="popover" data-placement="bottom" data-trigger="hover" data-content="Silahkan isikan Nama Evaluasi yang akan dibuat!" />
 						</div>
 					</div>
 					<div class="form-group row">
 						<label class="col-md-3 form-control-label" name="durasi" for="exampleInput">Durasi</label>
 						<div class="col-md-9">
-								<input type="number" class="form-control" name="durasi" id="exampleInput" placeholder="0" maxlength="3">
+								<input type="number" class="form-control" name="durasi" id="exampleInput" placeholder="0" min="0" maxlength="3">
 								<small class="text-muted">Lama Pengerjaan dalam satuan menit.</small>
 						</div>
 					</div>
@@ -126,7 +126,7 @@ $listQuiz	= $quizClass->getListbyModul($_GET['modul']);
 									<div class="tbl info-tbl">
 										<div class="tbl-row">
 											<div class="tbl-cell">
-												<p class="title">Ujian <?=$infoModul['nama']?></p>
+												<p class="title">Evaluasi <?=$infoModul['nama']?></p>
 												<p>Mata Pelajaran <?=$infoMapel['nama']?></p>
 											</div>
 											<div class="tbl-cell tbl-cell-stat">
@@ -160,13 +160,13 @@ $listQuiz	= $quizClass->getListbyModul($_GET['modul']);
 				<div class="col-xl-9 col-lg-8">
 					<section class="card card-inversed">
 						<header class="card-header">
-							Ujian
+							Evaluasi
 							<span class="label label-pill label-primary"><?=$listQuiz->count();?></span>
 							<?php
 								if($infoModul['creator'] == $_SESSION['lms_id']){
 							?>
 							<div class="btn-group" style="float: right;">
-								<button type="button" onclick="add()" title="Tambah" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menambahkan Quiz baru." class="btn btn-sm btn-rounded">+ Buat Kuis</button>
+								<button type="button" onclick="add()" title="Tambah" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menambahkan Quiz baru." class="btn btn-sm btn-rounded">+ Buat Evaluasi</button>
 							</div>
 							<?php
 								}
@@ -234,7 +234,7 @@ $listQuiz	= $quizClass->getListbyModul($_GET['modul']);
 										?>
 										<div class="row">
 											<div class="col-md-12">
-												<a href="quiz-start.php?id=<?=$materi['_id']?>&paket=<?=$materi['id_paket']?>" class="btn btn-rounded btn-primary pull-right" title="Evaluasi" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk mulai mengerjakan kuis." style="right: 35px">
+												<a href="quiz-start.php?id=<?=$materi['_id']?>&paket=<?=$materi['id_paket']?>" class="btn btn-rounded btn-primary pull-right" title="Evaluasi" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk mulai mengerjakan evaluasi." style="right: 35px">
 													<i class="fa fa-clock-o" aria-hidden="true"></i> Kerjakan
 												</a>
 											</div>
@@ -245,8 +245,8 @@ $listQuiz	= $quizClass->getListbyModul($_GET['modul']);
 										?>
 										<div class="row">
 											<div class="col-md-12">
-												<a href="print-quiz.php?id=<?=$materi['_id']?>&paket=<?=$materi['id_paket']?>" class="btn btn-rounded btn-primary pull-right" title="Print" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk print kuis." style="right: 60px" target="_blank">
-													<i class="fa fa-print" aria-hidden="true"></i> Print Kuis
+												<a href="print-quiz.php?id=<?=$materi['_id']?>&paket=<?=$materi['id_paket']?>" class="btn btn-rounded btn-primary pull-right" title="Print" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk print evaluasi." style="right: 60px" target="_blank">
+													<i class="fa fa-print" aria-hidden="true"></i> Print Evaluasi
 												</a>
 											</div>
 										</div>
@@ -266,8 +266,8 @@ $listQuiz	= $quizClass->getListbyModul($_GET['modul']);
 										<div class="add-customers-screen-user">
 											<i class="font-icon font-icon-notebook"></i>
 										</div>
-										<h2>Kuis Kosong</h2>
-										<p class="lead color-blue-grey-lighter">Belum ada kuis yang tersedia</p>
+										<h2>Evaluasi Kosong</h2>
+										<p class="lead color-blue-grey-lighter">Belum ada evaluasi</p>
 									</div>
 								</div>
 							</article>
