@@ -1,6 +1,8 @@
 </head>
 <?php
 $kelasClass = new Kelas();
+$classProfile = new Profile();
+$FuncProfile = $classProfile->GetData($_SESSION['lms_id']);
 
 if(isset($_POST['addKelas'])){
 	$nama = mysql_escape_string($_POST['namakelas']);
@@ -175,10 +177,10 @@ if(isset($_POST['joinKelas'])){
 
 	                    <div class="dropdown user-menu">
 	                        <button class="dropdown-toggle" id="dd-user-menu" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                            <img src="assets/img/avatar-2-64.png" alt="">
+	                            <img src="media/Assets/foto/<?php if ($FuncProfile['foto'] != NULL) {echo $FuncProfile['foto'];}else{echo "no_picture.png";} ?>" alt="">
 	                        </button>
 	                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd-user-menu">
-	                            <a class="dropdown-item" href="#"><span class="font-icon glyphicon glyphicon-cog"></span>Pengaturan</a>
+	                            <a class="dropdown-item" href="setting.php"><span class="font-icon glyphicon glyphicon-cog"></span>Pengaturan</a>
 	                            <a class="dropdown-item" href="#"><span class="font-icon glyphicon glyphicon-question-sign"></span>Bantuan</a>
 	                            <div class="dropdown-divider"></div>
 	                            <a class="dropdown-item" href="url-API/authOut.php"><span class="font-icon glyphicon glyphicon-log-out"></span>Keluar</a>
@@ -222,13 +224,13 @@ if(isset($_POST['joinKelas'])){
 	                        </div>
 	                        <div class="dropdown dropdown-typical">
 
-							   <a href="<?=base_url?>/paket-kuis.php" class="dropdown-toggle no-arr">
+							   <a href="<?=base_url?>paket-kuis.php" class="dropdown-toggle no-arr">
 								   <span class="font-icon font-icon-archive"></span> Paket Soal
 								   <span class="lbl"></span>
 							   </a>
 						   	</div>
 							<div class="dropdown dropdown-typical">
-							   <a href="<?=base_url?>/media" class="dropdown-toggle no-arr">
+							   <a href="<?=base_url?>media" class="dropdown-toggle no-arr">
 								   <span class="font-icon font-icon-share"></span> Gudang Media
 								   <span class="lbl"></span>
 							   </a>

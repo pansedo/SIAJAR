@@ -46,7 +46,13 @@
 
 	if (isset($_POST['simpan_sosmed'])) {
 		# code...
+		$id_profile 	= $id_users;
+		$website 		= $_POST['website'];
+		$facebook		= $_POST['facebook'];
+		$linkedin 		= $_POST['linkedin'];
+		$twitter 		= $_POST['twitter'];
 
+		$classProfile->UpdateSosmed($id_profile, $website,$facebook,$linkedin,$twitter);
 	}
 
 	if (isset($_POST['simpan_password'])) {
@@ -84,8 +90,8 @@
 						<div class="profile-statistic tbl">
 							<div class="tbl-row">
 								<div class="tbl-cell">
-									<b><?php echo $getMediaCount; ?></b>
-									Media Bahan Ajar
+									<?php if (isset($getMediaCount)){ echo '<b>'. $getMediaCount.' 
+									Media Bahan Ajar</b>';}?>
 								</div>
 							</div>
 						</div>
@@ -185,6 +191,7 @@
 								</div>
 								
 							</div>
+							
 							<button type="submit" name="simpan_profil" class="btn">Simpan</button>
 						</form>
 					</div><!--.tab-pane-->

@@ -34,14 +34,35 @@
 <script src="Assets/js/lib/uploadfile/custom-file-input.js"></script>
 <script src="Assets/js/app.js"></script>\
 
+	<script type="text/javascript">
+	    function copyTextToClipboard(text) {
+	        var textArea = document.createElement("textarea");
+	        textArea.style.background = 'transparent';
+	        textArea.value = text;
+	        document.body.appendChild(textArea);
+	        textArea.select();
+	        try {
+	            var successful = document.execCommand('copy');
+	            var msg = successful ? 'successful' : 'unsuccessful';
+	            console.log('Copying text command was ' + msg);
+	        } catch (err) {
+	            console.log('Oops, unable to copy');
+	        }
+	        document.body.removeChild(textArea);
+	    }
 
+	    function CopyLink() {
+	      copyTextToClipboard(location.href);
+	    }
+	</script>
 	<script type="text/javascript">
 		$(document).ready(function() {
-		  $.uploadPreview({
-		    input_field: "#image-upload",
-		    preview_box: "#image-preview",
-		    label_field: "#image-label"
-		  });
+			 
+			$.uploadPreview({
+				input_field: "#image-upload",
+				preview_box: "#image-preview",
+				label_field: "#image-label"
+			});
 		}); 
 	</script>
 </body>

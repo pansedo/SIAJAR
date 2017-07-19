@@ -370,7 +370,7 @@ if(isset($_POST['updateKelas'])){
 												</div>';
 
 									echo "	<tr>
-												<td><span class='user-name'>$data[nama]</span></td>
+												<td><a href='mapel.php?id=$data[_id]' title='$data[nama]' data-toggle='popover' data-placement='bottom' data-trigger='hover' data-content='Klik tautan diatas untuk membuka materi mata pelajaran tersebut.'><span class='user-name'>$data[nama]</span></a></td>
 												<td width='70px;' class='shared'>".($hakKelas['status'] == 1 ? $menu : '')."</td>
 											</tr>";
 								}

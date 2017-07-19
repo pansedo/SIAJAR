@@ -103,7 +103,8 @@ if(isset($_POST['updateKelas'])){
 	if ($hakKelas['status'] == 1) {
 		$nama	= mysql_escape_string($_POST['namakelasupdate']);
 		$post	= htmlentities($_POST['tentang']);
-		$rest	= $kelasClass->updateKelas($nama, $post, $_GET['id']);
+		$tkb	= $_POST['tkb'];
+		$rest	= $kelasClass->updateKelas($nama, $post, $tkb, $_GET['id']);
 
 		echo	"<script>
 					swal({
@@ -128,6 +129,8 @@ if(isset($_POST['updateKelas'])){
 }
 
 ?>
+<link rel="stylesheet" href="assets/css/separate/elements/tags-input.css">
+
 	<div class="modal fade"
 		 id="updateKelas"
 		 tabindex="-1"
@@ -153,7 +156,14 @@ if(isset($_POST['updateKelas'])){
 					<div class="form-group row">
 						<label for="tentang" class="col-md-3 form-control-label">Tentang Kelas</label>
 						<div class="col-md-9">
-							<textarea class="form-control" name="tentang" id="tentang" placeholder="Deskripsikan tentang kelas anda - Maksimal 260 karakter" maxlength="260"><?=$infoKelas['tentang']?></textarea>
+							<textarea class="form-control" name="tentang" id="tentang" placeholder="Deskripsikan tentang kelas anda - Maksimal 200 karakter" maxlength="200"><?=$infoKelas['tentang']?></textarea>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="tentang" class="col-md-3 form-control-label">Kelompok Belajar</label>
+						<div class="col-md-9">
+							<!-- <textarea id="tags-editor-textarea" placeholder="Nama Kelompok Belajar"></textarea> -->
+							<input type="tags" name="tkb" data-separator=' ' placeholder="" id="tags" value="<?=$infoKelas['tkb']?>" />
 						</div>
 					</div>
 				</div>
@@ -309,7 +319,7 @@ if(isset($_POST['updateKelas'])){
 									</button>
 									<div class="dropdown-menu" style="margin-left: -100px">
 										<a class="dropdown-item" href="#" data-toggle="modal" data-target="#addMapel"><span class="font-icon font-icon-plus"></span>Tambah Mata Pelajaran</a>
-		                                <a class="dropdown-item" href="mapel-kelas.php?id=<?=$_GET['id'];?>"><span class="font-icon font-icon-pencil"></span>Kelola Mata Pelajaran</a>
+		                                <a class="dropdown-item" href="mapel-kelas.php?id=<?=$_GET['id']?>"><span class="font-icon font-icon-pencil"></span>Kelola Mata Pelajaran</a>
 									</div>
 								</div>
 							<?php
@@ -365,7 +375,7 @@ if(isset($_POST['updateKelas'])){
 									// print_r($listPosting['data']);
 									// echo "</pre>";
 									foreach ($listPosting['data'] as $posting) {
-										$image		= empty($posting['user_foto']) ? "<img src='assets/img/avatar-2-128.png' style='max-width: 75px; max-height: 75px;' />" : "<img src='".$infoUser['foto']."' style='max-width: 75px; max-height: 75px;' />" ;
+										$image		= empty($posting['user_foto']) ? "<img src='assets/img/avatar-2-128.png' style='max-width: 75px; max-height: 75px;' />" : "<img src='media/Assets/foto/".$posting['user_foto']."' style='max-width: 75px; max-height: 75px;' />" ;
 										echo '	<article class="box-typical profile-post">
 													<div class="profile-post-header">
 														<div class="user-card-row">
@@ -393,7 +403,7 @@ if(isset($_POST['updateKelas'])){
 													</div>
 												</article>';
 									}
-								}else {
+								} else {
 									echo '	<article class="box-typical profile-post">
 												<div class="profile-post-content">
 													<p align="center">
@@ -445,6 +455,7 @@ if(isset($_POST['updateKelas'])){
 	require('includes/footer-top.php');
 ?>
 <script src="assets/js/lib/autoresize/autoresize-textarea.js"></script>
+<script src="assets/js/lib/tags-input/tags-input.js"></script>
 
 	<script>
 		function clearText(elementID){
@@ -570,7 +581,10 @@ if(isset($_POST['updateKelas'])){
 			});
 
 		});
+
+		tagsInput(document.querySelector('input[type="tags"]'));
 	</script>
+
 <script src="assets/js/app.js"></script>
 <?php
 	require('includes/footer-bottom.php');

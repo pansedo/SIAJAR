@@ -7,6 +7,7 @@
 	$classProfile = new Profile();
 	$classKategori = new Kategori();
 	$classPengaduan = new Pengaduan();
+	$classRating = new Rating(); 
 
 	if (isset($_POST['reportdokumen'])) {
 		$iddokumen = mysql_escape_string($_POST['iddokumen']);
@@ -14,8 +15,8 @@
 
 		$classPengaduan->CreatePengaduan($iddokumen,$keterangan,$id_users);
 	}
-
-	if (isset($_GET['id'])) {
+ 
+	if (isset($_GET['id'])) { 
 		# code...
 		$id 			= base64_decode($_GET['id']);
 		$getMediaById 	= $classMedia->GetMediaBy($id); 
@@ -23,7 +24,7 @@
 		$getUserById 	= $classProfile->GetData($getMediaById['id_user']);
 		$getKategori 	= $classKategori->getkategoriutamabyId($getMediaById['id_kategori']);
 		$FuncProfile = $classProfile->GetData($getMediaById['id_user']);
-
+		$getRating = $classRating->GetRatingBy($getMediaById['_id']);
 	
 ?>
 	<div class="page-content">
@@ -120,29 +121,51 @@
 										</div>
 										<div class="col-lg-5" style="text-align: right;">
 											<div class="title" >
-												<div class="sharebox" data-services="facebook google+ tumblr twitter"></div>
+												<div class="sharebox" data-services="facebook google+ tumblr twitter">&nbsp<button class="btn btn-default btn-sm"onclick="CopyLink()">Copy Link</button>&nbsp</div>
+												  </ul>
+												</div>
 											</div>
 										</div>
 									</div>
-										
-									</div>
-									<div class="tbl-cell tbl-cell-date">
-									<!-- Rating :  -->
-									</div>
 								</div>
 							</div>
-						</section><!--.proj-page-section-->
+						</section>
 
 						<section class="proj-page-section">
 							<div class="tbl proj-page-team">
 								<div class="tbl-row">
-									<div class="tbl-cell">
+									<div class="tbl-cell .col-lg-7">
 										<div class="project">Kategori:
 										<?php
 											foreach ($getKategori as $dataKategori) {
 											echo "<a href='#'>".$dataKategori['kategori']."</a>";
 										}?>
 										</div>
+									</div>
+									<div class="tbl-cell .col-lg-3" style="text-align: right;">
+									 <fieldset id='rate' class="rating" <?php if (is_null($id_users)) { echo 'disabled'; }  ?>>
+				                        <input class="stars" type="radio" id="star5" name="rating" value="5" <?=$getRating==5?'checked':'';?> /> 
+				                        <label class = "full" for="star5" title="Sangat Bagus - 5 Bintang"></label>
+				                        <input class="stars" type="radio" id="star4" name="rating" value="4" <?=$getRating==4?'checked':'';?> /> 
+				                        <label class = "full" for="star4" title="Bagus - 4 Bintang"></label>
+				                        <input class="stars" type="radio" id="star3" name="rating" value="3" <?=$getRating==3?'checked':'';?> /> 
+				                        <label class = "full" for="star3" title="Biasa - 3 Bintang"></label>
+				                        <input class="stars" type="radio" id="star2" name="rating" value="2" <?=$getRating==2?'checked':'';?> /> 
+				                        <label class = "full" for="star2" title="Kurang - 2 Bintang"></label>
+				                        <input class="stars" type="radio" id="star1" name="rating" value="1" <?=$getRating==1?'checked':'';?> /> 
+				                        <label class = "full" for="star1" title="Sangat Kurang - 1 Bintang"></label>
+				                    </fieldset>
+				                    <script type="text/javascript">
+					                    $(document).ready(function () {
+					                    	$("#rate .stars").click(function () {
+									            $.post('url/rating.php',{rate:$(this).val(), iddokumen: "<?php echo $getMediaById['_id']?>",idusers:"<?php echo $id_users ?>"},function(d){
+								                    alert(d);
+								                    location.reload();
+									            });
+									            $(this).attr("checked");
+									        });
+								        });
+				                    </script>
 									</div>
 									<!-- <div class="tbl-cell tbl-cell-date">3 days ago - 23 min read</div> -->
 								</div>

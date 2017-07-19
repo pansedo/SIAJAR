@@ -29,6 +29,7 @@ class Profile
         $sukses = $this -> table -> update(array("_id"=> new MongoId($id_profile)),array('$set'=>$update));
         if ($sukses) {
             # code...
+            $_SESSION['lms_name'] = $nama;
             echo "<script type='text/javascript'> swal({
                                   title: 'Berhasil diperbarui!',
                                   text: 'Profil anda berhasil diperbarui',
@@ -65,6 +66,51 @@ class Profile
         }
         
     }
+
+    public function UpdateSosmed($id_profile, $website,$facebook,$linkedin,$twitter){
+        global $db;
+        
+        $update = array("sosmed.website"=>$website,"sosmed.facebook"=>$facebook, "sosmed.linkedin"=>$linkedin,"date_modified"=>date('Y-m-d H:i:s'));
+        $sukses = $this -> table -> update(array("_id"=> new MongoId($id_profile)),array('$set'=>$update));
+        if ($sukses) {
+            # code...
+            echo "<script type='text/javascript'> swal({
+                                  title: 'Berhasil diperbarui!',
+                                  text: 'Profil anda berhasil diperbarui',
+                                  type: 'success',
+                                  timer: 2000
+                                }).then(
+                                  function () {
+                                    document.location.href='profile.php';
+                                  },
+                                  function (dismiss) {
+                                    document.location.href='profile.php';
+                                    if (dismiss === 'timer') {
+                                      console.log('I was closed by the timer')
+                                    }
+                                  })
+                </script>";
+        }else{
+            echo "<script type='text/javascript'> swal({
+                                  title: 'Gagal diperbarui!',
+                                  text: 'Profil anda gagal diperbarui',
+                                  type: 'error',
+                                  timer: 2000
+                                }).then(
+                                  function () {
+                                    document.location.href='profile.php';
+                                  },
+                                  function (dismiss) {
+                                    document.location.href='profile.php';
+                                    if (dismiss === 'timer') {
+                                      console.log('I was closed by the timer')
+                                    }
+                                  })
+                </script>";
+        }
+        
+    }
+
 
     public function CheckPassword($id_profile, $password, $password_baru, $pasword_confirm,$username,$nama,$email,$jenis_kelamin,$sekolah,$status,$foto){
         global $db;

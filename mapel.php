@@ -7,6 +7,7 @@ $modulClass = new Modul();
 $kelasClass = new Kelas();
 $tugasClass = new Tugas();
 
+$menuMapel	= 2;
 $infoMapel	= $mapelClass->getInfoMapel($_GET['id']);
 $listModul	= $modulClass->getListbyMapel($_GET['id']);
 $infoKelas	= $kelasClass->getInfoKelas($infoMapel['id_kelas']);
@@ -68,6 +69,18 @@ if(isset($_POST['updateMapel'])){
 
 ?>
 <link rel="stylesheet" href="./assets/css/separate/pages/others.min.css">
+<style media="screen">
+	@media (max-width: 470px) {
+		.tb-lg {
+			display: none;
+		}
+	}
+	@media (min-width: 470px) {
+		.tb-sm {
+			display: none;
+		}
+	}
+</style>
 
 	<div class="modal fade"
 		 id="updateMapel"
@@ -183,7 +196,7 @@ if(isset($_POST['updateMapel'])){
 	</div><!--.modal-->
 
 	<div class="page-content">
-		<div class="profile-header-photo">
+		<div class="profile-header-photo" style="background-image: url('assets/img/Artboard 1.png');">
 			<div class="profile-header-photo-in">
 				<div class="tbl-cell">
 					<div class="info-block">
@@ -193,8 +206,8 @@ if(isset($_POST['updateMapel'])){
 									<div class="tbl info-tbl">
 										<div class="tbl-row">
 											<div class="tbl-cell">
-												<p class="title"><?=$infoMapel['nama']?></p>
-												<p>Mata Pelajaran</p>
+												<p class="title">Mata Pelajaran <?=$infoMapel['nama']?></p>
+												<p><?=$infoKelas['nama']?></p>
 											</div>
 											<div class="tbl-cell tbl-cell-stat">
 												<div class="inline-block">
@@ -225,38 +238,10 @@ if(isset($_POST['updateMapel'])){
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-xl-3 col-lg-4">
-					<aside id="menu-fixed" class="profile-side" style="margin: 0 0 20px">
-						<section class="box-typical">
-							<header class="box-typical-header-sm bordered">
-								<div class="btn-group" style="float: right;">
-									<button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-										Kembali
-									</button>
-									<div class="dropdown-menu dropdown-menu-right">
-										<a href="kelas.php?id=<?=$infoMapel['id_kelas']?>" class="dropdown-item" title="Kelas" data-toggle="popover" data-placement="right" data-trigger="hover" data-content="Kembali ke halaman kelas"><i class="font-icon font-icon-build"></i> Halaman kelas</a>
-									</div>
-								</div>
-								Menu
-							</header>
-							<div class="box-typical-inner">
-								<ul class="side-menu-list">
-									<li class="blue opened">
-										<a href="mapel.php?id=<?=$_GET['id']?>">
-							                <i class="font-icon font-icon-home active"></i>
-							                <span class="lbl">Pelajaran</span>
-							            </a>
-									</li>
-									<li class="blue">
-										<a href="perkembangan.php?id=<?=$_GET['id']?>">
-											<i class="font-icon font-icon-zigzag"></i>
-											<span class="lbl">Perkembangan</span>
-										</a>
-									</li>
-								</ul>
-							</div>
-						</section>
+					<?php
+						require("includes/mapel-menu.php");
+					?>
 
-					</aside><!--.profile-side-->
 				</div>
 
 				<div class="col-xl-9 col-lg-8">
@@ -283,69 +268,95 @@ if(isset($_POST['updateMapel'])){
 								if ($listModul->count() > 0) {
 									$no = 1;
 									foreach ($listModul as $modul) {
-										// $$tugasClass->getStatusTugas($modul['_id'], $_SESSION['lms_id']);
-
-										if ($modulClass->getLearningPath($modul['prasyarat']) == "LULUS") {
+										if ($_SESSION['lms_status'] == 'guru') {
+							?>
+											<div class="widget-activity-item">
+												<div class="user-card-row">
+													<div class="tbl-row">
+														<div class="tbl-cell tbl-cell-photo">
+															<a href="modul.php?modul=<?=$modul['_id']?>">
+																<img src="assets/img/book.png" alt="">
+															</a>
+														</div>
+														<div class="tbl-cell">
+															<p>
+																<a href="modul.php?modul=<?=$modul['_id']?>" class="semibold"><?=''.$no.'. '.$modul['nama']?></a>
+															</p>
+															<p><?=selisih_waktu($modul['date_created'])?></p>
+														</div>
+												<?php
+												if ($_SESSION['lms_id'] == $modul['creator']) {
+												?>
+														<div class="tbl-cell" align="right">
+															<a onclick="edit('<?=$modul['_id']?>')" title="Edit" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk memperbarui Modul yang sudah dibuat."><i class="font-icon font-icon-pencil"></i></a>
+															<a onclick="remove('<?=$modul['_id']?>')" title="Hapus" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menghapus Modul yang sudah dibuat."><i class="font-icon font-icon-trash"></i></a>
+														</div>
+												<?php
+												}
+												?>
+													</div>
+												</div>
+											</div>
+									<?php
+										}else{
+											$nilai		= $modulClass->getLearningPath("$modul[_id]", $_SESSION['lms_id']);
+											$prasyarat	= $modulClass->getLearningPath($modul['prasyarat'], $_SESSION['lms_id']);
+											if ($prasyarat['status'] == "Terbuka") {
 									?>
-
 										<div class="widget-activity-item">
 											<div class="user-card-row">
 												<div class="tbl-row">
 													<div class="tbl-cell tbl-cell-photo">
-														<a href="modul.php?modul=<?=$modul['_id']?>">
-															<img src="assets/img/folder.png" alt="">
-														</a>
+														<img src="assets/img/book.png" alt="">
 													</div>
 													<div class="tbl-cell">
 														<p>
-															<a href="modul.php?modul=<?=$modul['_id']?>" class="semibold"><?=''.$no.'. '.$modul['nama']?></a>
+															<a class="semibold" title="<?=$modul['nama']?>" data-toggle="popover" data-placement="bottom" data-trigger="hover" data-content="Silahkan tekan tombol 'Buka Materi' untuk melihat materi yang tersedia."><?=''.$no.'. '.$modul['nama']?></a>
 														</p>
-														<p><?=selisih_waktu($modul['date_created'])?></p>
+														<p>
+															<!-- <?=selisih_waktu($modul['date_created'])?> -->
+															<?php
+																	echo 'Nilai : '.$nilai['hasil'];
+															?>
+														</p>
 													</div>
-											<?php
-											if ($_SESSION['lms_id'] == $modul['creator']) {
-											?>
 													<div class="tbl-cell" align="right">
-														<a onclick="edit('<?=$modul['_id']?>')" title="Edit" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk memperbarui Modul yang sudah dibuat."><i class="font-icon font-icon-pencil"></i></a>
-														<a onclick="remove('<?=$modul['_id']?>')" title="Hapus" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menghapus Modul yang sudah dibuat."><i class="font-icon font-icon-trash"></i></a>
+														<a href="modul.php?modul=<?=$modul['_id']?>" onclick="cModul('<?=$modul['_id']?>');" title="Buka Materi" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Silahkan tekan tombol 'Buka Materi' untuk melihat materi yang tersedia.">
+															<span class="tb-lg"><button type="button" class="btn btn-sm btn-rounded" name="button"><i class="fa fa-unlock"></i> Buka Materi</button></span>
+															<span class="tb-sm"><button type="button" class="btn btn-sm btn-rounded" name="button"><i class="fa fa-unlock"></i></button></span>
+														</a>
 													</div>
-											<?php
-											}
-											?>
 												</div>
 											</div>
 										</div>
-								<?php
-										}else {
-								?>
+										<?php
+											}else {
+										?>
 										<div class="widget-activity-item">
 											<div class="user-card-row">
 												<div class="tbl-row">
 													<div class="tbl-cell tbl-cell-photo">
-														<a href="modul.php?modul=<?=$modul['_id']?>">
+														<a onclick="swal('Maaf!', 'Silahkan selesaikan terlebih dahulu modul sebelumnya untuk membuka modul ini!', 'warning')">
 															<img src="assets/img/folder-na.png" alt="">
 														</a>
 													</div>
 													<div class="tbl-cell">
+														<p><a onclick="swal('Maaf!', 'Silahkan selesaikan terlebih dahulu modul sebelumnya untuk membuka modul ini!', 'warning')" class="semibold"><?=''.$no.'. '.$modul['nama']?></a></p>
 														<p>
-															<a onclick="" class="semibold"><?=''.$no.'. '.$modul['nama']?></a>
+															<!-- <?=selisih_waktu($modul['date_created'])?> -->
+															<?php
+																	echo 'Nilai : '.$nilai['hasil'];
+															?>
 														</p>
-														<p><?=selisih_waktu($modul['date_created'])?></p>
 													</div>
-											<?php
-											if ($_SESSION['lms_id'] == $modul['creator']) {
-											?>
 													<div class="tbl-cell" align="right">
-														<a onclick="edit('<?=$modul['_id']?>')" title="Edit" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk memperbarui Modul yang sudah dibuat."><i class="font-icon font-icon-pencil"></i></a>
-														<a onclick="remove('<?=$modul['_id']?>')" title="Hapus" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menghapus Modul yang sudah dibuat."><i class="font-icon font-icon-trash"></i></a>
+														<a onclick="swal('Maaf!', 'Silahkan selesaikan terlebih dahulu modul sebelumnya untuk membuka modul ini!', 'warning')" title="Modul masih terkunci" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Kamu belum bisa membuka modul ini, silahkan selesaikan terlebih dahulu Modul sebelumnya!."><i class="fa fa-lock"></i></a>
 													</div>
-											<?php
-											}
-											?>
 												</div>
 											</div>
 										</div>
 								<?php
+											}
 										}
 										$no++;
 									}
@@ -458,6 +469,20 @@ if(isset($_POST['updateMapel'])){
 			  	},
 				error: function () {
 					swal("Gagal!", "Data tidak dapat diambil!", "error");
+				}
+			});
+      	};
+
+		function cModul(modul){
+			$.ajax({
+				type: 'POST',
+				url: 'url-API/Kelas/Modul/',
+				data: {"action": "updtNMateri", 's':'<?=$_SESSION['lms_id']?>', 'i':modul, 'n':'100'},
+				success: function(res) {
+					console.log(res.response+' '+res.message);
+			  	},
+				error: function () {
+					console.log('Terjadi Kesalahan, Gagal melakukan aksi!');
 				}
 			});
       	};
