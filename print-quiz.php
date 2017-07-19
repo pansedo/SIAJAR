@@ -26,11 +26,16 @@
     }
 
     if(isset($_POST['answer'])){
+        $list_soal              = unserialize(base64_decode($_POST['list_soal']));
+        $bank_list_opsi_soal    = unserialize(base64_decode($_POST['list_opsi_soal']));
+
         if($_POST['answer'] == true){
             $show_jawaban = false;
         }else{
             $show_jawaban = true;
         }
+    }else{
+        $bank_list_opsi_soal    = array();
     }
 
 ?>
@@ -63,9 +68,6 @@
                         <?php }else{ ?>
                             <button class="btn btn-rounded btn-primary btn-show-answer" id="print" style="margin-top: 20px;"><i class="fa fa-eye-slash" aria-hidden="true"></i> Sembunyikan Jawaban</button>
                         <?php } ?>
-                        <form id="form_show_answer" class="" action="" method="post" style="display: none;">
-                            <input type="text" name="answer" value="<?=$show_jawaban?>">
-                        </form>
                         <hr />
                         <h2 class="text-center">Kuis <?=$infoQuiz['nama']?></h2>
                         <h5>Modul&emsp;&emsp;&emsp;&emsp; : <?=$infoModul['nama']?></h5>
@@ -80,7 +82,11 @@
                                 <h5 class="with-border">Nomor <?=$no_soal?><span class="pull-right"><?=$no_soal?> / <?=$jumlah_soal?></span></h5>
                                 <p id="soal"><?php echo $soal["soal"];?></p>
                                 <?php
-                                    $list_opsi_soal = $soalClass->getListOpsiSoal($soal['_id']);
+                                    if(!isset($_POST['answer'])){
+                                        $bank_list_opsi_soal[$no_soal] = $soalClass->getListOpsiSoal($soal['_id']);
+                                    }
+                                    $list_opsi_soal = $bank_list_opsi_soal[$no_soal];
+
                                     foreach ($list_opsi_soal as $opsi_soal) {
                                 ?>
                                 <div class="checkbox">
@@ -101,6 +107,11 @@
                             $no_soal++;
                         }
                     ?>
+                    <form id="form_show_answer" class="" action="" method="post" style="display: none;">
+                        <input type="text" name="list_soal" value="<?=base64_encode(serialize($list_soal))?>">
+                        <input type="text" name="list_opsi_soal" value="<?=base64_encode(serialize($bank_list_opsi_soal))?>">
+                        <input type="text" name="answer" value="<?=$show_jawaban?>">
+                    </form>
     				</div>
     			</div><!--.row-->
     		</div><!--.container-fluid-->

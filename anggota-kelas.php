@@ -414,7 +414,7 @@ if(isset($_POST['updateKelas'])){
 														</div>';
 									}
 
-									$image		= empty($infoUser['foto']) ? "<img src='assets/img/avatar-2-128.png' style='max-width: 75px; max-height: 75px;' />" : "<img src='".$infoUser['foto']."' style='max-width: 75px; max-height: 75px;' />" ;
+									$image		= empty($infoUser['foto']) ? "<img src='assets/img/avatar-2-128.png' style='max-width: 75px; max-height: 75px;' />" : "<img src='media/Assets/foto/".$infoUser['foto']."' style='max-width: 75px; max-height: 75px;' />" ;
 									echo "	<tr>
 												<td width='80px;'>".$image."</td>
 												<td><span class='user-name'>$infoUser[nama]</span> <br> <span style='font-size: 0.9em;'>$infoUser[sekolah] <br> ".ucfirst($infoUser['status'])." (".$posisi.")</span></td>

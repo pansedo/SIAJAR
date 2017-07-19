@@ -65,6 +65,7 @@ function selisih_waktu($timestamp){
 	<link rel="stylesheet" href="assets/css/separate/pages/widgets.min.css">
 	<link rel="stylesheet" href="assets/css/lib/datatables-net/datatables.min.css">
 	<link rel="stylesheet" href="assets/css/separate/vendor/datatables-net.min.css">
+	<link rel="stylesheet" href="assets/css/separate/vendor/blockui.min.css">
 	<script src="assets/js/lib/bootstrap-sweetalert/sweetalert.min.js"></script>
 	<style>
 		input[type="number"]::-webkit-outer-spin-button,

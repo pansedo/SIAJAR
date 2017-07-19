@@ -2,7 +2,6 @@
 require("includes/header-top.php");
 ?>
 <!-- Style for html code -->
-<link rel="stylesheet" href="./assets/css/separate/vendor/blockui.min.css">
 <link rel="stylesheet" href="./assets/css/separate/pages/others.min.css">
 <?php
 require("includes/header-menu.php");
@@ -227,7 +226,6 @@ if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
 	require('includes/footer-top.php');
 ?>
 	<script src="assets/js/lib/autoresize/autoresize-textarea.js"></script>
-	<script type="text/javascript" src="assets/js/lib/blockUI/jquery.blockUI.js"></script>
 
 	<script>
 

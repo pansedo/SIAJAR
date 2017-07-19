@@ -25,7 +25,7 @@ class Tugas
     }
 
     public function getStatusTugas($tugas, $user){
-        $query =  $this->db->kumpul_tugas->findOne(array("id_tugas"=>"$tugas", "id_user"=>$user));
+        $query =  $this->db->tugas_kumpul->findOne(array("id_tugas"=>"$tugas", "id_user"=>"$user"));
         return $query;
     }
 
@@ -53,6 +53,50 @@ class Tugas
             $this->table->update(array("_id" => new MongoId($idTugas)), $update);
             $status     = "Success";
         } catch(MongoCursorException $e) {
+            $status     = "Failed";
+        }
+
+        $result = array("status" => $status);
+        return $result;
+    }
+
+    public function submitTugas($user, $idTugas, $deskripsi, $file){
+
+        if($file['name'] != ""){
+            $ext        = pathinfo($file['name'], PATHINFO_EXTENSION);
+            $file_name	= "$user".'_'.date('dmYHIs').".".$ext;
+            $folderDest	= 'assets/dokumen/'.$file_name;
+
+            move_uploaded_file($file['tmp_name'], $folderDest);
+        }else{
+            $file_name  = "";
+        }
+
+        $insert = array("id_user"=>"$user", "id_tugas" => $idTugas, "deskripsi" => $deskripsi, "file" => $file_name, "nilai" => "0", "catatan" => "", "date_created"=>date('Y-m-d H:i:s'), "date_modified"=>date('Y-m-d H:i:s'));
+
+        $this->db->tugas_kumpul->insert($insert);
+
+        if ($insert) {
+            $status     = "Success";
+        }else{
+            $status     = "Failed";
+        }
+
+        $result = array("status" => $status);
+        return $result;
+    }
+
+    public function insertNilai($idUser, $idTugas, $nilai, $catatan){
+
+
+        $update     = array('$set' => array("nilai" => $nilai, "catatan" => $catatan, "date_modified"=>date('Y-m-d H:i:s')));
+
+        try {
+
+            $this->db->tugas_kumpul->update(array("id_user" => (string)$idUser, "id_tugas" => $idTugas), $update, array("upsert" => true));
+            $status     = "Success";
+        } catch(MongoCursorException $e) {
+
             $status     = "Failed";
         }
 

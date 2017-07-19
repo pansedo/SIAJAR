@@ -228,7 +228,15 @@ if(isset($_POST['updateMapel'])){
 					<aside id="menu-fixed" class="profile-side" style="margin: 0 0 20px">
 						<section class="box-typical">
 							<header class="box-typical-header-sm bordered">
-								<a href="kelas.php?id=<?=$infoKelas['_id']?>" class="pull-right" title="Kelas" data-toggle="popover" data-placement="right" data-trigger="hover" data-content="Kembali ke halaman kelas"><i class="font-icon font-icon-answer" style="color: #3ac9d6;"></i></a>Menu
+								<div class="btn-group" style="float: right;">
+									<button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										Kembali
+									</button>
+									<div class="dropdown-menu dropdown-menu-right">
+										<a href="kelas.php?id=<?=$infoMapel['id_kelas']?>" class="dropdown-item" title="Kelas" data-toggle="popover" data-placement="right" data-trigger="hover" data-content="Kembali ke halaman kelas"><i class="font-icon font-icon-build"></i> Halaman kelas</a>
+									</div>
+								</div>
+								Menu
 							</header>
 							<div class="box-typical-inner">
 								<ul class="side-menu-list">
