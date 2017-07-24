@@ -68,44 +68,13 @@ if(isset($_POST['addMapel'])){
 
 }
 
-//---> Proses Penambah Posting pada Kelas
-if(isset($_POST['postingText'])){
-	if ($hakKelas['status'] == 1 || $hakKelas['status'] == 2) {
-		$post	= trim(htmlentities($_POST['textPost']));
-		$rest	= $kelasClass->addPost($post, $infoKelas['_id'], $_SESSION['lms_id']);
-
-		if ($rest['status'] == "Success") {
-			echo "<script>document.location='kelas.php?id=".$_GET['id']."'</script>";
-		}else{
-			echo	"<script>
-						swal({
-							title: 'Maaf!',
-							text: 'Anda tidak memiliki kewenangan dalam menambahkan Posting-an baru.',
-							type: 'error'
-						}, function() {
-							 window.location = 'index.php';
-						});
-					</script>";
-		}
-	}else {
-		echo	"<script>
-					swal({
-						title: 'Maaf!',
-						text: 'Anda tidak memiliki kewenangan dalam menambahkan Posting-an baru.',
-						type: 'error'
-					}, function() {
-						 window.location = 'index.php';
-					});
-				</script>";
-	}
-}
-
 //---> Proses Update Pengaturan Kelas
 if(isset($_POST['updateKelas'])){
 	if ($hakKelas['status'] == 1) {
 		$nama	= mysql_escape_string($_POST['namakelasupdate']);
 		$post	= htmlentities($_POST['tentang']);
-		$rest	= $kelasClass->updateKelas($nama, $post, $_GET['id']);
+		$tkb	= $_POST['tkb'];
+		$rest	= $kelasClass->updateKelas($nama, $post, $tkb, $_GET['id']);
 
 		echo	"<script>
 					swal({
@@ -130,8 +99,10 @@ if(isset($_POST['updateKelas'])){
 }
 
 ?>
+<link rel="stylesheet" href="assets/css/separate/elements/tags-input.css">
 <link rel="stylesheet" href="assets/css/lib/datatables-net/datatables.min.css">
 <link rel="stylesheet" href="assets/css/separate/vendor/datatables-net.min.css">
+
 <style media="screen">
 	tr:last-child td {
 		border-bottom: 1px solid #d8e2e7;
@@ -169,12 +140,19 @@ if(isset($_POST['updateKelas'])){
 					<div class="form-group row">
 						<label for="tentang" class="col-md-3 form-control-label">Tentang Kelas</label>
 						<div class="col-md-9">
-							<textarea class="form-control" name="tentang" id="tentang" placeholder="Deskripsikan tentang kelas anda - Maksimal 260 karakter" maxlength="260"><?=$infoKelas['tentang']?></textarea>
+							<textarea class="form-control" name="tentang" id="tentang" placeholder="Deskripsikan tentang kelas anda - Maksimal 200 karakter" maxlength="200"><?=$infoKelas['tentang']?></textarea>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="tentang" class="col-md-3 form-control-label">Kelompok Belajar</label>
+						<div class="col-md-9">
+							<!-- <textarea id="tags-editor-textarea" placeholder="Nama Kelompok Belajar"></textarea> -->
+							<input type="tags" name="tkb" data-separator=' ' placeholder="" id="tags" value="<?=$infoKelas['tkb']?>" />
 						</div>
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-rounded btn-danger pull-left" onclick="" name="hapusKelas"><i class="font-icon-trash"></i> Hapus Kelas</button>
+					<button type="button" class="btn btn-rounded btn-danger pull-left" onclick="removeCl('<?=$infoKelas['_id']?>')" name="hapusKelas"><i class="font-icon-trash"></i> Hapus Kelas</button>
 					<button type="submit" class="btn btn-rounded btn-primary" name="updateKelas" value="send" >Simpan</button>
 					<button type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Tutup</button>
 				</div>
@@ -227,7 +205,7 @@ if(isset($_POST['updateKelas'])){
 										<div class="tbl-row">
 											<div class="tbl-cell">
 												<p class="title"><?=$infoKelas['nama']?></p>
-												<p>Kelas</p>
+												<p>Mata Pelajaran</p>
 											</div>
 											<div class="tbl-cell tbl-cell-stat">
 												<div class="inline-block">
@@ -358,8 +336,9 @@ if(isset($_POST['updateKelas'])){
 								</thead>
 								<tbody>
 							<?php
-							if ($infoMapel->count() > 0) {
-								foreach ($infoMapel as $data) {
+							$listMapel = $infoMapel->sort(array('nama' => 1));
+							if ($listMapel->count() > 0) {
+								foreach ($listMapel as $data) {
 									$menu	= '<div class="btn-group" style="float: right;">
 													<button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 														Aksi
@@ -389,6 +368,8 @@ if(isset($_POST['updateKelas'])){
 	require('includes/footer-top.php');
 ?>
 <script src="assets/js/lib/datatables-net/datatables.min.js"></script>
+<script src="assets/js/lib/autoresize/autoresize-textarea.js"></script>
+<script src="assets/js/lib/tags-input/tags-input.js"></script>
 
 <script>
 	var table;
@@ -397,6 +378,10 @@ if(isset($_POST['updateKelas'])){
 		$(elementID).html("");
 	}
 
+	$(function(){
+	  $('#textPost').autoResize();
+	});
+
 	function update(){
   		$('#updateKelas').trigger("reset");
   		$('#updateKelas').modal("show");
@@ -404,6 +389,37 @@ if(isset($_POST['updateKelas'])){
   		   $('#updateKelasLabel').text().replace('Tambah Modul', 'Pengaturan Kelas')
   		).show();
   	}
+
+	function removeCl(ID){
+		swal({
+		  title: "Apakah anda yakin?",
+		  text: "Semua data akan hilang dan tidak dapat dikembalikan!",
+		  type: "warning",
+		  showCancelButton: true,
+			confirmButtonText: "Ya",
+			confirmButtonClass: "btn-danger",
+		  closeOnConfirm: false,
+		  showLoaderOnConfirm: true
+		}, function () {
+			$.ajax({
+				type: 'POST',
+				url: 'url-API/Kelas/',
+				data: {"action": "rmv", "ID": "<?=$_GET['id']?>", "h": <?=$hakKelas['status']?>},
+				success: function(res) {
+					swal({
+						title: res.response,
+						text: res.message,
+						type: res.icon
+					}, function() {
+						 window.location = './';
+					});
+				},
+				error: function () {
+					swal("Gagal!", "Data tidak terhapus!", "error");
+				}
+			});
+		});
+	}
 
 		function remove(ID){
       		swal({
@@ -514,6 +530,7 @@ if(isset($_POST['updateKelas'])){
 		});
 
 	});
+	tagsInput(document.querySelector('input[type="tags"]'));
 </script>
 
 <script src="assets/js/app.js"></script>

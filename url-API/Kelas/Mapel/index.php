@@ -16,7 +16,7 @@ if(isset($method['action'])){
 	}
 
     if($method['action'] == 'showAll'){
-        $catch  = $table->find(array());
+        $catch  = $table->find()->sort(array('nama' => 1));
         foreach ($catch as $row) {
             $data[]   = $row;
         }
@@ -29,7 +29,7 @@ if(isset($method['action'])){
 	}
 
 	if($method['action'] == 'showList'){
-        $catch  = $table->find(array("id_kelas" => $method['ID']));
+        $catch  = $table->find(array("id_kelas" => $method['ID']))->sort(array('nama' => 1));
         $data = array();
         foreach ($catch as $row) {
 			$data[]   = $row;

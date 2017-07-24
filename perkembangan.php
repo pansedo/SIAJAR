@@ -555,12 +555,13 @@ if(isset($_POST['updateMapel'])){
         if (isset($_POST['filterData'])) {
             echo 'table = $("#perkembangan").dataTable({
 					"dom"			 : "Bfrtip",
-					"buttons"		 : ["copy", "csv", "excel", "pdf", "print"],
+					"buttons"		 : ["copy", "excel", "pdf", "print"],
                     "scrollX"        : true,
                     "scrollCollapse" : true,
                     "fixedColumns"   : true,
                     "order"          : [[ 1, "asc" ],[ 0, "asc" ]],
                     "bInfo"          : false,
+					"bLengthChange"  : false,
                     "pagingType"     : "simple",
                     "lengthMenu"     : [[25, 50, -1], [25, 50, "All"]],
             });';

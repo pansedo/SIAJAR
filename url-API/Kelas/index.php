@@ -87,6 +87,27 @@ if(isset($method['action'])){
 		echo $Json;
 	}
 
+    if($method['action'] == 'rmv'){
+        if ($method['h'] == 1) {
+            // ----- REMOVE CLASSROOM
+            $delete = array("_id" => new MongoId($method['ID']));
+            $data   = $table->remove($delete);
+
+            // ----- REMOVE MEMBER CLASSROOM
+            $delete2    = array("id_kelas"=>$method['ID']);
+            $data2      = $table2->remove($delete2);
+
+            $resp   = array('response'=>'Terhapus!', 'message'=>'Data berhasil dihapus!', 'icon'=>'success');
+        } else {
+            $resp   = array('response'=>'Gagal!', 'message'=>'Anda tidak memiliki hak untuk melakukan hal ini!', 'icon'=>'error');
+        }
+
+		$Json   = json_encode($resp);
+		header('Content-Type: application/json');
+
+		echo $Json;
+	}
+
     if($method['action'] == 'removeAnggota'){
         $delete = array("id_user" => $method['ID'], "id_kelas"=>$method['kelas']);
         $data   = $table2->remove($delete);
