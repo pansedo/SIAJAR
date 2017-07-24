@@ -544,6 +544,9 @@ if(isset($_POST['updateMapel'])){
 	require('includes/footer-top.php');
 ?>
     <script src="assets/js/lib/datatables-net/datatables.min.js"></script>
+    <script src="assets/js/lib/datatables-net/buttons-1.2.0/js/dataTables.buttons.min.js"></script>
+    <script src="assets/js/lib/datatables-net/buttons-1.2.0/js/buttons.flash.min.js"></script>
+    <script src="assets/js/lib/datatables-net/buttons-1.2.0/js/buttons.print.min.js"></script>
 
 	<script>
         var table;
@@ -551,12 +554,13 @@ if(isset($_POST['updateMapel'])){
         <?php
         if (isset($_POST['filterData'])) {
             echo 'table = $("#perkembangan").dataTable({
+					"dom"			 : "Bfrtip",
+					"buttons"		 : ["copy", "csv", "excel", "pdf", "print"],
                     "scrollX"        : true,
                     "scrollCollapse" : true,
                     "fixedColumns"   : true,
                     "order"          : [[ 1, "asc" ],[ 0, "asc" ]],
                     "bInfo"          : false,
-                    "bLengthChange"  : false,
                     "pagingType"     : "simple",
                     "lengthMenu"     : [[25, 50, -1], [25, 50, "All"]],
             });';
