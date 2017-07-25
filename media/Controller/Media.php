@@ -825,11 +825,11 @@ class Media
 
 			$deleteTag = $this -> db -> tag ->remove(array("id_dokumen" => new MongoId($id)));
 
-			if ($deleteTag) {
-				echo "<script>alert('terhapus !".$id."'); </script>";
-			}else{
-				echo "<script>alert('gagal !".$id."'); </script>";
-			}
+			// if ($deleteTag) {
+			// 	echo "<script>alert('terhapus !".$id."'); </script>";
+			// }else{
+			// 	echo "<script>alert('gagal !".$id."'); </script>";
+			// }
 
 			$explodetags = explode(",",$tags);
 			foreach ($explodetags as $tag) {
@@ -845,10 +845,10 @@ class Media
 								  timer: 2000
 								}).then(
 								  function () {
-								  	// document.location.href='profile.php';
+								  	document.location.href='profile.php';
 								  },
 								  function (dismiss) {
-								  	// document.location.href='profile.php';
+								  	document.location.href='profile.php';
 								    if (dismiss === 'timer') {
 								      console.log('I was closed by the timer')
 								    }
