@@ -1,7 +1,17 @@
 <aside id="menu-fixed" class="profile-side" style="margin: 0 0 20px">
 	<section class="box-typical">
 		<header class="box-typical-header-sm bordered">
-			<a href="mapel.php?id=<?=$infoMapel['_id']?>" class="pull-right" title="Mata Pelajaran" data-toggle="popover" data-placement="right" data-trigger="hover" data-content="Kembali ke halaman mata pelajaran"><i class="font-icon font-icon-answer" style="color: #3ac9d6;"></i></a><?=$infoModul['nama']?>
+			<div class="btn-group" style="float: right;">
+				<button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					Kembali
+				</button>
+				<div class="dropdown-menu dropdown-menu-right">
+					<a href="kelas.php?id=<?=$infoMapel['id_kelas']?>" class="dropdown-item" title="Kelas" data-toggle="popover" data-placement="right" data-trigger="hover" data-content="Kembali ke halaman kelas"><i class="font-icon font-icon-build"></i> Halaman kelas</a>
+					<a href="mapel.php?id=<?=$infoMapel['_id']?>" class="dropdown-item" title="Mata Pelajaran" data-toggle="popover" data-placement="right" data-trigger="hover" data-content="Kembali ke halaman mata pelajaran"><i class="font-icon font-icon-doc"></i> Halaman mata pelajaran</a>
+				</div>
+			</div>
+			<?=$infoModul['nama']?>
+
 		</header>
 		<div class="box-typical-inner">
 			<ul class="side-menu-list">

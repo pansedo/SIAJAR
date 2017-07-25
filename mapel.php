@@ -241,6 +241,7 @@ if(isset($_POST['updateMapel'])){
 					<?php
 						require("includes/mapel-menu.php");
 					?>
+
 				</div>
 
 				<div class="col-xl-9 col-lg-8">

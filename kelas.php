@@ -168,7 +168,7 @@ if(isset($_POST['updateKelas'])){
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-rounded btn-danger pull-left" onclick="" name="hapusKelas"><i class="font-icon-trash"></i> Hapus Kelas</button>
+					<button type="button" class="btn btn-rounded btn-danger pull-left" onclick="removeCl('<?=$infoKelas['_id']?>')" name="hapusKelas"><i class="font-icon-trash"></i> Hapus Kelas</button>
 					<button type="submit" class="btn btn-rounded btn-primary" name="updateKelas" value="send" >Simpan</button>
 					<button type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Tutup</button>
 				</div>
@@ -473,6 +473,37 @@ if(isset($_POST['updateKelas'])){
       		   $('#updateKelasLabel').text().replace('Tambah Modul', 'Pengaturan Kelas')
       		).show();
       	}
+
+		function removeCl(ID){
+			swal({
+			  title: "Apakah anda yakin?",
+			  text: "Semua data yang sudah dihapus, tidak dapat dikembalikan lagi!",
+			  type: "warning",
+			  showCancelButton: true,
+				confirmButtonText: "Ya",
+				confirmButtonClass: "btn-danger",
+			  closeOnConfirm: false,
+			  showLoaderOnConfirm: true
+			}, function () {
+				$.ajax({
+					type: 'POST',
+					url: 'url-API/Kelas/',
+					data: {"action": "rmv", "ID": "<?=$_GET['id']?>", "h": <?=$hakKelas['status']?>},
+					success: function(res) {
+						swal({
+							title: res.response,
+							text: res.message,
+							type: res.icon
+						}, function() {
+							 window.location = './';
+						});
+					},
+					error: function () {
+						swal("Gagal!", "Data tidak terhapus!", "error");
+					}
+				});
+			});
+		}
 
 		function removePost(ID){
       		swal({

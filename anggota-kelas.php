@@ -10,6 +10,7 @@ $userClass	= new User();
 $infoKelas	= $kelasClass->getInfoKelas($_GET['id']);
 
 $hakKelas	= $kelasClass->getKeanggotaan($_GET['id'], $_SESSION['lms_id']);
+echo "Ini loh hak kelas-nya : ".$hakKelas['status'];
 // $anggota	= in_array($_SESSION['lms_id'], array_values($infoKelas['list_member'])) ? true : false;
 if(!$hakKelas['status']){
 	echo "<script>
@@ -66,38 +67,6 @@ if(isset($_POST['addMapel'])){
 
 }
 
-//---> Proses Penambah Posting pada Kelas
-if(isset($_POST['postingText'])){
-	if ($hakKelas['status'] == 1 || $hakKelas['status'] == 2) {
-		$post	= trim(htmlentities($_POST['textPost']));
-		$rest	= $kelasClass->addPost($post, $infoKelas['_id'], $_SESSION['lms_id']);
-
-		if ($rest['status'] == "Success") {
-			echo "<script>document.location='kelas.php?id=".$_GET['id']."'</script>";
-		}else{
-			echo	"<script>
-						swal({
-							title: 'Maaf!',
-							text: 'Anda tidak memiliki kewenangan dalam menambahkan Posting-an baru.',
-							type: 'error'
-						}, function() {
-							 window.location = 'index.php';
-						});
-					</script>";
-		}
-	}else {
-		echo	"<script>
-					swal({
-						title: 'Maaf!',
-						text: 'Anda tidak memiliki kewenangan dalam menambahkan Posting-an baru.',
-						type: 'error'
-					}, function() {
-						 window.location = 'index.php';
-					});
-				</script>";
-	}
-}
-
 //---> Proses Update Pengaturan Kelas
 if(isset($_POST['updateKelas'])){
 	if ($hakKelas['status'] == 1) {
@@ -131,6 +100,7 @@ if(isset($_POST['updateKelas'])){
 ?>
 <link rel="stylesheet" href="assets/css/lib/datatables-net/datatables.min.css">
 <link rel="stylesheet" href="assets/css/separate/vendor/datatables-net.min.css">
+<link rel="stylesheet" href="assets/css/separate/elements/tags-input.css">
 <style media="screen">
 	tr:last-child td {
 		border-bottom: 1px solid #d8e2e7;
@@ -191,7 +161,7 @@ if(isset($_POST['updateKelas'])){
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-rounded btn-danger pull-left" onclick="" name="hapusKelas"><i class="font-icon-trash"></i> Hapus Kelas</button>
+					<button type="button" class="btn btn-rounded btn-danger pull-left" onclick="removeCl('<?=$infoKelas['_id']?>')" name="hapusKelas"><i class="font-icon-trash"></i> Hapus Kelas</button>
 					<button type="submit" class="btn btn-rounded btn-primary" name="updateKelas" value="send" >Simpan</button>
 					<button type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Tutup</button>
 				</div>
@@ -518,8 +488,9 @@ if(isset($_POST['updateKelas'])){
 <?php
 	require('includes/footer-top.php');
 ?>
-<script src="assets/js/lib/tags-input/tags-input.js"></script>
 <script src="assets/js/lib/datatables-net/datatables.min.js"></script>
+<script src="assets/js/lib/autoresize/autoresize-textarea.js"></script>
+<script src="assets/js/lib/tags-input/tags-input.js"></script>
 
 <script>
 	var table;
@@ -528,6 +499,10 @@ if(isset($_POST['updateKelas'])){
 		$(elementID).html("");
 	}
 
+	$(function(){
+	  $('#textPost').autoResize();
+	});
+
 	function update(){
   		$('#updateKelas').trigger("reset");
   		$('#updateKelas').modal("show");
@@ -535,6 +510,37 @@ if(isset($_POST['updateKelas'])){
   		   $('#updateKelasLabel').text().replace('Tambah Modul', 'Pengaturan Kelas')
   		).show();
   	}
+
+	function removeCl(ID){
+		swal({
+		  title: "Apakah anda yakin?",
+		  text: "Semua data yang sudah dihapus, tidak dapat dikembalikan lagi!",
+		  type: "warning",
+		  showCancelButton: true,
+			confirmButtonText: "Ya",
+			confirmButtonClass: "btn-danger",
+		  closeOnConfirm: false,
+		  showLoaderOnConfirm: true
+		}, function () {
+			$.ajax({
+				type: 'POST',
+				url: 'url-API/Kelas/',
+				data: {"action": "rmv", "ID": "<?=$_GET['id']?>", "h": <?=$hakKelas['status']?>},
+				success: function(res) {
+					swal({
+						title: res.response,
+						text: res.message,
+						type: res.icon
+					}, function() {
+						 window.location = './';
+					});
+				},
+				error: function () {
+					swal("Gagal!", "Data tidak terhapus!", "error");
+				}
+			});
+		});
+	}
 
 		function remove(ID){
       		swal({

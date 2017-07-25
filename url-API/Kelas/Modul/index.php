@@ -48,7 +48,7 @@ if(isset($method['action'])){
             $update = array("nilai" => $nilai, "date_modified"=>date('Y-m-d H:i:s'));
             $sukses = $db->modul_kumpul->update(array("id_user"=> $siswa, "id_modul"=>$modul), array('$set'=>$update));
 
-            $status = $sukses ? array('response'=>'Berhasil!', 'message'=>'Data berhasil disimpan m1!', 'icon'=>'success') : array('response'=>'Maaf!', 'message'=>'Data tidak tersimpan!', 'icon'=>'error');
+            $status = $sukses ? array('response'=>'Berhasil!', 'message'=>'Data berhasil disimpan!', 'icon'=>'success') : array('response'=>'Maaf!', 'message'=>'Data tidak tersimpan!', 'icon'=>'error');
             $Json   = json_encode($status);
     		header('Content-Type: application/json');
 
@@ -57,7 +57,7 @@ if(isset($method['action'])){
             $insert = array("id_user"=>$siswa, "id_modul"=>$modul, "nilai"=>$nilai, "date_created"=>date('Y-m-d H:i:s'), "date_modified"=>date('Y-m-d H:i:s'));
                       $db->modul_kumpul->insert($insert);
 
-            $status = $insert ? array('response'=>'Berhasil!', 'message'=>'Data berhasil disimpan m2!', 'icon'=>'success') : array('response'=>'Maaf!', 'message'=>'Data tidak tersimpan!', 'icon'=>'error');
+            $status = $insert ? array('response'=>'Berhasil!', 'message'=>'Data berhasil disimpan!', 'icon'=>'success') : array('response'=>'Maaf!', 'message'=>'Data tidak tersimpan!', 'icon'=>'error');
             $Json   = json_encode($status);
     		header('Content-Type: application/json');
 
@@ -75,7 +75,7 @@ if(isset($method['action'])){
             $update = array("nilai" => $nilai, "date_modified"=>date('Y-m-d H:i:s'));
             $sukses = $db->tugas_kumpul->update(array("id_user"=>"$siswa", "id_tugas"=>"$tugas"), array('$set'=>$update));
 
-            $status = $sukses ? array('response'=>'Berhasil!', 'message'=>'Data berhasil disimpan t1!', 'icon'=>'success') : array('response'=>'Maaf!', 'message'=>'Data tidak tersimpan!', 'icon'=>'error');
+            $status = $sukses ? array('response'=>'Berhasil!', 'message'=>'Data berhasil disimpan!', 'icon'=>'success') : array('response'=>'Maaf!', 'message'=>'Data tidak tersimpan!', 'icon'=>'error');
             $Json   = json_encode($status);
     		header('Content-Type: application/json');
 
@@ -84,7 +84,7 @@ if(isset($method['action'])){
             $insert = array("id_user"=>"$siswa", "id_tugas"=>"$tugas", "nilai"=>$nilai, "catatan"=>"", "file"=>"", "date_created"=>date('Y-m-d H:i:s'), "date_modified"=>date('Y-m-d H:i:s'));
                       $db->tugas_kumpul->insert($insert);
 
-            $status = $insert ? array('response'=>'Berhasil!', 'message'=>'Data berhasil disimpan t2!', 'icon'=>'success') : array('response'=>'Maaf!', 'message'=>'Data tidak tersimpan!', 'icon'=>'error');
+            $status = $insert ? array('response'=>'Berhasil!', 'message'=>'Data berhasil disimpan!', 'icon'=>'success') : array('response'=>'Maaf!', 'message'=>'Data tidak tersimpan!', 'icon'=>'error');
             $Json   = json_encode($status);
     		header('Content-Type: application/json');
 
@@ -102,7 +102,7 @@ if(isset($method['action'])){
             $update = array("nilai" => $nilai, "date_modified"=>date('Y-m-d H:i:s'));
             $sukses = $db->kumpul_quiz->update(array("id_user"=> $siswa, "id_quiz"=>$ujian), array('$set'=>$update));
 
-            $status = $sukses ? array('response'=>'Berhasil!', 'message'=>'Data berhasil disimpan u1!', 'icon'=>'success') : array('response'=>'Maaf!', 'message'=>'Data tidak tersimpan!', 'icon'=>'error');
+            $status = $sukses ? array('response'=>'Berhasil!', 'message'=>'Data berhasil disimpan!', 'icon'=>'success') : array('response'=>'Maaf!', 'message'=>'Data tidak tersimpan!', 'icon'=>'error');
             $Json   = json_encode($status);
     		header('Content-Type: application/json');
 
@@ -111,7 +111,7 @@ if(isset($method['action'])){
             $insert = array("id_user"=>$siswa, "id_quiz"=>$ujian, "nilai"=>$nilai, "date_created"=>date('Y-m-d H:i:s'), "date_modified"=>date('Y-m-d H:i:s'));
                       $db->kumpul_quiz->insert($insert);
 
-            $status = $insert ? array('response'=>'Berhasil!', 'message'=>'Data berhasil disimpan u2!', 'icon'=>'success') : array('response'=>'Maaf!', 'message'=>'Data tidak tersimpan!', 'icon'=>'error');
+            $status = $insert ? array('response'=>'Berhasil!', 'message'=>'Data berhasil disimpan!', 'icon'=>'success') : array('response'=>'Maaf!', 'message'=>'Data tidak tersimpan!', 'icon'=>'error');
             $Json   = json_encode($status);
     		header('Content-Type: application/json');
 
