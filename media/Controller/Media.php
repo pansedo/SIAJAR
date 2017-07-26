@@ -7,8 +7,10 @@ class Media
             global $db;  
 
             $tableName = 'dokumen';
+            $tableName2 = 'tag';
             $this->db = $db;
             $this->table = $this->db->$tableName;
+            $this->table2 = $this->db->$tableName2;
         } catch(Exception $e) {
             echo "Database Not Connection";
             exit();
@@ -626,15 +628,16 @@ class Media
 
 		if ($updatedokumen) {
 			# code...
+			echo "<script>alert('update')</script>";
 			$deleteTags = array(
-				"id_dokumen" => "$id"
+				"id_dokumen" => new MongoId($id)
 				);
 
-			$deleteTag = $this -> db -> tag ->remove($deleteTags);
+			$deleteTag = $this->db->tag->remove($deleteTags);
 
 			$explodetags = explode(",",$tags);
 			foreach ($explodetags as $tag) {
-				$inserts = array("id_dokumen" => "$id", "nama" => $tag );
+				$inserts = array("id_dokumen" => new MongoId($id), "nama" => $tag );
 				$inserttag = $this -> db -> tag -> insert($inserts);
 			}
 			echo "<script type='text/javascript'>swal({
@@ -815,14 +818,22 @@ class Media
 		if ($updatedokumen) {
 			# code...
 			$deleteTags = array(
-				"id_dokumen" => "$id"
+				"id_dokumen" => new MongoId($id)
 				);
 
-			$deleteTag = $this -> db -> tag ->remove($deleteTags);
+			// echo "<script>alert('Data gagal diperbarui !".$id."'); </script>";
+
+			$deleteTag = $this -> db -> tag ->remove(array("id_dokumen" => new MongoId($id)));
+
+			// if ($deleteTag) {
+			// 	echo "<script>alert('terhapus !".$id."'); </script>";
+			// }else{
+			// 	echo "<script>alert('gagal !".$id."'); </script>";
+			// }
 
 			$explodetags = explode(",",$tags);
 			foreach ($explodetags as $tag) {
-				$inserts = array("id_dokumen" => "$id", "nama" => $tag );
+				$inserts = array("id_dokumen" => new MongoId($id), "nama" => $tag );
 				$inserttag = $this -> db -> tag -> insert($inserts);
 			}
 
@@ -844,7 +855,7 @@ class Media
 								  })
 				</script>";
 		}else{
-			echo "<script>alert('Data gagal di rubah !'); </script>";
+			echo "<script>alert('Data gagal diperbarui !'); </script>";
 		}
     }
 
@@ -868,7 +879,7 @@ class Media
 		$this -> table -> remove($dokumen);
 
 		$deleteTags = array(
-			"id_dokumen" => "$id"
+			"id_dokumen" => new MongoId($id)
 			);
 
 		$deleteTag = $this -> db -> tag ->remove($deleteTags);
@@ -896,7 +907,7 @@ class Media
 		$delete= $this -> table -> remove($dokumen);
 
 		$deleteTags = array(
-			"id_dokumen" => "$id"
+			"id_dokumen" => new MongoId($id)
 			);
 
 		$deleteTag = $this -> db -> tag ->remove($deleteTags);

@@ -1,5 +1,5 @@
 <?php
-define('base_url', 'http://'.$_SERVER['SERVER_NAME'].'/siajar-lms/');
+define('base_url', 'http://'.$_SERVER['SERVER_NAME'].'/siajar/');
 date_default_timezone_set('Asia/Jakarta');
 // error_reporting(0);
 session_start();

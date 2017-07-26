@@ -60,9 +60,12 @@ if (isset($_GET['md'])) {
   $infoModul		= $modulClass->getInfoModul($_GET['md']);
   $infoMapel    = $mapelClass->getInfoMapel($infoModul['id_mapel']);
 }
-
-$infoSoal	= $soalClass->getInfoSoal($_GET['id']);
+if (isset($_GET['id'])) {
+  # code...
+  $infoSoal = $soalClass->getInfoSoal($_GET['id']);
 $listJawaban = $soalClass->getListJawaban($_GET['id']);
+}
+
 
 if(isset($_POST['updateQuiz'])){
     // print_r($_POST);
@@ -96,6 +99,16 @@ if(isset($_POST['updateQuiz'])){
     }
 }
 
+if(isset($_POST['addQuiz'])){
+  // print_r($_POST);
+  $soal     = $_POST['soal'];
+  $jawaban  = $_POST['jawaban'];
+  $benar    = $_POST['benar'];
+
+// print_r($benar);
+  $soalClass->addSoal($soal,$jawaban,$benar,$infoQuiz['id_paket'], $_SESSION['lms_id']);
+}
+
 
 ?>
 	<div class="page-content">
@@ -127,10 +140,10 @@ if(isset($_POST['updateQuiz'])){
 				<div class="col-xl-12 col-lg-12">
 					<section class="card card-default">
                     <?php
-                        if (isset($_GET['act']) && ($_GET['act'] == 'update')) {
+                        if (isset($_GET['act']) && isset($_GET['id']) && ($_GET['act'] == 'update')) {
                     ?>
                         <div class="card-block">
-                            <h5 class="with-border">Perbarui Soal</h5>
+                            <h5 class="with-border" >Perbarui Soal</h5>
                            <form id="form_tambah" method="POST">
                                 <div class="modal-body">
                                     <fieldset class="form-group">
@@ -140,10 +153,13 @@ if(isset($_POST['updateQuiz'])){
                                     <label class="form-label semibold" for="exampleInput">Jawaban</label>
                                     <hr />
                                     <?php 
+                                    $i = 0;
                                     foreach ($listJawaban as $jawaban) {
+                                      $i= $i + 1;
+
                                     ?>
                                     <fieldset class="form-group">
-                                       <label class="form-label " for="exampleInput">Pilhan 1</label>
+                                       <label class="form-label " for="exampleInput">Pilhan <?=$i;?></label>
                                         <textarea class ="myeditablediv" name="jawaban[]" ><?=$jawaban['text'];?></textarea>
                                         Atur Jawaban Benar <input type="radio" name="benar" value="0" <?php if($jawaban['status'] == "benar"){echo "checked";} ?>>
                                     </fieldset>
@@ -154,6 +170,10 @@ if(isset($_POST['updateQuiz'])){
                                         
                                     </div>
                                     <a style="align:right;color:#009dff;" id="tambahopsi" onclick="tambahOpsi();">+ Tambah Pilihan</a>
+                                    <br />
+                                    <br />
+                                    
+                                    
                                 </div>
                                 <div class="modal-footer">
                                     <button type="submit" name="updateQuiz" value="send" class="btn btn-rounded btn-primary">Simpan</button>
@@ -165,42 +185,41 @@ if(isset($_POST['updateQuiz'])){
                         }else {
                     ?>
 						<div class="card-block">
-                            <h5 class="with-border">Penambahan Materi</h5>
-                            <form id="form_tambah" method="POST">
-                                <div class="form-group row">
-                                    <label class="col-md-2 form-control-label">Terbitkan ?</label>
-                                    <div class="col-md-8">
-                                        <div class="radio">
-            								<input type="radio" name="publikasi" id="radio-1" value="publish">
-            								<label for="radio-1">Ya </label>
-                                            &nbsp;
-            								<input type="radio" name="publikasi" id="radio-2" value="draft" checked>
-            								<label for="radio-2">Tidak </label>
-            							</div>
-                                    </div>
-                                </div>
-            					<div class="form-group row">
-            						<label class="col-md-2 form-control-label">Judul materi</label>
-            						<div class="col-md-8">
-            							<input type="text" class="form-control" name="judul" placeholder="Judul dari materi" required="require">
-            						</div>
-            					</div>
-                                <div class="form-group row">
-            						<label class="col-md-2 form-control-label">Isi materi</label>
-            						<div class="col-md-9">
-                                        <div id="editorContainer">
-                    						<div id="toolbarLocation"></div>
-                							<textarea id="editormce" class="form-control wrs_div_box" contenteditable="true" tabindex="0" spellcheck="false" aria-label="Rich Text Editor, example"></textarea>
-                							<input id="editor" type="text" name="isi_materi" style="display: none;" />
-                    					</div>
-            						</div>
-            					</div>
-                                <hr>
-                                <div class="form-group pull-right">
-									<button type="submit" name="addMateri" class="btn">Tambah</button>
-									<button type="button" class="btn btn-default" onclick="history.go(-1)">Batal</button>
-								</div>
-            				</form>
+              <h5 class="with-border" >Penambahan Soal</h5>
+              <form id="form_tambah" method="POST">
+                <div class="modal-header">
+                  <button type="button" class="modal-close" data-dismiss="modal" aria-label="Close">
+                    <i class="font-icon-close-2"></i>
+                  </button>
+                  <h4 class="modal-title" id="addModulLabel">Tambah Kuis</h4>
+                </div>
+                <div class="modal-body">
+                  <fieldset class="form-group">
+                    <label class="form-label semibold" for="exampleInput">Soal</label>
+                    <textarea class ="myeditablediv" id="soal" name="soal" ></textarea>
+                  </fieldset>
+                  <label class="form-label semibold" for="exampleInput">Jawaban</label>
+                  <hr />
+                  <fieldset class="form-group">
+                    <label class="form-label " for="exampleInput">Pilhan 1</label>
+                    <textarea class ="myeditablediv" id="jawab1" name="jawaban[]" ></textarea>
+                    Atur Jawaban Benar <input type="radio" name="benar" value="0" checked="checked">
+                  </fieldset>
+                  <fieldset class="form-group">
+                    <label class="form-label " for="exampleInput">Pilihan 2</label>
+                    <textarea class="myeditablediv" id="jawab2" name="jawaban[]" ></textarea>
+                    Atur Jawaban Benar <input type="radio" name="benar" value="1">
+                  </fieldset>
+                  <div class ="opsitambahan">
+
+                  </div>
+                  <a style="align:right;color:#009dff;" id="tambahopsi" onclick="tambahOpsi();">+ Tambah Pilihan</a>
+                </div>
+                <div class="modal-footer">
+                  <button type="submit" name="addQuiz" value="send" class="btn btn-rounded btn-primary">Simpan</button>
+                  <button type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Tutup</button>
+                </div>
+              </form>
 						</div>
                     <?php
                         }
@@ -215,6 +234,15 @@ if(isset($_POST['updateQuiz'])){
 <?php
 	require('includes/footer-top.php');
 ?>
+<script>
+$(document).ready(function(){
+    $("#hapuspilihan").click(function(){
+      var id = this.id();
+      alert('asdsadad');
+        $("#asu").remove();
+    });
+});
+</script>
 	<script>
                 var i = 2;
                 var j = 1;
@@ -224,7 +252,8 @@ if(isset($_POST['updateQuiz'])){
                 // js.src = "./assets/tinymce4/js/tinymce/plugins/tiny_mce_wiris/integration/WIRISplugins.js?viewer=image";
                 // js.src = "./assets/tinymce4/js/tinymce/tinymce.min.js";
 
-                $(".opsitambahan").append("<fieldset class='form-group'><label class='form-label' for='exampleInput'>Pilihan "+i+"</label><textarea class='myeditablediv' name='jawaban[]' ></textarea>Atur Jawaban Benar <input type='radio' name='benar' value='"+j+"'></fieldset>");
+                // $(".opsitambahan").append("<fieldset class='form-group'><label class='form-label' for='exampleInput'>Pilihan "+i+"</label><textarea class='myeditablediv' name='jawaban[]' ></textarea>Atur Jawaban Benar <input type='radio' name='benar' value='"+j+"'></fieldset>");
+        $(".opsitambahan").append("<fieldset class='form-group' id='pilihan"+i+"'><label class='form-label' id="+i+" for='exampleInput'>Pilihan "+i+"</label><textarea class='myeditablediv' name='jawaban[]' ></textarea>Atur Jawaban Benar <input type='radio' name='benar' value='"+j+"'><br><a class='btn btn-warning' id='pilihan"+i+"' onclick='hapusOpsi("+i+");' name=''>x</a></fieldset>");
 
             tinymce.init({
                 selector: '.myeditablediv',
@@ -265,6 +294,12 @@ if(isset($_POST['updateQuiz'])){
 		$(document).ready(function() {
 			$('.note-statusbar').hide();
 		});
+
+    function hapusOpsi(a){
+      var ab = '#pilihan'+a;
+      // alert (ab);
+      $(''+ab).remove();
+    }
 
 		function clearText(elementID){
 			$(elementID).html("");

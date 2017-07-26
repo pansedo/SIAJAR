@@ -122,13 +122,14 @@
 									
 									<div class="tbl-cell tbl-cell-status" style="float:right">
 									<?php 
-										if ($id_users = $data['id_user']) {
+										if (isset($id_users)){ if ($id_users == $data['id_user']) {
 											# code...
 										
 									?>		
 										<a href="media.php?action=edit&id=<?php echo base64_encode($data['_id']);?>" class="font-icon font-icon-pencil"></a>
 										<a href="media.php?action=edit&id=<?php echo base64_encode($data['_id']);?>" class="font-icon font-icon-trash "></a>
-									<?php } ?>
+									<?php } 
+									}?>
 									</div>
 									<!-- <a href="#" class="card-typical-likes">
 										<i class="font-icon font-icon-heart"></i>
