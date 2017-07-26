@@ -31,6 +31,8 @@
         <link rel="stylesheet" type="text/css" href="assets/css/lib/front/style.css">
         <link rel="stylesheet" type="text/css" href="assets/css/lib/front/loader.css">
         <link rel="stylesheet" type="text/css" href="assets/css/separate/pages/login.css">
+        <link rel="stylesheet" type="text/css" href="assets/css/owl.theme.css">
+        <link rel="stylesheet" type="text/css" href="assets/css/owl.carousel.css">
 
         <link href="assets/img/favicon.ico" rel="shortcut icon">
 
@@ -238,13 +240,13 @@
         </header>
 
         <!--Search-->
-        <div id="search">
+        <!-- <div id="search">
             <button type="button" class="close">×</button>
             <form>
                 <input type="search" value="" placeholder="Search here...."  required/>
                 <button type="submit" class="btn btn_common yellow">Search</button>
             </form>
-        </div>
+        </div> -->
 
         <!--Text Banner-->
         <section class="padding" id="text_rotator_parent">
@@ -270,6 +272,49 @@
             </div>
         </section>
         <!--Text Banner ends-->
+
+        <section style="-moz-box-shadow: 0 3px 3px -3px rgba(0,0,0,.35); -o-box-shadow: 0 3px 3px -3px rgba(0,0,0,.35); -webkit-box-shadow: 0 3px 3px -3px rgba(0,0,0,.35); box-shadow: 0 3px 3px -3px rgba(0,0,0,.35);">
+            <div class="text-center">
+                <div style="width: 200px; margin:0 auto; padding: 10px; background: #3ac9d6; border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; font-family: 'museo_slab700'">Kerjasama Antara</div>
+            </div>
+            <div id="owl-demo" class="owl-carousel owl-theme" style="opacity: 1; display: block;">
+                <div class="owl-item">
+                    <div align="center">
+                        <a href="https://kemdikbud.go.id/" target="_blank" title="Kementerian Pendidikan dan Kebudayaan">
+                            <img style="max-height: 150px; max-width:150px; padding: 20px;" src="assets/img/dikbud.png" alt="KEMENDIKBUD" title="Kementerian Pendidikan dan Kebudayaan">
+                        </a>
+                    </div>
+                </div>
+
+                <div class="owl-item">
+                    <div align="center">
+                        <a href="http://jabarprov.go.id/" target="_blank" title="Dinas Pendidikan Provinsi Jawa Barat">
+                            <img style="max-height: 150px; max-width:150px; padding: 20px;" src="assets/img/jabar.png" alt="Dinas Pendidikan Provinsi Jawa Barat">
+                        </a>
+                    </div>
+                </div>
+
+                <div class="owl-item">
+                    <div align="center">
+                        <a href="http://pauddikmas-jayagiri.info/" target="_blank" title="PP PAUDDIKMAS JABAR">
+                            <img style="max-height: 150px; max-width:150px; padding: 20px;" src="assets/img/jayagiri.png" alt="PP PAUDDIKMAS JABAR">
+                        </a>
+                    </div>
+                </div>
+
+                <div class="owl-item">
+                    <div align="center">
+                        <a href="http://www.seamolec.org/" target="_blank" title="SEAMEO SEAMOLEC">
+                            <img style="max-height: 150px; max-width:150px; padding: 20px;" src="assets/img/20seam.png" alt="SEAMEO SEAMOLEC">
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="owl-controls clickable">
+                <div class="owl-pagination"></div>
+            </div>
+        </section>
 
         <!--ABout US-->
         <section id="about" class="padding-top">
@@ -457,6 +502,7 @@
         <script src="assets/js/lib/front/wow.min.js"></script>
         <script src="assets/js/lib/front/functions.js"></script>
         <script src="assets/js/lib/front/bootstrap-show-password.js"></script>
+        <script src="assets/js/owl.carousel.js"></script>
 
         <script>
             $(function() {
@@ -581,6 +627,17 @@
                         match_password = false;
                         $('#icon_re_password_guru').html('<i class="fa fa-times errspan" aria-hidden="true"></i>');
                     }
+                });
+            });
+
+            $(document).ready(function() {
+                $("#owl-demo").owlCarousel({
+                   autoPlay: 4000, //Set AutoPlay to 3 seconds
+                   items : 4,
+                   itemsDesktop : [1199,5],
+                   itemsDesktopSmall : [979,5],
+                   itemsTablet : [768,3],
+                   itemsMobile : [479,1]
                 });
             });
         </script>
