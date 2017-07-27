@@ -62,7 +62,7 @@
 							</header>
 							<?php
 								foreach ($getTagByMedia as $datatag) { 
-									echo "<a href='' class='label label-light-grey'>".$datatag['nama']."</a>";
+									echo "<a href='searchtag.php?tag=".$datatag['nama']."' class='label label-light-grey'>".$datatag['nama']."</a>";
 								} 
 							?>
 						</section>

@@ -3,7 +3,7 @@
 	include 'include/menu.php';
 	$classKategori = new Kategori();
 	$classMedia = new Media();
-	$classPopular = new Popular();
+	$classPopular = new Popular(); 
 
 
 	$getkategoriutama = $classKategori->GetKategoriUtama();
@@ -11,7 +11,7 @@
 	$getMediaPagging = $classMedia->GetMediaPagging();
 	$getMediaTerbanyak = $classPopular->MediaTerbanyak();
 	$getTagTerbanyak = $classPopular->TagTerbanyak();
-
+	
 ?>
 	<div class="page-content">
 		<div class="container-fluid">
@@ -58,9 +58,9 @@
 									</p><ul style="list-style-type: circle;margin-left: 20px;">
 									<?php 
 										foreach ($getTagTerbanyak as $tags) {
-											if (is_array($tags)) {
+											if (is_array($tags)) { 
 												foreach ($tags as $tag) {
-													echo "<a href='#' class='btn btn-inline btn-primary btn-sm ladda-button'>".$tag['_id']."</a>";
+													echo "<a href='searchtag.php?tag=".$tag['_id']."' class='btn btn-inline btn-primary btn-sm ladda-button'>".$tag['_id']."</a>";
 												}
 											}
 										}
