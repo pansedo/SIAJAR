@@ -42,13 +42,31 @@ class Soal
     }
 
     public function getListSoalbyQuiz($idPaket){
-        $query =  $this->table->find(array("id_paket"=>"$idPaket"));
-        return iterator_to_array($query);
+        $query      =  $this->table->find(array("id_paket"=>"$idPaket"));
+        $list_soal  = iterator_to_array($query);
+        $keys       = array_keys($list_soal);
+
+        shuffle($keys);
+
+        foreach ($keys as $key) {
+            $random_list_soal[$key] = $list_soal[$key];
+        }
+
+        return $random_list_soal;
     }
 
     public function getListOpsiSoal($idSoal){
         $query =  $this->db->opsi_soal->find(array("id_soal"=>"$idSoal"));
-        return $query;
+        $list_opsi_soal  = iterator_to_array($query);
+        $keys       = array_keys($list_opsi_soal);
+
+        shuffle($keys);
+
+        foreach ($keys as $key) {
+            $random_list_opsi_soal[$key] = $list_opsi_soal[$key];
+        }
+
+        return $random_list_opsi_soal;
     }
 
     public function getSoalbyId($idSoal){
@@ -97,7 +115,7 @@ class Soal
                 # code...
                 echo "<script>alert('Sukses'); document.location='paket-detail.php?id=".$_GET['id']."</script>";
             }
-            
+
         }else {
             $hasil     = "Failed";
         }

@@ -1,11 +1,14 @@
 <?php
 	include "include/header.php";
+	?>
+	
+	<?php
 	include 'include/menu.php';
 
 	if (!isset($_SESSION['lms_id']) && !isset($_SESSION['lms_username']) && !isset($_SESSION['lms_status'])) {
         header("Location:Auth/logout.php");
         exit();
-    }else{ 
+    }else{  
         set_time_limit(10000); 
         $id_users   = $_SESSION['lms_id'];
         $email    = $_SESSION['lms_username'];
@@ -27,6 +30,7 @@
         $judul = mysql_escape_string($_POST['judul']);
         // $deskripsi = mysql_escape_string($_POST['deskripsi']);
         $deskripsi = trim(htmlentities($_POST['deskripsi']));
+
         $kategori = mysql_escape_string($_POST['kategori']);
         $tags = mysql_escape_string($_POST['tags']);
         if (isset($_POST['tautan'])) {
@@ -53,6 +57,7 @@
 		$judul = mysql_escape_string($_POST['judul']);
         // $deskripsi = mysql_escape_string($_POST['deskripsi']);
         $deskripsi = trim(htmlentities($_POST['deskripsi']));
+
         $kategori = mysql_escape_string($_POST['kategori']);
         $tags = mysql_escape_string($_POST['tags']);
         if (isset($_POST['tautan'])) {
@@ -138,7 +143,7 @@
 										</fieldset>
 										<fieldset class="form-group">
 											<label class="form-label">Deskripsi</label>
-											<textarea rows="4" class="form-control maxlength-simple" name="deskripsi" required></textarea>
+											<textarea rows="4" class="form-control maxlength-simple myeditablediv" class="" name="deskripsi" ></textarea>
 										</fieldset>
 										<fieldset class="form-group">
 											<div class="row">
@@ -221,11 +226,11 @@
 								
 										<fieldset class="form-group">
 											<label class="form-label">Judul</label>
-											<input type="text" name="judul" required class="form-control maxlength-simple" id="exampleInput" value="<?php echo $getMediaById['judul'];?>" placeholder="Judul" maxlength="45">
+											<input type="text" name="judul" required class="form-control maxlength-simple " id="exampleInput" value="<?php echo $getMediaById['judul'];?>" placeholder="Judul" maxlength="45">
 										</fieldset>
 										<fieldset class="form-group">
 											<label class="form-label">Deskripsi</label>
-											<textarea rows="4" class="form-control maxlength-simple" name="deskripsi" required><?php echo $getMediaById['deskripsi'];?></textarea>
+											<textarea rows="4" class="form-control maxlength-simple myeditablediv" name="deskripsi" required><?php echo $getMediaById['deskripsi'];?></textarea>
 										</fieldset>
 										<fieldset class="form-group">
 											<div class="row">

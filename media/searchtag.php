@@ -7,13 +7,13 @@
         if ($_GET['tag'] == "") {
             echo "<script>document.location.href='index.php'</script>";
         }
-        $text = $_GET['tag'];
-        $serach = $classMedia->SearchData($text);
+        $text = $_GET['tag']; 
+        $serach = $classMedia->SearchDataTag($text);
         ?>
         <div class="page-content">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-xl-12 col-lg-8">
+                    <div class="col-xl-12 col-lg-8"> 
                     <?php
                         $no = 1;
                         foreach ($serach as $data) {

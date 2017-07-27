@@ -32,7 +32,7 @@
 	
 <script type="text/javascript" src="Assets/js/jquery.uploadPreview.min.js"></script>
 <script src="Assets/js/lib/uploadfile/custom-file-input.js"></script>
-<script src="Assets/js/app.js"></script>\
+<script src="Assets/js/app.js"></script>
 
 
 	<script type="text/javascript">

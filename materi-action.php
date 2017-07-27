@@ -35,7 +35,7 @@ if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
         // echo "<pre>";
         // print_r($_POST);
         // echo "</pre>";
-		echo "<script>alert('".$rest['status']."'); document.location='materi.php?modul=".$_GET['modul']."'</script>";
+		echo "<script>alert('".$rest['status']."'); document.location='modul.php?modul=".$_GET['modul']."'</script>";
 	}else{
 		echo "<script>alert('Gagal Update')</script>";
 	}

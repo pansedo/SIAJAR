@@ -347,7 +347,7 @@ if (isset($_POST['updateInfoQuiz'])) {
 				// js.src = "./assets/tinymce4/js/tinymce/plugins/tiny_mce_wiris/integration/WIRISplugins.js?viewer=image";
 				// js.src = "./assets/tinymce4/js/tinymce/tinymce.min.js";
 
-				$(".opsitambahan").append("<fieldset class='form-group'><label class='form-label' for='exampleInput'>Pilihan "+i+"</label><textarea class='myeditablediv' name='jawaban[]' ></textarea>Atur Jawaban Benar <input type='radio' name='benar' value='"+j+"'></fieldset>");
+				$(".opsitambahan").append("<fieldset class='form-group' id='pilihan "+i+"'><label class='form-label' id="+i+" for='exampleInput'>Pilihan "+i+"</label><textarea class='myeditablediv' name='jawaban[]' ></textarea>Atur Jawaban Benar <input type='radio' name='benar' value='"+j+"'><a onclick='hapuspilihan("+i+")' name=''>Hapus</a></fieldset>");
 
 			tinymce.init({
 	    		selector: '.myeditablediv',
@@ -390,6 +390,12 @@ if (isset($_POST['updateInfoQuiz'])) {
 
 		function clearText(elementID){
 			$(elementID).html("");
+		}
+
+		function hapuspilihan(a){
+			var ab = '#pilihan '+a;
+			alert (ab);
+			$(ab).hide();
 		}
 
 		function remove(ID){

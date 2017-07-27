@@ -139,7 +139,7 @@ if(isset($_POST['updateMapel'])){
 				<div class="col-xl-9 col-lg-8">
 					<section class="card card-default">
 						<div class="card-block">
-                            <h5 class="with-border"><b>Perkembangan Siswa / <a href=""><?=$infoKelas['nama']?></a></b></h5>
+                            <h5 class="with-border"><b>Perkembangan Akademik / <a href=""><?=$infoKelas['nama']?></a></b></h5>
                             <div class="col-md-12">
                                 <h6>Pilah Berdasarkan : </h6>
                                 <form id="form_tambah" method="POST">
@@ -149,12 +149,15 @@ if(isset($_POST['updateMapel'])){
                     							<label class="form-control-label" for="modulFilter">Modul</label>
                                                 <select class="form-control" name="modulFilter" id="modulFilter" required>
                                                 <?php
+
                                                     $jmlhModul = $listModul->count();
                                                     if ($jmlhModul > 0) {
-                                                            echo "<option value=''>-- Pilih Modul --</option>";
+                                                        echo "<option value=''>-- Pilih Modul --</option>";
                                                         foreach ($listModul as $data) {
                                                             echo "<option value='$data[_id]'>$data[nama]</option>";
                                                         }
+                                                    }else {
+                                                        echo "<option value=''>-- Belum Tersedia --</option>";
                                                     }
                                                 ?>
                                                 </select>
@@ -238,10 +241,10 @@ if(isset($_POST['updateMapel'])){
                                                     <th class="text-center">Nilai Membaca Materi</th>';
                             if ($jmlhTugas > 0) {
                                 foreach ($infoTugas as $value) {
-                                    $table  .= '    <th class="text-center">'.$value['nama'].'</th>';
+                                    $table  .= '    <th class="text-center">Nilai Tugas <br>'.$value['nama'].'</th>';
                                 }
                             }
-                $table  .= '                        <th class="text-center">Nilai Ujian <br> '.@$ujian[0]['nama'].'</th>
+                $table  .= '                        <th class="text-center">Nilai Evaluasi <br> '.@$ujian[0]['nama'].'</th>
                                                 </tr>
                                             </thead>
                                             <tbody>';
@@ -541,6 +544,9 @@ if(isset($_POST['updateMapel'])){
 	require('includes/footer-top.php');
 ?>
     <script src="assets/js/lib/datatables-net/datatables.min.js"></script>
+    <script src="assets/js/lib/datatables-net/buttons-1.2.0/js/dataTables.buttons.min.js"></script>
+    <script src="assets/js/lib/datatables-net/buttons-1.2.0/js/buttons.flash.min.js"></script>
+    <script src="assets/js/lib/datatables-net/buttons-1.2.0/js/buttons.print.min.js"></script>
 
 	<script>
         var table;
@@ -548,12 +554,14 @@ if(isset($_POST['updateMapel'])){
         <?php
         if (isset($_POST['filterData'])) {
             echo 'table = $("#perkembangan").dataTable({
+					"dom"			 : "Bfrtip",
+					"buttons"		 : ["copy", "excel", "pdf", "print"],
                     "scrollX"        : true,
                     "scrollCollapse" : true,
                     "fixedColumns"   : true,
                     "order"          : [[ 1, "asc" ],[ 0, "asc" ]],
                     "bInfo"          : false,
-                    "bLengthChange"  : false,
+					"bLengthChange"  : false,
                     "pagingType"     : "simple",
                     "lengthMenu"     : [[25, 50, -1], [25, 50, "All"]],
             });';

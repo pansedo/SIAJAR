@@ -97,11 +97,62 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
 	 Share Icon
 	<script src="https://code.jquery.com/jquery-3.2.0.min.js"></script> 
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
+	<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
+	 Share Icon
+	<script src="https://code.jquery.com/jquery-3.2.0.min.js"></script> -->
+
+>>>>>>> fd629ccf7b8c86c49e9d9f370a6e7cdd0ac80830
 	<script src="Assets/js/lib/simple-share/jquery.sharebox.js"></script>
 	<link href="Assets/js/lib/simple-share/jquery.sharebox.css" rel="stylesheet">
 	
 	<link rel="stylesheet" type="text/css" href="Assets/css/lib/uploadfile/component.css" />
 	<script>(function(e,t,n){var r=e.querySelectorAll("html")[0];r.className=r.className.replace(/(^|\s)no-js(\s|$)/,"$1js$2")})(document,window,0);</script>
+
+	<script type="text/javascript" src="./assets/tinymce4/js/tinymce/tinymce.min.js"></script>
+
+<!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/codemirror.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/mode/xml/xml.min.js"></script> -->
+
+<!-- Style for html code -->
+
+<script type="text/javascript">
+        tinymce.init({
+            selector: '.myeditablediv',
+            height : 100,
+            menubar: false,
+            auto_focus:true,
+            
+            
+        // To avoid TinyMCE path conversion from base64 to blob objects.
+        // https://www.tinymce.com/docs/configure/file-image-upload/#images_dataimg_filter
+        images_dataimg_filter : function(img) {
+            return img.hasAttribute('internal-blob');
+        },
+        setup : function(ed)
+        {
+            ed.on('init', function()
+            {
+                this.getDoc().body.style.fontSize = '16px';
+                this.getDoc().body.style.fontFamily = 'Arial, "Helvetica Neue", Helvetica, sans-serif';
+            });
+        },
+         // // plugins: [
+         // //      "advlist autolink link image lists charmap print preview hr anchor pagebreak",
+         // //      "searchreplace wordcount visualblocks visualchars insertdatetime media nonbreaking",
+         // //      "table contextmenu directionality emoticons paste textcolor responsivefilemanager code tiny_mce_wiris"
+         // // ],
+         // toolbar1: "undo redo | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | styleselect",
+         // toolbar2: "| link unlink anchor | image media | forecolor backcolor | print preview | tiny_mce_wiris_formulaEditor tiny_mce_wiris_formulaEditorChemistry",
+         // image_advtab: true
+        });
+</script>
+<!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/codemirror.min.js"></script> -->
+<!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/mode/xml/xml.min.js"></script> -->
+
+<!-- Style for html code -->
+<link type="text/css" rel="stylesheet" href="./assets/tinymce4/css/prism.css" />
 </head>
 <body class="with-side-menu sidebar-hidden chrome-browser ">
 <header class="site-header">

@@ -46,7 +46,7 @@
                                 <div class="card-typical-section card-typical-content">
                                     <!-- <div class="photo" style="min-width: 200px; height:300px; background-image:url('<?php// echo $data['path_image']; ?>'; position: center center"> -->
                                      <div class="photo" > 
-                                        <a href="product.php?id=<?php echo base64_encode($data['_id']);?>"><img style="   height:350px; background:<?php echo $data['path_image']; ?>" src="<?php echo $data['path_image']; ?>"  alt=""></a>
+                                        <a href="product.php?id=<?php echo base64_encode($data['_id']);?>"><img style="   height:400px; background:<?php echo $data['path_image']; ?>" src="<?php echo $data['path_image']; ?>"  alt=""></a>
                                     </div>
                                     <header class="title"><a href="#"></a></header>
                                     <p><?php //echo substr($data['deskripsi'], 0, 30)."..."; ?></p>

@@ -36,6 +36,12 @@ class Provkot
         return $query;
     }
 
+    public function getProvinsi($id){
+      $criteria = array("id_provinsi" => $id);
+        $query =  $this->table1->findOne($criteria);
+        return $query;
+    }
+
     public function getKota($id){
       $criteria = array("id_kab_kot" => $id);
         $query =  $this->table2->findOne($criteria);
