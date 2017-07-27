@@ -34,6 +34,7 @@
 <script src="Assets/js/lib/uploadfile/custom-file-input.js"></script>
 <script src="Assets/js/app.js"></script>\
 
+
 	<script type="text/javascript">
 	    function copyTextToClipboard(text) {
 	        var textArea = document.createElement("textarea");
@@ -43,13 +44,19 @@
 	        textArea.select();
 	        try {
 	            var successful = document.execCommand('copy');
-	            var msg = successful ? 'successful' : 'unsuccessful';
-	            console.log('Copying text command was ' + msg);
+	            // var msg = successful ? 'successful' : 'unsuccessful';
+	            // console.log('Copying text command was ' + msg);
+	            swal({
+				  title: 'Berhasil !',
+				  text: 'Link Berhasil Di Copy!',
+				  type: 'success',
+				  timer: 2000
+				})
 	        } catch (err) {
 	            console.log('Oops, unable to copy');
 	        }
 	        document.body.removeChild(textArea);
-	    }
+	    } 
 
 	    function CopyLink() {
 	      copyTextToClipboard(location.href);
@@ -58,7 +65,7 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			 
-			$.uploadPreview({
+			$.uploadPreview({ 
 				input_field: "#image-upload",
 				preview_box: "#image-preview",
 				label_field: "#image-label"

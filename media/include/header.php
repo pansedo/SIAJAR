@@ -94,13 +94,9 @@
 	<script  src="Assets/js/lib/sweetalert/sweetalert2.min.js"></script>
 	<link rel="stylesheet"  href="Assets/js/lib/sweetalert/sweetalert2.min.css">
 
-<<<<<<< HEAD
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
-=======
-	<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
 	 Share Icon
-	<script src="https://code.jquery.com/jquery-3.2.0.min.js"></script> -->
->>>>>>> bc62bcdd3a20ec0615a568cc8bd16c75060a99a8
+	<script src="https://code.jquery.com/jquery-3.2.0.min.js"></script> 
 	<script src="Assets/js/lib/simple-share/jquery.sharebox.js"></script>
 	<link href="Assets/js/lib/simple-share/jquery.sharebox.css" rel="stylesheet">
 	
