@@ -1,13 +1,11 @@
 <?php
-	include "include/header.php";
-	include 'include/menu.php';
+    include "include/header.php";
+    include 'include/menu.php';
 
-	$classMedia = new Media();
- 	if (isset($_GET['tag'])) { 
-        if ($_GET['tag'] == "") {
-            echo "<script>document.location.href='index.php'</script>";
-        }
-        $text = $_GET['tag']; 
+    $classMedia = new Media();
+    if (isset($_GET['tag'])) { 
+        
+        $text = $_GET['tag'];  
         $serach = $classMedia->SearchDataTag($text);
         ?>
         <div class="page-content">
@@ -56,19 +54,19 @@
                         </div>
                         <?php
                             }
-                            
-
                         ?>
                         <div class="col-lg-12" align="center">
+                            <?php
+                                $classMedia->SearchDataTagPagging($_GET['tag'],isset($_GET['page']) ? $_GET['page'] : 1);
+                            ?>
                         </div>
+                        
                     </div>
                     </div>
                 </div>
             </div>
         </div>
-		<?php
-    }else{
-        echo "<script>document.location.href='index.php'</script>";
+        <?php
     }
 ?> 
 <?php

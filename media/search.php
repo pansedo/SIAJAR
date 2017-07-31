@@ -63,7 +63,6 @@
                         </div>
                         <?php
                             }
-                            
 
                         ?>
                         <!-- Selesai Buku Content -->

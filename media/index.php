@@ -11,6 +11,8 @@
 	$getMediaPagging = $classMedia->GetMediaPagging();
 	$getMediaTerbanyak = $classPopular->MediaTerbanyak();
 	$getTagTerbanyak = $classPopular->TagTerbanyak();
+	$CountData = $classMedia->GetCountData();
+	
 	
 ?>
 	<div class="page-content">
@@ -50,7 +52,6 @@
 								
 							</div>
 						</section>
-
 						<section class="box-typical">
 							<header class="box-typical-header-sm bordered">Tag Terbanyak</header>
 							<div class="box-typical-inner">
@@ -67,6 +68,17 @@
 									?>
 									</ul>
 								<p></p>
+							</div>
+						</section>
+
+						<section class="box-typical">
+							<header class="box-typical-header-sm bordered">Total Dokumen</header>
+							<div class="box-typical-inner">
+								<center style="padding:15px 0px 0px 0px;">
+									<h4 class="font">
+										<div id="totdokumen"><?php echo $CountData['dokumen']; ?></div>
+									</h4>
+								</center>
 							</div>
 						</section>
 						</aside>

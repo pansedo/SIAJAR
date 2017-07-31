@@ -133,15 +133,7 @@ class Media
     	$query['user'] = $this-> db -> user -> find () -> count();
  	 	$query['tag'] = $this-> db -> tag -> count();
  	 	$query['kategori'] = $this-> db -> kategori -> find((array("sub_id"=>"0"))) ->count();
-		// $query['tag'] = $this-> db -> tag -> aggregate ([
-		// 		{ $group: {
-		// 		    "_id": "$nama"
-		// 			}
-		// 		},
-		// 	    {
-		// 	      $count: "total"
-		// 	    }
-		// ]);
+		
 
     	return $query;
     }
@@ -355,10 +347,10 @@ class Media
 															  timer: 2000
 															}).then(
 															  function () {
-															  	//document.location.href='media.php';
+															  	document.location.href='profile.php';
 															  },
 															  function (dismiss) {
-															  	//document.location.href='media.php';
+															  	document.location.href='profile.php';
 															    if (dismiss === 'timer') {
 															      console.log('I was closed by the timer')
 															    }
@@ -371,10 +363,10 @@ class Media
 															  timer: 2000
 															}).then(
 															  function () {
-															  	//document.location.href='media.php';
+															  	document.location.href='profile.php';
 															  },
 															  function (dismiss) {
-															  	//document.location.href='media.php';
+															  	document.location.href='profile.php';
 															    if (dismiss === 'timer') {
 															      console.log('I was closed by the timer')
 															    }
@@ -389,10 +381,10 @@ class Media
 															  timer: 3000
 															}).then(
 															  function () {
-															  	//document.location.href='media.php';
+															  	document.location.href='profile.php';
 															  },
 															  function (dismiss) {
-															  	//document.location.href='media.php';
+															  	document.location.href='profile.php';
 															    if (dismiss === 'timer') {
 															      console.log('I was closed by the timer')
 															    }
@@ -428,10 +420,10 @@ class Media
 															  timer: 2000
 															}).then(
 															  function () {
-															  	//document.location.href='media.php';
+															  	document.location.href='profile.php';
 															  },
 															  function (dismiss) {
-															  	//document.location.href='media.php';
+															  	document.location.href='profile.php';
 															    if (dismiss === 'timer') {
 															      console.log('I was closed by the timer')
 															    }
@@ -444,10 +436,10 @@ class Media
 															  timer: 2000
 															}).then(
 															  function () {
-															  	//document.location.href='media.php';
+															  	document.location.href='profile.php';
 															  },
 															  function (dismiss) {
-															  	//document.location.href='media.php';
+															  	document.location.href='profile.php';
 															    if (dismiss === 'timer') {
 															      console.log('I was closed by the timer')
 															    }
@@ -466,10 +458,10 @@ class Media
 															  timer: 2000
 															}).then(
 															  function () {
-															  	//document.location.href='media.php';
+															  	document.location.href='profile.php';
 															  },
 															  function (dismiss) {
-															  	//document.location.href='media.php';
+															  	document.location.href='profile.php';
 															    if (dismiss === 'timer') {
 															      console.log('I was closed by the timer')
 															    }
@@ -483,10 +475,10 @@ class Media
 															  timer: 2000
 															}).then(
 															  function () {
-															  	//document.location.href='media.php';
+															  	document.location.href='profile.php';
 															  },
 															  function (dismiss) {
-															  	//document.location.href='media.php';
+															  	document.location.href='profile.php';
 															    if (dismiss === 'timer') {
 															      console.log('I was closed by the timer')
 															    }
@@ -760,10 +752,10 @@ class Media
 								  timer: 2000
 								}).then(
 								  function () {
-								  	//document.location.href='media.php';
+								  	document.location.href='profile.php';
 								  },
 								  function (dismiss) {
-								  	//document.location.href='media.php';
+								  	document.location.href='profile.php';
 								    if (dismiss === 'timer') {
 								      console.log('I was closed by the timer')
 								    }
@@ -950,43 +942,7 @@ class Media
 		}
     }
 
-    // const ACCENT_STRINGS = 'ŠŒŽšœžŸ¥µÀÁÂÃÄÅÆÇÈÉÊËẼÌÍÎÏĨÐÑÒÓÔÕÖØÙÚÛÜÝßàáâãäåæçèéêëẽìíîïĩðñòóôõöøùúûüýÿ';
-    // const NO_ACCENT_STRINGS = 'SOZsozYYuAAAAAAACEEEEEIIIIIDNOOOOOOUUUUYsaaaaaaaceeeeeiiiiionoooooouuuuyy';
-
-  //    public function accentToRegex($text)
-  //   {
-
-  //       $from = str_split(utf8_decode(self::ACCENT_STRINGS));
-  //       $to   = str_split(strtolower(self::NO_ACCENT_STRINGS));
-  //       $text = utf8_decode($text);
-  //       $regex = array();
-  //       foreach ($to as $key => $value) {
-  //           if (isset($regex[$value])) {
-  //               $regex[$value] .= $from[$key];
-  //           } else {
-  //               $regex[$value] = $value;
-  //           }
-  //       }
-  //       foreach ($regex as $rg_key => $rg) {
-  //           $text = preg_replace("/[$rg]/", "_{$rg_key}_", $text);
-  //       }
-  //       foreach ($regex as $rg_key => $rg) {
-  //           $text = preg_replace("/_{$rg_key}_/", "[$rg]", $text);
-  //       }
- 	// 	 $search = utf8_encode($text);
- 	// 	$query =  array('judul' =>new MongoRegex("/.*{$search}.*/i"));
- 	// 	// db.dokumen.find({$text:{$search:"$query"}})
-		// $cursosr = $this -> table ->find(array($text=>array($search=>"$text")));
-		// // $cursosr = $this -> table ->find($query);
-		// var_dump($query);
-		// foreach ($cursosr as $key ) {
-		// 	print_r($key['judul']);
-		// 	var_dump($key['judul']);
-		// }
-
-		// // return $cursor;
-
-  //   }
+   
     public function SearchData($texts)
     {
     	$page = isset($_GET['page']) ? $_GET['page'] : 1;
@@ -997,7 +953,6 @@ class Media
     	$short = array('_id' => -1);
     	$query =  $this -> table -> find(array('$text' => array('$search' => $texts)))->skip($skip)->limit($limit);
 
-    	// echo " find(array('$text' => array('$search' => $texts)))->skip($skip)->limit($limit)";
     	print_r($query);
     	$count = $query->count();
     	if ($count > 0) {
@@ -1038,10 +993,10 @@ class Media
     	}
     }
 
-        public function SearchDataTag($texts)
+    public function SearchDataTag($texts)
     {
     	$page = isset($_GET['page']) ? $_GET['page'] : 1;
-    	$limit = 15;
+    	$limit = 16;
     	$skip = ($page - 1)*$limit;
     	$next = ($page+1); 
     	$prev = ($page-1);
@@ -1088,7 +1043,27 @@ class Media
     	}
     }
 
-     public function PaggingSearch($page,$texts){
+     public function SearchDataTagPagging($tag,$page){
+		$page = isset($_GET['page']) ? $_GET['page'] : 1;
+    	$limit = 16;
+    	$skip = ($page - 1)*$limit;
+    	$next = ($page+1);
+    	$prev = ($page-1);
+    	$cursor = $this -> table2 -> find(array('nama'=>$tag))->skip($skip)->limit($limit);
+    	$total= $cursor->count();
+		if($page > 1){
+			    echo '<a class="btn btn-sucess" href="?tag='. $tag .'&&page=' . $prev . '"><b>< Previous</b> </a>';
+			    if($page * $limit < $total) {
+			        echo ' <a class="btn btn-sucess" href="?tag='. $tag .'&&page=' . $next . '"><b>Next ></b></a>';
+			    }
+			} else {
+			    if($page * $limit < $total) {
+			        echo ' <a class="btn btn-sucess" href="?tag='. $tag .'&&page=' . $next . '"><b>Next ></b></a>';
+			    }
+			}
+    }
+
+     public function PaggingSearch($texts,$page){
 		$page = isset($_GET['page']) ? $_GET['page'] : 1;
     	$limit = 9;
     	$skip = ($page - 1)*$limit;
