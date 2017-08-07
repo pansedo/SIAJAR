@@ -83,14 +83,10 @@ if(isset($_POST['updateQuiz'])){
 
     echo "string ".$rest['status'];
     if ($rest['status'] == "Sukses") {
-        // echo "<pre>";
-        // print_r($_POST);
-        // echo "</pre>";
+
         if (isset($_GET['md'])) {
-          # code...
           echo "<script>alert('".$rest['status']."'); document.location='quiz-action.php?act=update&md=".$_GET['md']."&qz=".$_GET['qz']."'</script>";
         }else if (isset($_GET['id'])) {
-          # code...
           echo "<script>alert('".$rest['status']."'); document.location='paket-detail.php?id=".$_GET['qz']."'</script>";
         }
         
@@ -106,7 +102,13 @@ if(isset($_POST['addQuiz'])){
   $benar    = $_POST['benar'];
 
 // print_r($benar);
-  $soalClass->addSoal($soal,$jawaban,$benar,$infoQuiz['id_paket'], $_SESSION['lms_id']);
+  $rest = $soalClass->addSoal($soal,$jawaban,$benar,$infoQuiz['id_paket'], $_SESSION['lms_id']);
+
+  if ($rest['hasil'] == "Sukses") {
+    # code...
+          echo "<script>alert('".$rest['hasil']."'); document.location='quiz-action.php?act=update&md=".$_GET['md']."&qz=".$_GET['qz']."'</script>";
+
+  }
 }
 
 

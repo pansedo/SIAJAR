@@ -5,7 +5,7 @@
     });
     $ClassUser = new User();
     $ClassKelas = new Kelas();
-    $ClassMedia = new media();
+    $ClassMedia = new Media();
     $countguru = $ClassUser->CountGuru();
     $countsiswa = $ClassUser->CountSiswa();
     $countkelas = $ClassKelas->CountKelas();
