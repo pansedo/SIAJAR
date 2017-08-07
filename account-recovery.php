@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
-	<title>SEAMOLEC - Learning Path</title>
+	<title>SIAJAR LMS - Lupa Kata Sandi</title>
 
 	<link href="assets/img/favicon.144x144.png" rel="apple-touch-icon" type="image/png" sizes="144x144">
 	<link href="assets/img/favicon.114x114.png" rel="apple-touch-icon" type="image/png" sizes="114x114">
@@ -27,16 +27,17 @@
     <div class="page-center">
         <div class="page-center-in">
             <div class="container-fluid">
-                <form class="sign-box reset-password-box">
+                <form name="" class="sign-box reset-password-box" method="post" onsubmit="">
                     <!--<div class="sign-avatar">
                         <img src="assets/img/avatar-sign.png" alt="">
                     </div>-->
                     <header class="sign-title">Atur ulang Kata Sandi</header>
                     <div class="form-group">
                         <input type="text" name="name" class="form-control" placeholder="Email atau nama pengguna"/>
+                        <input type="hidden" name="action" value="forgot" class="form-control"/>
                     </div>
                     <button type="submit" class="btn btn-rounded">Atur ulang</button>
-                    or <a href="account-login.php">Log In</a>
+                    or <a href="./">Log In</a>
                 </form>
             </div>
         </div>
@@ -62,6 +63,32 @@
                 },100);
             });
         });
+
+		$('form').submit(function(e) {
+      		e.preventDefault();
+      		var submit = true;
+
+  			$.ajax({
+  				type: 'POST',
+  				url: 'url-API/Pengguna/',
+  				data: new FormData(this),
+  				contentType: false,
+  				processData: false,
+  				success: function(res){
+  					swal({
+						title: res.response,
+						text:  res.message,
+						type:  res.icon
+  					});
+  				},
+  				error: function(){
+  					swal(res.response, res.message, res.icon);
+  					submit = false;
+  				}
+  			});
+
+      		return false;
+      	});
     </script>
 <script src="assets/js/app.js"></script>
 </body>

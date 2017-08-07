@@ -20,7 +20,7 @@
     ];
     $pass   = password_hash ( $password , PASSWORD_BCRYPT, $options );
 
-    $data   = $table->findOne(['username' => $username]);
+    $data   = $table->findOne(['username' => new MongoRegex("/^$username/i")]);
 
     if (!is_null($data)) {
         $resp = array('response'=>'Error!', 'message'=>'Email/ NIK sudah digunakan!', 'icon'=>'error');
