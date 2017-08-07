@@ -3,7 +3,7 @@
 	include 'include/menu.php';
 	$classKategori = new Kategori();
 	$classMedia = new Media();
-	$classPopular = new Popular();
+	$classPopular = new Popular(); 
 
 
 	$getkategoriutama = $classKategori->GetKategoriUtama();
@@ -11,7 +11,9 @@
 	$getMediaPagging = $classMedia->GetMediaPagging();
 	$getMediaTerbanyak = $classPopular->MediaTerbanyak();
 	$getTagTerbanyak = $classPopular->TagTerbanyak();
-
+	$CountData = $classMedia->GetCountData();
+	
+	
 ?>
 	<div class="page-content">
 		<div class="container-fluid">
@@ -50,7 +52,6 @@
 								
 							</div>
 						</section>
-
 						<section class="box-typical">
 							<header class="box-typical-header-sm bordered">Tag Terbanyak</header>
 							<div class="box-typical-inner">
@@ -58,15 +59,26 @@
 									</p><ul style="list-style-type: circle;margin-left: 20px;">
 									<?php 
 										foreach ($getTagTerbanyak as $tags) {
-											if (is_array($tags)) {
+											if (is_array($tags)) { 
 												foreach ($tags as $tag) {
-													echo "<a href='#' class='btn btn-inline btn-primary btn-sm ladda-button'>".$tag['_id']."</a>";
+													echo "<a href='searchtag.php?tag=".$tag['_id']."' class='btn btn-inline btn-primary btn-sm ladda-button'>".$tag['_id']."</a>";
 												}
 											}
 										}
 									?>
 									</ul>
 								<p></p>
+							</div>
+						</section>
+
+						<section class="box-typical">
+							<header class="box-typical-header-sm bordered">Total Dokumen</header>
+							<div class="box-typical-inner">
+								<center style="padding:15px 0px 0px 0px;">
+									<h4 class="font">
+										<div id="totdokumen"><?php echo $CountData['dokumen']; ?></div>
+									</h4>
+								</center>
 							</div>
 						</section>
 						</aside>

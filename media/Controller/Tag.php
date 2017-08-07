@@ -19,5 +19,6 @@ class Tag
     	$query =  $this -> table -> find(array("id_dokumen"=>new MongoId($id)));
     	return $query; 
     }
+
 }
 ?>
