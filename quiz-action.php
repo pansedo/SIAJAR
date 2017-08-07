@@ -250,7 +250,7 @@ if (isset($_POST['updateInfoQuiz'])) {
 						<header class="widget-header">
 							Soal Kuis Paket Soal - <?=$infoQuiz['nama']?>
 							<div class="btn-group" style="float:right;">
-									<button type="button" class="btn btn-sm btn-inline" onclick="add()" title="Tambah" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menambahkan Modul baru.">+ Tambah Soal</button>
+									<a href="edit-quiz.php?md=<?=$_GET['md']?>&&qz=<?=$_GET['qz']?>" class="btn btn-sm btn-inline" title="Tambah" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menambahkan Soal baru.">+ Tambah Soal</a>
 
 							</div>
 
@@ -259,7 +259,6 @@ if (isset($_POST['updateInfoQuiz'])) {
 						<div class="card-block" id="accordion">
 							<?php
 					$no	= 1;
-					// print_r($listQuiz);
 					if ($listSoal->count() > 0) {
 						foreach ($listSoal as $materi) {
 							echo '<article class="box-typical profile-post panel">
