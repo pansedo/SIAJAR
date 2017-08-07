@@ -65,34 +65,34 @@
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
 	<title>Learning Management System - Seamolec</title>
 
-	<link href="Assets/img/favicon.144x144.png" rel="apple-touch-icon" type="image/png" sizes="144x144">
-	<link href="Assets/img/favicon.114x114.png" rel="apple-touch-icon" type="image/png" sizes="114x114">
-	<link href="Assets/img/favicon.72x72.png" rel="apple-touch-icon" type="image/png" sizes="72x72">
-	<link href="Assets/img/favicon.57x57.png" rel="apple-touch-icon" type="image/png">
-	<link href="Assets/img/favicon.png" rel="icon" type="image/png">
-	<link href="Assets/img/favicon.ico" rel="shortcut icon">
-	<link rel="stylesheet" href="Assets/css/separate/vendor/slick.min.css">
-	<link rel="stylesheet" href="Assets/css/separate/pages/profile.min.css">
-	<link rel="stylesheet" href="Assets/css/separate/pages/project.min.css">
-	<link rel="stylesheet" href="Assets/css/separate/elements/cards.min.css">
-	<link rel="stylesheet" href="Assets/css/separate/pages/widgets.min.css">
-    <link rel="stylesheet" href="Assets/css/lib/font-awesome/font-awesome.min.css">
-    <link rel="stylesheet" href="Assets/css/lib/bootstrap/bootstrap.min.css">
-    <link rel="stylesheet" href="Assets/css/main.source.css">
+	<link href="./Assets/img/favicon.144x144.png" rel="apple-touch-icon" type="image/png" sizes="144x144">
+	<link href="./Assets/img/favicon.114x114.png" rel="apple-touch-icon" type="image/png" sizes="114x114">
+	<link href="./Assets/img/favicon.72x72.png" rel="apple-touch-icon" type="image/png" sizes="72x72">
+	<link href="./Assets/img/favicon.57x57.png" rel="apple-touch-icon" type="image/png">
+	<link href="./Assets/img/favicon.png" rel="icon" type="image/png">
+	<link href="./Assets/img/favicon.ico" rel="shortcut icon">
+	<link rel="stylesheet" href="./Assets/css/separate/vendor/slick.min.css">
+	<link rel="stylesheet" href="./Assets/css/separate/pages/profile.min.css">
+	<link rel="stylesheet" href="./Assets/css/separate/pages/project.min.css">
+	<link rel="stylesheet" href="./Assets/css/separate/elements/cards.min.css">
+	<link rel="stylesheet" href="./Assets/css/separate/pages/widgets.min.css">
+    <link rel="stylesheet" href="./Assets/css/lib/font-awesome/font-awesome.min.css">
+    <link rel="stylesheet" href="./Assets/css/lib/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="./Assets/css/main.source.css">
 
     <!-- <link rel="stylesheet" href="Assets/css/style_manual.css"> -->
-	<link rel="stylesheet" href="Assets/css/lib/datatables-net/datatables.min.css">
-	<link rel="stylesheet" href="Assets/css/separate/vendor/datatables-net.min.css">
-	<link rel="stylesheet" href="Assets/css/separate/vendor/tags_editor.min.css">
+	<link rel="stylesheet" href="./Assets/css/lib/datatables-net/datatables.min.css">
+	<link rel="stylesheet" href="./Assets/css/separate/vendor/datatables-net.min.css">
+	<link rel="stylesheet" href="./Assets/css/separate/vendor/tags_editor.min.css">
 
-	<link rel="stylesheet" href="Assets/css/separate/vendor/tags_editor.min.css">
-	<link rel="stylesheet" href="Assets/css/separate/vendor/bootstrap-select/bootstrap-select.min.css">
-	<link rel="stylesheet" href="Assets/css/separate/vendor/select2.min.css">
-	<script src="Assets/js/lib/jquery/jquery.min.js"></script>
-	<link rel="stylesheet" href="Assets/css/style_manual.css">
+	<link rel="stylesheet" href="./Assets/css/separate/vendor/tags_editor.min.css">
+	<link rel="stylesheet" href="./Assets/css/separate/vendor/bootstrap-select/bootstrap-select.min.css">
+	<link rel="stylesheet" href="./Assets/css/separate/vendor/select2.min.css">
+	<script src="./Assets/js/lib/jquery/jquery.min.js"></script>
+	<link rel="stylesheet" href="./Assets/css/style_manual.css">
 
-	<script  src="Assets/js/lib/sweetalert/sweetalert2.min.js"></script>
-	<link rel="stylesheet"  href="Assets/js/lib/sweetalert/sweetalert2.min.css">
+	<script  src="./Assets/js/lib/sweetalert/sweetalert2.min.js"></script>
+	<link rel="stylesheet"  href="./Assets/js/lib/sweetalert/sweetalert2.min.css">
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
 	 Share Icon
@@ -103,7 +103,7 @@
 	 Share Icon
 	<script src="https://code.jquery.com/jquery-3.2.0.min.js"></script> -->
 
->>>>>>> fd629ccf7b8c86c49e9d9f370a6e7cdd0ac80830
+
 	<script src="Assets/js/lib/simple-share/jquery.sharebox.js"></script>
 	<link href="Assets/js/lib/simple-share/jquery.sharebox.css" rel="stylesheet">
 	

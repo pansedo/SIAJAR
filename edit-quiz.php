@@ -179,7 +179,7 @@ if(isset($_POST['addQuiz'])){
                                 </div>
                                 <div class="modal-footer">
                                     <button type="submit" name="updateQuiz" value="send" class="btn btn-rounded btn-primary">Simpan</button>
-                                    <button type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Tutup</button>
+                                    <a href="quiz-action.php?act=update&md=<?=$_GET['md']?>&qz=<?=$_GET['qz']?>" type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Batal</a>
                                 </div>
                             </form>
                         </div>
@@ -219,7 +219,7 @@ if(isset($_POST['addQuiz'])){
                 </div>
                 <div class="modal-footer">
                   <button type="submit" name="addQuiz" value="send" class="btn btn-rounded btn-primary">Simpan</button>
-                  <button type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Tutup</button>
+                  <a href="quiz-action.php?act=update&md=<?=$_GET['md']?>&qz=<?=$_GET['qz']?>" type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Batal</a>
                 </div>
               </form>
 						</div>

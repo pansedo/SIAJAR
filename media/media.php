@@ -26,55 +26,77 @@
 	$getkategoriutama = $classKategori->GetKategoriUtama();
 	$getMedia = $classMedia->GetMedia();
 
-	if (isset($_POST['tambah_media'])) {
-        $judul = mysql_escape_string($_POST['judul']);
-        // $deskripsi = mysql_escape_string($_POST['deskripsi']);
-        $deskripsi = trim(htmlentities($_POST['deskripsi']));
+	
 
-        $kategori = mysql_escape_string($_POST['kategori']);
-        $tags = mysql_escape_string($_POST['tags']);
-        if (isset($_POST['tautan'])) {
-        	$tautan = mysql_escape_string($_POST['tautan']);
-        }else{
-        	$tautan = "";
-        }
-       
-        if (isset($_FILES['dokumen']['name'])) {
-        	# code...
-        	$dokumen = mysql_escape_string($_FILES['dokumen']['name']);
-        }else{
-        	$dokumen = "";
-        }
-        // echo "<script>alert('test');</script>";
-        $image = mysql_escape_string($_FILES['image']['name']);
-        $iduser = $id_users;
-        $classMedia->CreateMediaUser($iduser,$judul,$deskripsi,$kategori,$tags,$tautan,$dokumen,$image); 
-        
+	if (isset($_POST['tambah_media'])) {
+		if(isset($_POST['g-recaptcha-response']) && !empty($_POST['g-recaptcha-response'])){
+			 $secret = '6LcrIysUAAAAAHf-bD-hf1XZg2yNM6o4VmvfFrjt';
+			 $user_ip = $_SERVER['REMOTE_ADDR'];
+			 $response = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$secret.'&response='.$_POST['g-recaptcha-response'].'&remoteip='.$user_ip);
+			 $response = json_decode($response, true);
+			 if($response["success"] === true){
+				$judul = mysql_escape_string($_POST['judul']);
+		        // $deskripsi = trim(htmlentities($_POST['deskripsi']));
+		        $deskripsi = $_POST['deskripsi'];
+		        $kategori = mysql_escape_string($_POST['kategori']);
+		        $tags = mysql_escape_string($_POST['tags']);
+		        if (isset($_POST['tautan'])) {
+		        	$tautan = mysql_escape_string($_POST['tautan']);
+		        }else{
+		        	$tautan = ""; 
+		        }
+		        if (isset($_FILES['dokumen']['name'])) {
+		        	$dokumen = mysql_escape_string($_FILES['dokumen']['name']);
+		        }else{
+		        	$dokumen = "";
+		        }
+		        // echo "<script>alert('test');</script>";
+		        $image = mysql_escape_string($_FILES['image']['name']);
+		        $iduser = $id_users;
+		        $classMedia->CreateMediaUser($iduser,$judul,$deskripsi,$kategori,$tags,$tautan,$dokumen,$image); 
+			}else{
+				$response["success"] === false;
+			}
+		}else{
+				$response["success"] === false;
+			}
 	}
 	if (isset($_POST['update_media'])) {
-		# code...
-		$id           = base64_decode($_GET['id']);
-		$judul = mysql_escape_string($_POST['judul']);
-        // $deskripsi = mysql_escape_string($_POST['deskripsi']);
-        $deskripsi = trim(htmlentities($_POST['deskripsi']));
+		if(isset($_POST['g-recaptcha-response']) && !empty($_POST['g-recaptcha-response'])){
+			 $secret = '6LcrIysUAAAAAHf-bD-hf1XZg2yNM6o4VmvfFrjt';
+			 $user_ip = $_SERVER['REMOTE_ADDR'];
+			 $response = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$secret.'&response='.$_POST['g-recaptcha-response'].'&remoteip='.$user_ip);
+			 $response = json_decode($response, true);
+			 if($response["success"] === true){
+				$id           = base64_decode($_GET['id']);
+				$judul = mysql_escape_string($_POST['judul']);
+				// $deskripsi = trim(htmlentities($_POST['deskripsi']));
+		        // $deskripsi = mysql_escape_string($_POST['deskripsi']);
+		        $deskripsi = $_POST['deskripsi'];
 
-        $kategori = mysql_escape_string($_POST['kategori']);
-        $tags = mysql_escape_string($_POST['tags']);
-        if (isset($_POST['tautan'])) {
-        	$tautan = mysql_escape_string($_POST['tautan']);
-        }else{
-        	$tautan = "";
-        }
-        if (isset($_FILES['dokumen'])) {
-         	$dokumen = mysql_escape_string($_FILES['dokumen']['name']);
-         }else{
-         	$dokumen ="";
-         } 
-        $image = mysql_escape_string($_FILES['image']['name']);
-        $iduser = $id_users;
-        $gambar_lama = mysql_escape_string($_POST['gambar_lama']);
-        $file_lama = mysql_escape_string($_POST['file_lama']);
-        $classMedia->EditMediaUser($id,$iduser,$judul,$deskripsi,$kategori,$tags,$tautan,$dokumen,$image,$gambar_lama,$file_lama);
+		        $kategori = mysql_escape_string($_POST['kategori']);
+		        $tags = mysql_escape_string($_POST['tags']);
+		        if (isset($_POST['tautan'])) {
+		        	$tautan = mysql_escape_string($_POST['tautan']);
+		        }else{
+		        	$tautan = "";
+		        }
+		        if (isset($_FILES['dokumen'])) {
+		         	$dokumen = mysql_escape_string($_FILES['dokumen']['name']);
+		         }else{
+		         	$dokumen ="";
+		         } 
+		        $image = mysql_escape_string($_FILES['image']['name']);
+		        $iduser = $id_users;
+		        $gambar_lama = mysql_escape_string($_POST['gambar_lama']);
+		        $file_lama = mysql_escape_string($_POST['file_lama']);
+		        $classMedia->EditMediaUser($id,$iduser,$judul,$deskripsi,$kategori,$tags,$tautan,$dokumen,$image,$gambar_lama,$file_lama);
+			}else{
+				$response["success"] === false;
+			}
+		}else{
+			$response["success"] === false;
+		}
 	}
 ?> 
 	<div class="page-content">
@@ -122,8 +144,6 @@
 						if ($_GET['action'] == "unggah") {
 							# code...
 						?>
-					
-
 						<section class="card">
 						<div class="card-block">
 							<h5 class="with-border">Media Ajar</h5>
@@ -181,8 +201,11 @@
 											<label class="form-label">Tags</label>
 											<textarea id="tags-editor-textarea" name="tags"></textarea>
 										</fieldset>
+										<div class="g-recaptcha" data-sitekey="6LcrIysUAAAAACIcTO5afzcl3RjkGvo9nPbu2JRf"></div>
 									</div>
 								</div>
+								
+
 								<div style="text-align: right">
 								   <button type="submit" class="btn btn-primary" name="tambah_media" href="#" style="text-align: right;">Tambah Media</button>
 								</div>
@@ -297,6 +320,7 @@
 												?>
 											</textarea>
 										</fieldset>
+										<div class="g-recaptcha" data-sitekey="6LcrIysUAAAAACIcTO5afzcl3RjkGvo9nPbu2JRf"></div>
 									</div>
 								</div>
 								<div style="text-align: right">
