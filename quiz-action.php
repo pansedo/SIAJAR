@@ -320,7 +320,7 @@ if (isset($_POST['updateInfoQuiz'])) {
 									<div class="profile-post-content" align="center">
 										<span>
 										 Belum ada Soal pada kuis ini saat ini. <br />
-										<button type="button" class="btn btn-sm btn-inline" onclick="add()" title="Tambah" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menambahkan Modul baru.">+ Buat Soal Pertama</button>
+										<a href="edit-quiz.php?md='.$_GET['md'].'&&qz='.$_GET['qz'].'" type="button" class="btn btn-sm btn-inline"  title="Tambah" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menambahkan Modul baru.">+ Buat Soal Pertama</a>
 										</span>
 									</div>
 								</article>';
