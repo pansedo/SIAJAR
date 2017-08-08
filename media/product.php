@@ -278,6 +278,7 @@
 								<p>
 									<!-- <a href="#">View</a> -->
 									<a href="<?php echo $getMediaById['path_document'];?>"  download="<?php echo $getMediaById['judul'];?>.<?php echo $ekstensi;?>">Download</a>
+									<a onclick="copyToClipboard('<?php echo $_SERVER['HTTP_HOST']."/siajar/media/".$getMediaById['path_document']; ?>')">Lampirkan</a>
 								</p>
 							</div>
 					<?php
@@ -299,6 +300,8 @@
 								<p class="date"><?php echo date_format($date,'d-m-Y H:i:s');?></p>
 								<p>
 									<a href="<?php echo $http;echo $getMediaById['tautan'];?>" target="_blank">View</a>
+									<a onclick="copyToClipboard('<?php echo $http;echo $getMediaById['tautan'];?>')">Lampirkan</a>
+									
 								</p>
 							</div>
 					<?php
@@ -312,6 +315,31 @@
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript">
+	function copyToClipboard(url) {
+	        var textArea = document.createElement("textarea");
+	        textArea.style.background = 'transparent';
+	        textArea.value = url;
+	        document.body.appendChild(textArea);
+	        textArea.select();
+	        try {
+	            var successful = document.execCommand('copy');
+	            swal({
+				  title: 'Berhasil !',
+				  text: 'Link Berhasil Di Copy!',
+				  type: 'success',
+				  timer: 2000
+				})
+	        } catch (err) {
+	            console.log('Oops, unable to copy');
+	        }
+	        document.body.removeChild(textArea);
+	    } 
+	function Lampirkan(url){
+		var link = url;
+		copyToClipboard(""+link);
+	}
+	</script>
 
 <?php
 }
