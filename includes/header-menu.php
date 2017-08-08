@@ -231,7 +231,7 @@ if(isset($_POST['joinKelas'])){
 						   	</div>
 							<div class="dropdown dropdown-typical">
 							   <a href="<?=base_url?>media" class="dropdown-toggle no-arr">
-								   <span class="font-icon font-icon-share"></span> Gudang Media
+								   <span class="font-icon font-icon-share"></span> Sumber Belajar
 								   <span class="lbl"></span>
 							   </a>
 						   </div>

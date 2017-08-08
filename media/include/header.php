@@ -1,19 +1,19 @@
 <?php
-    session_start(); 
-    ob_start(); 
+    session_start();
+    ob_start();
 	// error_reporting(0);
 	$id_users = null;
 	include 'Connection/connection.php';
-    
+
     spl_autoload_register(function ($class) {
       include 'Controller/' .$class . '.php';
     });
-    $base_url = "http://114.4.109.108/media";
+    $base_url = "http://sumberbelajar.seamolec.org";
 	if (!isset($_SESSION['lms_id']) && !isset($_SESSION['lms_username']) && !isset($_SESSION['lms_status'])) {
         // header("Location:Auth/$base_url");
         // exit();
-    }else{ 
-        set_time_limit(10000); 
+    }else{
+        set_time_limit(10000);
         $id_users   = $_SESSION['lms_id'];
         $email    = $_SESSION['lms_username'];
         $status     = $_SESSION['lms_status'];
@@ -56,7 +56,7 @@
 
     $classKategori = new Kategori();
     $getkategoriutama = $classKategori->GetKategoriUtama();
-?>  
+?>
 <!DOCTYPE html>
 <html>
 <head lang="en">
@@ -96,7 +96,7 @@
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
 	 Share Icon
-	<script src="https://code.jquery.com/jquery-3.2.0.min.js"></script> 
+	<script src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
 	<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
@@ -106,7 +106,7 @@
 
 	<script src="Assets/js/lib/simple-share/jquery.sharebox.js"></script>
 	<link href="Assets/js/lib/simple-share/jquery.sharebox.css" rel="stylesheet">
-	
+
 	<link rel="stylesheet" type="text/css" href="Assets/css/lib/uploadfile/component.css" />
 	<script>(function(e,t,n){var r=e.querySelectorAll("html")[0];r.className=r.className.replace(/(^|\s)no-js(\s|$)/,"$1js$2")})(document,window,0);</script>
 
@@ -123,8 +123,8 @@
             height : 100,
             menubar: false,
             auto_focus:true,
-            
-            
+
+
         // To avoid TinyMCE path conversion from base64 to blob objects.
         // https://www.tinymce.com/docs/configure/file-image-upload/#images_dataimg_filter
         images_dataimg_filter : function(img) {
@@ -165,12 +165,12 @@
 
 	        <div class="site-header-content">
 	            <div class="site-header-content-in">
-		            
+
 	                <div class="site-header-shown">
 	                <?php
 	                	if (isset($_SESSION['lms_id'])) {
 	                ?>
-	                    
+
 
 	                    <div class="dropdown user-menu">
 	                        <button class="dropdown-toggle" id="dd-user-menu" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -189,9 +189,9 @@
 	                    <button type="button" class="burger-right">
 	                        <i class="font-icon-menu-addl"></i>
 	                    </button>
-	                    
+
 	                </div><!--.site-header-shown-->
-	                
+
 	                <div class="mobile-menu-right-overlay"></div>
 	                <div class="site-header-collapsed">
 					<!-- HEADER MENU -->
@@ -209,7 +209,7 @@
 	                            </a>
 
 	                            <div class="dropdown-menu" aria-labelledby="dd-header-marketing">
-	                            <?php 
+	                            <?php
 	                            	foreach ($getkategoriutama as $data) {
 	                            		echo "<a class='dropdown-item' href='kategori.php?idkat=".base64_encode($data['_id'])."'>".$data['kategori']."</a>";
 	                            	}
@@ -226,11 +226,11 @@
 							   </a>
 						   </div> -->
 						    <div class="site-header-collapsed-in">
-	                    
+
 	                        <div class="site-header-search-container">
 	                       	<?php
 	                            if (!isset($_SESSION['lms_id'])) {
-	 						
+
 			                ?>
 		        				<a class="btn btn-sm btn-inline btn-primary-outline" href="Auth/Signin.php">
 		                            <i class="fa fa-lock"></i> Login
@@ -239,7 +239,7 @@
 		                		}else{
 		                    ?>
 		                    	<a href="media.php?action=unggah" class="btn btn-inline btn-sm btn-primary-outline">
-			                            <i class="fa fa-upload"></i> Unggah 
+			                            <i class="fa fa-upload"></i> Unggah
 			                        </a>
 			                <?php
 			                	}
@@ -252,12 +252,12 @@
 	                                </button>
 	                                <div class="overlay"></div>
 	                            </form>
-	                              
-						 
+
+
 
 	                        </div>
-						   <div class="dropdown dropdown-typical">   
-			                		
+						   <div class="dropdown dropdown-typical">
+
 			                    </div>
 	                    </div><!--.site-header-collapsed-in-->
 	                </div><!--.site-header-collapsed-->
@@ -267,7 +267,7 @@
 	</header><!--.site-header-->
 
 
-	
+
 	</header><!--.site-header-->
 	<div class="modal fade bd-example-modal-lg"
 		 tabindex="-1"
@@ -294,7 +294,7 @@
 										</div>
 										</div>
 										<input type="file" name="foto" class="form-control" id="exampleInput" placeholder="Nama Lengkap" >
-										
+
 									</fieldset>
 								</div>
 							</div>
@@ -312,7 +312,7 @@
 										<input type="email" name="email" class="form-control" id="exampleInputEmail1" placeholder="Email" value="">
 									</fieldset>
 								</div>
-								
+
 							</div>
 							<div class="row">
 								<div class="col-lg-6">
@@ -323,7 +323,7 @@
 											<option value="Laki-laki" >Laki-laki</option>
 											<option value="Perempuan" >Perempuan</option>
 										</select>
-										
+
 									</fieldset>
 								</div>
 								<div class="col-lg-6">
@@ -332,7 +332,7 @@
 										<input type="text" name="instansi" class="form-control" value=""  placeholder="Instansi" >
 									</fieldset>
 								</div>
-								
+
 							</div>
 							<button type="submit" name="simpan_profil" class="btn">Simpan</button>
 						</form>
