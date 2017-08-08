@@ -8,7 +8,7 @@
     spl_autoload_register(function ($class) {
       include 'Controller/' .$class . '.php';
     });
-    $base_url = "http://114.4.109.108/media";
+    $base_url = "http://sumberbelajar.seamolec.org";
 	if (!isset($_SESSION['lms_id']) && !isset($_SESSION['lms_username']) && !isset($_SESSION['lms_status'])) {
         // header("Location:Auth/$base_url");
         // exit();
@@ -65,45 +65,42 @@
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
 	<title>Learning Management System - Seamolec</title>
 
-	<link href="./Assets/img/favicon.144x144.png" rel="apple-touch-icon" type="image/png" sizes="144x144">
-	<link href="./Assets/img/favicon.114x114.png" rel="apple-touch-icon" type="image/png" sizes="114x114">
-	<link href="./Assets/img/favicon.72x72.png" rel="apple-touch-icon" type="image/png" sizes="72x72">
-	<link href="./Assets/img/favicon.57x57.png" rel="apple-touch-icon" type="image/png">
-	<link href="./Assets/img/favicon.png" rel="icon" type="image/png">
-	<link href="./Assets/img/favicon.ico" rel="shortcut icon">
-	<link rel="stylesheet" href="./Assets/css/separate/vendor/slick.min.css">
-	<link rel="stylesheet" href="./Assets/css/separate/pages/profile.min.css">
-	<link rel="stylesheet" href="./Assets/css/separate/pages/project.min.css">
-	<link rel="stylesheet" href="./Assets/css/separate/elements/cards.min.css">
-	<link rel="stylesheet" href="./Assets/css/separate/pages/widgets.min.css">
-    <link rel="stylesheet" href="./Assets/css/lib/font-awesome/font-awesome.min.css">
-    <link rel="stylesheet" href="./Assets/css/lib/bootstrap/bootstrap.min.css">
-    <link rel="stylesheet" href="./Assets/css/main.source.css">
+	<link href="Assets/img/favicon.144x144.png" rel="apple-touch-icon" type="image/png" sizes="144x144">
+	<link href="Assets/img/favicon.114x114.png" rel="apple-touch-icon" type="image/png" sizes="114x114">
+	<link href="Assets/img/favicon.72x72.png" rel="apple-touch-icon" type="image/png" sizes="72x72">
+	<link href="Assets/img/favicon.57x57.png" rel="apple-touch-icon" type="image/png">
+	<link href="Assets/img/favicon.png" rel="icon" type="image/png">
+	<link href="Assets/img/favicon.ico" rel="shortcut icon">
+	<link rel="stylesheet" href="Assets/css/separate/vendor/slick.min.css">
+	<link rel="stylesheet" href="Assets/css/separate/pages/profile.min.css">
+	<link rel="stylesheet" href="Assets/css/separate/pages/project.min.css">
+	<link rel="stylesheet" href="Assets/css/separate/elements/cards.min.css">
+	<link rel="stylesheet" href="Assets/css/separate/pages/widgets.min.css">
+    <link rel="stylesheet" href="Assets/css/lib/font-awesome/font-awesome.min.css">
+    <link rel="stylesheet" href="Assets/css/lib/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="Assets/css/main.source.css">
 
-    <!-- <link rel="stylesheet" href="Assets/css/style_manual.css"> -->
-	<link rel="stylesheet" href="./Assets/css/lib/datatables-net/datatables.min.css">
-	<link rel="stylesheet" href="./Assets/css/separate/vendor/datatables-net.min.css">
-	<link rel="stylesheet" href="./Assets/css/separate/vendor/tags_editor.min.css">
+    <link rel="stylesheet" href="Assets/css/style_manual.css">
+	<link rel="stylesheet" href="Assets/css/lib/datatables-net/datatables.min.css">
+	<link rel="stylesheet" href="Assets/css/separate/vendor/datatables-net.min.css">
+	<link rel="stylesheet" href="Assets/css/separate/vendor/tags_editor.min.css">
 
-	<link rel="stylesheet" href="./Assets/css/separate/vendor/tags_editor.min.css">
-	<link rel="stylesheet" href="./Assets/css/separate/vendor/bootstrap-select/bootstrap-select.min.css">
-	<link rel="stylesheet" href="./Assets/css/separate/vendor/select2.min.css">
-	<script src="./Assets/js/lib/jquery/jquery.min.js"></script>
-	<link rel="stylesheet" href="./Assets/css/style_manual.css">
+	<link rel="stylesheet" href="Assets/css/separate/vendor/tags_editor.min.css">
+	<link rel="stylesheet" href="Assets/css/separate/vendor/bootstrap-select/bootstrap-select.min.css">
+	<link rel="stylesheet" href="Assets/css/separate/vendor/select2.min.css">
+	<script src="Assets/js/lib/jquery/jquery.min.js"></script>
+	<link rel="stylesheet" href="Assets/css/style_manual.css">
 
-	<script  src="./Assets/js/lib/sweetalert/sweetalert2.min.js"></script>
-	<link rel="stylesheet"  href="./Assets/js/lib/sweetalert/sweetalert2.min.css">
-
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
-	 Share Icon
-	<script src="https://code.jquery.com/jquery-3.2.0.min.js"></script> 
+	<script  src="Assets/js/lib/sweetalert/sweetalert2.min.js"></script>
+	<link rel="stylesheet"  href="Assets/js/lib/sweetalert/sweetalert2.min.css">
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
+	<!-- // <script src="https://code.jquery.com/jquery-3.2.0.min.js"></script>  -->
+
 	<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
 	 Share Icon
 	<script src="https://code.jquery.com/jquery-3.2.0.min.js"></script> -->
-
-
+	<script src='https://www.google.com/recaptcha/api.js'></script>
 	<script src="Assets/js/lib/simple-share/jquery.sharebox.js"></script>
 	<link href="Assets/js/lib/simple-share/jquery.sharebox.css" rel="stylesheet">
 	
@@ -124,7 +121,6 @@
             menubar: false,
             auto_focus:true,
             
-            
         // To avoid TinyMCE path conversion from base64 to blob objects.
         // https://www.tinymce.com/docs/configure/file-image-upload/#images_dataimg_filter
         images_dataimg_filter : function(img) {
@@ -138,13 +134,12 @@
                 this.getDoc().body.style.fontFamily = 'Arial, "Helvetica Neue", Helvetica, sans-serif';
             });
         },
-         // // plugins: [
-         // //      "advlist autolink link image lists charmap print preview hr anchor pagebreak",
-         // //      "searchreplace wordcount visualblocks visualchars insertdatetime media nonbreaking",
-         // //      "table contextmenu directionality emoticons paste textcolor responsivefilemanager code tiny_mce_wiris"
-         // // ],
-         // toolbar1: "undo redo | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | styleselect",
-         // toolbar2: "| link unlink anchor | image media | forecolor backcolor | print preview | tiny_mce_wiris_formulaEditor tiny_mce_wiris_formulaEditorChemistry",
+         plugins: [
+              "advlist autolink link image lists charmap print preview hr anchor pagebreak",
+              "searchreplace wordcount visualblocks visualchars insertdatetime media nonbreaking",
+              "table contextmenu directionality emoticons paste textcolor responsivefilemanager code tiny_mce_wiris"
+         ],
+         toolbar1: "undo redo | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | styleselect| link unlink anchor | image media | forecolor backcolor  | tiny_mce_wiris_formulaEditor tiny_mce_wiris_formulaEditorChemistry",
          // image_advtab: true
         });
 </script>

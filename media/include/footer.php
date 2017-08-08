@@ -57,6 +57,11 @@
 	      copyTextToClipboard(location.href);
 	    }
 
+	    function Lampirkan(url){
+	    	alert("".url);
+		copyTextToClipboard(url);
+	}
+
 		var auto_refresh = setInterval(
 		function ()
 		{
