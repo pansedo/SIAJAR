@@ -31,8 +31,6 @@
         <link rel="stylesheet" type="text/css" href="assets/css/lib/front/style.css">
         <link rel="stylesheet" type="text/css" href="assets/css/lib/front/loader.css">
         <link rel="stylesheet" type="text/css" href="assets/css/separate/pages/login.css">
-        <link rel="stylesheet" type="text/css" href="assets/css/owl.theme.css">
-        <link rel="stylesheet" type="text/css" href="assets/css/owl.carousel.css">
 
         <link href="assets/img/favicon.ico" rel="shortcut icon">
 
@@ -249,28 +247,61 @@
         </div> -->
 
         <!--Text Banner-->
-        <section class="padding" id="text_rotator_parent">
-            <div class="container">
-                <div id="text_rotator" class="owl-carousel">
-                    <div class="item">
-                        <div class="rotate_caption text-center">
-                            <h1>Selamat datang di Siajar</h1>
-                            <p>Cara paling aman dan termudah bagi pendidik untuk menghubungkan <br> berkolaborasi dengan guru dan siswa.</p>
-                            <a href="#" data-toggle="modal" data-target="#register" class="border_radius btn_common yellow">Buat akun Gratis</a>
-                            <a href="#" data-toggle="modal" data-target="#login" class="border_radius btn_common yellow">Masuk</a>
-                        </div>
+        <section class="" id="text_rotator_parent">
+            <div id="text_rotator" class="owl-carousel">
+                <div class="item" style="background:url(assets/img/front/7.jpg) no-repeat; background-size: cover;">
+                    <div class="rotate_caption text-center">
+                        <h1>Selamat datang di SIAJAR</h1>
+                        <p>Cara paling aman dan termudah bagi pendidik untuk menghubungkan <br> berkolaborasi dengan guru dan siswa.</p>
+                        <br>
+                        <br>
+                        <a href="#" data-toggle="modal" data-target="#register" class="border_radius btn_common yellow">Buat akun Gratis</a>
+                        <a href="#" data-toggle="modal" data-target="#login" class="border_radius btn_common yellow">Masuk</a>
                     </div>
-                    <div class="item">
-                        <div class="rotate_caption text-center">
-                            <h1>Selamat datang di Siajar</h1>
-                            <p>Cara paling aman dan termudah bagi pendidik untuk menghubungkan <br> berkolaborasi dengan guru dan siswa.</p>
-                            <a href="#" data-toggle="modal" data-target="#register" class="border_radius btn_common yellow">Buat akun Gratis</a>
-                            <a href="#" data-toggle="modal" data-target="#login" class="border_radius btn_common yellow">Masuk</a>
-                        </div>
+                </div>
+                <div class="item" style="background:url(assets/img/front/1.jpg) no-repeat; background-size: cover;">
+                    <div class="rotate_caption text-center">
+                        <h1>Selamat datang di SIAJAR</h1>
+                        <p>Cara paling aman dan termudah bagi pendidik untuk menghubungkan <br> berkolaborasi dengan guru dan siswa.</p>
+                        <br>
+                        <br>
+                        <a href="#" data-toggle="modal" data-target="#register" class="border_radius btn_common yellow">Buat akun Gratis</a>
+                        <a href="#" data-toggle="modal" data-target="#login" class="border_radius btn_common yellow">Masuk</a>
+                    </div>
+                </div>
+                <div class="item" style="background:url(assets/img/front/2.jpg) no-repeat; background-size: cover;">
+                    <div class="rotate_caption text-center">
+                        <h1>Selamat datang di SIAJAR</h1>
+                        <p>Cara paling aman dan termudah bagi pendidik untuk menghubungkan <br> berkolaborasi dengan guru dan siswa.</p>
+                        <br>
+                        <br>
+                        <a href="#" data-toggle="modal" data-target="#register" class="border_radius btn_common yellow">Buat akun Gratis</a>
+                        <a href="#" data-toggle="modal" data-target="#login" class="border_radius btn_common yellow">Masuk</a>
+                    </div>
+                </div>
+                <div class="item" style="background:url(assets/img/front/3.jpg) no-repeat; background-size: cover;">
+                    <div class="rotate_caption text-center">
+                        <h1>Selamat datang di SIAJAR</h1>
+                        <p>Cara paling aman dan termudah bagi pendidik untuk menghubungkan <br> berkolaborasi dengan guru dan siswa.</p>
+                        <br>
+                        <br>
+                        <a href="#" data-toggle="modal" data-target="#register" class="border_radius btn_common yellow">Buat akun Gratis</a>
+                        <a href="#" data-toggle="modal" data-target="#login" class="border_radius btn_common yellow">Masuk</a>
+                    </div>
+                </div>
+                <div class="item" style="background:url(assets/img/front/5.jpg) no-repeat; background-size: cover;">
+                    <div class="rotate_caption text-center">
+                        <h1>Selamat datang di SIAJAR</h1>
+                        <p>Cara paling aman dan termudah bagi pendidik untuk menghubungkan <br> berkolaborasi dengan guru dan siswa.</p>
+                        <br>
+                        <br>
+                        <a href="#" data-toggle="modal" data-target="#register" class="border_radius btn_common yellow">Buat akun Gratis</a>
+                        <a href="#" data-toggle="modal" data-target="#login" class="border_radius btn_common yellow">Masuk</a>
                     </div>
                 </div>
             </div>
         </section>
+        <hr style="margin: 0">
         <!--Text Banner ends-->
 
         <section style="-moz-box-shadow: 0 3px 3px -3px rgba(0,0,0,.35); -o-box-shadow: 0 3px 3px -3px rgba(0,0,0,.35); -webkit-box-shadow: 0 3px 3px -3px rgba(0,0,0,.35); box-shadow: 0 3px 3px -3px rgba(0,0,0,.35);">
@@ -325,7 +356,7 @@
                         <p class="half_space">Fokus pada mengajar bukan pada tulis-menulis
                         Dengan fitur-fitur intuitif dan penyimpanan tidak terbatas, membuat grup dengan cepat,
                         mengelola kemajuan dan banyak lagi.
-                        Siajar telah dirancang untuk memberikan kontrol sepenuhnya terhadap kelas digitalmu.</p>
+                        SIAJAR telah dirancang untuk memberikan kontrol sepenuhnya terhadap kelas digitalmu.</p>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="about-post">
@@ -502,7 +533,7 @@
         <script src="assets/js/lib/front/wow.min.js"></script>
         <script src="assets/js/lib/front/functions.js"></script>
         <script src="assets/js/lib/front/bootstrap-show-password.js"></script>
-        <script src="assets/js/owl.carousel.js"></script>
+
 
         <script>
             $(function() {
