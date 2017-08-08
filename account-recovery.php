@@ -22,6 +22,8 @@
     <link rel="stylesheet" href="assets/css/lib/font-awesome/font-awesome.min.css">
     <link rel="stylesheet" href="assets/css/lib/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/main.css">
+	<link rel="stylesheet" href="assets/css/lib/bootstrap-sweetalert/sweetalert.css">
+	<script src="assets/js/lib/bootstrap-sweetalert/sweetalert.min.js"></script>
 </head>
 <body>
     <div class="page-center">
@@ -33,7 +35,7 @@
                     </div>-->
                     <header class="sign-title">Atur ulang Kata Sandi</header>
                     <div class="form-group">
-                        <input type="text" name="name" class="form-control" placeholder="Email atau nama pengguna"/>
+                        <input type="text" name="name" class="form-control" placeholder="Email atau nama pengguna" required/>
                         <input type="hidden" name="action" value="forgot" class="form-control"/>
                     </div>
                     <button type="submit" class="btn btn-rounded">Atur ulang</button>

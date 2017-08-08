@@ -58,7 +58,7 @@ if(isset($method['action'])){
 
     			$mail->Subject = "Atur ulang kata sandi SIAJAR LMS";
     			$msg  = "<html><body style='font-size: 100%; border: 2px solid #000; border-radius: 5px; padding: 25px;'>";
-    			$msg .= "Kata Sandi SIAJAR LMS anda sudah diganti,<br />
+    			$msg .= "Hallo $data[nama], kata sandi SIAJAR LMS anda sudah diganti,<br />
     					<hr style='width: 100%'><br />
     					<p>Saat ini kata sandi untuk masuk ke dalam SIAJAR LMS anda telah diganti menjadi <b><u>$hasil</u></b>. Silahkan gunakan kata sandi tersebut, kemudian silahkan langsung ubah kata sandi pada menu Profil untuk memudahkan anda masuk kembali ke SIAJAR LMS.</p>
     					<br />
@@ -73,13 +73,13 @@ if(isset($method['action'])){
     			$mail->addAddress($data['email'], $data['nama']);
     			$mail->msgHTML($msg);
 
-    			// if (!$mail->send()) {
-    			// 	// $response = array('response'=>'Failed', 'message'=>'Email tidak dikirim dikarenakan '. $mail->ErrorInfo);
-    			// 	$response = array('response'=>'Gagal', 'message'=>'Penggantian kata sandi tidak berhasil! '.$mail->ErrorInfo, 'icon'=>'error');
-    			// } else {
-    			// 	$response = array('response'=>'Sukses', 'message'=>'Selamat, Proses penggantian kata sandi berhasil! Silahkan periksa Inbox ataupun Spam pada email untuk melihat kata sandi baru!', 'icon'=>'success');
-    			// }
-	               $response = array('response'=>'Sukses '.$hasil, 'message'=>'Selamat, Proses penggantian kata sandi berhasil! Silahkan periksa Inbox ataupun Spam pada email untuk melihat kata sandi baru!', 'icon'=>'success');
+    			if (!$mail->send()) {
+    				// $response = array('response'=>'Failed', 'message'=>'Email tidak dikirim dikarenakan '. $mail->ErrorInfo);
+    				$response = array('response'=>'Gagal', 'message'=>'Penggantian kata sandi tidak berhasil! '.$mail->ErrorInfo, 'icon'=>'error');
+    			} else {
+    				$response = array('response'=>'Sukses', 'message'=>'Selamat, Proses penggantian kata sandi berhasil! Silahkan periksa Inbox ataupun Spam pada email untuk melihat kata sandi baru!', 'icon'=>'success');
+    			}
+	            //    $response = array('response'=>'Sukses '.$hasil, 'message'=>'Selamat, Proses penggantian kata sandi berhasil! Silahkan periksa Inbox ataupun Spam pada email untuk melihat kata sandi baru!', 'icon'=>'success');
     			$mail->clearAddresses();
             }else {
                 $response = array('response'=>'Gagal', 'message'=>'Penggantian kata sandi tidak berhasil!', 'icon'=>'error');
