@@ -114,7 +114,7 @@ if (isset($FuncProfile['kota']) && !empty($FuncProfile['kota'])) {
 					<aside id="menu-fixed2" class="profile-side">
 						<section class="box-typical profile-side-user">
 							<button type="button" class="avatar-preview avatar-preview-128">
-								<img src="media/Assets/foto/<?php if ($FuncProfile['foto'] != NULL) {echo $FuncProfile['foto'];}else{echo "no_picture.png";} ?>" alt=""/>
+								<img src="http://sumberbelajar.seamolec.org/Assets/foto/<?php if ($FuncProfile['foto'] != NULL) {echo $FuncProfile['foto'];}else{echo "no_picture.png";} ?>" alt=""/>
 							</button>
 							<button type="button" id="ohyeah" class="btn btn-rounded"><?=$_SESSION['lms_status'] == 'guru' ? 'Kirim Pesan' : '<span data-toggle="modal" data-target="#joinKelas"><i class="font-icon font-icon-user"></i> Gabung Kelas</span>'; ?></button>
 
@@ -260,7 +260,7 @@ if (isset($FuncProfile['kota']) && !empty($FuncProfile['kota'])) {
 								<div class="col-lg-6">
 									<fieldset class="form-group">
 										<div class="profile-card-photo" style="text-align: center;">
-											<img class="m-b" src="media/Assets/foto/<?php if ($FuncProfile['foto'] != NULL) {echo $FuncProfile['foto'];}else{echo "no_picture.png";} ?>" alt="" style="max-width: 250px; max-height: 250px;" />
+											<img class="m-b" src="http://sumberbelajar.seamolec.org/Assets/foto/<?php if ($FuncProfile['foto'] != NULL) {echo $FuncProfile['foto'];}else{echo "no_picture.png";} ?>" alt="" style="max-width: 250px; max-height: 250px;" />
 										</div>
 										<input type="file" name="foto" class="form-control" id="exampleInput" placeholder="Nama Lengkap" >
 

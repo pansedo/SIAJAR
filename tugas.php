@@ -51,12 +51,12 @@ if(isset($_POST['addTugas']) || isset($_POST['updateTugas']) || isset($_POST['ku
 		echo "<script>alert('Update Tugas');</script>";
 		$rest 	= $tugasClass->updateTugas($_POST['ID'], $_POST['nama'], $_POST['deskripsi'], $_POST['deadline']);
 	}else{
-		echo "<script>alert('Submit Tugas');</script>";
+		// echo "<script>alert('Submit Tugas');</script>";
 		$rest 	= $tugasClass->submitTugas($_SESSION['lms_id'], $_POST['ID'], $_POST['deskripsi'], $_FILES['file_upload']);
 	}
 
 	if ($rest['status'] == "Success") {
-		echo "<script>alert('".$rest['status']."'); document.location='tugas.php?modul=".$_GET['modul']."'</script>";
+		echo "<script>alert('Tersimpan!'); document.location='tugas.php?modul=".$_GET['modul']."'</script>";
 	}else{
 		echo "<script>alert('Gagal Update')</script>";
 	}

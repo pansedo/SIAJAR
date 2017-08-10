@@ -164,8 +164,8 @@ class Profile
             if(in_array(strtolower($foto_ext), $format))
             {
                 $foto_name    = substr(md5(time()), 0, 9).'_'.date('dmYHIs').".".$foto_ext;
-                $folderRoot   ='media/Assets/foto/';
-                $folderDest   ='media/Assets/foto/'.$foto_name;
+                $folderRoot   ='../media/Assets/foto/';
+                $folderDest   ='../media/Assets/foto/'.$foto_name;
 
                 // echo "move_uploaded_file($foto_tmp, $folderDest)";
                 if ($foto_size< 2000000) {

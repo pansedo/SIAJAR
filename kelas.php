@@ -292,7 +292,7 @@ if(isset($_POST['updateKelas'])){
 									if ($infoKelas['status'] != 'LOCKED') {
 										echo '<u>'.$infoKelas['kode'].'</u>';
 									}else {
-										echo '<i class="font-icon font-icon-lock"></i> LOCKED';
+										echo '<i class="font-icon font-icon-lock"></i> TERKUNCI';
 									}
 									?>
 								</p>
@@ -360,7 +360,7 @@ if(isset($_POST['updateKelas'])){
 												</button>
 											</div> -->
 											<div class="tbl-cell tbl-cell-action">
-												<button type="submit" name="postingText" class="btn btn-rounded pull-right">Send</button>
+												<button type="submit" name="postingText" class="btn btn-rounded pull-right">Kirim</button>
 											</div>
 										</div>
 									</div>
@@ -488,7 +488,7 @@ if(isset($_POST['updateKelas'])){
 				$.ajax({
 					type: 'POST',
 					url: 'url-API/Kelas/',
-					data: {"action": "rmv", "ID": "<?=$_GET['id']?>", "h": <?=$hakKelas['status']?>},
+					data: {"action": "rmv", "ID": "<?=$_GET['id']?>", "u":"<?=$_SESSION['lms_id']?>"},
 					success: function(res) {
 						swal({
 							title: res.response,

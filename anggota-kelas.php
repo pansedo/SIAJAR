@@ -10,7 +10,7 @@ $userClass	= new User();
 $infoKelas	= $kelasClass->getInfoKelas($_GET['id']);
 
 $hakKelas	= $kelasClass->getKeanggotaan($_GET['id'], $_SESSION['lms_id']);
-echo "Ini loh hak kelas-nya : ".$hakKelas['status'];
+// echo "Ini loh hak kelas-nya : ".$hakKelas['status'];
 // $anggota	= in_array($_SESSION['lms_id'], array_values($infoKelas['list_member'])) ? true : false;
 if(!$hakKelas['status']){
 	echo "<script>
@@ -279,7 +279,7 @@ if(isset($_POST['updateKelas'])){
 									if ($infoKelas['status'] != 'LOCKED') {
 										echo '<u>'.$infoKelas['kode'].'</u>';
 									}else {
-										echo '<i class="font-icon font-icon-lock"></i> LOCKED';
+										echo '<i class="font-icon font-icon-lock"></i> TERKUNCI';
 									}
 									?>
 								</p>
@@ -347,13 +347,13 @@ if(isset($_POST['updateKelas'])){
 									$infoHak	= $kelasClass->getKeanggotaan($_GET['id'], "$infoUser[_id]");
 									switch ($infoHak['status']) {
 									    case 1:
-									        $posisi	= "Guru Kelas";
+									        $posisi	= "Wali Kelas";
 									        break;
 									    case 2:
 									        $posisi	= "Guru Mata Pelajaran";
 									        break;
 									    case 3:
-									        $posisi	= "Co-Teacher";
+									        $posisi	= "Tutor";
 									        break;
 										default:
 											$posisi	= "Anggota";
@@ -369,12 +369,12 @@ if(isset($_POST['updateKelas'])){
 																<div class="dropdown-menu dropdown-menu-right">
 																	<div class="radio">
 																		<a class="dropdown-item" href="#">
-																			<input type="radio" name="statusGuru" id="statusGuru2" onclick="cPriv(\''.$infoUser['_id'].'\', \'status'.$m.'\', 2)" value="2" '.($infoHak['status'] == 2 ? "checked" : "").' >
+																			<input type="radio" name="statusGuru'.$m.'" id="statusGuru2" onclick="cPriv(\''.$infoUser['_id'].'\', \'status'.$m.'\', 2)" value="2" checked >
 																			<label for="statusGuru2">Guru Mata Pelajaran </label>
 																		</a>
 																		<a class="dropdown-item" href="#">
-																			<input type="radio" name="statusGuru" id="statusGuru3" onclick="cPriv(\''.$infoUser['_id'].'\', \'status'.$m.'\', 3)" value="3" '.($infoHak['status'] == 3 ? "checked" : "").' >
-																			<label for="statusGuru3">Co-Teacher </label>
+																			<input type="radio" name="statusGuru'.$m.'" id="statusGuru3" onclick="cPriv(\''.$infoUser['_id'].'\', \'status'.$m.'\', 3)" value="3" >
+																			<label for="statusGuru3">Tutor </label>
 																		</a>
 																	</div>
 																	<div class="dropdown-divider"></div>
@@ -390,12 +390,12 @@ if(isset($_POST['updateKelas'])){
 																<div class="dropdown-menu dropdown-menu-right">
 																	<div class="radio">
 																		<a class="dropdown-item" href="#">
-																			<input type="radio" name="statusGuru" id="statusGuru2" onclick="cPriv(\''.$infoUser['_id'].'\', \'status'.$m.'\', 2)" value="2" '.($infoHak['status'] == 2 ? "checked" : "").' >
+																			<input type="radio" name="statusGuru'.$m.'" id="statusGuru2" onclick="cPriv(\''.$infoUser['_id'].'\', \'status'.$m.'\', 2)" value="2" >
 																			<label for="statusGuru2">Guru Mata Pelajaran </label>
 																		</a>
 																		<a class="dropdown-item" href="#">
-																			<input type="radio" name="statusGuru" id="statusGuru3" onclick="cPriv(\''.$infoUser['_id'].'\', \'status'.$m.'\', 3)" value="3" '.($infoHak['status'] == 3 ? "checked" : "").' >
-																			<label for="statusGuru3">Co-Teacher </label>
+																			<input type="radio" name="statusGuru'.$m.'" id="statusGuru3" onclick="cPriv(\''.$infoUser['_id'].'\', \'status'.$m.'\', 3)" value="3" checked >
+																			<label for="statusGuru3">Tutor </label>
 																		</a>
 																	</div>
 																	<div class="dropdown-divider"></div>
@@ -423,9 +423,9 @@ if(isset($_POST['updateKelas'])){
 																	<span class="tb-sm"><i class="fa fa-pencil"></i></span>
 																</button>
 																<div class="dropdown-menu dropdown-menu-right">';
-																$datatkb	= explode(',', $infoKelas['tkb']);
-																if (count($datatkb) > 0) {
+																if ($infoKelas['tkb'] != '') {
 																	$no = 1;
+																	$datatkb	=  explode(',', $infoKelas['tkb']);
 											$menuAnggota	.= '	<div class="radio">';
 																	foreach ($datatkb as $tkb) {
 											$menuAnggota	.= '		<a class="dropdown-item" onclick="cTKB(\''.$infoUser['_id'].'\', \''.$tkb.'\', \'namaTKB'.$no.'\', \'member'.$m.'\')" >
@@ -525,7 +525,7 @@ if(isset($_POST['updateKelas'])){
 			$.ajax({
 				type: 'POST',
 				url: 'url-API/Kelas/',
-				data: {"action": "rmv", "ID": "<?=$_GET['id']?>", "h": <?=$hakKelas['status']?>},
+				data: {"action": "rmv", "ID": "<?=$_GET['id']?>", "u":"<?=$_SESSION['lms_id']?>"},
 				success: function(res) {
 					swal({
 						title: res.response,
@@ -604,7 +604,7 @@ if(isset($_POST['updateKelas'])){
 			url: 'url-API/Kelas/',
 			data: {"action": "cPriv", "ID": ID, "hak_akses" : Priv, "kelas": "<?=$_GET['id']?>"},
 			success: function(res) {
-				var jabatan = Priv == 2 ? 'Guru (Guru Mata Pelajaran)' : 'Guru (Co-Teacher)';
+				var jabatan = Priv == 2 ? 'Guru (Guru Mata Pelajaran)' : 'Guru (Tutor)';
 				swal(res.status, res.message, res.icon);
 				$('#'+Text).html(jabatan)
 			},

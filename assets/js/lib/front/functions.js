@@ -25,7 +25,7 @@ jQuery(function($) {
         return false;
     });
 
-    // Push Menus 
+    // Push Menus
     var $menuLeft = $(".pushmenu-left");
     var $menuRight = $(".pushmenu-right");
     var $toggleleft = $("#menu_bars.left");
@@ -43,7 +43,7 @@ jQuery(function($) {
         return false;
     });
 
-    //push DropDowns 
+    //push DropDowns
     var side_drop = $('.push_nav .dropdown');
     side_drop.on('show.bs.dropdown', function(e) {
         $(this).find('.dropdown-menu').first().stop(true, true).slideDown();
@@ -52,7 +52,7 @@ jQuery(function($) {
         $(this).find('.dropdown-menu').first().stop(true, true).slideUp();
     });
 
-    // ************ Accordions 
+    // ************ Accordions
     $(".items > li:first-child .sub-items").fadeIn();
     $(".items > li:first-child >").addClass("expanded");
     $(".items > li > a").on('click', function(e) {
@@ -69,7 +69,7 @@ jQuery(function($) {
     });
 
     // ************ Search On Click
-    
+
         $(".search_btn").on("click", function(event) {
             event.preventDefault();
             $("#search").addClass("open");
@@ -81,9 +81,9 @@ jQuery(function($) {
                 $(this).removeClass("open");
             }
         });
-    
 
-    // ************ tabbed content 
+
+    // ************ tabbed content
     $(".tab_content").hide();
     $(".tab_content:first").show();
     /* tab mode */
@@ -142,7 +142,7 @@ jQuery(function($) {
             //Ajax post data to server
             $.post('contact_me.php', post_data, function(response) {
 
-                //load json data from server and output message     
+                //load json data from server and output message
                 if (response.type == 'error') {
                     output = '<div class="alert-danger" style="padding:10px; margin-bottom:10px;">' + response.text + '</div>';
                 } else {
@@ -196,7 +196,7 @@ jQuery(function($) {
 
     //Fading testimonial content
     $("#review_slider, #text_rotator").owlCarousel({
-        autoPlay: 3000,
+        autoPlay: 7000,
         navigation: false,
         slideSpeed: 300,
         singleItem: true,
@@ -236,7 +236,7 @@ jQuery(function($) {
         gridwidth: [1170, 960, 750, 480],
         gridheight: [670, 600, 500, 390],
     });
-	 
+
 	 //Full Screen
 	 revapi = jQuery("#rev_slider_full").revolution({
         sliderType: "standard",
@@ -269,8 +269,8 @@ jQuery(function($) {
         gridwidth: [1170, 960, 750, 480],
         gridheight: [670, 600, 500, 390],
     });
-	 
-	 
+
+
 	 revapi = jQuery("#rev_slider_video").revolution({
         sliderType: "standard",
         sliderLayout: "fullwidth",
@@ -302,10 +302,10 @@ jQuery(function($) {
         gridwidth: [1170, 960, 767, 480],
         gridheight: [600, 550, 450, 320],
     });
-	 
-	 
-	 
-	 
+
+
+
+
 
     // ============= Parallax=============
     $(".page_header").parallax("50%", 0.3);

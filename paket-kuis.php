@@ -11,9 +11,9 @@ if(isset($_POST['addQuiz'])){
 	$nama = mysql_escape_string($_POST['namakuis']);
 	$publish = mysql_escape_string($_POST['publish']);
 
-	
+
 		$rest = $paketClass->addPaket($nama, $publish, $_SESSION['lms_id']);
-	
+
 
 	if ($rest['status'] == "Sukses") {
 		echo "<script>alert('".$rest['status']."'); document.location='paket-detail.php?id=".$rest['idPaket']."'</script>";
@@ -83,14 +83,14 @@ $listQuiz	= $quizClass->getListbyUser($_SESSION['lms_id']);
 				<div class="modal-body">
 					<div class="form-group row">
 
-							<div class="form-group row">
+							<div class="form-group">
 								<label for="namamodul" class="col-md-3 form-control-label">Nama Paket</label>
 								<input type="hidden" name="idmodul" id="idmodul" class="" maxlength="11" />
 								<div class="col-md-9">
 									<input type="text" class="form-control" name="namakuis" id="namamodul" placeholder="Nama Paket" title="Nama Paket" data-toggle="popover" data-placement="bottom" data-trigger="hover" data-content="Silahkan isikan Nama Paket Soal yang akan dibuat!" />
 								</div>
 							</div>
-							<div class="form-group row">
+							<div class="form-group">
 								<label class="col-md-3 form-control-label" name="durasi" for="exampleInput">Bagikan</label>
 								<div class="col-md-9">
 										<div class="radio">
@@ -102,11 +102,11 @@ $listQuiz	= $quizClass->getListbyUser($_SESSION['lms_id']);
 											<label for="radio-2">Tidak</label>
 										</div>
 										<!-- <input type="radio" class="form-control" name="publish" id="exampleInput" placeholder="0"  value="1"> Ya -->
-										
+
 								</div>
-										
+
 							</div>
-							
+
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -192,7 +192,7 @@ $listQuiz	= $quizClass->getListbyUser($_SESSION['lms_id']);
 												</div>
 												<div class="tbl-cell" align="right">';
 												if ($_SESSION['lms_id'] == $materi['creator']) {
-													
+
 													echo '
 													<a href="paket-detail.php?id='.$materi['_id'].'" class="shared" title="Edit" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk memperbarui isi dari Materi yang sudah dibuat." style="right: 35px">
 															<i class="font-icon font-icon-pencil")"></i>
@@ -205,7 +205,7 @@ $listQuiz	= $quizClass->getListbyUser($_SESSION['lms_id']);
 											</div>
 										</div>
 									</div>
-							
+
 								</article>
 							';
 							$no++;
@@ -242,7 +242,7 @@ $listQuiz	= $quizClass->getListbyUser($_SESSION['lms_id']);
 			$(elementID).html("");
 		}
 
-		
+
 
 		function update(){
       		$('#updateMapel').trigger("reset");

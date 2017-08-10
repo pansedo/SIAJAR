@@ -48,7 +48,7 @@ if (isset($userProfil['kota']) || !empty($userProfil['kota'])) {
 					<aside id="menu-fixed2" class="profile-side">
 						<section class="box-typical profile-side-user">
 							<button type="button" class="avatar-preview avatar-preview-128">
-								<img src="media/Assets/foto/<?php if ($FuncProfile['foto'] != NULL) {echo $FuncProfile['foto'];}else{echo "no_picture.png";} ?>" alt=""/>
+								<img src="http://sumberbelajar.seamolec.org/Assets/foto/<?php if ($FuncProfile['foto'] != NULL) {echo $FuncProfile['foto'];}else{echo "no_picture.png";} ?>" alt=""/>
 							</button>
 							<button type="button" id="ohyeah" class="btn btn-rounded"><?=$_SESSION['lms_status'] == 'guru' ? 'Kirim Pesan' : '<span data-toggle="modal" data-target="#joinKelas"><i class="font-icon font-icon-user"></i> Gabung Kelas</span>'; ?></button>
 

@@ -1,5 +1,5 @@
 <?php
-define('base_url', 'http://'.$_SERVER['SERVER_NAME'].'/siajar/');
+define('base_url', 'http://'.$_SERVER['SERVER_NAME'].'/siajar_lms/');
 date_default_timezone_set('Asia/Jakarta');
 // error_reporting(0);
 session_start();
@@ -66,7 +66,7 @@ function selisih_waktu($timestamp){
 	<link rel="stylesheet" href="assets/css/lib/datatables-net/datatables.min.css">
 	<link rel="stylesheet" href="assets/css/separate/vendor/datatables-net.min.css">
 	<link rel="stylesheet" href="assets/css/separate/vendor/blockui.min.css">
-	
+
     <script src="assets/js/lib/jquery/jquery.min.js"></script>
 	<script src="assets/js/lib/bootstrap-sweetalert/sweetalert.min.js"></script>
 

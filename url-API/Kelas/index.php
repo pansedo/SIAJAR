@@ -88,7 +88,8 @@ if(isset($method['action'])){
 	}
 
     if($method['action'] == 'rmv'){
-        if ($method['h'] == 1) {
+        $query  = $table->findOne(array('_id'=>new MongoId($method['ID'])));
+        if ($query['creator'] == $method['u']) {
             // ----- REMOVE CLASSROOM
             $delete = array("_id" => new MongoId($method['ID']));
             $data   = $table->remove($delete);
@@ -111,7 +112,7 @@ if(isset($method['action'])){
     if($method['action'] == 'removeAnggota'){
         $delete = array("id_user" => $method['ID'], "id_kelas"=>$method['kelas']);
         $data   = $table2->remove($delete);
-        $resp   = array('response'=>'Terhapus!', 'message'=>'Data berhasil dihapus!', 'icon'=>'success');
+        $resp   = array('response'=>'Berhasil!', 'message'=>'Anggota Kelas berhasil dihapus!', 'icon'=>'success');
 		$Json   = json_encode($resp);
 		header('Content-Type: application/json');
 

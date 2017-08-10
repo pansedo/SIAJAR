@@ -36,6 +36,25 @@ class Kelas
         return $hasil;
     }
 
+    public function getListKelas($user){
+        $query  = $this->db->anggota_kelas->find(array("id_user" => "$user"));
+
+        if($query->count() > 0){
+            $s=0;
+            foreach ($query as $member) {
+                $idkelas = new MongoId($member['id_kelas']);
+                $query1	= $this->table->findOne(array("_id" => $idkelas));
+                $kelas[$s] = $query1;
+                $kelas[$s]['hak'] = $member['status'];
+                $kelas[$s]['test'] = $_SESSION['lms_id'];
+                $s++;
+            }
+
+            $data   = $kelas;
+        }
+        return $data;
+    }
+
 	public function getInfoKelas($idkelas){
 		$ID     = new MongoId($idkelas);
         $query  = $this->db->kelas->findOne(array("_id" => $ID));

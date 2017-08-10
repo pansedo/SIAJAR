@@ -177,7 +177,7 @@ if(isset($_POST['joinKelas'])){
 
 	                    <div class="dropdown user-menu">
 	                        <button class="dropdown-toggle" id="dd-user-menu" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                            <img src="media/Assets/foto/<?php if ($FuncProfile['foto'] != NULL) {echo $FuncProfile['foto'];}else{echo "no_picture.png";} ?>" alt="">
+	                            <img src="http://sumberbelajar.seamolec.org/Assets/foto/<?php if ($FuncProfile['foto'] != NULL) {echo $FuncProfile['foto'];}else{echo "no_picture.png";} ?>" alt="">
 	                        </button>
 	                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd-user-menu">
 	                            <a class="dropdown-item" href="setting.php"><span class="font-icon glyphicon glyphicon-cog"></span>Pengaturan</a>
@@ -211,7 +211,7 @@ if(isset($_POST['joinKelas'])){
 									if($_SESSION['lms_status'] == "guru"){
 										echo '<div class="dropdown-menu" aria-labelledby="dd-header-marketing">
 			                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#addKelas"><span class="font-icon font-icon-plus"></span>Tambah Kelas</a>
-			                                <a class="dropdown-item" href="#"><span class="font-icon font-icon-pencil"></span>Kelola Kelas</a>
+			                                <a class="dropdown-item" href="kelola-kelas.php"><span class="font-icon font-icon-pencil"></span>Kelola Kelas</a>
 			                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#joinKelas"><span class="font-icon font-icon-user"></span>Gabung Kelas</a>
 			                            </div>';
 									}else {

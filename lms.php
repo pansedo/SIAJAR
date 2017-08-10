@@ -87,7 +87,7 @@
                         </div>
                     </div>
                     <div class="modal-header">
-                        <h4 class="modal-title text-center">SIAJAR</h4>
+                        <h4 class="modal-title text-center">SIAJAR LMS</h4>
                     </div>
                     <div class="modal-body">
                         <div class="form-group row">
@@ -107,7 +107,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-rounded btn-primary pull-right" name="updateMapel" value="send" >Login</button>
+                        <button type="submit" class="btn btn-rounded btn-primary pull-right" name="updateMapel" value="send" >Masuk</button>
                         <button type="button" class="btn btn-rounded btn-default btn-cancel" data-dismiss="modal">Batal</button>
                     </div>
                     </form>
@@ -135,7 +135,7 @@
                         </div>
                     </div>
                     <div class="modal-header">
-                        <h4 class="modal-title text-center">SIAJAR</h4>
+                        <h4 class="modal-title text-center">SIAJAR LMS</h4>
                     </div>
                     <div class="modal-body">
                         <ul class="nav nav-tabs">
@@ -221,15 +221,15 @@
                         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
                             <i class="fa fa-bars"></i>
                         </button>
-                        <a class="navbar-brand" href="index3.html">
+                        <a class="navbar-brand" href="./">
                             <img src="assets/img/front/logo.png" class="logo" alt="">
                         </a>
                     </div>
                     <div class="collapse navbar-collapse" id="navbar-menu">
                         <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOut">
-                            <li><a href="#" data-toggle="modal" data-target="#login">Login</a>
+                            <li><a href="#" data-toggle="modal" data-target="#login">Masuk</a>
                             </li>
-                            <li><a href="#" data-toggle="modal" data-target="#register">Register</a>
+                            <li><a href="#" data-toggle="modal" data-target="#register">Daftar</a>
                             </li>
                         </ul>
                     </div>
@@ -249,16 +249,6 @@
         <!--Text Banner-->
         <section class="" id="text_rotator_parent">
             <div id="text_rotator" class="owl-carousel">
-                <div class="item" style="background:url(assets/img/front/7.jpg) no-repeat; background-size: cover;">
-                    <div class="rotate_caption text-center">
-                        <h1>Selamat datang di SIAJAR</h1>
-                        <p>Cara paling aman dan termudah bagi pendidik untuk menghubungkan <br> berkolaborasi dengan guru dan siswa.</p>
-                        <br>
-                        <br>
-                        <a href="#" data-toggle="modal" data-target="#register" class="border_radius btn_common yellow">Buat akun Gratis</a>
-                        <a href="#" data-toggle="modal" data-target="#login" class="border_radius btn_common yellow">Masuk</a>
-                    </div>
-                </div>
                 <div class="item" style="background:url(assets/img/front/1.jpg) no-repeat; background-size: cover;">
                     <div class="rotate_caption text-center">
                         <h1>Selamat datang di SIAJAR</h1>
@@ -269,27 +259,7 @@
                         <a href="#" data-toggle="modal" data-target="#login" class="border_radius btn_common yellow">Masuk</a>
                     </div>
                 </div>
-                <div class="item" style="background:url(assets/img/front/2.jpg) no-repeat; background-size: cover;">
-                    <div class="rotate_caption text-center">
-                        <h1>Selamat datang di SIAJAR</h1>
-                        <p>Cara paling aman dan termudah bagi pendidik untuk menghubungkan <br> berkolaborasi dengan guru dan siswa.</p>
-                        <br>
-                        <br>
-                        <a href="#" data-toggle="modal" data-target="#register" class="border_radius btn_common yellow">Buat akun Gratis</a>
-                        <a href="#" data-toggle="modal" data-target="#login" class="border_radius btn_common yellow">Masuk</a>
-                    </div>
-                </div>
-                <div class="item" style="background:url(assets/img/front/3.jpg) no-repeat; background-size: cover;">
-                    <div class="rotate_caption text-center">
-                        <h1>Selamat datang di SIAJAR</h1>
-                        <p>Cara paling aman dan termudah bagi pendidik untuk menghubungkan <br> berkolaborasi dengan guru dan siswa.</p>
-                        <br>
-                        <br>
-                        <a href="#" data-toggle="modal" data-target="#register" class="border_radius btn_common yellow">Buat akun Gratis</a>
-                        <a href="#" data-toggle="modal" data-target="#login" class="border_radius btn_common yellow">Masuk</a>
-                    </div>
-                </div>
-                <div class="item" style="background:url(assets/img/front/5.jpg) no-repeat; background-size: cover;">
+                <div class="item" style="background:url(assets/img/front/banner0.jpg) no-repeat; background-size: cover;">
                     <div class="rotate_caption text-center">
                         <h1>Selamat datang di SIAJAR</h1>
                         <p>Cara paling aman dan termudah bagi pendidik untuk menghubungkan <br> berkolaborasi dengan guru dan siswa.</p>
@@ -306,7 +276,7 @@
 
         <section style="-moz-box-shadow: 0 3px 3px -3px rgba(0,0,0,.35); -o-box-shadow: 0 3px 3px -3px rgba(0,0,0,.35); -webkit-box-shadow: 0 3px 3px -3px rgba(0,0,0,.35); box-shadow: 0 3px 3px -3px rgba(0,0,0,.35);">
             <div class="text-center">
-                <div style="width: 200px; margin:0 auto; padding: 10px; background: #3ac9d6; border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; font-family: 'museo_slab700'">Kerjasama Antara</div>
+                <div style="width: 200px; margin:0 auto; padding: 10px; background: #3ac9d6; border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; font-family: 'museo_slab700'; color: #fff; font-weight: normal;">Kerjasama Antara</div>
             </div>
             <div id="owl-demo" class="owl-carousel owl-theme" style="opacity: 1; display: block;">
                 <div class="owl-item">
@@ -471,7 +441,7 @@
                 <div class="row">
                     <div class="col-md-4 col-sm-4 footer_panel bottom25">
                         <h3 class="heading bottom25">Tentang SIAJAR<span class="divider-left"></span></h3>
-                        <a href="index3.html" class="footer_logo bottom25"><img src="assets/img/front/logo.png" width="150px" alt="Edua"></a>
+                        <a href="./" class="footer_logo bottom25"><img src="assets/img/front/logo.png" width="150px" alt="Edua"></a>
                         <p>SIAJAR adalah sebuah platform Learning Management System yang di desain untuk sistem pembelajaran masyarakat indonesia</p>
                         <!--  <ul class="social_icon top25">
                         <li><a href="#." class="facebook"><i class="fa fa-facebook"></i></a></li>
@@ -508,7 +478,7 @@
                 </div>
                 <div class="row copyright">
                     <div class="col-md-12 text-center">
-                        <p>Copyright &copy; 2017 <a href="#.">SIAJAR - SEAMOLEC</a>. all rights reserved.</p>
+                        <p>Copyright &copy; 2017 <a href="http://www.seamolec.org" target="_blank">SIAJAR - SEAMOLEC</a>. all rights reserved.</p>
                     </div>
                 </div>
             </div>

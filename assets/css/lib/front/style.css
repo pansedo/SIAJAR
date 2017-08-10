@@ -1589,7 +1589,7 @@ body.pushmenu-push-toright .wrap-sticky nav.navbar.bootsnav.sticked{
 }
 
 #text_rotator_parent{
-  background:url(../../../img/front/banner.jpg) no-repeat;
+  /*background:url(../../../img/front/banner.jpg) no-repeat;*/
   width:100%;
   background-position:center center;
   background-size:cover;
