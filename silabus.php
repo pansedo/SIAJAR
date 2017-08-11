@@ -27,15 +27,20 @@ if(!$anggota){
 		die();
 }
 
-if(isset($_POST['addModul']) || isset($_POST['updateModul'])){
-	if (isset($_POST['updateModul'])) {
-		$rest = $modulClass->setModul($_POST, $_GET['id']);
-	}else{
-		$rest = $modulClass->addModul($_POST, $_GET['id'], $_SESSION['lms_id']);
-	}
+if(isset($_POST['addSilabus'])){
 
-	if ($rest['status'] == "Success") {
-		echo "<script>alert('".$rest['status']."'); document.location='mapel.php?id=".$rest['IDMapel']."'</script>";
+	$rest = $mapelClass->updateSilabus($_POST['deskripsi'], $_GET['id']);
+
+	if ($rest['status'] == "success") {
+		echo "<script>
+				swal({
+						title	: '".$rest['judul']."',
+						text	: '".$rest['message']."',
+						type	: '".$rest['status']."'
+					}, function(){
+						window.location = 'silabus.php?id=$rest[IDMapel]';
+					});
+				</script>";
 	}
 	// print_r($rest);
 }
@@ -51,7 +56,7 @@ if(isset($_POST['updateMapel'])){
 						text: '$rest[message]',
 						type: '$rest[status]'
 					}, function() {
-						 window.location = 'mapel.php?id=$rest[IDMapel]';
+						 window.location = 'silabus.php?id=$rest[IDMapel]';
 					});
 				</script>";
 	}else {
@@ -61,7 +66,7 @@ if(isset($_POST['updateMapel'])){
 						text: 'Anda tidak memiliki kewenangan dalam merubah Pengaturan kelas.',
 						type: 'error'
 					}, function() {
-						 window.location = 'index.php';
+						 window.location = './';
 					});
 				</script>";
 	}
@@ -69,6 +74,11 @@ if(isset($_POST['updateMapel'])){
 
 ?>
 <link rel="stylesheet" href="./assets/css/separate/pages/others.min.css">
+<link rel="stylesheet" href="./assets/tinymce4/css/prism.css" type="text/css" />
+<script type="text/javascript" src="./assets/tinymce4/js/tinymce/tinymce.min.js"></script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/codemirror.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/mode/xml/xml.min.js"></script>
 <style media="screen">
 	@media (max-width: 470px) {
 		.tb-lg {
@@ -116,84 +126,6 @@ if(isset($_POST['updateMapel'])){
 		</div>
 	</div><!--.modal-->
 
-	<div class="modal fade"
-		 id="addModul"
-		 tabindex="-1"
-		 role="dialog"
-		 aria-labelledby="addModulLabel"
-		 aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<form method="POST" id="addModulForm">
-				<div class="modal-header">
-					<button type="button" class="modal-close" data-dismiss="modal" aria-label="Close">
-						<i class="font-icon-close-2"></i>
-					</button>
-					<h4 class="modal-title" id="addModulLabel">Tambah Modul</h4>
-				</div>
-				<div class="modal-body">
-					<div class="form-group row">
-						<label for="namamodul" class="col-md-3 form-control-label">Nama Modul</label>
-						<div class="col-md-9">
-							<input type="hidden" name="idmodul" id="idmodul" class="" maxlength="11" />
-							<input type="text" class="form-control" name="namamodul" id="namamodul" placeholder="Nama Modul" title="Nama Modul" data-toggle="popover" data-placement="bottom" data-trigger="hover" data-content="Silahkan isikan Nama Modul yang akan dibuat!" required/>
-						</div>
-					</div>
-					<div class="form-group row">
-						<label for="namamodul" class="col-md-3 form-control-label">Prasyarat Modul</label>
-						<div class="col-md-9">
-							<select class="form-control" name="prasyaratmodul" id="prasyaratmodul" title="Prasyarat Modul" data-toggle="popover" data-placement="bottom" data-trigger="hover" data-content="Silahkan pilih modul yang akan dijadikan prasyarat untuk membuka modul ini! Jika tidak ada silahkan pilih 'Tidak ada'" required>
-								<option value="0">-- Tidak ada --</option>
-								<?php
-								foreach ($listModul as $data) {
-									echo '<option value="'.$data['_id'].'">'.$data['nama'].'</option>';
-								}
-								?>
-							</select>
-						</div>
-					</div>
-					<div class="form-group row">
-						<label for="nilaimateri" class="col-md-3 form-control-label">Nilai Materi</label>
-						<div class="col-md-3">
-							<div class="input-group">
-								<input type="number" min="0" max="100" value="0" class="form-control" onchange="checkTotal()" name="nilaimateri" id="nilaimateri" required>
-								<div class="input-group-addon">%</div>
-							</div>
-						</div>
-					</div>
-					<div class="form-group row">
-						<label for="nilaitugas" class="col-md-3 form-control-label">Nilai Tugas</label>
-						<div class="col-md-3">
-							<div class="input-group">
-								<input type="number" min="0" max="100" value="0" class="form-control" onchange="checkTotal()" name="nilaitugas" id="nilaitugas" required>
-								<div class="input-group-addon">%</div>
-							</div>
-						</div>
-					</div>
-					<div class="form-group row">
-						<label for="nilaiujian" class="col-md-3 form-control-label">Nilai Ujian</label>
-						<div class="col-md-3">
-							<div class="input-group">
-								<input type="number" min="0" max="100" value="0" class="form-control" onchange="checkTotal()" name="nilaiujian" id="nilaiujian" required>
-								<div class="input-group-addon">%</div>
-							</div>
-						</div>
-					</div>
-					<div class="form-group row">
-						<label for="namamodul" class="col-md-3 form-control-label">Nilai Minimal</label>
-						<div class="col-md-2">
-							<input type="number" min="0" max="100" value="0" class="form-control" placeholder="1 - 100" name="nilaiminimal" id="nilaiminimal" required>
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="submit" id="btn-submit" name="addModul" value="send" class="btn btn-rounded btn-primary">Simpan</button>
-					<button type="button" class="btn btn-rounded btn-default" data-dismiss="modal">Tutup</button>
-				</div>
-				</form>
-			</div>
-		</div>
-	</div><!--.modal-->
 
 	<div class="page-content">
 		<div class="profile-header-photo" style="background-image: url('assets/img/Artboard 1.png');">
@@ -245,27 +177,68 @@ if(isset($_POST['updateMapel'])){
 				</div>
 
 				<div class="col-xl-9 col-lg-8">
-					<section class="widget widget-activity">
-						<header class="widget-header">
-							Silabus Mata Pelajaran <?=$infoMapel['nama']?>
-						<?php
-						if ($hakKelas['status'] == 1 || $hakKelas['status'] == 2) {
-							if(($hakKelas['status'] == 2) && ($infoMapel['creator'] == $_SESSION['lms_id'])){
-								echo '<div class="btn-group" style="float: right;">
-										<button type="button" class="btn btn-sm btn-rounded btn-inline" onclick="add()" title="Tambah" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menambahkan Modul baru.">+ Tambah Modul</button>
+					<section class="card card-default" id="tugas-editor" style="display: none;">
+						<div class="card-block">
+                            <h5 class="with-border" id="judul-editor">Pembuatan Silabus</h5>
+
+                            <form id="form_tambah" method="POST" enctype="multipart/form-data">
+                                <div class="form-group row">
+                                    <label class="col-md-2 form-control-label">Isi Silabus</label>
+                                    <div class="col-md-10">
+                                        <div id="editorContainer">
+                                            <div id="toolbarLocation"></div>
+                                            <textarea id="editormce" class="form-control wrs_div_box" contenteditable="true" tabindex="0" spellcheck="false" aria-label="Rich Text Editor, example"></textarea>
+                                            <input id="editor" type="text" name="deskripsi" style="display: none;" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="form-group pull-right">
+                                    <button type="submit" id="btn-submit" name="addSilabus" class="btn">Simpan</button>
+                                    <button type="button" class="btn btn-default" id="btn-cancel">Batal</button>
+                                </div>
+                            </form>
+                        </div>
+					</section>
+
+					<section id="tugas-preview" class="card card-inversed" style="">
+						<header class="card-header">
+							Silabus Pembelajaran
+
+							<?php
+								if($infoMapel['creator'] == $_SESSION['lms_id']){
+									echo '<div class="btn-group" style="float: right;">
+										<button id="btn-tambah" title="Edit" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menambahkan tugas baru." class="btn btn-sm btn-rounded"><i class="fa fa-pencil"></i> Edit</button>
 									</div>';
-							}elseif($hakKelas['status'] == 1) {
-								echo '<div class="btn-group" style="float: right;">
-										<button type="button" class="btn btn-sm btn-rounded btn-inline" onclick="add()" title="Tambah" data-toggle="popover" data-placement="left" data-trigger="hover" data-content="Tombol untuk menambahkan Modul baru.">+ Tambah Modul</button>
-									</div>';
-							}
-						}
-						?>
+								}
+							?>
 						</header>
-						<div>
-						
+
+						<div class="card-block" id="accordion">
+							<?php
+								if (isset($infoMapel['silabus']) && ($infoMapel['silabus'] != '')) {
+										echo '<article class="box-typical profile-post panel">
+												<div>
+													<div class="profile-post-content">
+														'.$infoMapel['silabus'].'
+													</div>
+												</div>
+											</article>';
+								}else {
+									echo '	<article class="box-typical profile-post">
+												<div class="add-customers-screen tbl">
+													<div class="add-customers-screen-in">
+														<div class="add-customers-screen-user">
+															<i class="fa fa-file-text"></i>
+														</div>
+														<h2>Belum ada Silabus Pembelajaran</h2>
+													</div>
+												</div>
+											</article>';
+								}
+							?>
 						</div>
-					</section><!--.widget-tasks-->
+					</section>
 				</div>
 			</div><!--.row-->
 		</div><!--.container-fluid-->
@@ -280,41 +253,37 @@ if(isset($_POST['updateMapel'])){
 			$(elementID).html("");
 		}
 
-		function checkTotal(){
-      		var materi 	= parseInt($('#nilaimateri').val());
-      		var tugas	= parseInt($('#nilaitugas').val());
-      		var ujian	= parseInt($('#nilaiujian').val());
-			var total	= 100;
-			var gabung	= materi+tugas+ujian;
+		$("#form_tambah").submit(function(e){
+			$("#editor").val(tinyMCE.get('editormce').getContent());
+		});
 
-			// alert(gabung+' - '+total);
-			if (gabung > total) {
-				swal({
-					title: 'Maaf!',
-					text: 'Jumlah total nilai HARUS 100%, tidak boleh lebih ataupun kurang.',
-					type: 'warning'
-				}, function() {
-					$('#nilaimateri').val(0);
-					$('#nilaitugas').val(0);
-					$('#nilaiujian').val(0);
-				});
+		// Initialize action.
+		$('#btn-tambah').on('click', function () {
+			$('#form_tambah').trigger("reset");
+			$('#tugas-editor').show();
+			$('#tugas-preview').hide();
 
-				//	swal({
-				//		title: "Maaf!",
-				//		text: "Jumlah total nilai tidak dapat lebih dari 100%, Apakah anda mengisi kembali ?",
-				//		type: "warning",
-				//		showCancelButton: true,
-				//  	confirmButtonText: "Ya",
-	      		//		confirmButtonClass: "btn-danger",
-				//		closeOnConfirm: false,
-				//		showLoaderOnConfirm: true
-				//	}, function () {
-				//		$('#nilaimateri').val(0);
-				//		$('#nilaitugas').val(0);
-				//		$('#nilaiujian').val(0);
-				//	});
-			}
-      	};
+
+	      		$.ajax({
+	      			type: 'POST',
+	      			url: 'url-API/Kelas/Mapel/',
+	      			data: {"action": "show", "ID": "<?=$_GET['id']?>"},
+	      			success: function(res) {
+						tinyMCE.activeEditor.setContent(res.data.silabus);
+	      			},
+	      			error: function () {
+	      				swal("Gagal!", "Data tidak ditemukan!", "error");
+	      			}
+	      		});
+		});
+
+		// Destroy action.
+		$('#btn-cancel').on('click', function () {
+			$('#tugas-preview').show();
+			$('#tugas-editor').hide();
+			$('#form_tambah').trigger("reset");
+			$('#btn-submit').attr('name', 'addSilabus');
+		});
 
 		function add(){
       		$('#addModulForm').trigger("reset");
@@ -454,6 +423,7 @@ if(isset($_POST['updateMapel'])){
       	}
 
 		$(document).ready(function() {
+
 			$(".fancybox").fancybox({
 				padding: 0,
 				openEffect	: 'none',
@@ -463,6 +433,14 @@ if(isset($_POST['updateMapel'])){
 	</script>
 
 <script src="assets/js/app.js"></script>
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+	MathJax.Hub.Config({
+		extensions: ["mml2jax.js"],
+		jax: ["input/MathML","output/HTML-CSS"]
+	});
+</script>
+<script type="text/javascript" src="./assets/tinymce4/js/wirislib.js"></script>
+<script type="text/javascript" src="./assets/tinymce4/js/prism.js"></script>
 <?php
 	require('includes/footer-bottom.php');
 ?>

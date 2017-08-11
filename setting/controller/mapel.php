@@ -31,7 +31,7 @@ class Mapel
 
     public function addMapel($nama, $kelas, $user){
         $newID  = "";
-        $insert = array("id_kelas"=>$kelas, "nama" => $nama, "creator" => "$user", "date_created"=>date('Y-m-d H:i:s'), "date_modified"=>date('Y-m-d H:i:s'));
+        $insert = array("id_kelas"=>$kelas, "nama" => $nama, "silabus"=>'', "creator" => "$user", "date_created"=>date('Y-m-d H:i:s'), "date_modified"=>date('Y-m-d H:i:s'));
                   $this->table->insert($insert);
         $newID  = $insert['_id'];
         if ($newID) {
@@ -58,6 +58,24 @@ class Mapel
               $status   = "error";
               $judul    = "Maaf!";
               $message  = "Pengaturan Mata Pelajaran gagal disimpan.";
+          }
+
+        $result = array("status" => $status, "judul" => $judul, "message"=>$message, "IDMapel" => $mapel);
+        return $result;
+    }
+
+    public function updateSilabus($teks, $mapel){
+        $update     = array('$set' => array("silabus"=>$teks, "date_modified"=>date('Y-m-d H:i:s')));
+
+          try {
+              $this->table->update(array("_id" => new MongoId($mapel)), $update);
+              $status   = "success";
+              $judul    = "Berhasil!";
+              $message  = "Silabus berhasil disimpan.";
+          } catch(MongoCursorException $e) {
+              $status   = "error";
+              $judul    = "Maaf!";
+              $message  = "Silabus gagal disimpan.";
           }
 
         $result = array("status" => $status, "judul" => $judul, "message"=>$message, "IDMapel" => $mapel);

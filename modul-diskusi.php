@@ -117,7 +117,7 @@ if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
 											</form><!--.box-typical-->
 									<?php
 									foreach ($listTopik['data'] as $posting) {
-										$image		= empty($posting['user_foto']) ? "<img src='assets/img/avatar-2-128.png' style='max-width: 75px; max-height: 75px;' />" : "<img src='media/Assets/foto/".$posting['user_foto']."' style='max-width: 75px; max-height: 75px;' />" ;
+										$image		= empty($posting['user_foto']) ? "<img src='assets/img/avatar-2-128.png' style='max-width: 75px; max-height: 75px;' />" : "<img src='http://sumberbelajar.seamolec.org/Assets/foto/".$posting['user_foto']."' style='max-width: 75px; max-height: 75px;' />" ;
 										$listReply	= $diskusiClass->getListReply($posting['_id']);
 									?>
 										<article id="topik-<?=$posting['_id']?>" class="box-typical profile-post" style="border: 2px solid #d8e2e7">
@@ -155,7 +155,7 @@ if(isset($_POST['addMateri']) || isset($_POST['updateMateri'])){
 												<div id="demo<?=$posting['_id']?>" class="collapse">
 												<?php
 													foreach ($listReply['data'] as $reply) {
-														$image				= empty($reply['user_foto']) ? "<img src='assets/img/avatar-2-128.png' style='max-width: 75px; max-height: 75px;' />" : "<img src='media/Assets/foto/".$reply['user_foto']."' style='max-width: 75px; max-height: 75px;' />" ;
+														$image				= empty($reply['user_foto']) ? "<img src='assets/img/avatar-2-128.png' style='max-width: 75px; max-height: 75px;' />" : "<img src='http://sumberbelajar.seamolec.org/Assets/foto/".$reply['user_foto']."' style='max-width: 75px; max-height: 75px;' />" ;
 														$listCommentReply	= $diskusiClass->getListReply($reply['_id']);
 												?>
 												<div class="comment-row-item">

@@ -92,7 +92,7 @@
                     <div class="modal-body">
                         <div class="form-group row">
                             <div class="col-md-12">
-                                <input type="text" class="form-control" name="username" id="username" placeholder="Email atau username" required />
+                                <input type="text" class="form-control" name="username" id="username" placeholder="Email atau nama pengguna" required />
                             </div>
                         </div>
                         <div class="form-group row">

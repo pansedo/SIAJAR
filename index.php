@@ -144,10 +144,10 @@ if (isset($userProfil['kota']) || !empty($userProfil['kota'])) {
 										<?php
 										if (strtolower($_SESSION['lms_status']) == 'guru') {
 											echo '
-												<a class="dropdown-item" href="#" data-toggle="modal" data-target="#addKelas"><span class="font-icon font-icon-plus"></span>Tambah Kelas</a>
-				                                <a class="dropdown-item" href="#"><span class="font-icon font-icon-pencil"></span>Kelola Kelas</a>';
+												<a class="dropdown-item" href="#" data-toggle="modal" data-target="#addKelas"><span class="font-icon font-icon-plus"></span>Tambah Kelas</a>';
 										}
 										?>
+										<a class="dropdown-item" href="kelola-kelas.php"><span class="font-icon font-icon-pencil"></span>Kelola Kelas</a>
 		                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#joinKelas"><span class="font-icon font-icon-user"></span>Gabung Kelas</a>
 									</div>
 								</div>

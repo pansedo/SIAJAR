@@ -481,7 +481,7 @@ if(isset($_POST['addTugas']) || isset($_POST['updateTugas']) || isset($_POST['ku
   					$('#btn-submit').attr('name', 'updateTugas');
       			},
       			error: function () {
-      				swal("Error!", "Cannot fetch data!", "error");
+      				swal("Error!", "Data tidak ditemukan!", "error");
       			}
       		});
       	}
@@ -536,7 +536,7 @@ if(isset($_POST['addTugas']) || isset($_POST['updateTugas']) || isset($_POST['ku
 					loaded();
 				},
 				error: function (res) {
-					swal("Error!", "Cannot fetch data!", "error");
+					swal("Error!", "Data tidak ditemukan!", "error");
 				}
 			});
 		}
@@ -615,7 +615,7 @@ if(isset($_POST['addTugas']) || isset($_POST['updateTugas']) || isset($_POST['ku
 					loaded();
 				},
 				error: function () {
-					swal("Error!", "Cannot fetch data!", "error");
+					swal("Error!", "Data tidak ditemukan!", "error");
 				}
 			});
 		});
